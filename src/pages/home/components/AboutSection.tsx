@@ -69,7 +69,7 @@ export default function AboutSection() {
               <span className="text-kh-pink">PASSION DEFINES.</span>
             </h2>
 
-            <div className="text-kh-gray text-sm leading-relaxed space-y-4 font-sans">
+            <div className="text-gray-300 text-sm md:text-base leading-relaxed space-y-4 font-sans">
               <p>
                 Kennedi Harris is a Class of 2030 basketball prospect known for
                 her rare combination of size, versatility, rebounding, shot
@@ -105,13 +105,17 @@ export default function AboutSection() {
               const Icon = item.icon;
 
               return (
-                <div key={index} className="group">
-                  <div className="flex items-center gap-4">
-                    <div className="group-hover:bg-kh-pink group-hover:text-white transition-colors">
-                      <Icon size={50} />
+                <div key={index} className="">
+                  <div className="flex items-center gap-4 ">
+                    <div className="group-hover:bg-kh-pink rounded-full border-2 border-kh-pink group-hover:text-white transition-colors p-4">
+                      <Icon
+                        strokeWidth={2}
+                        className="text-kh-pink group-hover:text-white"
+                        size={30}
+                      />
                     </div>
 
-                    <div>
+                    <div className="">
                       <div className="font-condensed font-bold tracking-widest text-white uppercase">
                         {item.title}
                       </div>
