@@ -1,14 +1,35 @@
 import { Star, User, GraduationCap, Users, ArrowRight } from "lucide-react";
 import aboutImg from "@/assets/me-removebg-preview.png";
 import { Button } from "@/components/ui/button";
-
+const features = [
+  {
+    icon: Star,
+    title: "COMPETITIVE",
+    desc: "Relentless on both ends",
+  },
+  {
+    icon: User,
+    title: "LEADER",
+    desc: "Leads by example",
+  },
+  {
+    icon: GraduationCap,
+    title: "STUDENT",
+    desc: "Academic driven",
+  },
+  {
+    icon: Users,
+    title: "TEAM FIRST",
+    desc: "Success together",
+  },
+];
 export default function AboutSection() {
   return (
     <section id="about" className=" bg-kh-dark relative overflow-hidden">
       <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
-        <div className="flex flex-col lg:flex-row  items-center justify-between">
+        <div className="flex flex-col lg:flex-row  items-center justify-between gap-20">
           {/* Left - Image */}
-          <div className="w-full lg:w-1/3 relative flex justify-center">
+          <div className="w-full lg:w-1/2 relative flex justify-center">
             {/* Blue accent line */}
             {/* <div className="absolute left-0 bottom-0 w-1 h-3/4 bg-linear-to-t from-kh-blue to-transparent transform -skew-x-12 -translate-x-4 hidden lg:block" /> */}
             <div className="dot-grid absolute w-32 h-[60%] -left-10 top-[10%]"></div>
@@ -38,17 +59,17 @@ export default function AboutSection() {
           </div>
 
           {/* Middle - Content */}
-          <div className="w-full lg:w-[40%] flex flex-col gap-6">
+          <div className=" flex flex-col gap-6">
             <div className="font-condensed font-bold tracking-[0.15em] text-kh-pink text-sm uppercase">
               ABOUT KENNEDI
             </div>
-            <h2 className="font-condensed font-bold text-5xl lg:text-6xl text-white uppercase leading-[0.95]">
+            <h2 className="font-condensed font-semibold text-5xl lg:text-7xl text-white uppercase leading-[0.95]">
               PURPOSE DRIVES.
               <br />
               <span className="text-kh-pink">PASSION DEFINES.</span>
             </h2>
 
-            <div className="text-kh-gray text-sm leading-relaxed space-y-4 font-sans max-w-lg">
+            <div className="text-kh-gray text-sm leading-relaxed space-y-4 font-sans">
               <p>
                 Kennedi Harris is a Class of 2030 basketball prospect known for
                 her rare combination of size, versatility, rebounding, shot
@@ -71,7 +92,7 @@ export default function AboutSection() {
               >
                 LEARN MORE ABOUT KENNEDI
                 <ArrowRight
-                  size={16}
+                  size={50}
                   className="transform group-hover:translate-x-1 transition-transform"
                 />
               </Button>
@@ -79,56 +100,26 @@ export default function AboutSection() {
           </div>
 
           {/* Right - Traits */}
-          <div className="w-full lg:w-1/4 flex flex-col border-l border-gray-600 pl-8 gap-8">
-            <div className="trait-card group">
-              <div className="flex items-center gap-4">
-                <div className="trait-icon group-hover:bg-kh-pink group-hover:text-white transition-colors">
-                  <Star size={16} />
-                </div>
-                <div className="font-condensed font-bold tracking-widest text-white uppercase">
-                  COMPETITIVE
-                </div>
-              </div>
-              <div className="text-kh-gray text-xs pl-12">
-                Relentless on both ends
-              </div>
-            </div>
+          <div className="w-full lg:w-2/4 flex flex-col border-l border-gray-600 pl-8 gap-8">
+            {features.map((item, index) => {
+              const Icon = item.icon;
 
-            <div className="trait-card group">
-              <div className="flex items-center gap-4">
-                <div className="trait-icon group-hover:bg-kh-pink group-hover:text-white transition-colors">
-                  <User size={16} />
-                </div>
-                <div className="font-condensed font-bold tracking-widest text-white uppercase">
-                  LEADER
-                </div>
-              </div>
-              <div className="text-kh-gray text-xs pl-12">Leads by example</div>
-            </div>
+              return (
+                <div key={index} className="group">
+                  <div className="flex items-center gap-4">
+                    <div className="group-hover:bg-kh-pink group-hover:text-white transition-colors">
+                      <Icon size={50} />
+                    </div>
 
-            <div className="trait-card group">
-              <div className="flex items-center gap-4">
-                <div className="trait-icon group-hover:bg-kh-pink group-hover:text-white transition-colors">
-                  <GraduationCap size={16} />
-                </div>
-                <div className="font-condensed font-bold tracking-widest text-white uppercase">
-                  STUDENT
-                </div>
-              </div>
-              <div className="text-kh-gray text-xs pl-12">Academic driven</div>
-            </div>
+                    <div className="font-condensed font-bold tracking-widest text-white uppercase">
+                      {item.title}
+                    </div>
+                  </div>
 
-            <div className="trait-card group">
-              <div className="flex items-center gap-4">
-                <div className="trait-icon group-hover:bg-kh-pink group-hover:text-white transition-colors">
-                  <Users size={16} />
+                  <div className="text-kh-gray text-xs pl-12">{item.desc}</div>
                 </div>
-                <div className="font-condensed font-bold tracking-widest text-white uppercase">
-                  TEAM FIRST
-                </div>
-              </div>
-              <div className="text-kh-gray text-xs pl-12">Success together</div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
