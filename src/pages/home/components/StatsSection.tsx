@@ -47,7 +47,7 @@ export default function StatsSection() {
         </div>
         {/* Right Info Box */}
         <div className="w-full lg:w-[30%] flex flex-col sm:flex-row items-center gap-6 bg-kh-dark p-4 rounded border border-white/5">
-          <div className="w-24 h-24  overflow-hidden shrink-0 border-2 border-kh-pink">
+          <div className="w-24 h-full  overflow-hidden shrink-0 ">
             <img
               src={statsImg}
               alt="Stats Avatar"
@@ -65,12 +65,15 @@ export default function StatsSection() {
               }}
             />
           </div>
-          <div className="font-condensed font-bold text-sm tracking-widest text-white uppercase leading-snug text-center sm:text-left">
-            STATS UPDATED
-            <br />
-            THROUGHOUT
-            <br />
-            THE SEASON.
+          <div className="flex flex-col justify-center gap-4 h-full ">
+            <div className="font-condensed font-semibold text-lg tracking-widest text-white uppercase leading-snug text-center sm:text-left">
+              STATS UPDATED
+              <br />
+              THROUGHOUT
+              <br />
+              THE SEASON.
+            </div>
+            <span className="w-[60%]  bg-kh-pink h-0.5 rounded-full block"></span>
           </div>
         </div>
       </div>
