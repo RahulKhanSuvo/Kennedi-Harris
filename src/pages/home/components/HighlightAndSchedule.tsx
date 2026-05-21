@@ -1,3 +1,11 @@
+import HighlightsSection from "./HighlightsSection";
+import ScheduleSection from "./ScheduleSection";
+
 export default function HighlightAndSchedule() {
-  return <div>HighlightAndSchedule</div>;
+  return (
+    <section className="">
+      <HighlightsSection />
+      <ScheduleSection />
+    </section>
+  );
 }

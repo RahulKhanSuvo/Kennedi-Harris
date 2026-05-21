@@ -2,9 +2,8 @@ import AboutSection from "./components/AboutSection";
 import BottomInfoBar from "./components/BottomInfoBar";
 import GallerySection from "./components/GallerySection";
 import HeroSection from "./components/HeroSection";
-import HighlightsSection from "./components/HighlightsSection";
+import HighlightAndSchedule from "./components/HighlightAndSchedule";
 import PartnersSection from "./components/PartnersSection";
-import ScheduleSection from "./components/ScheduleSection";
 import StatsSection from "./components/StatsSection";
 
 export default function Home() {
@@ -14,8 +13,7 @@ export default function Home() {
       <BottomInfoBar />
       <AboutSection />
       <StatsSection />
-      <HighlightsSection />
-      <ScheduleSection />
+      <HighlightAndSchedule />
       <GallerySection />
       <PartnersSection />
     </div>
