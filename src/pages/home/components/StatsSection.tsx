@@ -36,7 +36,7 @@ export default function StatsSection() {
                   {item.value}
                 </div>
 
-                <div className="font-condensed font-bold text-[10px] lg:text-xs tracking-widest text-kh-pink mt-2 uppercase px-4 lg:px-0 text-center">
+                <div className="font-condensed font-semibold text-sm lg:text-base tracking-widest text-kh-pink mt-2 uppercase px-4 lg:px-0 text-center">
                   {Array.isArray(item.label)
                     ? item.label.map((line, i) => <div key={i}>{line}</div>)
                     : item.label}
