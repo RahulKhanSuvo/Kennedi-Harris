@@ -1,5 +1,14 @@
 import statsImg from "@/assets/stats-player.png";
-
+const stats = [
+  { value: "20+", label: "PPG" },
+  { value: "16+", label: "RPG" },
+  { value: "3+", label: "BPG" },
+  { value: "24+", label: "DOUBLE-DOUBLES" },
+  {
+    value: "26",
+    label: ["REBOUNDS", "SINGLE GAME"],
+  },
+];
 export default function StatsSection() {
   return (
     <section className=" py-16 border-y border-white/5 relative overflow-hidden">
@@ -14,64 +23,39 @@ export default function StatsSection() {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           {/* Stats Flexbox */}
           <div className="flex flex-wrap lg:flex-nowrap items-start gap-y-10 w-full lg:w-[70%]">
-            <div className="w-1/3 lg:w-1/5 flex flex-col items-center border-r border-white/10 last:border-0 lg:border-r-0 relative after:content-[''] after:hidden lg:after:block after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-12 after:bg-white/10">
-              <div className="font-display text-5xl lg:text-7xl text-white leading-none">
-                20<span className="text-kh-pink">+</span>
-              </div>
-              <div className="font-condensed font-bold text-[10px] lg:text-xs tracking-widest text-kh-pink mt-2 uppercase">
-                PPG
-              </div>
-            </div>
+            {stats.map((item, index) => (
+              <div
+                key={index}
+                className={`flex flex-col items-center relative after:content-[''] after:hidden lg:after:block after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-12 after:bg-white/10
+        ${index < 3 ? "w-1/3 lg:w-1/5 border-r border-white/10" : ""}
+        ${index === 3 ? "w-1/2 lg:w-1/5 mt-10 lg:mt-0 border-r border-white/10" : ""}
+        ${index === 4 ? "w-1/2 lg:w-1/5 mt-10 lg:mt-0 text-center" : ""}
+        ${index === stats.length - 1 ? "border-0" : ""}
+      `}
+              >
+                <div className="font-display text-5xl lg:text-7xl xl:text-8xl text-white leading-none">
+                  {item.value}
+                </div>
 
-            <div className="w-1/3 lg:w-1/5 flex flex-col items-center border-r border-white/10 last:border-0 lg:border-r-0 relative after:content-[''] after:hidden lg:after:block after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-12 after:bg-white/10">
-              <div className="font-display text-5xl lg:text-7xl text-white leading-none">
-                16<span className="text-kh-pink">+</span>
+                <div className="font-condensed font-bold text-[10px] lg:text-xs tracking-widest text-kh-pink mt-2 uppercase px-4 lg:px-0 text-center">
+                  {Array.isArray(item.label)
+                    ? item.label.map((line, i) => <div key={i}>{line}</div>)
+                    : item.label}
+                </div>
               </div>
-              <div className="font-condensed font-bold text-[10px] lg:text-xs tracking-widest text-kh-pink mt-2 uppercase">
-                RPG
-              </div>
-            </div>
-
-            <div className="w-1/3 lg:w-1/5 flex flex-col items-center relative after:content-[''] after:hidden lg:after:block after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-12 after:bg-white/10">
-              <div className="font-display text-5xl lg:text-7xl text-white leading-none">
-                3<span className="text-kh-pink">+</span>
-              </div>
-              <div className="font-condensed font-bold text-[10px] lg:text-xs tracking-widest text-kh-pink mt-2 uppercase">
-                BPG
-              </div>
-            </div>
-
-            <div className="w-1/2 lg:w-1/5 flex flex-col items-center mt-10 lg:mt-0 relative after:content-[''] after:hidden lg:after:block after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-12 after:bg-white/10">
-              <div className="font-display text-5xl lg:text-7xl text-white leading-none">
-                24<span className="text-kh-pink">+</span>
-              </div>
-              <div className="font-condensed font-bold text-[10px] lg:text-xs tracking-widest text-kh-pink mt-2 uppercase">
-                DOUBLE-DOUBLES
-              </div>
-            </div>
-
-            <div className="w-1/2 lg:w-1/5 flex flex-col items-center mt-10 lg:mt-0 text-center">
-              <div className="font-display text-5xl lg:text-7xl text-white leading-none">
-                26
-              </div>
-              <div className="font-condensed font-bold text-[10px] lg:text-xs tracking-widest text-kh-pink mt-2 uppercase px-4 lg:px-0">
-                REBOUNDS
-                <br />
-                SINGLE GAME
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Right Info Box */}
           <div className="w-full lg:w-[25%] flex flex-col sm:flex-row items-center gap-6 bg-kh-dark p-4 rounded border border-white/5">
-            <div className="w-24 h-24 rounded-full overflow-hidden shrink-0 border-2 border-kh-pink">
+            <div className="w-24 h-24  overflow-hidden shrink-0 border-2 border-kh-pink">
               <img
                 src={statsImg}
                 alt="Stats Avatar"
                 className="w-full h-full object-cover object-top"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
-                  e.currentTarget.parentElement?.classList.add(
+                  e.currentTarget.parentElement!.classList.add(
                     "flex",
                     "items-center",
                     "justify-center",
