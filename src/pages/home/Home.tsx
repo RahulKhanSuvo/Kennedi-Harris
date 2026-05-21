@@ -1,23 +1,21 @@
-import Navbar from "@/components/home/Navbar";
-import HeroSection from "@/components/home/HeroSection";
-import AboutSection from "@/components/home/AboutSection";
-import StatsSection from "@/components/home/StatsSection";
-import HighlightsScheduleSection from "@/components/home/HighlightsScheduleSection";
-import GalleryPartnersSection from "@/components/home/GalleryPartnersSection";
-import ContactSection from "@/components/home/ContactSection";
-import Footer from "@/components/home/Footer";
+import HeroSection from "../../components/home/HeroSection";
+import AboutSection from "../../components/home/AboutSection";
+import StatsSection from "../../components/home/StatsSection";
+import HighlightsSection from "../../components/home/HighlightsSection";
+import ScheduleSection from "../../components/home/ScheduleSection";
+import GallerySection from "../../components/home/GallerySection";
+import PartnersSection from "../../components/home/PartnersSection";
 
 export default function Home() {
   return (
-    <div className="bg-kh-dark min-h-screen text-white overflow-x-hidden">
-      <Navbar />
+    <div className="flex flex-col w-full bg-kh-dark min-h-screen">
       <HeroSection />
       <AboutSection />
       <StatsSection />
-      <HighlightsScheduleSection />
-      <GalleryPartnersSection />
-      <ContactSection />
-      <Footer />
+      <HighlightsSection />
+      <ScheduleSection />
+      <GallerySection />
+      <PartnersSection />
     </div>
   );
 }

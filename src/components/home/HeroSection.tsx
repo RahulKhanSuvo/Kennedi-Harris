@@ -1,186 +1,127 @@
-import heroImg from "@/assets/hero.png";
 import {
-  PlayIcon,
-  FileIcon,
-  MailIcon,
-  CalIcon,
-  RulerIcon,
-  BasketballIcon,
-  MapPinIcon,
-  StarIcon,
-} from "./icons";
+  PlayCircle,
+  FileText,
+  Mail,
+  Calendar,
+  Ruler,
+  User,
+  MapPin,
+  Star,
+} from "lucide-react";
+import heroImg from "../../assets/hero-player.png";
 
 export default function HeroSection() {
   return (
-    <section
-      id="hero"
-      style={{
-        background:
-          "linear-gradient(135deg, #050508 0%, #08091a 50%, #0a0515 100%)",
-        minHeight: "92vh",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Glow layers */}
-      <div className="absolute inset-0 hero-glow-pink pointer-events-none" />
-      <div className="absolute inset-0 hero-glow-blue pointer-events-none" />
+    <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden bg-kh-dark hero-glow-blue">
+      {/* Background large 30 */}
+      <div className="absolute top-10 right-0 lg:right-10 pointer-events-none select-none z-0">
+        <span className="font-display text-[300px] lg:text-[450px] leading-none outline-text-blue opacity-40">
+          30
+        </span>
+      </div>
 
-      {/* Extra blue glow bottom-right */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          bottom: "-80px",
-          right: "10%",
-          width: "400px",
-          height: "400px",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(26,64,200,0.35) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
+      <div className="container mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center justify-between pt-20">
+        {/* Left Content */}
+        <div className="w-full lg:w-[55%] flex flex-col items-start gap-4 animate-fade-in-up">
+          <div className="font-condensed font-bold tracking-[0.2em] text-kh-pink text-sm uppercase">
+            Class of 2030
+          </div>
 
-      <div
-        className="max-w-[1280px] mx-auto px-6 relative"
-        style={{ paddingTop: "3rem", paddingBottom: "1rem" }}
-      >
-        <div className="flex items-start justify-between gap-4 relative">
-          {/* ── LEFT CONTENT ── */}
-          <div className="z-10 max-w-[500px] animate-fade-in-up">
-            {/* Class badge */}
-            <p className="font-condensed font-bold text-kh-pink text-sm tracking-[0.25em] uppercase mb-3">
-              Class of 2030
-            </p>
+          <div className="flex flex-col -gap-4">
+            <h1 className="font-display text-7xl sm:text-8xl lg:text-[110px] leading-[0.85] text-white tracking-wider m-0">
+              KENNEDI
+            </h1>
+            <h1 className="font-display text-7xl sm:text-8xl lg:text-[110px] leading-[0.85] text-kh-pink tracking-wider m-0">
+              HARRIS
+            </h1>
+          </div>
 
-            {/* Name */}
-            <div
-              className="font-display leading-none mb-2"
-              style={{ fontSize: "clamp(70px, 9vw, 112px)" }}
-            >
-              <div className="text-white" style={{ lineHeight: 0.9 }}>
-                KENNEDI
-              </div>
-              <div className="text-kh-pink" style={{ lineHeight: 0.9 }}>
-                HARRIS
-              </div>
-            </div>
+          <div className="font-condensed font-bold tracking-[0.1em] text-white text-xl sm:text-2xl mt-4">
+            6'2 GUARD / FORWARD
+          </div>
 
-            {/* Position */}
-            <p className="font-condensed font-bold text-white text-xl tracking-widest uppercase mt-3 mb-2">
-              6'2 GUARD / FORWARD
-            </p>
-
-            {/* Tagline */}
-            <p
-              className="font-script text-kh-pink text-2xl mb-1"
-              style={{ fontWeight: 700 }}
-            >
+          <div className="mt-4 flex flex-col gap-2">
+            <div className="font-script text-4xl sm:text-5xl text-kh-pink">
               Unfinished Legacy.
-            </p>
-            <p className="font-condensed font-semibold text-white/70 text-sm tracking-[0.18em] uppercase mb-6">
-              BUILT DAILY. PROVEN GAME BY GAME.
-            </p>
-
-            {/* CTA buttons */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              <button id="btn-watch-highlights" className="btn-primary">
-                <PlayIcon /> WATCH HIGHLIGHTS
-              </button>
-              <button id="btn-view-media-kit" className="btn-outline">
-                <FileIcon /> VIEW MEDIA KIT
-              </button>
-              <button id="btn-contact-nil" className="btn-outline">
-                <MailIcon /> CONTACT FOR NIL / RECRUITING
-              </button>
+            </div>
+            <div className="font-condensed font-bold tracking-[0.1em] text-white text-lg sm:text-xl uppercase">
+              Built daily. Proven game by game.
             </div>
           </div>
 
-          {/* ── CENTER: Player Image ── */}
-          <div
-            className="absolute pointer-events-none"
-            style={{
-              right: "140px",
-              bottom: 0,
-              height: "88vh",
-              maxHeight: "680px",
-              zIndex: 5,
-            }}
-          >
-            <img
-              src={heroImg}
-              alt="Kennedi Harris"
-              style={{
-                height: "100%",
-                width: "auto",
-                objectFit: "contain",
-                objectPosition: "bottom center",
-                filter: "drop-shadow(0 0 40px rgba(232,23,106,0.25))",
-              }}
-            />
+          {/* Action Buttons */}
+          <div className="flex flex-wrap gap-4 mt-8">
+            <button className="btn-primary">
+              <PlayCircle size={18} />
+              WATCH HIGHLIGHTS
+            </button>
+            <button className="btn-outline">
+              VIEW MEDIA KIT
+              <FileText size={18} />
+            </button>
+            <button className="btn-outline">
+              CONTACT FOR NIL / RECRUITING
+              <Mail size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Right Player Image */}
+        <div className="w-full lg:w-[45%] h-full flex justify-end items-end relative mt-10 lg:mt-0 delay-200 animate-fade-in-up">
+          {/* Decorative script text behind image */}
+          <div className="absolute right-[-10%] bottom-[20%] font-script text-5xl lg:text-7xl text-kh-pink opacity-40 rotate-[-10deg] pointer-events-none select-none z-0">
+            Kennedi
+            <br />
+            Harris
+            <br />
+            #30
           </div>
 
-          {/* ── RIGHT: #30 outline + signature ── */}
-          <div
-            className="shrink-0 relative z-10 flex flex-col items-end"
-            style={{ minWidth: "110px" }}
-          >
-            <div
-              className="font-display outline-text-blue select-none"
-              style={{
-                fontSize: "clamp(120px, 14vw, 190px)",
-                lineHeight: 1,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              30
-            </div>
-            <div
-              className="font-script text-kh-pink text-right mt-2 select-none"
-              style={{
-                fontSize: "clamp(18px, 2vw, 26px)",
-                fontWeight: 700,
-                lineHeight: 1.2,
-              }}
-            >
-              Kennedi
-              <br />
-              Harris #30
+          <div className="relative z-10 h-[500px] lg:h-[700px] w-full flex justify-end">
+            {/* The image will be placed here. Using a placeholder container if image is missing */}
+            <div className="w-[80%] h-full bg-kh-blue/10 border border-kh-blue/30 rounded-lg flex items-center justify-center backdrop-blur-sm overflow-hidden">
+              <img
+                src={heroImg}
+                alt="Kennedi Harris"
+                className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  e.currentTarget.parentElement?.classList.add(
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                  );
+                  e.currentTarget.parentElement!.innerHTML =
+                    '<div class="text-kh-gray font-condensed">IMAGE PLACEHOLDER</div>';
+                }}
+              />
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── STAT BAR ── */}
-      <div
-        style={{
-          background: "rgba(0,0,0,0.55)",
-          borderTop: "1px solid rgba(255,255,255,0.07)",
-          backdropFilter: "blur(8px)",
-          position: "relative",
-          zIndex: 10,
-        }}
-      >
-        <div className="max-w-[1280px] mx-auto px-6">
-          <div className="flex items-center flex-wrap">
-            {[
-              { icon: <CalIcon />, text: "CLASS OF 2030" },
-              { icon: <RulerIcon />, text: "6'2" },
-              { icon: <BasketballIcon />, text: "GUARD / FORWARD" },
-              { icon: <MapPinIcon />, text: "GEORGIA" },
-              { icon: <StarIcon />, text: "NATIONAL PROSPECT" },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="stat-bar-item flex items-center gap-2 py-4"
-                style={{ color: "#aaa" }}
-              >
-                <span className="text-kh-pink">{item.icon}</span>
-                <span className="font-condensed font-bold text-xs tracking-widest text-white uppercase">
-                  {item.text}
-                </span>
-              </div>
-            ))}
+      {/* Bottom Info Bar */}
+      <div className="w-full border-y border-white/10 bg-[#0C0C14]/80 backdrop-blur mt-auto">
+        <div className="container mx-auto px-6 flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-between py-5 gap-y-4 text-xs font-condensed font-bold tracking-widest text-white">
+          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center lg:justify-start">
+            <Calendar className="text-kh-pink" size={18} />
+            CLASS OF 2030
+          </div>
+          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center">
+            <Ruler className="text-kh-pink" size={18} />
+            6'2
+          </div>
+          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center">
+            <User className="text-kh-pink" size={18} />
+            GUARD / FORWARD
+          </div>
+          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center">
+            <MapPin className="text-kh-pink" size={18} />
+            GEORGIA
+          </div>
+          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center lg:justify-end">
+            <Star className="text-kh-pink" size={18} />
+            NATIONAL PROSPECT
           </div>
         </div>
       </div>
