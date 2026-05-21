@@ -16,7 +16,7 @@ export default function StatsSection() {
         <div className="flex flex-col w-full lg:w-[70%]">
           {/* title */}
           <div className="flex items-center gap-4 mb-8">
-            <h3 className="font-condensed font-medium  text-base xl:text-lg tracking-widest text-white uppercase">
+            <h3 className="font-condensed font-semibold  text-base xl:text-xl tracking-widest text-white uppercase">
               BY THE NUMBERS
             </h3>
             <div className="h-px w-12 bg-kh-pink "></div>
