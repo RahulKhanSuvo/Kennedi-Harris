@@ -1,22 +1,25 @@
 import { Star, User, GraduationCap, Users, ArrowRight } from "lucide-react";
-import aboutImg from "@/assets/about-player.png";
+import aboutImg from "@/assets/me-removebg-preview.png";
 import { Button } from "@/components/ui/button";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-24 bg-kh-dark relative overflow-hidden">
+    <section id="about" className=" bg-kh-dark relative overflow-hidden">
       <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-8 items-center justify-between">
+        <div className="flex flex-col lg:flex-row  items-center justify-between">
           {/* Left - Image */}
           <div className="w-full lg:w-1/3 relative flex justify-center">
             {/* Blue accent line */}
-            <div className="absolute left-0 bottom-0 w-1 h-3/4 bg-linear-to-t from-kh-blue to-transparent transform -skew-x-12 -translate-x-4 hidden lg:block"></div>
+            {/* <div className="absolute left-0 bottom-0 w-1 h-3/4 bg-linear-to-t from-kh-blue to-transparent transform -skew-x-12 -translate-x-4 hidden lg:block" /> */}
+            <div className="dot-grid absolute w-32 h-[60%] -left-10 top-[10%]"></div>
+            <div className="absolute left-0 bottom-0 w-2 h-full transform -skew-x-24 -translate-x-4 hidden lg:block bg-[linear-gradient(to_top,#0046c0_0%,#0046c0_50%,#f1136a_50%,#f1136a_100%)]" />
+            <div className="absolute left-0 bottom-0 w-2 h-2/5 bg-linear-to-t from-kh-blue to-transparent transform -skew-x-24 translate-x-10 hidden lg:block" />
 
-            <div className="relative z-10 w-[80%] lg:w-full max-w-[400px] aspect-3/4 bg-kh-dark-2/50 border border-white/5 rounded overflow-hidden">
+            <div className="relative z-10 w-[80%] lg:w-full max-w-[400px] aspect-3/4 rounded overflow-hidden">
               <img
                 src={aboutImg}
                 alt="About Kennedi"
-                className="w-full h-full object-cover grayscale opacity-80 mix-blend-lighten"
+                className="w-full h-full object-contain"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
                   e.currentTarget.parentElement?.classList.add(
@@ -64,7 +67,7 @@ export default function AboutSection() {
             <div className="pt-4 border-t border-white/5 mt-2">
               <Button
                 variant="kh-outline"
-                className="inline-flex items-center gap-2 font-condensed font-bold tracking-[0.1em] text-kh-blue hover:text-kh-blue-light transition-colors uppercase text-sm group"
+                className="inline-flex items-center gap-2 font-condensed font-bold tracking-widest text-kh-blue hover:text-kh-blue-light transition-colors uppercase text-sm group"
               >
                 LEARN MORE ABOUT KENNEDI
                 <ArrowRight
