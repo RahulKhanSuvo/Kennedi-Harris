@@ -2,10 +2,10 @@ import statsImg from "@/assets/stats-player.png";
 
 export default function StatsSection() {
   return (
-    <section className="bg-kh-dark-2 py-16 border-y border-white/5 relative overflow-hidden">
+    <section className=" py-16 border-y border-white/5 relative overflow-hidden">
       <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
         <div className="flex items-center gap-4 mb-8">
-          <h3 className="font-condensed font-bold text-sm tracking-widest text-white uppercase">
+          <h3 className="font-condensed font-medium tracking-widest text-white uppercase">
             BY THE NUMBERS
           </h3>
           <div className="h-px w-12 bg-kh-pink "></div>
