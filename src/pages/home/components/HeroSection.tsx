@@ -28,10 +28,10 @@ export default function HeroSection() {
           </div>
 
           <div className="flex flex-col -gap-4">
-            <h1 className="font-display text-7xl sm:text-8xl lg:text-[110px] leading-[0.85] text-white tracking-wider m-0">
+            <h1 className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] leading-[0.85] text-white tracking-wider m-0">
               KENNEDI
             </h1>
-            <h1 className="font-display text-7xl sm:text-8xl lg:text-[110px] leading-[0.85] text-kh-pink tracking-wider m-0">
+            <h1 className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] leading-[0.85] text-kh-pink tracking-wider m-0">
               HARRIS
             </h1>
           </div>
