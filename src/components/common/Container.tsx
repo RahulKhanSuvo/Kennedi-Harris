@@ -6,11 +6,11 @@ const containerVariants = cva("mx-auto w-full px-4 sm:px-6 lg:px-6", {
     variant: {
       default: "container",
       narrow: "max-w-4xl",
-      wide: "max-w-[1440px]",
+      wide: "max-w-[1920px]",
       full: "max-w-full",
     },
     size: {
-      none: "",
+      none: "px-4 lg:px-10",
       sm: "py-4 md:py-6",
       md: "py-8 md:py-12",
       lg: "py-12 md:py-24",
@@ -21,7 +21,7 @@ const containerVariants = cva("mx-auto w-full px-4 sm:px-6 lg:px-6", {
     },
   },
   defaultVariants: {
-    variant: "default",
+    variant: "wide",
     size: "none",
     center: false,
   },

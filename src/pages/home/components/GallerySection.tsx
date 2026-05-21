@@ -20,7 +20,7 @@ export default function GallerySection() {
             </div>
 
             <div className="grid grid-cols-4 gap-2 h-full">
-              <div className="aspect-[4/5] bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
+              <div className="aspect-4/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
                   src={gal1}
                   alt="Gallery 1"
@@ -28,7 +28,7 @@ export default function GallerySection() {
                   onError={(e) => (e.currentTarget.style.display = "none")}
                 />
               </div>
-              <div className="aspect-[4/5] bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
+              <div className="aspect-4/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
                   src={gal1}
                   alt="Gallery 2"
@@ -36,7 +36,7 @@ export default function GallerySection() {
                   onError={(e) => (e.currentTarget.style.display = "none")}
                 />
               </div>
-              <div className="aspect-[4/5] bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
+              <div className="aspect-4/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
                   src={gal1}
                   alt="Gallery 3"
@@ -44,7 +44,7 @@ export default function GallerySection() {
                   onError={(e) => (e.currentTarget.style.display = "none")}
                 />
               </div>
-              <div className="aspect-[4/5] bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
+              <div className="aspect-4/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
                   src={gal1}
                   alt="Gallery 4"

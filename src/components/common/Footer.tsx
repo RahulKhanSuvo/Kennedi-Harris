@@ -2,19 +2,19 @@ import { Camera, MessageCircle, Video, Music } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-kh-dark-2 pt-16 pb-8 border-t border-white/5">
+    <footer className=" pb-8">
       <div className="max-w-[1905px] mx-auto px-4 lg:px-10">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 pt-12">
           <div className="flex items-center gap-3">
-            <div className="flex text-5xl font-display font-bold leading-none">
+            <div className="flex text-9xl font-logo font-bold leading-none">
               <span className="text-kh-blue">K</span>
-              <span className="text-kh-pink">H</span>
+              <span className="text-kh-pink -ml-6">H</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-2xl leading-none tracking-wider text-white">
+              <span className="font-display text-2xl md:text-3xl lg:text-4xl leading-none tracking-wider text-white">
                 KENNEDI HARRIS
               </span>
-              <span className="font-sans text-[10px] tracking-[0.25em] text-kh-pink leading-none mt-1 font-bold">
+              <span className="font-sans text-[10px] text-center tracking-[0.25em] text-kh-pink leading-none mt-1 font-bold">
                 HOOPS
               </span>
             </div>

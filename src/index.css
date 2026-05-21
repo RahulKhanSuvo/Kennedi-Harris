@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Roboto+Slab:wght@100..900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -8,6 +9,7 @@
     --font-display: 'Bebas Neue', sans-serif;
     --font-condensed: 'Barlow Condensed', sans-serif;
     --font-script: 'Dancing Script', cursive;
+    --font-logo: 'Roboto Slab', serif;
     --font-sans: 'Inter', sans-serif;
     --font-heading: 'Barlow Condensed', sans-serif;
 
