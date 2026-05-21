@@ -1,13 +1,4 @@
-import {
-  PlayCircle,
-  FileText,
-  Mail,
-  Calendar,
-  Ruler,
-  User,
-  MapPin,
-  Star,
-} from "lucide-react";
+import { PlayCircle, FileText, Mail } from "lucide-react";
 // import heroImg from "../../assets/hero-player.png";
 
 export default function HeroSection() {
@@ -20,23 +11,23 @@ export default function HeroSection() {
         </span>
       </div>
 
-      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center justify-between pt-20">
+      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center justify-between pt-16">
         {/* Left Content */}
-        <div className="w-full lg:w-[55%] flex flex-col items-start gap-4 animate-fade-in-up">
+        <div className="w-full lg:w-[55%] flex flex-col items-start gap-2">
           <div className="font-condensed font-bold tracking-[0.2em] text-kh-pink text-sm uppercase">
             Class of 2030
           </div>
 
-          <div className="flex flex-col -gap-4">
-            <h1 className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] leading-[0.85] text-white tracking-wider m-0">
+          <div className="flex flex-col">
+            <h1 className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] leading-[0.85] text-white tracking-wider">
               KENNEDI
             </h1>
-            <h1 className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] leading-[0.85] text-kh-pink tracking-wider m-0">
+            <h1 className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] leading-[0.85] text-kh-pink tracking-wider">
               HARRIS
             </h1>
           </div>
 
-          <div className="font-condensed font-bold tracking-widest text-white text-xl sm:text-2xl mt-4">
+          <div className="font-condensed font-semibold tracking-widest text-white text-xl sm:text-2xl">
             6'2 GUARD / FORWARD
           </div>
 
@@ -44,7 +35,7 @@ export default function HeroSection() {
             <div className="font-script text-4xl sm:text-5xl text-kh-pink">
               Unfinished Legacy.
             </div>
-            <div className="font-condensed font-bold tracking-widest text-white text-lg sm:text-xl uppercase">
+            <div className="font-condensed  tracking-widest text-white text-lg sm:text-xl uppercase">
               Built daily. Proven game by game.
             </div>
           </div>
@@ -96,32 +87,6 @@ export default function HeroSection() {
                 }}
               /> */}
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Info Bar */}
-      <div className="w-full border-y border-white/10 bg-[#0C0C14]/80 backdrop-blur mt-auto">
-        <div className="max-w-[1920px] w-full mx-auto px-6 flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-between py-5 gap-y-4 text-xs font-condensed font-bold tracking-widest text-white">
-          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center lg:justify-start">
-            <Calendar className="text-kh-pink" size={18} />
-            CLASS OF 2030
-          </div>
-          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center">
-            <Ruler className="text-kh-pink" size={18} />
-            6'2
-          </div>
-          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center">
-            <User className="text-kh-pink" size={18} />
-            GUARD / FORWARD
-          </div>
-          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center">
-            <MapPin className="text-kh-pink" size={18} />
-            GEORGIA
-          </div>
-          <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center lg:justify-end">
-            <Star className="text-kh-pink" size={18} />
-            NATIONAL PROSPECT
           </div>
         </div>
       </div>
