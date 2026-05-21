@@ -111,12 +111,13 @@ export default function AboutSection() {
                       <Icon size={50} />
                     </div>
 
-                    <div className="font-condensed font-bold tracking-widest text-white uppercase">
-                      {item.title}
+                    <div>
+                      <div className="font-condensed font-bold tracking-widest text-white uppercase">
+                        {item.title}
+                      </div>
+                      <div className="text-kh-gray text-xs">{item.desc}</div>
                     </div>
                   </div>
-
-                  <div className="text-kh-gray text-xs pl-12">{item.desc}</div>
                 </div>
               );
             })}
