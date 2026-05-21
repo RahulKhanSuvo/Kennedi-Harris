@@ -8,7 +8,7 @@ import {
   MapPin,
   Star,
 } from "lucide-react";
-import heroImg from "../../assets/hero-player.png";
+// import heroImg from "../../assets/hero-player.png";
 
 export default function HeroSection() {
   return (
@@ -36,7 +36,7 @@ export default function HeroSection() {
             </h1>
           </div>
 
-          <div className="font-condensed font-bold tracking-[0.1em] text-white text-xl sm:text-2xl mt-4">
+          <div className="font-condensed font-bold tracking-widest text-white text-xl sm:text-2xl mt-4">
             6'2 GUARD / FORWARD
           </div>
 
@@ -44,7 +44,7 @@ export default function HeroSection() {
             <div className="font-script text-4xl sm:text-5xl text-kh-pink">
               Unfinished Legacy.
             </div>
-            <div className="font-condensed font-bold tracking-[0.1em] text-white text-lg sm:text-xl uppercase">
+            <div className="font-condensed font-bold tracking-widest text-white text-lg sm:text-xl uppercase">
               Built daily. Proven game by game.
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function HeroSection() {
           <div className="relative z-10 h-[500px] lg:h-[700px] w-full flex justify-end">
             {/* The image will be placed here. Using a placeholder container if image is missing */}
             <div className="w-[80%] h-full bg-kh-blue/10 border border-kh-blue/30 rounded-lg flex items-center justify-center backdrop-blur-sm overflow-hidden">
-              <img
+              {/* <img
                 src={heroImg}
                 alt="Kennedi Harris"
                 className="w-full h-full object-cover object-top"
@@ -94,7 +94,7 @@ export default function HeroSection() {
                   e.currentTarget.parentElement!.innerHTML =
                     '<div class="text-kh-gray font-condensed">IMAGE PLACEHOLDER</div>';
                 }}
-              />
+              /> */}
             </div>
           </div>
         </div>
