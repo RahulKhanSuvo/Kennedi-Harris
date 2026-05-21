@@ -8,7 +8,7 @@ export default function StatsSection() {
           <h3 className="font-condensed font-bold text-sm tracking-widest text-white uppercase">
             BY THE NUMBERS
           </h3>
-          <div className="h-[1px] w-12 bg-kh-pink"></div>
+          <div className="h-px w-12 bg-kh-pink "></div>
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
