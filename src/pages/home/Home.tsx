@@ -1,3 +1,4 @@
+import ContactForm from "@/components/common/ContactForm";
 import AboutSection from "./components/AboutSection";
 import BottomInfoBar from "./components/BottomInfoBar";
 import GallerySection from "./components/GallerySection";
@@ -14,6 +15,7 @@ export default function Home() {
       <StatsSection />
       <HighlightAndSchedule />
       <GallerySection />
+      <ContactForm />
     </div>
   );
 }

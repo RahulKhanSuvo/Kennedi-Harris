@@ -4,9 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-kh-dark-2 pt-16 pb-8 border-t border-white/5">
       <div className="max-w-[1905px] mx-auto px-4 lg:px-10">
-        {/* Footer Bottom Links */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 pt-12">
-          {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="flex text-5xl font-display font-bold leading-none">
               <span className="text-kh-blue">K</span>
