@@ -11,18 +11,17 @@ const stats = [
 ];
 export default function StatsSection() {
   return (
-    <section className=" h-[210px] border-y border-white/5 relative overflow-hidden py-4">
-      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
-        <div className="flex items-center gap-4 mb-8">
-          <h3 className="font-condensed font-medium tracking-widest text-white uppercase">
-            BY THE NUMBERS
-          </h3>
-          <div className="h-px w-12 bg-kh-pink "></div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          {/* Stats Flexbox */}
-          <div className="flex flex-wrap lg:flex-nowrap items-start gap-y-10 w-full lg:w-[70%]">
+    <section className="border-y border-white/5 relative overflow-hidden py-4">
+      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12 flex">
+        <div className="flex flex-col w-full lg:w-[70%]">
+          {/* title */}
+          <div className="flex items-center gap-4 mb-8">
+            <h3 className="font-condensed font-medium tracking-widest text-white uppercase">
+              BY THE NUMBERS
+            </h3>
+            <div className="h-px w-12 bg-kh-pink "></div>
+          </div>
+          <div className="flex flex-wrap lg:flex-nowrap items-start gap-y-10 ">
             {stats.map((item, index) => (
               <div
                 key={index}
@@ -45,34 +44,33 @@ export default function StatsSection() {
               </div>
             ))}
           </div>
-
-          {/* Right Info Box */}
-          <div className="w-full lg:w-[25%] flex flex-col sm:flex-row items-center gap-6 bg-kh-dark p-4 rounded border border-white/5">
-            <div className="w-24 h-24  overflow-hidden shrink-0 border-2 border-kh-pink">
-              <img
-                src={statsImg}
-                alt="Stats Avatar"
-                className="w-full h-full object-cover object-top"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                  e.currentTarget.parentElement!.classList.add(
-                    "flex",
-                    "items-center",
-                    "justify-center",
-                    "bg-kh-blue/20",
-                  );
-                  e.currentTarget.parentElement!.innerHTML =
-                    '<span class="text-[8px] text-kh-gray">IMG</span>';
-                }}
-              />
-            </div>
-            <div className="font-condensed font-bold text-sm tracking-widest text-white uppercase leading-snug text-center sm:text-left">
-              STATS UPDATED
-              <br />
-              THROUGHOUT
-              <br />
-              THE SEASON.
-            </div>
+        </div>
+        {/* Right Info Box */}
+        <div className="w-full lg:w-[30%] flex flex-col sm:flex-row items-center gap-6 bg-kh-dark p-4 rounded border border-white/5">
+          <div className="w-24 h-24  overflow-hidden shrink-0 border-2 border-kh-pink">
+            <img
+              src={statsImg}
+              alt="Stats Avatar"
+              className="w-full h-full object-cover object-top"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+                e.currentTarget.parentElement!.classList.add(
+                  "flex",
+                  "items-center",
+                  "justify-center",
+                  "bg-kh-blue/20",
+                );
+                e.currentTarget.parentElement!.innerHTML =
+                  '<span class="text-[8px] text-kh-gray">IMG</span>';
+              }}
+            />
+          </div>
+          <div className="font-condensed font-bold text-sm tracking-widest text-white uppercase leading-snug text-center sm:text-left">
+            STATS UPDATED
+            <br />
+            THROUGHOUT
+            <br />
+            THE SEASON.
           </div>
         </div>
       </div>
