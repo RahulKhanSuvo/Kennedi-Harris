@@ -3,7 +3,6 @@ import BottomInfoBar from "./components/BottomInfoBar";
 import GallerySection from "./components/GallerySection";
 import HeroSection from "./components/HeroSection";
 import HighlightAndSchedule from "./components/HighlightAndSchedule";
-import PartnersSection from "./components/PartnersSection";
 import StatsSection from "./components/StatsSection";
 
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
       <StatsSection />
       <HighlightAndSchedule />
       <GallerySection />
-      <PartnersSection />
     </div>
   );
 }
