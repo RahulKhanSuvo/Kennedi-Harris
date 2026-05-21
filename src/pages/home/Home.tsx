@@ -1,10 +1,10 @@
-import HeroSection from "../../components/home/HeroSection";
-import AboutSection from "../../components/home/AboutSection";
-import StatsSection from "../../components/home/StatsSection";
-import HighlightsSection from "../../components/home/HighlightsSection";
-import ScheduleSection from "../../components/home/ScheduleSection";
-import GallerySection from "../../components/home/GallerySection";
-import PartnersSection from "../../components/home/PartnersSection";
+import AboutSection from "./components/AboutSection";
+import GallerySection from "./components/GallerySection";
+import HeroSection from "./components/HeroSection";
+import HighlightsSection from "./components/HighlightsSection";
+import PartnersSection from "./components/PartnersSection";
+import ScheduleSection from "./components/ScheduleSection";
+import StatsSection from "./components/StatsSection";
 
 export default function Home() {
   return (

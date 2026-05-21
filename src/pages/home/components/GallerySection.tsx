@@ -1,7 +1,4 @@
-import gal1 from "../../assets/gal-1.png";
-import gal2 from "../../assets/gal-2.png";
-import gal3 from "../../assets/gal-3.png";
-import gal4 from "../../assets/gal-4.png";
+import gal1 from "@/assets/gal-1.png";
 
 export default function GallerySection() {
   return (
@@ -30,7 +27,7 @@ export default function GallerySection() {
           </div>
           <div className="aspect-[4/5] bg-kh-dark-2 rounded overflow-hidden border border-white/5 cursor-pointer">
             <img
-              src={gal2}
+              src={gal1}
               alt="Gallery 2"
               className="w-full h-full object-cover gallery-img"
               onError={(e) => (e.currentTarget.style.display = "none")}
@@ -38,7 +35,7 @@ export default function GallerySection() {
           </div>
           <div className="aspect-[4/5] bg-kh-dark-2 rounded overflow-hidden border border-white/5 cursor-pointer">
             <img
-              src={gal3}
+              src={gal1}
               alt="Gallery 3"
               className="w-full h-full object-cover gallery-img"
               onError={(e) => (e.currentTarget.style.display = "none")}
@@ -46,7 +43,7 @@ export default function GallerySection() {
           </div>
           <div className="aspect-[4/5] bg-kh-dark-2 rounded overflow-hidden border border-white/5 cursor-pointer">
             <img
-              src={gal4}
+              src={gal1}
               alt="Gallery 4"
               className="w-full h-full object-cover gallery-img"
               onError={(e) => (e.currentTarget.style.display = "none")}

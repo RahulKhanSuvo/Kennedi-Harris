@@ -1,4 +1,4 @@
-import statsImg from "../../assets/stats-player.png";
+import statsImg from "@/assets/stats-player.png";
 
 export default function StatsSection() {
   return (

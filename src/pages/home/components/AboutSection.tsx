@@ -1,5 +1,5 @@
 import { Star, User, GraduationCap, Users, ArrowRight } from "lucide-react";
-import aboutImg from "../../assets/about-player.png";
+import aboutImg from "@/assets/about-player.png";
 
 export default function AboutSection() {
   return (

@@ -1,8 +1,6 @@
 import { Play, ArrowRight } from "lucide-react";
-import highlightMain from "../../assets/highlight-main.png";
-import highlight1 from "../../assets/highlight-1.png";
-import highlight2 from "../../assets/highlight-2.png";
-import highlight3 from "../../assets/highlight-3.png";
+import highlightMain from "@/assets/highlight-main.png";
+import highlight1 from "@/assets/highlight-1.png";
 
 export default function HighlightsSection() {
   return (
@@ -83,7 +81,7 @@ export default function HighlightsSection() {
               <div className="flex gap-4 group cursor-pointer p-2 rounded hover:bg-white/5 transition-colors">
                 <div className="relative w-32 aspect-video bg-kh-dark-2 rounded overflow-hidden shrink-0 border border-white/10">
                   <img
-                    src={highlight2}
+                    src={highlight1}
                     alt="Highlight 2"
                     className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
                     onError={(e) => (e.currentTarget.style.display = "none")}
@@ -109,7 +107,7 @@ export default function HighlightsSection() {
               <div className="flex gap-4 group cursor-pointer p-2 rounded hover:bg-white/5 transition-colors">
                 <div className="relative w-32 aspect-video bg-kh-dark-2 rounded overflow-hidden shrink-0 border border-white/10">
                   <img
-                    src={highlight3}
+                    src={highlight1}
                     alt="Highlight 3"
                     className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
                     onError={(e) => (e.currentTarget.style.display = "none")}
