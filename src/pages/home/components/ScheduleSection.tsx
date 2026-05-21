@@ -37,7 +37,7 @@ export default function ScheduleSection() {
       id="schedule"
       className="bg-kh-dark-2 py-16 border-y border-white/5"
     >
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-end mb-8">
           <h3 className="font-condensed font-bold text-sm tracking-widest text-white uppercase">
             UPCOMING SCHEDULE

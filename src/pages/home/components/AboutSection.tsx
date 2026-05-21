@@ -1,17 +1,18 @@
 import { Star, User, GraduationCap, Users, ArrowRight } from "lucide-react";
 import aboutImg from "@/assets/about-player.png";
+import { Button } from "@/components/ui/button";
 
 export default function AboutSection() {
   return (
     <section id="about" className="py-24 bg-kh-dark relative overflow-hidden">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-8 items-center justify-between">
           {/* Left - Image */}
           <div className="w-full lg:w-1/3 relative flex justify-center">
             {/* Blue accent line */}
-            <div className="absolute left-0 bottom-0 w-1 h-3/4 bg-gradient-to-t from-kh-blue to-transparent transform -skew-x-12 -translate-x-4 hidden lg:block"></div>
+            <div className="absolute left-0 bottom-0 w-1 h-3/4 bg-linear-to-t from-kh-blue to-transparent transform -skew-x-12 -translate-x-4 hidden lg:block"></div>
 
-            <div className="relative z-10 w-[80%] lg:w-full max-w-[400px] aspect-[3/4] bg-kh-dark-2/50 border border-white/5 rounded overflow-hidden">
+            <div className="relative z-10 w-[80%] lg:w-full max-w-[400px] aspect-3/4 bg-kh-dark-2/50 border border-white/5 rounded overflow-hidden">
               <img
                 src={aboutImg}
                 alt="About Kennedi"
@@ -61,8 +62,8 @@ export default function AboutSection() {
             </div>
 
             <div className="pt-4 border-t border-white/5 mt-2">
-              <a
-                href="#"
+              <Button
+                variant="kh-outline"
                 className="inline-flex items-center gap-2 font-condensed font-bold tracking-[0.1em] text-kh-blue hover:text-kh-blue-light transition-colors uppercase text-sm group"
               >
                 LEARN MORE ABOUT KENNEDI
@@ -70,12 +71,12 @@ export default function AboutSection() {
                   size={16}
                   className="transform group-hover:translate-x-1 transition-transform"
                 />
-              </a>
+              </Button>
             </div>
           </div>
 
           {/* Right - Traits */}
-          <div className="w-full lg:w-1/4 flex flex-col gap-8">
+          <div className="w-full lg:w-1/4 flex flex-col border-l border-gray-600 pl-8 gap-8">
             <div className="trait-card group">
               <div className="flex items-center gap-4">
                 <div className="trait-icon group-hover:bg-kh-pink group-hover:text-white transition-colors">

@@ -4,7 +4,7 @@ export default function PartnersSection() {
       id="partners"
       className="py-16 bg-kh-dark-2 border-t border-white/5"
     >
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row gap-12 justify-between">
           <div className="w-full lg:w-1/2 flex flex-col gap-4">
             <div className="flex justify-between items-end">

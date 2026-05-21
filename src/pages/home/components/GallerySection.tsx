@@ -3,7 +3,7 @@ import gal1 from "@/assets/gal-1.png";
 export default function GallerySection() {
   return (
     <section id="gallery" className="py-16 bg-kh-dark">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-end mb-8">
           <h3 className="font-condensed font-bold text-sm tracking-widest text-white uppercase">
             PHOTO GALLERY

@@ -5,7 +5,7 @@ import highlight1 from "@/assets/highlight-1.png";
 export default function HighlightsSection() {
   return (
     <section id="highlights" className="py-20 bg-kh-dark relative">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Main Video Area */}
           <div className="w-full lg:w-2/3 flex flex-col gap-4">
