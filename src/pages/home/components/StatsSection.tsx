@@ -11,7 +11,7 @@ const stats = [
 ];
 export default function StatsSection() {
   return (
-    <section className=" py-16 border-y border-white/5 relative overflow-hidden">
+    <section className=" h-[210px] border-y border-white/5 relative overflow-hidden py-4">
       <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
         <div className="flex items-center gap-4 mb-8">
           <h3 className="font-condensed font-medium tracking-widest text-white uppercase">
