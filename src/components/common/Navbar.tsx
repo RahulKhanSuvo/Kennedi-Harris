@@ -16,7 +16,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-kh-dark-2/90 backdrop-blur-md border-b border-white/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/10">
       <div className="max-w-[1905px] mx-auto px-4 lg:px-10 flex items-center justify-between h-20">
         {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3">
