@@ -1,4 +1,3 @@
-import React from "react";
 import { Play, ArrowRight } from "lucide-react";
 import mainHighlightImg from "../../../assets/highlight-main.png";
 

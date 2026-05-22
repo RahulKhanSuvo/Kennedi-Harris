@@ -1,4 +1,3 @@
-import React from "react";
 import { BsYoutube } from "react-icons/bs";
 
 export function SubscribeSection() {

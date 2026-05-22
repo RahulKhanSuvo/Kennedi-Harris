@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import { Camera, MessageCircle, Video, Music } from "lucide-react";
 
 export default function Navbar() {
@@ -6,13 +6,13 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "HOME", path: "/" },
-    { name: "ABOUT", path: "#about" },
-    { name: "HIGHLIGHTS", path: "#highlights" },
-    { name: "SCHEDULE", path: "#schedule" },
-    { name: "MEDIA KIT", path: "#media" },
-    { name: "BRAND PARTNERS", path: "#partners" },
-    { name: "GALLERY", path: "#gallery" },
-    { name: "CONTACT", path: "#contact" },
+    { name: "ABOUT", path: "about" },
+    { name: "HIGHLIGHTS", path: "highlights" },
+    { name: "SCHEDULE", path: "schedule" },
+    { name: "MEDIA KIT", path: "media-kit" },
+    { name: "BRAND PARTNERS", path: "brand-partners" },
+    { name: "GALLERY", path: "gallery" },
+    { name: "CONTACT", path: "contact" },
   ];
 
   return (
@@ -41,9 +41,9 @@ export default function Navbar() {
               location.pathname === link.path ||
               (link.path === "/" && location.pathname === "/");
             return (
-              <a
+              <NavLink
                 key={link.name}
-                href={link.path}
+                to={link.path}
                 className={`font-condensed font-bold text-[13px] tracking-widest transition-colors relative pb-1 uppercase ${
                   isActive ? "text-kh-pink" : "text-white hover:text-kh-pink"
                 }`}
@@ -52,7 +52,7 @@ export default function Navbar() {
                 {isActive && (
                   <span className="absolute bottom-[-26px] left-0 right-0 h-[3px] bg-kh-pink" />
                 )}
-              </a>
+              </NavLink>
             );
           })}
         </div>

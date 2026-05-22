@@ -1,7 +1,9 @@
 import mainLayout from "@/layouts/mainLayout";
 import About from "@/pages/about/About";
+import GallaryPage from "@/pages/Gallary/GallaryPage";
 import Highlights from "@/pages/Highlights/Highlights";
 import Home from "@/pages/home/Home";
+import Schedule from "@/pages/Schedule/Schedule";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: "/highlights",
         Component: Highlights,
+      },
+      {
+        path: "/gallery",
+        Component: GallaryPage,
+      },
+      {
+        path: "/schedule",
+        Component: Schedule,
       },
     ],
   },

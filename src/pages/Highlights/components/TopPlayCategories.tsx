@@ -1,4 +1,3 @@
-import React from "react";
 import { Play } from "lucide-react";
 import img1 from "../../../assets/highlight-1.png";
 import img2 from "../../../assets/highlight-2.png";
