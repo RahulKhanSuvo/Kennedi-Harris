@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { HeroSection } from "./components/HeroSection";
 import { NavigationTabs } from "./components/NavigationTabs";
 import { MainHighlight } from "./components/MainHighlight";
 import { FeaturedHighlights } from "./components/FeaturedHighlights";
 import { SeasonStats } from "./components/SeasonStats";
 import { TopPlayCategories } from "./components/TopPlayCategories";
 import { SubscribeSection } from "./components/SubscribeSection";
+import HeroSection from "./components/HeroSection";
 
 export default function Highlights() {
   // Scroll to top on mount
@@ -14,7 +14,7 @@ export default function Highlights() {
   }, []);
 
   return (
-    <main className="bg-kh-dark min-h-screen text-foreground flex flex-col w-full">
+    <main className="min-h-screen text-foreground flex flex-col w-full">
       <HeroSection />
       <NavigationTabs />
 
