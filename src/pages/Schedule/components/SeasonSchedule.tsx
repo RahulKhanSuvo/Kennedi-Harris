@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MapPin } from "lucide-react";
+import Container from "@/components/common/Container";
 
 const SCHEDULE_DATA = [
   {
@@ -117,7 +118,7 @@ export function SeasonSchedule() {
 
   return (
     <section className="py-12 bg-kh-dark-2/40 border-t border-white/5">
-      <div className="container mx-auto px-6">
+      <Container>
         {/* Header & Filters */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <h2 className="font-condensed font-bold text-xl md:text-2xl text-white uppercase tracking-wider">
@@ -221,7 +222,7 @@ export function SeasonSchedule() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

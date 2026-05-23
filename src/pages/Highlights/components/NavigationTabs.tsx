@@ -15,19 +15,18 @@ export function NavigationTabs() {
 
   return (
     <div className="w-full border-b border-white/10 mb-8 pt-4">
-      <Container className="container mx-auto px-6">
+      <Container className="">
         <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-8 pb-4">
           {TABS.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`font-condensed font-bold tracking-widest text-sm py-2 px-4 transition-all duration-300 whitespace-nowrap
-                                ${
-                                  activeTab === tab
-                                    ? "text-kh-pink border border-kh-pink"
-                                    : "text-gray-400 border border-transparent hover:text-white"
-                                }
-                            `}
+ ${
+   activeTab === tab
+     ? "text-kh-pink border border-kh-pink"
+     : "text-gray-400 border border-transparent hover:text-white"
+ } `}
             >
               {tab}
             </button>

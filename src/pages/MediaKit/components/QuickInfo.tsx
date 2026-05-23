@@ -1,3 +1,4 @@
+import Container from "@/components/common/Container";
 import { User, Ruler, MapPin, Users } from "lucide-react";
 
 export default function QuickInfo() {
@@ -45,7 +46,7 @@ export default function QuickInfo() {
     {
       id: 5,
       label: "JERSEY",
-      value: "#30",
+      value: "#11",
       Icon: ({ className }: { className?: string }) => (
         <div
           className={`relative flex items-center justify-center ${className}`}
@@ -62,7 +63,7 @@ export default function QuickInfo() {
             <path d="M6 3h12l4 6-3 3-1 9H6l-1-9-3-3z" />
           </svg>
           <span className="absolute text-[8px] font-sans font-black mt-1 text-kh-pink">
-            30
+            11
           </span>
         </div>
       ),
@@ -77,7 +78,7 @@ export default function QuickInfo() {
 
   return (
     <section className="py-12 bg-kh-dark border-y border-white/5">
-      <div className="container mx-auto px-6">
+      <Container>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 items-center divide-x-0 lg:divide-x divide-white/10">
           {infoItems.map((item, idx) => {
             const IconComponent = item.Icon;
@@ -108,7 +109,7 @@ export default function QuickInfo() {
             );
           })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

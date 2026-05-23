@@ -1,3 +1,4 @@
+import Container from "@/components/common/Container";
 import { Bell } from "lucide-react";
 
 export function SubscribeBanner() {
@@ -6,7 +7,7 @@ export function SubscribeBanner() {
       {/* Background elements */}
       <div className="absolute right-1/4 top-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-kh-blue/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <div className="container mx-auto px-6 relative z-10 flex flex-col xl:flex-row items-center justify-between gap-8 xl:gap-4">
+      <Container className="relative z-10 flex flex-col xl:flex-row items-center justify-between gap-8 xl:gap-4">
         {/* Left Content */}
         <div className="flex flex-col md:flex-row items-center md:items-start xl:items-center text-center md:text-left gap-6 xl:w-1/2">
           {/* Icon Container */}
@@ -47,7 +48,7 @@ export function SubscribeBanner() {
             </button>
           </form>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

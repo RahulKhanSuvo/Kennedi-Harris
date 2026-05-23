@@ -2,6 +2,7 @@ import { Calendar, MapPin, Clock } from "lucide-react";
 import bg1 from "../../../assets/gal-1.png";
 import bg2 from "../../../assets/gal-2.png";
 import bg3 from "../../../assets/gal-3.png";
+import Container from "@/components/common/Container";
 
 const UPCOMING_DATA = [
   {
@@ -42,7 +43,7 @@ const UPCOMING_DATA = [
 export function UpcomingEvents() {
   return (
     <section className="py-16 bg-kh-dark">
-      <div className="container mx-auto px-6">
+      <Container>
         {/* Header */}
         <div className="flex items-end justify-between mb-8">
           <h2 className="font-condensed font-bold text-xl md:text-2xl text-white uppercase tracking-wider">
@@ -114,7 +115,7 @@ export function UpcomingEvents() {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

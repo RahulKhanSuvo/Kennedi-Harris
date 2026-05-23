@@ -1,3 +1,4 @@
+import Container from "@/components/common/Container";
 import { Star, LineChart, Grid, Trophy } from "lucide-react";
 import { BsDribbble } from "react-icons/bs";
 
@@ -47,7 +48,7 @@ const STATS = [
 export function SeasonStats() {
   return (
     <section className="py-12 mt-8">
-      <div className="container mx-auto px-6">
+      <Container className="">
         <h3 className="font-condensed text-xl font-bold text-white uppercase tracking-wider mb-6">
           SEASON HIGHLIGHT STATS
         </h3>
@@ -83,7 +84,7 @@ export function SeasonStats() {
             );
           })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

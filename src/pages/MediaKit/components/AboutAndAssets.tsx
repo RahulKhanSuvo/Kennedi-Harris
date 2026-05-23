@@ -7,6 +7,7 @@ import {
   FileText,
   BarChart3,
 } from "lucide-react";
+import Container from "@/components/common/Container";
 
 export default function AboutAndAssets() {
   const assets = [
@@ -49,7 +50,7 @@ export default function AboutAndAssets() {
       {/* Background element */}
       <div className="absolute right-0 bottom-0 w-[500px] h-[300px] bg-kh-blue/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+      <Container className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
         {/* Left Column - About */}
         <div className="lg:col-span-5 flex flex-col justify-center">
           <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-sm mb-4">
@@ -139,7 +140,7 @@ export default function AboutAndAssets() {
             </button>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -6,6 +6,7 @@ import { SeasonStats } from "./components/SeasonStats";
 import { TopPlayCategories } from "./components/TopPlayCategories";
 import { SubscribeSection } from "./components/SubscribeSection";
 import HeroSection from "./components/HeroSection";
+import Container from "@/components/common/Container";
 
 export default function Highlights() {
   // Scroll to top on mount
@@ -19,7 +20,7 @@ export default function Highlights() {
       <NavigationTabs />
 
       {/* Highlights Grid */}
-      <section className="container mx-auto px-6 py-8">
+      <Container className="container mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Video (Left 2/3) */}
           <div className="lg:col-span-2">
@@ -31,7 +32,7 @@ export default function Highlights() {
             <FeaturedHighlights />
           </div>
         </div>
-      </section>
+      </Container>
 
       <SeasonStats />
       <TopPlayCategories />

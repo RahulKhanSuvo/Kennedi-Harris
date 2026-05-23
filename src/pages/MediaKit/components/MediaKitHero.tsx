@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import heroImg from "../../../assets/me-removebg-preview.png";
+import Container from "@/components/common/Container";
 
 export default function MediaKitHero() {
   const handleDownload = () => {
@@ -19,7 +20,7 @@ export default function MediaKitHero() {
         style={{ left: "50%", top: "5%" }}
       ></div>
 
-      <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <Container className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Content */}
         <div className="lg:col-span-7 flex flex-col gap-6 animate-fade-in-up">
           <span className="text-kh-pink font-condensed tracking-[0.25em] uppercase font-bold text-sm">
@@ -88,7 +89,7 @@ export default function MediaKitHero() {
             </span>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

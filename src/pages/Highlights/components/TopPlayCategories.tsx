@@ -4,6 +4,7 @@ import img2 from "../../../assets/highlight-2.png";
 import img3 from "../../../assets/highlight-3.png";
 import img4 from "../../../assets/hero-player.png";
 import img5 from "../../../assets/highlight-main.png";
+import Container from "@/components/common/Container";
 
 const CATEGORIES = [
   { id: 1, title: "SCORING", count: "28 Videos", img: img1 },
@@ -16,7 +17,7 @@ const CATEGORIES = [
 export function TopPlayCategories() {
   return (
     <section className="py-8">
-      <div className="container mx-auto px-6">
+      <Container>
         <h3 className="font-condensed text-xl font-bold text-white uppercase tracking-wider mb-6">
           TOP PLAY CATEGORIES
         </h3>
@@ -53,7 +54,7 @@ export function TopPlayCategories() {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

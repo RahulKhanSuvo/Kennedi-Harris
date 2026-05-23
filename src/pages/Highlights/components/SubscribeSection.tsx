@@ -1,3 +1,4 @@
+import Container from "@/components/common/Container";
 import { BsYoutube } from "react-icons/bs";
 
 export function SubscribeSection() {
@@ -9,7 +10,7 @@ export function SubscribeSection() {
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-kh-pink/20 blur-[100px] rounded-full pointer-events-none"></div>
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-kh-blue/20 blur-[100px] rounded-full pointer-events-none"></div>
 
-      <div className="container mx-auto px-6 relative z-10 border-y border-white/5 py-12 flex flex-col md:flex-row items-center justify-between gap-8">
+      <Container className="relative z-10 border-y border-white/5 py-12 flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="flex items-center gap-6">
           {/* Icon Container */}
           <div className="relative flex items-center justify-center">
@@ -43,7 +44,7 @@ export function SubscribeSection() {
           VISIT MY YOUTUBE
           <BsYoutube className="w-5 h-5 text-kh-pink group-hover:text-white transition-colors" />
         </a>
-      </div>
+      </Container>
     </section>
   );
 }
