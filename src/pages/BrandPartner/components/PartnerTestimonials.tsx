@@ -1,3 +1,4 @@
+import Container from "@/components/common/Container";
 import { Star, ChevronRight } from "lucide-react";
 
 const TESTIMONIALS_PARTNERS = [
@@ -28,7 +29,7 @@ const TESTIMONIALS_PARTNERS = [
 export function PartnerTestimonials() {
   return (
     <section className="py-16 bg-kh-dark-2/40 border-t border-white/5">
-      <div className="container mx-auto px-6">
+      <Container>
         {/* Section Header */}
         <h2 className="font-condensed font-bold text-xl md:text-2xl text-white uppercase tracking-wider mb-10">
           PARTNER TESTIMONIALS
@@ -80,7 +81,7 @@ export function PartnerTestimonials() {
             ))}
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

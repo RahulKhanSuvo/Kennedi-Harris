@@ -1,3 +1,4 @@
+import Container from "@/components/common/Container";
 import { Users, Heart, Eye, HandHeart } from "lucide-react";
 
 const BENEFITS = [
@@ -31,7 +32,7 @@ const BENEFITS = [
 export function WhyPartner() {
   return (
     <section className="py-16 bg-kh-dark border-t border-white/5">
-      <div className="container mx-auto px-6">
+      <Container>
         <div className="border border-white/10 rounded-md bg-kh-dark-2/50 p-8 md:p-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
             {/* Left Content */}
@@ -71,7 +72,7 @@ export function WhyPartner() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

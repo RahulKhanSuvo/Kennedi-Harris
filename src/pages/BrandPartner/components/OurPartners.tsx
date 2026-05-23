@@ -2,6 +2,8 @@
 // Since we don't have actual brand logo image files, we render stylized text logos.
 // Replace these with <img> tags when real logo assets are available.
 
+import Container from "@/components/common/Container";
+
 function NikeLogo({ className = "" }: { className?: string }) {
   return (
     <span
@@ -175,7 +177,7 @@ const PARTNER_TIERS = [
 export function OurPartners() {
   return (
     <section className="py-16 bg-kh-dark-2/40 border-t border-white/5">
-      <div className="container mx-auto px-6">
+      <Container>
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <h2 className="font-condensed font-bold text-xl md:text-2xl text-white uppercase tracking-wider">
@@ -213,7 +215,7 @@ export function OurPartners() {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
