@@ -35,7 +35,7 @@ export function SubscribeSection() {
 
         {/* CTA Button */}
         <a
-          href="https://youtube.com"
+          href="https://youtube.com/@KennediHarrisHoops"
           target="_blank"
           rel="noopener noreferrer"
           className="btn-outline border-kh-pink text-kh-pink hover:text-white shrink-0 group flex items-center gap-2"

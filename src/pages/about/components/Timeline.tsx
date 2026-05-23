@@ -6,7 +6,7 @@ const TIMELINE_DATA = [
     id: 1,
     title: "EARLY BEGINNINGS",
     description:
-      "Basketball became my passion at a young age. I fell in love with the game and the endless opportunities it brings.",
+      "My Dad started teaching me basketball when I was 6 years old. I fell in love with the game and it became my passion",
     date: "2016 - 2018",
     icon: Target,
   },
@@ -31,7 +31,7 @@ const TIMELINE_DATA = [
     title: "FBC UNITED",
     description:
       "Proud to represent FBC United and continue building toward my future goals.",
-    date: "2024 - PRESENT",
+    date: "2022 - PRESENT",
     icon: Users,
   },
   {

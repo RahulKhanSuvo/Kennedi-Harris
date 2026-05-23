@@ -113,16 +113,40 @@ export default function Footer() {
                 CONNECT
               </h4>
               <div className="flex items-center gap-4 text-white">
-                <a href="#" className="hover:text-kh-pink transition-colors">
+                <a
+                  href="https://instagram.com/kennediharrishoops"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-kh-pink transition-colors"
+                  aria-label="Instagram"
+                >
                   <Camera size={18} />
                 </a>
-                <a href="#" className="hover:text-kh-pink transition-colors">
+                <a
+                  href="https://tiktok.com/@KennediHarrisHoops"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-kh-pink transition-colors"
+                  aria-label="TikTok"
+                >
                   <Music size={18} />
                 </a>
-                <a href="#" className="hover:text-kh-pink transition-colors">
+                <a
+                  href="https://x.com/kennedihoops"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-kh-pink transition-colors"
+                  aria-label="X (Twitter)"
+                >
                   <MessageCircle size={18} />
                 </a>
-                <a href="#" className="hover:text-kh-pink transition-colors">
+                <a
+                  href="https://youtube.com/@KennediHarrisHoops"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-kh-pink transition-colors"
+                  aria-label="YouTube"
+                >
                   <Video size={18} />
                 </a>
               </div>

@@ -32,7 +32,7 @@ export function InstagramSection() {
               <br className="hidden md:block" />
               Follow me on Instagram{" "}
               <span className="text-kh-pink font-semibold">
-                @kennedi_harrishoops
+                @kennediharrishoops
               </span>
             </p>
           </div>
@@ -63,7 +63,7 @@ export function InstagramSection() {
         {/* Right Content - CTA Button */}
         <div className="flex justify-center xl:justify-end xl:w-1/3">
           <a
-            href="https://instagram.com"
+            href="https://instagram.com/kennediharrishoops"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary group flex items-center"
