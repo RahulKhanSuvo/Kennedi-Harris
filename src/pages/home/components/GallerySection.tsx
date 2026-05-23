@@ -20,7 +20,7 @@ export default function GallerySection() {
               </a>
             </div>
 
-            <div className="grid grid-cols-4 gap-2 h-full">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 h-full">
               <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
                   src={gal1}

@@ -1,25 +1,71 @@
-import { Play, ArrowRight } from "lucide-react";
-import highlightMain from "@/assets/highlight-main.png";
-import highlight1 from "@/assets/highlight-1.png";
+import { Play, ArrowRight, Pause } from "lucide-react";
+import { useState, useRef } from "react";
+import mainVideo from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
+import video1 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
+import video2 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.15.05-PM.mp4";
+
 const highlights = [
   {
-    image: highlight1,
+    video: video1,
     alt: "Highlight 1",
     title: "vs. Team Elite",
     subtitle: "Atlanta, GA",
   },
   {
-    image: highlight1,
+    video: video2,
     alt: "Highlight 2",
     title: "AAU Championship Highlights",
   },
   {
-    image: highlight1,
+    video: video2,
     alt: "Highlight 3",
     title: "Shot Blocking Highlights",
   },
 ];
+
 export default function HighlightsSection() {
+  const [currentVideo, setCurrentVideo] = useState(mainVideo);
+  const [isPlaying, setIsPlaying] = useState(false); // starts paused
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const sidebarVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  const handlePlayPause = () => {
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (video.paused) {
+      // User clicks play: ensure it's unmuted and play with sound
+      video.muted = false;
+      video.play().catch(() => {});
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const handleSidebarClick = (videoSrc: string) => {
+    setCurrentVideo(videoSrc);
+    setTimeout(() => {
+      if (videoRef.current) {
+        // New video starts paused (no autoplay)
+        videoRef.current.muted = false; // will be ready for user to play with sound
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }, 100);
+  };
+
+  const handleSidebarHover = (index: number, isHovering: boolean) => {
+    const video = sidebarVideoRefs.current[index];
+    if (!video) return;
+    if (isHovering) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  };
+
   return (
     <div className="flex flex-col w-[60%] lg:flex-row gap-10">
       {/* Main Video Area */}
@@ -29,29 +75,34 @@ export default function HighlightsSection() {
         </h3>
 
         <div className="relative max-h-[300px] lg:h-auto w-full aspect-square md:aspect-video bg-kh-dark-2 rounded-lg overflow-hidden border border-white/10 group cursor-pointer">
-          <img
-            src={highlightMain}
-            alt="Main Highlight"
+          <video
+            ref={videoRef}
+            src={currentVideo}
             className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-              e.currentTarget.parentElement?.classList.add(
-                "flex",
-                "items-center",
-                "justify-center",
-              );
-              e.currentTarget.parentElement!.innerHTML =
-                '<div class="text-kh-gray font-condensed">VIDEO PLACEHOLDER</div><div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full border-2 border-white flex items-center justify-center bg-black/40"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></div>';
-            }}
+            // No autoPlay, no muted (will be unmuted when user clicks)
+            loop
+            playsInline
           />
-          {/* Play Button Overlay */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center bg-black/20 group-hover:bg-kh-pink/20 group-hover:border-kh-pink transition-colors">
-              <Play
-                className="text-white group-hover:text-kh-pink ml-2"
-                size={32}
-                fill="currentColor"
-              />
+
+          {/* Play/Pause Button Overlay */}
+          <div
+            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            onClick={handlePlayPause}
+          >
+            <div className="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center bg-black/20 hover:bg-kh-pink/20 hover:border-kh-pink transition-colors cursor-pointer">
+              {isPlaying ? (
+                <Pause
+                  className="text-white hover:text-kh-pink"
+                  size={32}
+                  fill="currentColor"
+                />
+              ) : (
+                <Play
+                  className="text-white hover:text-kh-pink ml-2"
+                  size={32}
+                  fill="currentColor"
+                />
+              )}
             </div>
           </div>
         </div>
@@ -60,19 +111,23 @@ export default function HighlightsSection() {
       {/* Right Sidebar Playlist */}
       <div className="w-full lg:w-1/3 flex flex-col pt-10">
         <div className="flex flex-col gap-2">
-          {highlights.map((item) => (
+          {highlights.map((item, index) => (
             <div
               key={item.alt}
+              onClick={() => handleSidebarClick(item.video)}
+              onMouseEnter={() => handleSidebarHover(index, true)}
+              onMouseLeave={() => handleSidebarHover(index, false)}
               className="flex gap-4 group cursor-pointer rounded hover:bg-white/5 transition-colors"
             >
               <div className="relative w-32 aspect-video bg-kh-dark-2 rounded overflow-hidden shrink-0 border border-white/10">
-                <img
-                  src={item.image}
-                  alt={item.alt}
+                <video
+                  ref={(el) => (sidebarVideoRefs.current[index] = el)}
+                  src={item.video}
                   className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
-                  onError={(e) => (e.currentTarget.style.display = "none")}
+                  loop
+                  muted
+                  playsInline
                 />
-
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-8 h-8 rounded-full bg-black/60 flex items-center justify-center border border-white/50 group-hover:border-kh-pink group-hover:bg-kh-pink/20">
                     <Play
