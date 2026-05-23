@@ -1,111 +1,165 @@
 import { useState } from "react";
-import {
-  LayoutGrid,
-  UserCircle,
-  Users,
-  Camera,
-  Heart,
-  ChevronDown,
-  RefreshCw,
-} from "lucide-react";
-import gal1 from "../../../assets/gal-1.png";
-import gal2 from "../../../assets/gal-2.png";
-import gal3 from "../../../assets/gal-3.png";
-import gal4 from "../../../assets/gal-4.png";
-import hl1 from "../../../assets/highlight-1.png";
-import hl2 from "../../../assets/highlight-2.png";
-import hl3 from "../../../assets/highlight-3.png";
-import hero from "../../../assets/hero-player.png";
+import { ImageIcon, Film, Trophy, Flame, Eye } from "lucide-react";
 import Container from "@/components/common/Container";
 
-const TABS = [
-  { id: "ALL", label: "ALL", icon: null },
-  { id: "GAME_ACTION", label: "GAME ACTION", icon: LayoutGrid },
-  { id: "PORTRAITS", label: "PORTRAITS", icon: UserCircle },
-  { id: "TEAM", label: "TEAM", icon: Users },
-  { id: "BEHIND_SCENES", label: "BEHIND THE SCENES", icon: Camera },
-  { id: "COMMUNITY", label: "COMMUNITY", icon: Heart },
-];
+// Types for our gallery items
+interface GalleryItem {
+  id: number;
+  title: string;
+  category: "all" | "photoshoot" | "highlights" | "training";
+  tag: string;
+  aspectRatio: string; // Tailored for editorial masonry rhythm
+  imagePlaceholder: string;
+}
 
-const IMAGES = [
-  gal1,
-  hl1,
-  gal2,
-  hl2,
-  gal3,
-  hl3,
-  gal4,
-  hero,
-  hl2,
-  gal1,
-  hl3,
-  gal3,
+const CATEGORIES = [
+  { id: "all", label: "ALL MEDIA", icon: ImageIcon },
+  { id: "photoshoot", label: "PHOTOSHOOTS", icon: Flame },
+  { id: "highlights", label: "GAME HIGHLIGHTS", icon: Trophy },
+  { id: "training", label: "TRAINING SESSIONS", icon: Film },
+] as const;
+
+const GALLERY_DATA: GalleryItem[] = [
+  {
+    id: 1,
+    title: "Official Season Media Day",
+    category: "photoshoot",
+    tag: "Studio",
+    aspectRatio: "aspect-[4/5]",
+    imagePlaceholder: "[ MEDIA_DAY_PORTRAIT ]",
+  },
+  {
+    id: 2,
+    title: "Clutch Three-Pointer vs. Rival Team",
+    category: "highlights",
+    tag: "In-Game",
+    aspectRatio: "aspect-video",
+    imagePlaceholder: "[ GAME_ACTION_WIDE ]",
+  },
+  {
+    id: 3,
+    title: "Late Night Ball Handling Drill",
+    category: "training",
+    tag: "The Grind",
+    aspectRatio: "aspect-square",
+    imagePlaceholder: "[ DRILL_SESSION_SQUARE ]",
+  },
+  {
+    id: 4,
+    title: "Fast Break Finish & Transition",
+    category: "highlights",
+    tag: "In-Game",
+    aspectRatio: "aspect-[4/5]",
+    imagePlaceholder: "[ FAST_BREAK_PORTRAIT ]",
+  },
+  {
+    id: 5,
+    title: "Aggressive Defensive Stance Showcase",
+    category: "photoshoot",
+    tag: "Studio",
+    aspectRatio: "aspect-square",
+    imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
+  },
+  {
+    id: 6,
+    title: "Weighted Vest Explosion Vertical Jumps",
+    category: "training",
+    tag: "Conditioning",
+    aspectRatio: "aspect-video",
+    imagePlaceholder: "[ VERT_TRAINING_WIDE ]",
+  },
 ];
 
 export function GalleryGrid() {
-  const [activeTab, setActiveTab] = useState("ALL");
+  const [activeCategory, setActiveCategory] =
+    useState<GalleryItem["category"]>("all");
+
+  // Filtering the dataset reactively based on UI state selection
+  const filteredItems = GALLERY_DATA.filter(
+    (item) => activeCategory === "all" || item.category === activeCategory,
+  );
 
   return (
-    <section className="bg-kh-dark-2/40 py-12 border-t border-white/5">
+    <section id="gallery-grid" className="py-20 bg-[#09090b] relative">
       <Container>
-        {/* Filters & Sorting */}
-        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-10 border-b border-white/10 pb-6">
-          {/* Tabs */}
-          <div className="flex flex-wrap items-center gap-2">
-            {TABS.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 font-condensed font-bold tracking-widest text-sm py-2 px-4 transition-all duration-300 rounded-sm
-                                        ${
-                                          isActive
-                                            ? "bg-kh-pink text-white"
-                                            : "text-gray-400 hover:text-white bg-transparent hover:bg-white/5"
-                                        }
-                                    `}
-                >
-                  {Icon && <Icon className="w-4 h-4" />}
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
+        {/* INTERACTIVE CONTROLS — Horizontal Filter Track */}
+        <div className="flex flex-wrap items-center justify-start gap-3 border-b border-white/5 pb-8 mb-12 overflow-x-auto scrollbar-none">
+          {CATEGORIES.map((cat) => {
+            const Icon = cat.icon;
+            const isActive = activeCategory === cat.id;
 
-          {/* Sort Dropdown */}
-          <button className="flex items-center justify-between gap-4 font-condensed font-bold text-sm tracking-widest text-white border border-white/20 py-2 px-4 rounded-sm bg-black/50 hover:border-white/50 transition-colors w-40 shrink-0">
-            LATEST
-            <ChevronDown className="w-4 h-4 text-gray-400" />
-          </button>
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`flex items-center gap-2.5 px-5 py-3 rounded-lg font-condensed font-bold text-xs tracking-widest uppercase border transition-all duration-300 whitespace-nowrap ${
+                  isActive
+                    ? "bg-kh-pink border-kh-pink text-white shadow-[0_4px_20px_rgba(236,72,153,0.25)]"
+                    : "bg-[#111115] border-white/5 text-gray-400 hover:text-white hover:border-white/10"
+                }`}
+              >
+                <Icon
+                  size={14}
+                  className={isActive ? "text-white" : "text-gray-500"}
+                />
+                {cat.label}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {IMAGES.map((src, index) => (
+        {/* GALLERY GRID — Dynamic Grid Layout */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 [column-fill:_balance]">
+          {filteredItems.map((item) => (
             <div
-              key={index}
-              className="break-inside-avoid overflow-hidden rounded-md group cursor-pointer relative"
+              key={item.id}
+              className={`relative break-inside-avoid w-full ${item.aspectRatio} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg cursor-pointer transition-all duration-500 hover:border-white/20`}
             >
-              <img
-                src={src}
-                alt={`Gallery item ${index + 1}`}
-                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              {/* Overlay on hover */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300"></div>
+              {/* Image Canvas Container */}
+              <div className="w-full h-full bg-[#16161c] flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase transition-transform duration-700 group-hover:scale-105">
+                {/* Once images are ready, map them like this: */}
+                {/* <img src={item.imageSrc} alt={item.title} className="w-full h-full object-cover" /> */}
+                {item.imagePlaceholder}
+              </div>
+
+              {/* Premium Dark Gradient & Interactive Text Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300 z-10" />
+
+              {/* Hover Interactive Content Layout */}
+              <div className="absolute inset-0 p-6 flex flex-col justify-between z-20">
+                {/* Top Row: Meta Badge Tag */}
+                <div className="transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75">
+                  <span className="bg-white/10 backdrop-blur-md border border-white/10 text-white font-condensed text-[10px] tracking-widest uppercase px-2.5 py-1 rounded-md">
+                    {item.tag}
+                  </span>
+                </div>
+
+                {/* Bottom Row: Title and View Icon */}
+                <div className="flex items-end justify-between gap-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  <div className="max-w-[80%]">
+                    <p className="font-condensed font-bold text-lg sm:text-xl text-white uppercase tracking-wide leading-tight line-clamp-2">
+                      {item.title}
+                    </p>
+                  </div>
+
+                  {/* Glassmorphic View Trigger button circle */}
+                  <div className="h-9 w-9 rounded-full bg-white text-black flex items-center justify-center shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-100">
+                    <Eye size={16} />
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Load More Button */}
-        <div className="flex justify-center mt-12">
-          <button className="btn-outline border-kh-pink text-kh-pink hover:text-white group flex items-center gap-2">
-            LOAD MORE PHOTOS
-            <RefreshCw className="w-4 h-4 ml-2 group-hover:rotate-180 transition-transform duration-500" />
-          </button>
-        </div>
+        {/* Empty State Feedback when no filters match */}
+        {filteredItems.length === 0 && (
+          <div className="text-center py-20 border border-dashed border-white/10 rounded-xl bg-[#111115]">
+            <p className="font-condensed font-bold text-gray-500 tracking-wider uppercase text-sm">
+              No media found in this collection category.
+            </p>
+          </div>
+        )}
       </Container>
     </section>
   );

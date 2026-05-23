@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { BrandHero } from "./components/BrandHero";
 import { OurPartners } from "./components/OurPartners";
 import { WhyPartner } from "./components/WhyPartner";
 import { PartnerTestimonials } from "./components/PartnerTestimonials";
 import { PartnerCTA } from "./components/PartnerCTA";
+import BrandPartnerHero from "./components/BrandHero";
 
 export default function BrandPartner() {
   useEffect(() => {
@@ -11,7 +11,7 @@ export default function BrandPartner() {
   }, []);
   return (
     <main className="bg-kh-dark min-h-screen text-foreground flex flex-col w-full overflow-hidden">
-      <BrandHero />
+      <BrandPartnerHero />
       <OurPartners />
       <WhyPartner />
       <PartnerTestimonials />

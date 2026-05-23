@@ -1,70 +1,126 @@
-import { Download } from "lucide-react";
-import galleryHeroPlayer from "../../../assets/highlight-main.png";
+import { Grid, Layers, ArrowDown } from "lucide-react";
 import Container from "@/components/common/Container";
+
+// TODO: Replace these placeholders with your actual asset imports
+// import galleryHeroMain from "../../../assets/gallery-hero-1.jpg";
+// import galleryHeroSub from "../../../assets/gallery-hero-2.jpg";
 
 export function GalleryHero() {
   return (
-    <section className="relative w-full min-h-[600px] flex items-center pt-24 pb-16 overflow-hidden bg-kh-dark">
-      {/* Background Glows */}
-      <div
-        className="absolute inset-0 hero-glow-pink opacity-40 pointer-events-none"
-        style={{ left: "-10%", top: "20%" }}
-      ></div>
-      <div
-        className="absolute inset-0 hero-glow-blue opacity-40 pointer-events-none"
-        style={{ left: "50%", top: "10%" }}
-      ></div>
+    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[#09090b] border-b border-white/5 overflow-hidden">
+      {/* Decorative Editorial Background Text Grid */}
+      <div className="absolute inset-0 dot-grid opacity-[0.1] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-kh-pink/5 blur-[150px] pointer-events-none" />
+      <div className="absolute -left-12 top-1/3 text-[14vw] font-display font-black text-white/[0.01] uppercase select-none tracking-tighter leading-none pointer-events-none">
+        VISUALS // 11
+      </div>
 
-      <Container className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Left Content */}
-        <div className="flex flex-col gap-6 animate-fade-in-up">
-          <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-sm">
-            Gallery
-          </span>
+      <Container className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+        {/* LEFT COLUMN (7 Columns) — Typography & Core Narrative */}
+        <div className="lg:col-span-7 flex flex-col justify-center">
+          {/* Section Breadcrumb Badge */}
+          <div className="font-condensed font-bold tracking-[0.25em] text-kh-pink text-xs uppercase mb-3 flex items-center gap-2">
+            <span className="w-6 h-[1px] bg-kh-pink inline-block" />
+            Media Gallery
+          </div>
 
-          <h1 className="font-display text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-tight">
-            <span className="block text-white">MOMENTS.</span>
-            <span className="block text-kh-pink mt-2">MEMORIES.</span>
+          {/* Giant Title Typography Stacks */}
+          <h1 className="font-display text-6xl sm:text-7xl xl:text-8xl font-black leading-[0.85] tracking-tight text-white uppercase mb-8">
+            MOMENTS.
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-kh-pink via-[#d946ef] to-white">
+              MEMORIES.
+            </span>
           </h1>
 
-          <p className="text-gray-300 max-w-md text-sm md:text-base leading-relaxed mt-2 font-sans font-light">
+          {/* Body Content Description */}
+          <p className="text-gray-400 font-sans font-light text-base sm:text-lg leading-relaxed max-w-xl mb-10">
             A collection of moments that define the journey, the grind, and the
-            game I love.
+            game I love. Each frame captures the sweat behind closed doors and
+            the energy on the court.
           </p>
 
-          <div className="mt-4">
-            <button className="btn-outline border-kh-pink text-kh-pink hover:text-white group">
-              DOWNLOAD PHOTOS
-              <Download className="w-4 h-4 ml-2 fill-current" />
-            </button>
+          {/* Action Metrics Row / Quick Controls Navigation */}
+          <div className="flex flex-wrap items-center gap-6 sm:gap-10 border-t border-white/5 pt-8 max-w-lg">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-kh-pink">
+                <Layers size={18} />
+              </div>
+              <div>
+                <div className="font-condensed font-bold text-white uppercase text-sm tracking-wider">
+                  ALL MEDIA
+                </div>
+                <div className="text-xs text-gray-500 font-sans">
+                  Photos & Highlights
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400">
+                <Grid size={18} />
+              </div>
+              <div>
+                <div className="font-condensed font-bold text-white uppercase text-sm tracking-wider">
+                  ARCHIVE
+                </div>
+                <div className="text-xs text-gray-500 font-sans">
+                  Filtered by Seasons
+                </div>
+              </div>
+            </div>
+
+            {/* Micro-Scroll Down Anchor Button */}
+            <a
+              href="#gallery-grid"
+              className="ml-auto h-11 w-11 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-kh-pink hover:bg-kh-pink/10 transition-all duration-300 group"
+            >
+              <ArrowDown
+                size={16}
+                className="group-hover:translate-y-0.5 transition-transform"
+              />
+            </a>
           </div>
         </div>
 
-        {/* Right Content - Player Image & Number */}
-        <div className="relative flex justify-center items-center animate-fade-in-up delay-200 mt-12 lg:mt-0">
-          <div className="relative z-10">
-            <img
-              src={galleryHeroPlayer}
-              alt="Kennedi Harris Gallery"
-              className="h-[450px] md:h-[600px] object-contain object-bottom drop-shadow-[0_0_20px_rgba(26,64,200,0.3)]"
-            />
-          </div>
-          {/* Outline Number Behind */}
-          <div className="absolute right-0 md:right-4 top-0 font-display text-[200px] md:text-[300px] outline-text-pink opacity-30 -z-10 leading-none select-none tracking-tighter">
-            30
-          </div>
-          {/* Signature */}
-          <div className="absolute -bottom-4 right-0 md:-right-8 transform -rotate-12 z-20">
-            <span className="font-script text-4xl md:text-6xl text-kh-pink drop-shadow-md">
-              Kennedi
-            </span>
-            <br />
-            <span className="font-script text-4xl md:text-6xl text-kh-pink drop-shadow-md ml-12">
-              Harris{" "}
-              <span className="font-sans text-xl md:text-2xl font-bold ml-2 opacity-80">
-                #30
-              </span>
-            </span>
+        {/* RIGHT COLUMN (5 Columns) — Premium Layered Graphic Composition */}
+        <div className="lg:col-span-5 relative w-full flex items-center justify-center lg:justify-end pt-8 lg:pt-0">
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none aspect-[4/5] relative">
+            {/* Background Structural Accent Box */}
+            <div className="absolute inset-0 bg-[#111115] border border-white/10 rounded-2xl transform -rotate-3 transition-transform duration-500 hover:rotate-0 shadow-xl overflow-hidden z-0">
+              <div className="absolute inset-0 dot-grid opacity-[0.1]" />
+              {/* Optional Back Frame Fallback Texture/Image */}
+              <div className="absolute bottom-6 left-6 font-display text-4xl text-white/5 font-black uppercase">
+                THE GRIND
+              </div>
+            </div>
+
+            {/* Main Foreground Frame Canvas */}
+            <div className="absolute inset-4 bg-[#16161c] border border-white/10 rounded-xl transform rotate-2 hover:rotate-0 transition-transform duration-500 shadow-2xl overflow-hidden z-10 flex items-end">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
+
+              {/* Main Image Replacement Layer */}
+              <div className="w-full h-full bg-[#1c1c24] flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
+                {/* <img src={galleryHeroMain} alt="On Court Action" className="w-full h-full object-cover" /> */}
+                [ COURT_ACTION_IMAGE ]
+              </div>
+
+              {/* Bottom Frame Badge Tag */}
+              <div className="absolute bottom-4 left-4 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-md">
+                <span className="w-2 h-2 rounded-full bg-kh-pink animate-pulse" />
+                <span className="font-condensed text-[10px] tracking-widest text-white uppercase">
+                  IN-GAME CAPTURES
+                </span>
+              </div>
+            </div>
+
+            {/* Asymmetrical Offset Floating Secondary Mini-Frame */}
+            <div className="absolute -bottom-6 -left-6 sm:-left-10 w-1/2 aspect-square bg-[#1a1a22] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-20 transform -rotate-6 hover:rotate-0 transition-transform duration-300 hidden sm:block">
+              <div className="w-full h-full bg-[#22222a] flex items-center justify-center text-gray-600 font-condensed text-[9px] tracking-wider uppercase text-center p-2">
+                {/* <img src={galleryHeroSub} alt="Training Session" className="w-full h-full object-cover" /> */}
+                [ TRAINING_DETAILS ]
+              </div>
+            </div>
           </div>
         </div>
       </Container>

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { GalleryHero } from "./components/GalleryHero";
-import { GalleryGrid } from "./components/GalleryGrid";
 import { InstagramSection } from "./components/InstagramSection";
+import { GalleryGrid } from "./components/GalleryGrid";
+import { GalleryHeritage } from "./components/GalleryHeritage";
 
 export default function GallaryPage() {
   // Scroll to top on mount
@@ -13,6 +14,7 @@ export default function GallaryPage() {
     <main className="bg-kh-dark min-h-screen text-foreground flex flex-col w-full overflow-hidden">
       <GalleryHero />
       <GalleryGrid />
+      <GalleryHeritage />
       <InstagramSection />
     </main>
   );

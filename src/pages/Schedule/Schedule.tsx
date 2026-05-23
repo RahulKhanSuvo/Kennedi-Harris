@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { ScheduleHero } from "./components/ScheduleHero";
 import { SeasonSchedule } from "./components/SeasonSchedule";
 import { UpcomingEvents } from "./components/UpcomingEvents";
 import { SubscribeBanner } from "./components/SubscribeBanner";
+import ScheduleHero from "./components/ScheduleHero";
 
 export default function Schedule() {
   // Scroll to top on mount

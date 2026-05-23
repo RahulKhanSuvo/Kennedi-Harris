@@ -1,78 +1,132 @@
-import { MessageSquare } from "lucide-react";
-import heroPlayer from "../../../assets/highlight-main.png";
+import { Mail, Phone, MapPin, ArrowDown, Send } from "lucide-react";
 import Container from "@/components/common/Container";
 
 export function ContactHero() {
   return (
-    <section className="relative w-full min-h-[600px] flex items-center pt-24 pb-16 overflow-hidden bg-kh-dark">
-      {/* Background Glows */}
-      <div
-        className="absolute inset-0 hero-glow-pink opacity-40 pointer-events-none"
-        style={{ left: "-10%", top: "20%" }}
-      ></div>
-      <div
-        className="absolute inset-0 hero-glow-blue opacity-40 pointer-events-none"
-        style={{ left: "50%", top: "10%" }}
-      ></div>
+    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[#09090b] border-b border-white/5 overflow-hidden">
+      {/* Structural Subtle Layout Overlays */}
+      <div className="absolute inset-0 dot-grid opacity-[0.08] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gradient-to-r from-kh-pink/5 to-cyan-500/5 blur-[130px] pointer-events-none" />
 
-      <Container className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Left Content */}
-        <div className="flex flex-col gap-6 animate-fade-in-up">
-          <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-sm">
-            Contact
-          </span>
+      {/* Decorative Giant Editorial Background Watermark */}
+      <div className="absolute -right-20 top-1/4 text-[16vw] font-display font-black text-white/[0.01] uppercase select-none tracking-tighter leading-none pointer-events-none">
+        CONNECT // 11
+      </div>
 
-          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[0.85] tracking-tight">
-            <span className="block text-white">LET'S CONNECT.</span>
-            <span className="block text-kh-pink mt-2">LET'S ELEVATE.</span>
+      <Container className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+        {/* LEFT COLUMN (7 Columns) — Assertive Headline Stacks */}
+        <div className="lg:col-span-7 flex flex-col justify-center">
+          {/* Section Breadcrumb Track Badge */}
+          <div className="font-condensed font-bold tracking-[0.25em] text-kh-pink text-xs uppercase mb-3 flex items-center gap-2">
+            <span className="w-6 h-[1px] bg-kh-pink inline-block" />
+            Get In Touch
+          </div>
+
+          {/* Giant Typographic Statement */}
+          <h1 className="font-display text-5xl sm:text-7xl xl:text-8xl font-black leading-[0.85] tracking-tight text-white uppercase mb-8">
+            LET'S CONNECT.
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-kh-pink via-[#d946ef] to-white">
+              LET'S ELEVATE.
+            </span>
           </h1>
 
-          <p className="text-gray-300 max-w-md text-sm md:text-base leading-relaxed mt-2 font-sans font-light">
+          {/* Core Content Body Paragraph */}
+          <p className="text-gray-400 font-sans font-light text-base sm:text-lg leading-relaxed max-w-xl mb-10">
             Have a question, opportunity, or partnership idea? I'd love to hear
             from you. Fill out the form or reach out using the contact
-            information below.
+            information below to get started.
           </p>
 
-          <div className="mt-4">
-            <button
-              onClick={() =>
-                document
-                  .getElementById("contact-form")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="btn-outline border-kh-pink text-kh-pink hover:text-white group flex items-center cursor-pointer"
+          {/* Jump-to-Form Scrolling Anchor Node */}
+          <div className="flex items-center gap-4">
+            <a
+              href="#contact-form-section"
+              className="px-6 py-3.5 bg-white hover:bg-kh-pink text-black hover:text-white font-condensed font-bold text-xs tracking-widest uppercase rounded-lg transition-all duration-300 flex items-center gap-2.5 shadow-lg group"
             >
-              <MessageSquare className="w-4 h-4 mr-2" />
+              <Send
+                size={14}
+                className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              />
               SEND A MESSAGE
-            </button>
+            </a>
+
+            <a
+              href="#contact-form-section"
+              className="h-11 w-11 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-white/20 transition-all duration-300"
+            >
+              <ArrowDown size={16} className="animate-bounce" />
+            </a>
           </div>
         </div>
 
-        {/* Right Content - Player Image & Number */}
-        <div className="relative flex justify-center items-center animate-fade-in-up delay-200 mt-12 lg:mt-0">
-          <div className="relative z-10">
-            <img
-              src={heroPlayer}
-              alt="Kennedi Harris Contact"
-              className="h-[450px] md:h-[600px] object-contain object-bottom drop-shadow-[0_0_20px_rgba(26,64,200,0.3)]"
-            />
-          </div>
-          {/* Outline Number Behind */}
-          <div className="absolute right-0 md:right-4 top-0 font-display text-[200px] md:text-[300px] outline-text-pink opacity-30 -z-10 leading-none select-none tracking-tighter">
-            30
-          </div>
-          {/* Signature */}
-          <div className="absolute -bottom-4 right-0 md:-right-8 transform -rotate-12 z-20">
-            <span className="font-script text-4xl md:text-6xl text-kh-pink drop-shadow-md">
-              Kennedi
-            </span>
-            <br />
-            <span className="font-script text-4xl md:text-6xl text-kh-pink drop-shadow-md ml-12">
-              Harris{" "}
-              <span className="font-sans text-xl md:text-2xl font-bold ml-2 opacity-80">
-                #30
-              </span>
-            </span>
+        {/* RIGHT COLUMN (5 Columns) — Premium Digital Rolodex Card */}
+        <div className="lg:col-span-5 w-full flex justify-center lg:justify-end">
+          <div className="w-full max-w-sm bg-[#111115] border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden group">
+            {/* Subtle inner grid glow accent */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-kh-pink/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 dot-grid opacity-[0.05] z-0" />
+
+            <h3 className="font-condensed font-bold text-lg tracking-wider text-white uppercase mb-6 relative z-10 pb-4 border-b border-white/5">
+              DIRECT REACHOUT
+            </h3>
+
+            {/* Directory Metric Contact Info Items */}
+            <div className="space-y-6 relative z-10">
+              <div className="flex gap-4 items-center group/item">
+                <div className="h-10 w-10 shrink-0 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-kh-pink group-hover/item:border-kh-pink/40 transition-colors">
+                  <Mail size={16} />
+                </div>
+                <div>
+                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase">
+                    Email Me Directly
+                  </div>
+                  <a
+                    href="mailto:contact@kennediharris.com"
+                    className="text-sm font-sans font-medium text-gray-200 hover:text-kh-pink transition-colors"
+                  >
+                    contact@kennediharris.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-center group/item">
+                <div className="h-10 w-10 shrink-0 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 group-hover/item:border-cyan-400/40 transition-colors">
+                  <Phone size={16} />
+                </div>
+                <div>
+                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase">
+                    Management / Inquiries
+                  </div>
+                  <a
+                    href="tel:+1234567890"
+                    className="text-sm font-sans font-medium text-gray-200 hover:text-cyan-400 transition-colors"
+                  >
+                    (555) 234-5678
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-center group/item">
+                <div className="h-10 w-10 shrink-0 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 group-hover/item:text-white transition-colors">
+                  <MapPin size={16} />
+                </div>
+                <div>
+                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase">
+                    Based Out Of
+                  </div>
+                  <div className="text-sm font-sans font-medium text-gray-300">
+                    United States
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Micro Identity Bottom Badge */}
+            <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-[10px] font-condensed tracking-widest text-gray-600 uppercase relative z-10">
+              <span>AVAILABLE FOR PARTNERSHIPS</span>
+              <span>NO. 11</span>
+            </div>
           </div>
         </div>
       </Container>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { NavigationTabs } from "./components/NavigationTabs";
+// import { NavigationTabs } from "./components/NavigationTabs";
 import { MainHighlight } from "./components/MainHighlight";
 import { FeaturedHighlights } from "./components/FeaturedHighlights";
 import { SeasonStats } from "./components/SeasonStats";
@@ -8,6 +8,7 @@ import { TopPlayCategories } from "./components/TopPlayCategories";
 import HeroSection from "./components/HeroSection";
 import Container from "@/components/common/Container";
 import TestimonialSlider from "./components/TestimonialSlider";
+import FeaturedHighlightsSection from "./components/FeaturedHighlightsSection";
 
 export default function Highlights() {
   // Scroll to top on mount
@@ -18,7 +19,8 @@ export default function Highlights() {
   return (
     <main className="min-h-screen text-foreground flex flex-col w-full">
       <HeroSection />
-      <NavigationTabs />
+      {/* <NavigationTabs /> */}
+      <FeaturedHighlightsSection></FeaturedHighlightsSection>
 
       {/* Highlights Grid */}
       <Container className="container mx-auto px-6 py-8">

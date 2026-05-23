@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-
+import { Autoplay } from "swiper/modules";
 interface Testimonial {
   id: number;
   quote: string;
@@ -46,9 +46,15 @@ export default function TestimonialSlider(): React.JSX.Element {
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
         }}
+        modules={[Autoplay]}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         spaceBetween={50}
         slidesPerView={1}
+        autoplay={{
+          delay: 3500,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
         loop={true}
         className="w-full"
       >

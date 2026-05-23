@@ -77,33 +77,43 @@ export default function QuickInfo() {
   ];
 
   return (
-    <section className="py-12 bg-kh-dark border-y border-white/5">
+    <section className="relative py-16 bg-gradient-to-b from-kh-dark via-black/20 to-kh-dark border-y border-white/5 overflow-hidden">
+      {/* Subtle futuristic background grid line detail */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none opacity-40" />
+
       <Container>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 items-center divide-x-0 lg:divide-x divide-white/10">
-          {infoItems.map((item, idx) => {
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-white/5 rounded-xl border border-white/10 overflow-hidden backdrop-blur-sm">
+          {infoItems.map((item) => {
             const IconComponent = item.Icon;
             return (
               <div
                 key={item.id}
-                className={`flex flex-col items-center justify-center text-center gap-4 ${
-                  idx > 0 ? "lg:pl-6" : ""
-                }`}
+                className="group relative flex flex-col items-center justify-between p-6 md:p-8 bg-black/40 text-center transition-all duration-300 hover:bg-white/[0.02]"
               >
-                {/* Icon Container */}
-                <div className="relative flex items-center justify-center shrink-0">
-                  <div className="w-12 h-12 rounded-full border border-kh-pink/30 flex items-center justify-center bg-black/40 text-kh-pink hover:border-kh-pink hover:bg-kh-pink/10 transition-colors duration-300">
-                    <IconComponent className="w-5 h-5" />
-                  </div>
-                </div>
+                {/* Subtle Hover Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-t from-kh-pink/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                {/* Text labels */}
-                <div className="flex flex-col gap-1">
-                  <span className="font-condensed font-bold text-xs tracking-[0.2em] text-kh-pink uppercase">
-                    {item.label}
-                  </span>
-                  <span className="font-condensed font-black text-lg md:text-xl text-white uppercase tracking-wider">
-                    {item.value}
-                  </span>
+                {/* Top Corner Technical Accent Line */}
+                <div className="absolute top-0 left-0 w-3 h-[1px] bg-white/20 group-hover:bg-kh-pink/60 transition-colors" />
+                <div className="absolute top-0 left-0 w-[1px] h-3 bg-white/20 group-hover:bg-kh-pink/60 transition-colors" />
+
+                <div className="flex flex-col items-center gap-5 w-full z-10">
+                  {/* Hexagon/Angled Box Icon Container */}
+                  <div className="relative flex items-center justify-center shrink-0">
+                    <div className="w-11 h-11 border border-white/10 rounded-lg flex items-center justify-center bg-white/[0.02] text-white/50 group-hover:text-kh-pink group-hover:border-kh-pink/40 group-hover:bg-kh-pink/[0.03] shadow-inner transform group-hover:rotate-6 transition-all duration-300">
+                      <IconComponent className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                    </div>
+                  </div>
+
+                  {/* Text labels container */}
+                  <div className="flex flex-col gap-1.5 transition-transform duration-300 group-hover:-translate-y-0.5">
+                    <span className="font-condensed font-bold text-[10px] tracking-[0.25em] text-white/40 group-hover:text-kh-pink transition-colors uppercase">
+                      {item.label}
+                    </span>
+                    <span className="font-condensed font-black text-base md:text-lg text-white group-hover:text-white uppercase tracking-wide leading-tight break-words max-w-[140px]">
+                      {item.value}
+                    </span>
+                  </div>
                 </div>
               </div>
             );
