@@ -45,7 +45,14 @@ export default function Navbar() {
                   }`
                 }
               >
-                {link.name}
+                {({ isActive }) => (
+                  <>
+                    {link.name}
+                    {isActive && (
+                      <span className="absolute bottom-[-90%] left-0 right-0 h-[3px] bg-kh-pink" />
+                    )}
+                  </>
+                )}
               </NavLink>
             );
           })}

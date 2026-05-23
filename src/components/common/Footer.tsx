@@ -20,7 +20,7 @@ export default function Footer() {
                 <span className="text-lg font-bold tracking-wider leading-none">
                   KENNEDI HARRIS
                 </span>
-                <span className="text-[10px] tracking-[0.3em] text-red-600 font-bold mt-1 uppercase">
+                <span className="text-[10px] tracking-[0.3em] text-kh-pink font-bold mt-1 uppercase">
                   Hoops
                 </span>
               </div>
