@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowRight, Handshake } from "lucide-react";
 
 export function PartnerCTA() {

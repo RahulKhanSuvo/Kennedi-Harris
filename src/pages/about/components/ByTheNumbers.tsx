@@ -2,17 +2,17 @@ import { BsDribbble } from "react-icons/bs";
 
 export function ByTheNumbers() {
   return (
-    <section className="py-16 border-y border-white/5 bg-kh-dark">
-      <div className="container mx-auto px-6">
-        <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-sm block mb-8">
+    <section className=" border-b-2  bg-kh-dark p-8">
+      <div className="">
+        <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-lg block mb-8">
           By The Numbers
         </span>
 
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-0 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
           {/* Stat Items */}
-          <div className="flex flex-wrap lg:flex-nowrap items-center justify-between lg:justify-start w-full lg:w-3/4 gap-8 lg:gap-12 px-0 lg:px-4">
+          <div className="grid grid-cols-5 flex-1 items-center justify-between lg:justify-start w-full lg:w-3/4 gap-8 lg:gap-12 px-0 lg:px-4">
             <div className="flex flex-col">
-              <span className="font-display text-5xl md:text-6xl text-white">
+              <span className="font-display text-5xl md:text-8xl text-white">
                 20+
               </span>
               <span className="font-condensed font-bold text-kh-pink tracking-widest mt-1">
@@ -21,7 +21,7 @@ export function ByTheNumbers() {
             </div>
 
             <div className="flex flex-col">
-              <span className="font-display text-5xl md:text-6xl text-white">
+              <span className="font-display text-5xl md:text-8xl text-white">
                 16+
               </span>
               <span className="font-condensed font-bold text-kh-pink tracking-widest mt-1">
@@ -30,7 +30,7 @@ export function ByTheNumbers() {
             </div>
 
             <div className="flex flex-col">
-              <span className="font-display text-5xl md:text-6xl text-white">
+              <span className="font-display text-5xl md:text-8xl text-white">
                 3+
               </span>
               <span className="font-condensed font-bold text-kh-pink tracking-widest mt-1">
@@ -39,7 +39,7 @@ export function ByTheNumbers() {
             </div>
 
             <div className="flex flex-col">
-              <span className="font-display text-5xl md:text-6xl text-white">
+              <span className="font-display text-5xl md:text-8xl text-white">
                 24+
               </span>
               <span className="font-condensed font-bold text-kh-pink tracking-widest mt-1">
@@ -48,7 +48,7 @@ export function ByTheNumbers() {
             </div>
 
             <div className="flex flex-col max-w-[120px]">
-              <span className="font-display text-5xl md:text-6xl text-white">
+              <span className="font-display text-5xl md:text-8xl text-white">
                 31
               </span>
               <span className="font-condensed font-bold text-kh-pink tracking-widest mt-1 text-sm">

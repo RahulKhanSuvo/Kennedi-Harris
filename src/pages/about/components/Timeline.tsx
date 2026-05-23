@@ -1,5 +1,6 @@
 import { Target, Activity, Users, Star } from "lucide-react";
 import meImg from "../../../assets/me-removebg-preview.png";
+import Container from "@/components/common/Container";
 
 const TIMELINE_DATA = [
   {
@@ -47,7 +48,7 @@ const TIMELINE_DATA = [
 export function Timeline() {
   return (
     <section className="py-20 relative bg-kh-dark-2/40 border-t border-white/5">
-      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+      <Container className=" grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
         {/* Left Content */}
         <div className="lg:col-span-5 flex flex-col">
           <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-sm mb-4">
@@ -105,7 +106,7 @@ export function Timeline() {
             })}
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

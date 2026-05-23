@@ -1,27 +1,36 @@
 import { Play } from "lucide-react";
-import aboutPlayer from "../../../assets/about-player.png";
+import heroImg from "@/assets/modal/hero.png";
+import Container from "@/components/common/Container";
+import backgroundImage from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
 
-export function AboutHero() {
+export default function AboutHero() {
   return (
-    <section className="relative w-full min-h-[700px] flex items-center pt-24 pb-16 overflow-hidden">
-      {/* Background Glows */}
-      <div
-        className="absolute inset-0 hero-glow-pink opacity-40 pointer-events-none"
-        style={{ left: "-10%", top: "20%" }}
-      ></div>
-      <div
-        className="absolute inset-0 hero-glow-blue opacity-40 pointer-events-none"
-        style={{ left: "50%", top: "10%" }}
-      ></div>
+    <section className="relative min-h-[90vh] flex flex-col justify-center  overflow-hidden hero-glow-blue">
+      {/* background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={backgroundImage}
+          alt="Background"
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
+      {/* opacity */}
+      <div className="absolute inset-0 z-0 bg-black/70"></div>
+      {/* Background large 11 */}
+      <div className="absolute top-20 right-0 lg:right-10 pointer-events-none select-none z-0">
+        <span className="font-display text-[300px] lg:text-[450px] leading-none outline-text-blue ">
+          11
+        </span>
+      </div>
 
-      <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <Container className="relative z-10 flex flex-col lg:flex-row items-center justify-between pt-16">
         {/* Left Content */}
         <div className="flex flex-col gap-6 animate-fade-in-up">
-          <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-sm">
+          <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-lg">
             About Kennedi
           </span>
 
-          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[0.85] tracking-tight">
+          <h1 className="font-display text-5xl md:text-6xl lg:text-8xl leading-[0.85] tracking-tight">
             <span className="block text-white">PURPOSE DRIVES.</span>
             <span className="block text-kh-pink mt-2">PASSION DEFINES.</span>
           </h1>
@@ -52,34 +61,48 @@ export function AboutHero() {
           </div>
         </div>
 
-        {/* Right Content - Player Image & Number */}
-        <div className="relative flex justify-center items-center animate-fade-in-up delay-200 mt-12 lg:mt-0">
-          <div className="relative z-10">
-            <img
-              src={aboutPlayer}
-              alt="Kennedi Harris"
-              className="h-[500px] md:h-[650px] object-contain object-bottom drop-shadow-[0_0_20px_rgba(26,64,200,0.3)]"
-            />
-          </div>
-          {/* Outline Number Behind */}
-          <div className="absolute right-0 md:right-10 top-0 font-display text-[200px] md:text-[300px] outline-text-pink opacity-30 -z-10 leading-none select-none tracking-tighter">
-            30
-          </div>
-          {/* Signature */}
-          <div className="absolute -bottom-8 right-0 md:right-10 transform -rotate-12 z-20">
-            <span className="font-script text-4xl md:text-6xl text-kh-pink drop-shadow-md">
-              Kennedi
-            </span>
+        {/* Right Player Image */}
+        <div className="w-full lg:w-[55%] h-full flex justify-start items-start relative">
+          <div
+            className="absolute bottom-[-10%] left-[25%] -translate-x-1/2 pointer-events-none
+                  h-[300px] w-[300px] rounded-full 
+                  bg-[#ec4899] opacity-30 blur-[80px]"
+          ></div>
+          <div
+            className="absolute bottom-0 right-0 pointer-events-none
+                  h-[400px] w-[500px] rounded-tl-[100px]
+                  bg-linear-to-br from-[#06b6d4] to-[#3b82f6] opacity-25 blur-[100px]"
+          ></div>
+          {/* Decorative script text behind image */}
+          <div className="absolute right-[5%] bottom-[20%] font-script text-5xl lg:text-7xl text-kh-pink rotate-[-10deg] z-30">
+            Kennedi
             <br />
-            <span className="font-script text-4xl md:text-6xl text-kh-pink drop-shadow-md ml-12">
-              Harris{" "}
-              <span className="font-sans text-2xl font-bold ml-2 opacity-80">
-                #30
-              </span>
-            </span>
+            Harris
+            <br />
+            <span className="text-white">#11</span>
+          </div>
+
+          <div className="relative z-10  w-full flex justify-start">
+            <div className="w-[80%] flex items-center justify-center overflow-hidden">
+              <img
+                src={heroImg}
+                alt="Kennedi Harris"
+                className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  e.currentTarget.parentElement?.classList.add(
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                  );
+                  e.currentTarget.parentElement!.innerHTML =
+                    '<div class="text-kh-gray font-condensed">IMAGE PLACEHOLDER</div>';
+                }}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

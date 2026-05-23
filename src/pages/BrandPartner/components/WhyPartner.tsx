@@ -1,4 +1,3 @@
-import React from "react";
 import { Users, Heart, Eye, HandHeart } from "lucide-react";
 
 const BENEFITS = [

@@ -4,7 +4,7 @@ import { ChevronDown, Mail } from "lucide-react";
 export default function ContactForm() {
   return (
     <section>
-      <Container>
+      <Container className="relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 bg-[#0b0d0f] px-4 py-3.5 rounded">
           <div className="flex items-center gap-6 lg:w-1/2">
             <div className="w-16 h-16 rounded-full border border-kh-pink flex items-center justify-center text-kh-pink shrink-0">

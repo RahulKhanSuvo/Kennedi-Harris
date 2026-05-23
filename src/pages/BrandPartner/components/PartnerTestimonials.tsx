@@ -1,4 +1,3 @@
-import React from "react";
 import { Star, ChevronRight } from "lucide-react";
 
 const TESTIMONIALS_PARTNERS = [

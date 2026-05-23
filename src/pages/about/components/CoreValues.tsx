@@ -35,9 +35,9 @@ const VALUES = [
 
 export function CoreValues() {
   return (
-    <section className="py-16 bg-kh-dark">
-      <div className="container mx-auto px-6">
-        <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-sm block mb-12">
+    <section className=" p-8 border-b">
+      <div className="">
+        <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-lg block mb-2">
           Core Values
         </span>
 
@@ -49,8 +49,8 @@ export function CoreValues() {
                 key={value.id}
                 className="flex flex-col items-center text-center p-6 lg:p-4 group"
               >
-                <div className="w-16 h-16 rounded-full border border-kh-pink flex items-center justify-center text-kh-pink mb-6 group-hover:bg-kh-pink group-hover:text-white transition-colors duration-300">
-                  <Icon className="w-6 h-6" />
+                <div className="w-16 h-16 rounded-full border border-kh-pink flex items-center justify-center text-kh-pink mb-6 group-hover:bg-kh-pink  transition-colors duration-300">
+                  <Icon className="w-6 h-6 group-hover:text-white" />
                 </div>
                 <h4 className="font-condensed font-bold text-xl text-white tracking-wider uppercase mb-3">
                   {value.title}
