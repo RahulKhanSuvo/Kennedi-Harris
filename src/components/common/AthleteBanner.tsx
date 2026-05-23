@@ -33,13 +33,13 @@ const AthleteBanner = () => {
         {/* Right Section: Name & Number */}
         <div className="relative z-10 flex flex-col items-center md:items-end justify-center select-none shrink-0 pr-2">
           {/* Signature Name */}
-          <h2 className="text-3xl sm:text-4xl font-normal text-pink-500 tracking-wide font-signature drop-shadow-[0_0_8px_rgba(236,72,153,0.4)] rotate-[-2deg]">
+          <h2 className="text-3xl sm:text-4xl font-script font-normal text-pink-500 tracking-wide font-signature drop-shadow-[0_0_8px_rgba(236,72,153,0.4)] -rotate-2">
             Kennedi Harris
           </h2>
 
           {/* Player Number */}
-          <span className="text-4xl sm:text-5xl font-black italic text-blue-500 tracking-tighter mt-1 drop-shadow-[0_0_12px_rgba(59,130,246,0.5)] font-mono">
-            #30
+          <span className="text-xl sm:text-5xl font-black italic text-blue-500 tracking-tighter mt-1 drop-shadow-[0_0_12px_rgba(59,130,246,0.5)] font-script">
+            #11
           </span>
         </div>
       </Container>
