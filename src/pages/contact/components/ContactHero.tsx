@@ -1,5 +1,6 @@
 import { MessageSquare } from "lucide-react";
 import heroPlayer from "../../../assets/highlight-main.png";
+import Container from "@/components/common/Container";
 
 export function ContactHero() {
   return (
@@ -14,7 +15,7 @@ export function ContactHero() {
         style={{ left: "50%", top: "10%" }}
       ></div>
 
-      <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <Container className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Content */}
         <div className="flex flex-col gap-6 animate-fade-in-up">
           <span className="text-kh-pink font-condensed tracking-[0.2em] uppercase font-bold text-sm">
@@ -74,7 +75,7 @@ export function ContactHero() {
             </span>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

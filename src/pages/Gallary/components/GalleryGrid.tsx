@@ -16,6 +16,7 @@ import hl1 from "../../../assets/highlight-1.png";
 import hl2 from "../../../assets/highlight-2.png";
 import hl3 from "../../../assets/highlight-3.png";
 import hero from "../../../assets/hero-player.png";
+import Container from "@/components/common/Container";
 
 const TABS = [
   { id: "ALL", label: "ALL", icon: null },
@@ -46,7 +47,7 @@ export function GalleryGrid() {
 
   return (
     <section className="bg-kh-dark-2/40 py-12 border-t border-white/5">
-      <div className="container mx-auto px-6">
+      <Container>
         {/* Filters & Sorting */}
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-10 border-b border-white/10 pb-6">
           {/* Tabs */}
@@ -105,7 +106,7 @@ export function GalleryGrid() {
             <RefreshCw className="w-4 h-4 ml-2 group-hover:rotate-180 transition-transform duration-500" />
           </button>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
