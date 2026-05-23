@@ -1,13 +1,24 @@
 import { PlayCircle, FileText, Mail } from "lucide-react";
 import heroImg from "@/assets/modal/hero.png";
 import Container from "@/components/common/Container";
+import backgroundImage from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-center  overflow-hiddenhero-glow-blue">
+    <section className="relative min-h-[90vh] flex flex-col justify-center  overflow-hidden hero-glow-blue">
+      {/* background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={backgroundImage}
+          alt="Background"
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
+      {/* opacity */}
+      <div className="absolute inset-0 z-0 bg-black/70"></div>
       {/* Background large 11 */}
-      <div className="absolute top-10 right-0 lg:right-10 pointer-events-none select-none z-0">
-        <span className="font-display text-[300px] lg:text-[450px] leading-none outline-text-blue opacity-40">
+      <div className="absolute top-20 right-0 lg:right-10 pointer-events-none select-none z-0">
+        <span className="font-display text-[300px] lg:text-[450px] leading-none outline-text-blue ">
           11
         </span>
       </div>
@@ -59,14 +70,24 @@ export default function HeroSection() {
         </div>
 
         {/* Right Player Image */}
-        <div className="w-full lg:w-[55%] h-full flex justify-start items-start border relative">
+        <div className="w-full lg:w-[55%] h-full flex justify-start items-start relative">
+          <div
+            className="absolute bottom-[-10%] left-[25%] -translate-x-1/2 pointer-events-none
+                  h-[300px] w-[300px] rounded-full 
+                  bg-[#ec4899] opacity-30 blur-[80px]"
+          ></div>
+          <div
+            className="absolute bottom-0 right-0 pointer-events-none
+                  h-[400px] w-[500px] rounded-tl-[100px]
+                  bg-linear-to-br from-[#06b6d4] to-[#3b82f6] opacity-25 blur-[100px]"
+          ></div>
           {/* Decorative script text behind image */}
-          <div className="absolute right-[5%] bottom-[20%] font-script text-5xl lg:text-7xl text-kh-pink opacity-40 rotate-[-10deg] pointer-events-none select-none z-0">
+          <div className="absolute right-[5%] bottom-[20%] font-script text-5xl lg:text-7xl text-kh-pink rotate-[-10deg] z-30">
             Kennedi
             <br />
             Harris
             <br />
-            #11
+            <span className="text-white">#11</span>
           </div>
 
           <div className="relative z-10  w-full flex justify-start">

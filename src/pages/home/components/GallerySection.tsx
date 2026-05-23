@@ -1,4 +1,5 @@
-import gal1 from "@/assets/gal-1.png";
+import gal1 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
+import gal2 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
 
 export default function GallerySection() {
   return (
@@ -20,35 +21,35 @@ export default function GallerySection() {
             </div>
 
             <div className="grid grid-cols-4 gap-2 h-full">
-              <div className="aspect-4/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
+              <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
                   src={gal1}
                   alt="Gallery 1"
-                  className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                  className="w-full h-full object-cover transition-all duration-500"
                   onError={(e) => (e.currentTarget.style.display = "none")}
                 />
               </div>
-              <div className="aspect-4/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
+              <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
-                  src={gal1}
+                  src={gal2}
                   alt="Gallery 2"
-                  className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                  className="w-full h-full object-cover transition-all duration-500"
                   onError={(e) => (e.currentTarget.style.display = "none")}
                 />
               </div>
-              <div className="aspect-4/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
+              <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
                   src={gal1}
                   alt="Gallery 3"
-                  className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                  className="w-full h-full object-cover transition-all duration-500"
                   onError={(e) => (e.currentTarget.style.display = "none")}
                 />
               </div>
-              <div className="aspect-4/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
+              <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
                 <img
                   src={gal1}
                   alt="Gallery 4"
-                  className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                  className="w-full h-full object-cover transition-all duration-500"
                   onError={(e) => (e.currentTarget.style.display = "none")}
                 />
               </div>
