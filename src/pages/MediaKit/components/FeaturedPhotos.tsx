@@ -1,10 +1,11 @@
 import { Link } from "react-router";
 import { ChevronRight } from "lucide-react";
-import img1 from "../../../assets/gal-1.png";
-import img2 from "../../../assets/gal-2.png";
-import img3 from "../../../assets/stats-player.png";
-import img4 from "../../../assets/gal-3.png";
-import img5 from "../../../assets/gal-4.png";
+import img1 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
+import img2 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
+import img3 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
+import img4 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
+import img5 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
+import Container from "@/components/common/Container";
 
 export default function FeaturedPhotos() {
   const photos = [
@@ -17,7 +18,7 @@ export default function FeaturedPhotos() {
 
   return (
     <section className="py-16 bg-kh-dark border-t border-white/5">
-      <div className="container mx-auto px-6">
+      <Container>
         {/* Section Header */}
         <div className="flex items-center justify-between gap-6 mb-8">
           <h2 className="font-condensed font-black text-xl md:text-2xl text-white uppercase tracking-wider">
@@ -48,7 +49,7 @@ export default function FeaturedPhotos() {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
