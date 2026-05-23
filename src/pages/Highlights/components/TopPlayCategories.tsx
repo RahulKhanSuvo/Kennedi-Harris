@@ -1,17 +1,17 @@
 import { Play } from "lucide-react";
-import img1 from "../../../assets/highlight-1.png";
-import img2 from "../../../assets/highlight-2.png";
-import img3 from "../../../assets/highlight-3.png";
-import img4 from "../../../assets/hero-player.png";
-import img5 from "../../../assets/highlight-main.png";
+import img1 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
+import img2 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
+import img3 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
+// import img4 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
+// import img5 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
 import Container from "@/components/common/Container";
 
 const CATEGORIES = [
   { id: 1, title: "SCORING", count: "28 Videos", img: img1 },
   { id: 2, title: "DEFENSE", count: "24 Videos", img: img2 },
   { id: 3, title: "PLAYMAKING", count: "18 Videos", img: img3 },
-  { id: 4, title: "LEADERSHIP", count: "12 Videos", img: img4 },
-  { id: 5, title: "CLUTCH MOMENTS", count: "15 Videos", img: img5 },
+  // { id: 4, title: "LEADERSHIP", count: "12 Videos", img: img4 },
+  // { id: 5, title: "CLUTCH MOMENTS", count: "15 Videos", img: img5 },
 ];
 
 export function TopPlayCategories() {
@@ -19,10 +19,10 @@ export function TopPlayCategories() {
     <section className="py-8">
       <Container>
         <h3 className="font-condensed text-xl font-bold text-white uppercase tracking-wider mb-6">
-          TOP PLAY CATEGORIES
+          GAME FOOTAGE
         </h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {CATEGORIES.map((category) => (
             <div
               key={category.id}

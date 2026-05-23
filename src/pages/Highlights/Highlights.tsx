@@ -7,6 +7,7 @@ import { TopPlayCategories } from "./components/TopPlayCategories";
 import { SubscribeSection } from "./components/SubscribeSection";
 import HeroSection from "./components/HeroSection";
 import Container from "@/components/common/Container";
+import TestimonialSlider from "./components/TestimonialSlider";
 
 export default function Highlights() {
   // Scroll to top on mount
@@ -37,6 +38,7 @@ export default function Highlights() {
       <SeasonStats />
       <TopPlayCategories />
       <SubscribeSection />
+      <TestimonialSlider />
     </main>
   );
 }
