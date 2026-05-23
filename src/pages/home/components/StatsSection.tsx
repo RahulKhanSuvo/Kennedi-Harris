@@ -1,4 +1,4 @@
-import statsImg from "@/assets/stats-player.png";
+import statsImg from "@/assets/modal/f84dc78b-5abc-44a4-a0cb-07c9baf66f16-scaled.png";
 const stats = [
   { value: "20+", label: "PPG" },
   { value: "16+", label: "RPG" },
