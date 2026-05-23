@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router";
-import { Camera, MessageCircle, Video, Music } from "lucide-react";
+import { FaInstagram, FaTiktok, FaTwitter, FaYoutube } from "react-icons/fa";
 
 export default function Navbar() {
   const navLinks = [
@@ -40,19 +40,12 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 className={({ isActive }) =>
-                  `font-condensed font-bold text-[13px] tracking-widest transition-colors relative pb-1 uppercase ${
+                  `font-condensed font-bold tracking-widest transition-colors relative pb-1 uppercase ${
                     isActive ? "text-kh-pink" : "text-white hover:text-kh-pink"
                   }`
                 }
               >
-                {({ isActive }) => (
-                  <>
-                    {link.name}
-                    {isActive && (
-                      <span className="absolute bottom-[-26px] left-0 right-0 h-[3px] bg-kh-pink" />
-                    )}
-                  </>
-                )}
+                {link.name}
               </NavLink>
             );
           })}
@@ -67,7 +60,7 @@ export default function Navbar() {
             className="hover:text-kh-pink transition-colors"
             aria-label="Instagram"
           >
-            <Camera size={20} />
+            <FaInstagram size={20} />
           </a>
           <a
             href="https://tiktok.com/@KennediHarrisHoops"
@@ -76,7 +69,7 @@ export default function Navbar() {
             className="hover:text-kh-pink transition-colors"
             aria-label="TikTok"
           >
-            <Music size={20} />
+            <FaTiktok size={20} />
           </a>
           <a
             href="https://x.com/kennedihoops"
@@ -85,7 +78,7 @@ export default function Navbar() {
             className="hover:text-kh-pink transition-colors"
             aria-label="X (Twitter)"
           >
-            <MessageCircle size={20} />
+            <FaTwitter size={20} />
           </a>
           <a
             href="https://youtube.com/@KennediHarrisHoops"
@@ -94,7 +87,7 @@ export default function Navbar() {
             className="hover:text-kh-pink transition-colors"
             aria-label="YouTube"
           >
-            <Video size={20} />
+            <FaYoutube size={20} />
           </a>
         </div>
       </div>
