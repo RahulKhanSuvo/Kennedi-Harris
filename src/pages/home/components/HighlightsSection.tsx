@@ -25,16 +25,14 @@ const highlights = [
 
 export default function HighlightsSection() {
   const [currentVideo, setCurrentVideo] = useState(mainVideo);
-  const [isPlaying, setIsPlaying] = useState(false); // starts paused
-  const videoRef = useRef<HTMLVideoElement>(null);
-
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const sidebarVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const handlePlayPause = () => {
     if (!videoRef.current) return;
     const video = videoRef.current;
     if (video.paused) {
-      // User clicks play: ensure it's unmuted and play with sound
       video.muted = false;
       video.play().catch(() => {});
       setIsPlaying(true);
@@ -44,16 +42,20 @@ export default function HighlightsSection() {
     }
   };
 
+  // FIXED: Now unmutes and plays the main video instantly on click
   const handleSidebarClick = (videoSrc: string) => {
     setCurrentVideo(videoSrc);
     setTimeout(() => {
       if (videoRef.current) {
-        // New video starts paused (no autoplay)
-        videoRef.current.muted = false; // will be ready for user to play with sound
-        videoRef.current.pause();
-        setIsPlaying(false);
+        videoRef.current.muted = false;
+        videoRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(() => {});
       }
-    }, 100);
+    }, 50);
   };
 
   const handleSidebarHover = (index: number, isHovering: boolean) => {
@@ -79,7 +81,6 @@ export default function HighlightsSection() {
             ref={videoRef}
             src={currentVideo}
             className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-            // No autoPlay, no muted (will be unmuted when user clicks)
             loop
             playsInline
           />
@@ -121,7 +122,9 @@ export default function HighlightsSection() {
             >
               <div className="relative w-32 aspect-video bg-kh-dark-2 rounded overflow-hidden shrink-0 border border-white/10">
                 <video
-                  ref={(el) => (sidebarVideoRefs.current[index] = el)}
+                  ref={(el) => {
+                    sidebarVideoRefs.current[index] = el;
+                  }}
                   src={item.video}
                   className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
                   loop

@@ -87,17 +87,24 @@ export default function Footer() {
               on social media.
             </p>
             <div className="flex items-center gap-5 text-white text-3xl">
-              <a href="https://web.facebook.com/profile.php?id=61555406655649&_rdc=1&_rdr#">
+              <a
+                target="_blank"
+                href="https://web.facebook.com/profile.php?id=61555406655649&_rdc=1&_rdr#"
+              >
                 <FaFacebook className="hover:text-neutral-400 transition-colors cursor-pointer" />
               </a>
               <FaInstagram className="hover:text-neutral-400 transition-colors cursor-pointer" />
               {/* TikTok */}
-              <a href="https://www.tiktok.com/@kennediharrishoops?_t=ZT-8rgy1sD9O39&_r=1">
+              <a
+                target="_blank"
+                href="https://www.tiktok.com/@kennediharrishoops?_t=ZT-8rgy1sD9O39&_r=1"
+              >
                 {" "}
                 <FaTiktok className="hover:text-neutral-400 transition-colors cursor-pointer" />
               </a>
-
-              <FaYoutube className="hover:text-neutral-400 transition-colors cursor-pointer" />
+              <a target="_blank" href="">
+                <FaYoutube className="hover:text-neutral-400 transition-colors cursor-pointer" />
+              </a>
             </div>
           </div>
 
