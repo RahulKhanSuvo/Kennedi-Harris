@@ -1,11 +1,11 @@
 import { Play, ArrowRight } from "lucide-react";
-import mainHighlightImg from "../../../assets/highlight-main.png";
+import mainHighlightImg from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
 
 export function MainHighlight() {
   return (
-    <div className="group relative border border-white/10 rounded-md overflow-hidden bg-kh-dark-2 flex flex-col cursor-pointer hover:border-kh-pink/50 transition-colors duration-300">
+    <div className="group relative border border-white/10 rounded-md overflow-hidden  flex flex-col cursor-pointer hover:border-kh-pink/50 transition-colors duration-300">
       {/* Image Container */}
-      <div className="relative aspect-video overflow-hidden">
+      <div className="relative max-h-96 overflow-hidden">
         <img
           src={mainHighlightImg}
           alt="Official Highlight Reel"
@@ -24,13 +24,13 @@ export function MainHighlight() {
         </div>
 
         {/* Duration Badge */}
-        <div className="absolute bottom-3 right-3 bg-black/80 px-2 py-1 text-xs font-sans text-white rounded border border-white/20">
+        <div className="absolute bottom-3 right-3 bg-black/60 px-2 py-1 text-xs font-sans text-white rounded border border-white/20">
           5:32
         </div>
       </div>
 
       {/* Content Container */}
-      <div className="p-5 flex justify-between items-end bg-kh-dark-2">
+      <div className="p-5 flex justify-between items-end">
         <div>
           <h3 className="font-condensed text-xl md:text-2xl font-bold text-white uppercase tracking-wide">
             OFFICIAL HIGHLIGHT REEL 2024-2025

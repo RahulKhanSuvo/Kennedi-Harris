@@ -1,12 +1,8 @@
-import React from "react";
-// Import Swiper React components and required modules
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-
-// Import core Swiper CSS files
+import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 interface Testimonial {
   id: number;
@@ -40,29 +36,27 @@ const dummyTestimonials: Testimonial[] = [
 ];
 
 export default function TestimonialSlider(): React.JSX.Element {
+  const swiperRef = useRef<SwiperType | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
-    <div className="mx-auto my-10 max-w-4xl rounded bg-[#0a0a0c] px-6 py-10 font-sans md:px-14">
+    <div className="mx-auto my-10 max-w-7xl rounded bg-[#0a0a0c] px-12 py-10 font-sans md:px-20 relative">
+      {/* Slider Track */}
       <Swiper
-        modules={[Navigation, Pagination]}
+        onBeforeInit={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         spaceBetween={50}
         slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
         loop={true}
-        className="
-          pb-10
-          /* Target Swiper Internal Elements with Tailwind Nesting */
-          [&_.swiper-button-next]:scale-50 [&_.swiper-button-next]:text-white
-          [&_.swiper-button-prev]:scale-50 [&_.swiper-button-prev]:text-white
-          [&_.swiper-pagination-bullet-active]:bg-[#ff0055]! [&_.swiper-pagination-bullet-active]:h-2 [&_.swiper-pagination-bullet-active]:w-2
-          [&_.swiper-pagination-bullet]:bg-[#555555] [&_.swiper-pagination-bullet]:opacity-100
-        "
+        className="w-full"
       >
         {dummyTestimonials.map((item) => (
           <SwiperSlide key={item.id}>
-            <div className="flex min-h-[120px] flex-col items-center justify-between gap-6 px-10 sm:flex-row sm:gap-0">
-              {/* Left Side: Quote Icon & Text */}
-              <div className="flex flex-1 items-start gap-4 pr-0 sm:flex-2 sm:pr-8">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-0 items-center min-h-[140px]">
+              {/* Left Column: Quote Text */}
+              <div className="md:col-span-2 flex items-start gap-4 md:pr-12">
                 <span className="select-none font-serif text-5xl font-bold leading-8 text-[#ff0055]">
                   “
                 </span>
@@ -71,22 +65,56 @@ export default function TestimonialSlider(): React.JSX.Element {
                 </p>
               </div>
 
-              {/* Vertical Divider (Hidden on mobile stack, visible on layout split) */}
-              <div className="hidden h-auto self-stretch border-l border-[#222] sm:block sm:mx-5" />
-
-              {/* Right Side: Author Details */}
-              <div className="flex flex-1 flex-col justify-center pl-0 sm:pl-2">
-                <h4 className="m-0 text-sm font-bold tracking-wider text-[#ff0055] uppercase">
-                  {item.author}
-                </h4>
-                <p className="m-0 mt-1.5 text-xs font-normal text-[#8a8a8f]">
-                  {item.role}
-                </p>
+              {/* Right Column: Side Bar Divider & Author Details Combined */}
+              <div className="flex items-stretch gap-6 md:pl-8 border-t border-zinc-800 pt-6 md:border-t-0 md:pt-0 md:border-l md:border-zinc-800">
+                <div className="flex flex-col justify-center">
+                  <h4 className="m-0 text-sm font-bold tracking-wider text-[#ff0055] uppercase">
+                    {item.author}
+                  </h4>
+                  <p className="m-0 mt-1.5 text-xs font-normal text-[#8a8a8f]">
+                    {item.role}
+                  </p>
+                </div>
               </div>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Custom Bottom Pagination Dots */}
+      <div className="mt-8 flex justify-center gap-2">
+        {dummyTestimonials.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => swiperRef.current?.slideToLoop(index)}
+            className={`h-2 transition-all duration-300 rounded-full ${
+              activeIndex === index
+                ? "w-6 bg-[#ff0055]"
+                : "w-2 bg-zinc-700 hover:bg-zinc-500"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Absolute Positioned Side-by-Side Navigation Arrows */}
+      {/* Left Control */}
+      <button
+        onClick={() => swiperRef.current?.slidePrev()}
+        className="absolute left-3 md:left-6 top-1/2 z-10 -translate-y-1/2 flex text-2xl text-white transition hover:border-[#ff0055] hover:text-[#ff0055] active:scale-95"
+        aria-label="Previous slide"
+      >
+        <FaAngleLeft />
+      </button>
+
+      {/* Right Control */}
+      <button
+        onClick={() => swiperRef.current?.slideNext()}
+        className="absolute right-3 md:right-6 top-1/2 z-10 -translate-y-1/2 text-2xl text-white transition hover:border-[#ff0055] hover:text-[#ff0055] active:scale-95"
+        aria-label="Next slide"
+      >
+        <FaAngleRight />
+      </button>
     </div>
   );
 }

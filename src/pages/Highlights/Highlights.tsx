@@ -4,7 +4,7 @@ import { MainHighlight } from "./components/MainHighlight";
 import { FeaturedHighlights } from "./components/FeaturedHighlights";
 import { SeasonStats } from "./components/SeasonStats";
 import { TopPlayCategories } from "./components/TopPlayCategories";
-import { SubscribeSection } from "./components/SubscribeSection";
+// import { SubscribeSection } from "./components/SubscribeSection";
 import HeroSection from "./components/HeroSection";
 import Container from "@/components/common/Container";
 import TestimonialSlider from "./components/TestimonialSlider";
@@ -37,7 +37,7 @@ export default function Highlights() {
 
       <SeasonStats />
       <TopPlayCategories />
-      <SubscribeSection />
+      {/* <SubscribeSection /> */}
       <TestimonialSlider />
     </main>
   );
