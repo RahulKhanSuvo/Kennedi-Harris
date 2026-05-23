@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { Check, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import Container from "@/components/common/Container";
 
 export default function BioAndAccomplishments() {
   const bioData = [
@@ -30,7 +31,7 @@ export default function BioAndAccomplishments() {
       {/* Subtle Background Glow */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-kh-pink/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
+      <Container className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
         {/* Column 1 - Player Bio */}
         <div className="flex flex-col gap-6">
           <h3 className="font-condensed font-black text-lg md:text-xl text-white uppercase tracking-wider border-b border-white/10 pb-4">
@@ -143,7 +144,7 @@ export default function BioAndAccomplishments() {
             </Link>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
