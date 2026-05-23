@@ -1,9 +1,10 @@
 import { PlayCircle, FileText, Mail } from "lucide-react";
-// import heroImg from "../../assets/hero-player.png";
+import heroImg from "@/assets/modal/hero.png";
+import Container from "@/components/common/Container";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden bg-kh-dark hero-glow-blue">
+    <section className="relative min-h-[90vh] flex flex-col justify-center  overflow-hiddenhero-glow-blue">
       {/* Background large 11 */}
       <div className="absolute top-10 right-0 lg:right-10 pointer-events-none select-none z-0">
         <span className="font-display text-[300px] lg:text-[450px] leading-none outline-text-blue opacity-40">
@@ -11,9 +12,9 @@ export default function HeroSection() {
         </span>
       </div>
 
-      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center justify-between pt-16">
+      <Container className="relative z-10 flex flex-col lg:flex-row items-center justify-between pt-16">
         {/* Left Content */}
-        <div className="w-full lg:w-[55%] flex flex-col items-start gap-2">
+        <div className="w-full lg:w-[45%] flex flex-col items-start gap-2">
           <div className="font-condensed font-bold tracking-[0.2em] text-kh-pink text-sm uppercase">
             Class of 2030
           </div>
@@ -58,9 +59,9 @@ export default function HeroSection() {
         </div>
 
         {/* Right Player Image */}
-        <div className="w-full lg:w-[45%] h-full flex justify-end items-end relative mt-10 lg:mt-0 delay-200 animate-fade-in-up">
+        <div className="w-full lg:w-[55%] h-full flex justify-start items-start border relative">
           {/* Decorative script text behind image */}
-          <div className="absolute right-[-10%] bottom-[20%] font-script text-5xl lg:text-7xl text-kh-pink opacity-40 rotate-[-10deg] pointer-events-none select-none z-0">
+          <div className="absolute right-[5%] bottom-[20%] font-script text-5xl lg:text-7xl text-kh-pink opacity-40 rotate-[-10deg] pointer-events-none select-none z-0">
             Kennedi
             <br />
             Harris
@@ -68,10 +69,9 @@ export default function HeroSection() {
             #11
           </div>
 
-          <div className="relative z-10 h-[500px] lg:h-[700px] w-full flex justify-end">
-            {/* The image will be placed here. Using a placeholder container if image is missing */}
-            <div className="w-[80%] h-full bg-kh-blue/10 border border-kh-blue/30 rounded-lg flex items-center justify-center backdrop-blur-sm overflow-hidden">
-              {/* <img
+          <div className="relative z-10  w-full flex justify-start">
+            <div className="w-[80%] flex items-center justify-center overflow-hidden">
+              <img
                 src={heroImg}
                 alt="Kennedi Harris"
                 className="w-full h-full object-cover object-top"
@@ -85,11 +85,11 @@ export default function HeroSection() {
                   e.currentTarget.parentElement!.innerHTML =
                     '<div class="text-kh-gray font-condensed">IMAGE PLACEHOLDER</div>';
                 }}
-              /> */}
+              />
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

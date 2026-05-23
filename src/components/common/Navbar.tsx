@@ -60,16 +60,40 @@ export default function Navbar() {
 
         {/* Social Icons */}
         <div className="hidden lg:flex items-center gap-5 text-white">
-          <a href="#" className="hover:text-kh-pink transition-colors">
+          <a
+            href="https://instagram.com/kennediharrishoops"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-kh-pink transition-colors"
+            aria-label="Instagram"
+          >
             <Camera size={20} />
           </a>
-          <a href="#" className="hover:text-kh-pink transition-colors">
+          <a
+            href="https://tiktok.com/@KennediHarrisHoops"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-kh-pink transition-colors"
+            aria-label="TikTok"
+          >
             <Music size={20} />
           </a>
-          <a href="#" className="hover:text-kh-pink transition-colors">
+          <a
+            href="https://x.com/kennedihoops"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-kh-pink transition-colors"
+            aria-label="X (Twitter)"
+          >
             <MessageCircle size={20} />
           </a>
-          <a href="#" className="hover:text-kh-pink transition-colors">
+          <a
+            href="https://youtube.com/@KennediHarrisHoops"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-kh-pink transition-colors"
+            aria-label="YouTube"
+          >
             <Video size={20} />
           </a>
         </div>
