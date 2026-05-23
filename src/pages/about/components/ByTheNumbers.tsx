@@ -49,7 +49,7 @@ export function ByTheNumbers() {
 
             <div className="flex flex-col max-w-[120px]">
               <span className="font-display text-5xl md:text-6xl text-white">
-                26
+                31
               </span>
               <span className="font-condensed font-bold text-kh-pink tracking-widest mt-1 text-sm">
                 REBOUNDS IN A SINGLE GAME

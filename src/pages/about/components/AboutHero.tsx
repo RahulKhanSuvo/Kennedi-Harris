@@ -33,7 +33,7 @@ export function AboutHero() {
               blocking, and guard-level skill.
             </p>
             <p>
-              At 6'2", she impacts the game on both ends of the floor with the
+              At 6'4", she impacts the game on both ends of the floor with the
               ability to score, defend, rebound, push the ball, and create
               opportunities for her team.
             </p>

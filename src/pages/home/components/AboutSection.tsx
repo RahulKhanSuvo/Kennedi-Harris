@@ -53,7 +53,7 @@ export default function AboutSection() {
                 }}
               />
               <div className="absolute bottom-10 right-10 font-display text-[100px] leading-none outline-text opacity-30 select-none">
-                30
+                11
               </div>
             </div>
           </div>
@@ -73,7 +73,7 @@ export default function AboutSection() {
               <p>
                 Kennedi Harris is a Class of 2030 basketball prospect known for
                 her rare combination of size, versatility, rebounding, shot
-                blocking, and guard-level skill. At 6'2, she impacts the game on
+                blocking, and guard-level skill. At 6'4, she impacts the game on
                 both ends of the floor with the ability to score, defend,
                 rebound, push the ball, and create opportunities for her team.
               </p>

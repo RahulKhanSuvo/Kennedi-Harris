@@ -36,7 +36,7 @@ const STATS = [
   },
   {
     id: 5,
-    value: "26",
+    value: "31",
     label: "REBOUNDS IN A SINGLE GAME",
     sublabel: "Season High",
     icon: Trophy,

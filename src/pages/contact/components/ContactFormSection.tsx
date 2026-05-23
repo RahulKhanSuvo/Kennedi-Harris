@@ -1,4 +1,3 @@
-import React from "react";
 import {
   User,
   Mail,
@@ -111,7 +110,7 @@ export function ContactFormSection() {
                   PHONE
                 </h3>
                 <p className="text-gray-300 text-sm font-sans font-light">
-                  (404) 123-4567
+                  (904) 238-4734
                 </p>
               </div>
             </div>
@@ -126,7 +125,7 @@ export function ContactFormSection() {
                   LOCATION
                 </h3>
                 <p className="text-gray-300 text-sm font-sans font-light">
-                  Atlanta, Georgia
+                  Warner Robins, Georgia
                 </p>
                 <p className="text-gray-300 text-sm font-sans font-light">
                   United States

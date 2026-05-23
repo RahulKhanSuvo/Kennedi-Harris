@@ -14,7 +14,7 @@ export default function BottomInfoBar() {
         <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center">
           {/* <Ruler className="text-kh-pink" size={30} /> */}
           <TbRuler2 className="text-kh-pink" size={30} />
-          6'2
+          6'4
         </div>
         <div className="flex items-center gap-3 stat-bar-item lg:w-1/5 justify-center">
           {/* <User className="text-kh-pink" size={30} /> */}

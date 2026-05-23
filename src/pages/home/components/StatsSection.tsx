@@ -5,7 +5,7 @@ const stats = [
   { value: "3+", label: "BPG" },
   { value: "24+", label: "DOUBLE-DOUBLES" },
   {
-    value: "26",
+    value: "31",
     label: ["REBOUNDS", "SINGLE GAME"],
   },
 ];
@@ -25,7 +25,7 @@ export default function StatsSection() {
             {stats.map((item, index) => (
               <div
                 key={index}
-                className={`flex flex-col items-center relative after:content-[''] after:hidden lg:after:block after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-12 after:bg-white/10
+                className={`flex flex-col items-center relative after:content-[''] after:hidden lg:after:block after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-px after:h-12 after:bg-white/10
         ${index < 3 ? "w-1/3 lg:w-1/5 border-r border-white/10" : ""}
         ${index === 3 ? "w-1/2 lg:w-1/5 mt-10 lg:mt-0 border-r border-white/10" : ""}
         ${index === 4 ? "w-1/2 lg:w-1/5 mt-10 lg:mt-0 text-center" : ""}

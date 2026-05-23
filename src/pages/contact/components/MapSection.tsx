@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
@@ -39,8 +38,8 @@ const BasketballIcon = () => (
 );
 
 export function MapSection() {
-  // Atlanta, Georgia coordinates
-  const position: [number, number] = [33.749, -84.388];
+  // Warner Robins, Georgia coordinates
+  const position: [number, number] = [32.613, -83.5996];
 
   return (
     <section className="py-12 bg-kh-dark">
@@ -76,7 +75,7 @@ export function MapSection() {
             <p className="text-sm font-sans font-light text-gray-300 mb-2">
               Based in{" "}
               <span className="text-kh-pink font-semibold">
-                Atlanta, Georgia
+                Warner Robins, Georgia
               </span>
             </p>
 

@@ -4,10 +4,10 @@ import { PlayCircle, FileText, Mail } from "lucide-react";
 export default function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden bg-kh-dark hero-glow-blue">
-      {/* Background large 30 */}
+      {/* Background large 11 */}
       <div className="absolute top-10 right-0 lg:right-10 pointer-events-none select-none z-0">
         <span className="font-display text-[300px] lg:text-[450px] leading-none outline-text-blue opacity-40">
-          30
+          11
         </span>
       </div>
 
@@ -28,7 +28,7 @@ export default function HeroSection() {
           </div>
 
           <div className="font-condensed font-semibold tracking-widest text-white text-xl sm:text-2xl">
-            6'2 GUARD / FORWARD
+            6'4 GUARD / FORWARD
           </div>
 
           <div className="mt-4 flex flex-col gap-2">
@@ -65,7 +65,7 @@ export default function HeroSection() {
             <br />
             Harris
             <br />
-            #30
+            #11
           </div>
 
           <div className="relative z-10 h-[500px] lg:h-[700px] w-full flex justify-end">
