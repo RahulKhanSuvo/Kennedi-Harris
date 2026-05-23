@@ -1,5 +1,7 @@
 import mainLayout from "@/layouts/mainLayout";
 import About from "@/pages/about/About";
+import BrandPartner from "@/pages/BrandPartner/BrandPartner";
+import ContactPage from "@/pages/contact/ContactPage";
 import GallaryPage from "@/pages/Gallary/GallaryPage";
 import Highlights from "@/pages/Highlights/Highlights";
 import Home from "@/pages/home/Home";
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "/schedule",
         Component: Schedule,
+      },
+      {
+        path: "/brand-partners",
+        Component: BrandPartner,
+      },
+      {
+        path: "/contact",
+        Component: ContactPage,
       },
     ],
   },

@@ -351,3 +351,36 @@
     mask-image: radial-gradient(circle, #000 1px, transparent 1px);
     mask-size: 20px 20px;
 }
+
+/* Custom Leaflet Controls Style (Dark Theme) */
+.leaflet-container .leaflet-bar {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+}
+
+.leaflet-container .leaflet-bar a {
+    background-color: #0c0c14 !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.leaflet-container .leaflet-bar a:hover {
+    background-color: #e8176a !important;
+    color: #ffffff !important;
+}
+
+.leaflet-container .leaflet-bar a.leaflet-disabled {
+    background-color: #050508 !important;
+    color: #444455 !important;
+}
+
+.leaflet-container .leaflet-control-attribution {
+    background-color: rgba(12, 12, 20, 0.8) !important;
+    color: #888899 !important;
+    font-size: 10px !important;
+}
+
+.leaflet-container .leaflet-control-attribution a {
+    color: #e8176a !important;
+}
