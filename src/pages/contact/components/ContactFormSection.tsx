@@ -12,6 +12,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+type FormField = "name" | "email" | "subject" | "message" | null;
+
 export function ContactFormSection() {
   const [formState, setFormState] = useState({
     name: "",
@@ -19,7 +21,9 @@ export function ContactFormSection() {
     subject: "",
     message: "",
   });
-  const [focusedField, setFocusedField] = useState(null);
+
+  // Explicitly passing the FormField union type to useState resolves the TS2345 error
+  const [focusedField, setFocusedField] = useState<FormField>(null);
 
   const contactInfo = [
     {
