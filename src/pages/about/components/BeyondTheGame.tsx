@@ -60,21 +60,15 @@ export function BeyondTheGame() {
   ];
 
   return (
-    <section className="py-24 bg-[#050508] border-t border-white/5 relative overflow-hidden group/section">
+    <section className="py-3 bg-kh-dark border-t border-white/5 relative overflow-hidden group/section">
       {/* Structural environment light arrays */}
-      <div className="absolute left-1/4 top-1/4 w-[600px] h-[400px] bg-kh-blue/[0.02] blur-[150px] rounded-full pointer-events-none animate-pulse-glow" />
-      <div className="absolute right-10 bottom-0 w-[500px] h-[300px] bg-kh-pink/[0.02] blur-[120px] rounded-full pointer-events-none animate-pulse-glow" />
+      <div className="absolute left-1/4 top-1/4 w-[600px] h-[400px] bg-kh-blue/2 blur-[150px] rounded-full pointer-events-none animate-pulse-glow" />
+      <div className="absolute right-10 bottom-0 w-[500px] h-[300px] bg-kh-pink/2 blur-[120px] rounded-full pointer-events-none animate-pulse-glow" />
 
       <Container>
         {/* Section Header Frame */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-8">
           <div className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-kh-pink" />
-              <span className="text-white/40 font-condensed tracking-[0.2em] font-bold text-xs uppercase">
-                VISUAL STORIES
-              </span>
-            </div>
             <h2 className="font-display text-4xl md:text-6xl font-black italic uppercase leading-[0.9] tracking-tight text-white">
               BEYOND THE <span className="text-kh-pink">GAME</span>
             </h2>
@@ -86,11 +80,11 @@ export function BeyondTheGame() {
         </div>
 
         {/* Asymmetric Cinematic Mosaic Bento Framework Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[160px] md:auto-rows-[190px] gap-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[160px] md:auto-rows-[190px] gap-4">
           {bentoItems.map((item, index) => (
             <div
               key={index}
-              className={`${item.span} group/frame relative overflow-hidden rounded-xl md:rounded-2xl border border-white/5 bg-gradient-to-br from-neutral-900/40 to-neutral-950/60 p-6 flex flex-col justify-between transition-all duration-300 hover:border-white/10`}
+              className={`${item.span} group/frame relative overflow-hidden rounded md:rounded border border-white/5 bg-linear-to-br from-neutral-900/40 to-neutral-950/60 p-6 flex flex-col justify-between transition-all duration-300 hover:border-white/10`}
             >
               {/* RENDERING BLOCKS DEPENDING ON ELEMENT TYPE MATRICES */}
 
@@ -103,14 +97,14 @@ export function BeyondTheGame() {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover/frame:scale-105 will-change-transform"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover/frame:opacity-40 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover/frame:opacity-40 transition-opacity duration-500 pointer-events-none" />
                 </>
               )}
 
               {/* Archetype B: Numeric Stat Display Card */}
               {item.type === "stat" && (
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} p-6 flex flex-col justify-between h-full w-full`}
+                  className={`absolute inset-0 bg-linear-to-br ${item.bgGradient} p-6 flex flex-col justify-between h-full w-full`}
                 >
                   <div className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
                     {item.icon && (
@@ -131,13 +125,13 @@ export function BeyondTheGame() {
               {/* Archetype C: High Impact Athletic Quote Node */}
               {item.type === "quote" && (
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} p-7 flex flex-col justify-center gap-2 h-full w-full`}
+                  className={`absolute inset-0 bg-linear-to-br ${item.bgGradient} p-7 flex flex-col justify-center gap-2 h-full w-full`}
                 >
-                  <p className="font-display text-xl md:text-2xl font-black italic tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-zinc-400 leading-tight">
+                  <p className="font-display text-xl md:text-2xl font-black italic tracking-wide text-transparent bg-clip-text bg-linear-to-r from-white via-zinc-200 to-zinc-400 leading-tight">
                     {item.text}
                   </p>
                   <div className="flex items-center gap-2">
-                    <span className="h-[1px] w-4 bg-kh-blue" />
+                    <span className="h-px w-4 bg-kh-blue" />
                     <span className="font-mono text-[9px] tracking-widest text-kh-blue-light font-bold uppercase">
                       {item.author}
                     </span>
