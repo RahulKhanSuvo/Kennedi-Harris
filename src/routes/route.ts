@@ -7,6 +7,9 @@ import Highlights from "@/pages/Highlights/Highlights";
 import Home from "@/pages/home/Home";
 import MediaKit from "@/pages/MediaKit/MediaKit";
 import Schedule from "@/pages/Schedule/Schedule";
+import Login from "@/pages/login/Login";
+import Dashboard from "@/pages/admin/Dashboard";
+import AdminProtectedRoute from "@/components/common/AdminProtectedRoute";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -45,6 +48,20 @@ const router = createBrowserRouter([
       {
         path: "/media-kit",
         Component: MediaKit,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    Component: Login,
+  },
+  {
+    path: "/admin",
+    Component: AdminProtectedRoute,
+    children: [
+      {
+        index: true,
+        Component: Dashboard,
       },
     ],
   },

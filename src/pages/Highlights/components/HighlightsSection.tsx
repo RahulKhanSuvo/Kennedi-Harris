@@ -80,6 +80,7 @@ export default function MediaBroadcastCenter() {
         videoRef.current.play().catch(() => setIsPlaying(false));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTrack]);
 
   // Intersection Observer config for handling track auto-swaps via scroll heights
