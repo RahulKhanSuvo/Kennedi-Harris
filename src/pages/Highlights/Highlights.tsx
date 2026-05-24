@@ -1,14 +1,11 @@
 import { useEffect } from "react";
 // import { NavigationTabs } from "./components/NavigationTabs";
-import { MainHighlight } from "./components/MainHighlight";
-import { FeaturedHighlights } from "./components/FeaturedHighlights";
 import { SeasonStats } from "./components/SeasonStats";
-import { TopPlayCategories } from "./components/TopPlayCategories";
+import TopPlayCategories from "./components/TopPlayCategories";
 // import { SubscribeSection } from "./components/SubscribeSection";
 import HeroSection from "./components/HeroSection";
-import Container from "@/components/common/Container";
 import TestimonialSlider from "./components/TestimonialSlider";
-import FeaturedHighlightsSection from "./components/FeaturedHighlightsSection";
+import HighlightsSection from "./components/HighlightsSection";
 
 export default function Highlights() {
   // Scroll to top on mount
@@ -20,22 +17,8 @@ export default function Highlights() {
     <main className="min-h-screen text-foreground flex flex-col w-full">
       <HeroSection />
       {/* <NavigationTabs /> */}
-      <FeaturedHighlightsSection></FeaturedHighlightsSection>
-
-      {/* Highlights Grid */}
-      <Container className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Video (Left 2/3) */}
-          <div className="lg:col-span-2">
-            <MainHighlight />
-          </div>
-
-          {/* Featured List (Right 1/3) */}
-          <div className="lg:col-span-1">
-            <FeaturedHighlights />
-          </div>
-        </div>
-      </Container>
+      {/* <FeaturedHighlightsSection></FeaturedHighlightsSection> */}
+      <HighlightsSection />
 
       <SeasonStats />
       <TopPlayCategories />

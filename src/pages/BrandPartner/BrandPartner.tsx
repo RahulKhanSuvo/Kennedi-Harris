@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { OurPartners } from "./components/OurPartners";
-import { WhyPartner } from "./components/WhyPartner";
 import { PartnerTestimonials } from "./components/PartnerTestimonials";
 import { PartnerCTA } from "./components/PartnerCTA";
 import BrandPartnerHero from "./components/BrandHero";
+import WhyPartner from "./components/WhyPartner";
 
 export default function BrandPartner() {
   useEffect(() => {

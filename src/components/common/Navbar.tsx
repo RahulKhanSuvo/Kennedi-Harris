@@ -74,7 +74,7 @@ export default function Navbar() {
                     <span className="relative z-10">{link.name}</span>
                     {/* Sliding Underline Effect */}
                     <span
-                      className={`absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-kh-pink to-kh-blue transition-all duration-300 origin-left ${
+                      className={`absolute bottom-0 left-0 right-0 h-[2.5px] bg-kh-pink transition-all duration-300 origin-left ${
                         isActive ? "scale-x-100" : "scale-x-0 hover:scale-x-50"
                       }`}
                     />

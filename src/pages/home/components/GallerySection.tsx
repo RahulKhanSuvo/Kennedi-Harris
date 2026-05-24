@@ -1,114 +1,208 @@
+import { motion, type Variants } from "motion/react";
 import gal1 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
 import gal2 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
 
+const kineticSpring = [0.16, 1, 0.3, 1] as const;
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06 },
+  },
+};
+
+const fadeUpVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: kineticSpring },
+  },
+};
+
+const imageArray = [
+  { src: gal1, alt: "In-game baseline drive" },
+  { src: gal2, alt: "Defensive closeout block" },
+  { src: gal1, alt: "Mid-range pull up jumper" },
+  { src: gal1, alt: "Fastbreak transition attack" },
+];
+
 export default function GallerySection() {
   return (
-    <section id="gallery" className="py-16 bg-kh-dark border-t border-white/5">
+    <section
+      id="gallery"
+      className="py-20 lg:py-28 bg-kh-dark border-t border-white/10 relative overflow-hidden"
+    >
+      {/* 
+        Tailwind Global Style Injection Core
+        Injects a clean hardware-accelerated horizontal translation utility directly.
+      */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee-infinite {
+          display: flex;
+          width: max-content;
+          animation: marquee 22s linear infinite;
+        }
+        .animate-marquee-infinite:hover {
+          animation-play-state: paused;
+        }
+      `,
+        }}
+      />
+
       <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12">
-        <div className="flex flex-col xl:flex-row gap-8 xl:gap-12">
-          {/* Gallery Side */}
-          <div className="w-full xl:w-[45%] flex flex-col justify-between">
-            <div className="flex justify-between items-end mb-6">
-              <h3 className="font-condensed font-semibold text-xl tracking-widest text-white uppercase">
-                PHOTO GALLERY
-              </h3>
+        <div className="flex flex-col xl:flex-row gap-16 xl:gap-12 items-stretch">
+          {/* Left Side: Photo Gallery Deck */}
+          <div className="w-full xl:w-[46%] flex flex-col justify-between">
+            <div className="flex justify-between items-end mb-8">
+              <div className="flex items-center gap-4">
+                <h3 className="font-condensed font-semibold text-xl tracking-widest text-white uppercase">
+                  PHOTO GALLERY
+                </h3>
+                <div className="h-px w-8 bg-kh-pink"></div>
+              </div>
               <a
                 href="#"
-                className="font-condensed font-bold text-xs tracking-widest text-kh-blue hover:text-kh-blue-light transition-colors uppercase"
+                className="font-condensed font-bold text-xs tracking-widest text-kh-blue hover:text-white transition-colors uppercase border-b border-kh-blue/30 pb-0.5"
               >
                 VIEW GALLERY
               </a>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 h-full">
-              <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
-                <img
-                  src={gal1}
-                  alt="Gallery 1"
-                  className="w-full h-full object-cover transition-all duration-500"
-                  onError={(e) => (e.currentTarget.style.display = "none")}
-                />
-              </div>
-              <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
-                <img
-                  src={gal2}
-                  alt="Gallery 2"
-                  className="w-full h-full object-cover transition-all duration-500"
-                  onError={(e) => (e.currentTarget.style.display = "none")}
-                />
-              </div>
-              <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
-                <img
-                  src={gal1}
-                  alt="Gallery 3"
-                  className="w-full h-full object-cover transition-all duration-500"
-                  onError={(e) => (e.currentTarget.style.display = "none")}
-                />
-              </div>
-              <div className="aspect-5/5 bg-kh-dark-2 rounded overflow-hidden cursor-pointer group">
-                <img
-                  src={gal1}
-                  alt="Gallery 4"
-                  className="w-full h-full object-cover transition-all duration-500"
-                  onError={(e) => (e.currentTarget.style.display = "none")}
-                />
-              </div>
-            </div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-3"
+            >
+              {imageArray.map((img, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeUpVariants}
+                  className="aspect-square bg-neutral-900 rounded-sm border border-white/5 overflow-hidden cursor-pointer group relative"
+                >
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 z-10" />
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-500 will-change-transform"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      e.currentTarget.parentElement!.innerHTML =
+                        '<div class="absolute inset-0 flex items-center justify-center text-[10px] font-condensed tracking-widest text-zinc-600">// MEDIA</div>';
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
 
-          {/* Divider */}
-          <div className="hidden xl:block w-px bg-white/10 my-2"></div>
-          <div className="block xl:hidden h-px w-full bg-white/10 my-4"></div>
+          {/* Structural Row/Col Divider */}
+          <div className="hidden xl:block w-px bg-white/10 self-stretch my-2"></div>
+          <div className="block xl:hidden h-px w-full bg-white/10"></div>
 
-          {/* Partners Side */}
-          <div className="w-full xl:w-[55%] flex flex-col justify-between pt-2 xl:pt-0">
+          {/* Right Side: Brand Partner Matrix */}
+          <div className="w-full xl:w-[54%] flex flex-col justify-between xl:pl-6">
             <div className="flex flex-col gap-4">
-              <div className="flex justify-between items-end mb-2">
-                <h3 className="font-condensed font-semibold text-xl tracking-widest text-white uppercase">
-                  BRAND PARTNER OPPORTUNITIES
-                </h3>
+              <div className="flex justify-between items-end mb-4">
+                <div className="flex items-center gap-4">
+                  <h3 className="font-condensed font-semibold text-xl tracking-widest text-white uppercase">
+                    BRAND OPPORTUNITIES
+                  </h3>
+                  <div className="h-px w-8 bg-kh-pink"></div>
+                </div>
                 <a
                   href="#"
-                  className="font-condensed font-bold text-xs tracking-widest text-kh-blue hover:text-kh-blue-light transition-colors uppercase"
+                  className="font-condensed font-bold text-xs tracking-widest text-kh-blue hover:text-white transition-colors uppercase border-b border-kh-blue/30 pb-0.5"
                 >
                   LEARN MORE
                 </a>
               </div>
 
-              <p className="text-kh-gray text-sm leading-relaxed font-sans max-w-2xl mb-8">
+              <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-sans max-w-2xl mb-8 font-light">
                 Kennedi partners with brands that align with youth sports,
-                wellness, performance, education, and community impact. Let's
-                build something meaningful together.
+                wellness, elite performance, academic development, and local
+                community impact. Let's construct scalable, authentic narratives
+                together.
               </p>
             </div>
 
-            {/* Logos */}
-            <div className="flex flex-wrap items-center justify-between gap-6 opacity-60 hover:opacity-100 transition-all duration-500 pb-2">
-              {/* Nike */}
-              <svg viewBox="0 0 24 24" className="w-16 h-8 fill-white">
-                <path d="M24 8.2c-.3 1.2-1.3 2.5-2.8 3.5-3.3 2.1-8.5 2.1-13.6-.5C4.2 9.4 1 6.3 1 3.2 1 2.2 1.3 1.2 2 .5c.1-.1.2-.2.3-.2C1 .8-.1 2.4.4 4c.6 1.7 2.2 3.1 4.7 4.1 3.5 1.3 7.8 1.4 11.2.1-1.2.7-2.6 1-4.2.9-3.7-.3-6.6-2.6-6.6-2.6s2.5 2.7 7.7 2.4c3.4-.2 7.1-1.6 9.4-3.5.7-.6 1.2-1.2 1.4-1.8.2-.5.1-.4 0 .6z" />
-              </svg>
-              {/* Gatorade */}
-              <div className="text-4xl font-black italic text-white flex items-center">
-                G<span className="text-orange-500 text-2xl -ml-1">⚡</span>
-              </div>
-              {/* The Stinger */}
-              <div className="font-serif font-bold text-white text-xl italic flex items-center">
-                <span className="mr-1">🐝</span> THE STINGER
-              </div>
-              {/* Bouncewear */}
-              <div className="font-condensed font-bold text-white text-2xl tracking-wider italic">
-                BOUNCEWEAR
-              </div>
-              {/* BodyArmor */}
-              <div className="flex flex-col items-center justify-center">
-                <div className="font-black tracking-tighter text-2xl flex items-center leading-none">
-                  <span className="text-[#E31837]">BODY</span>
-                  <span className="text-white">ARMOR</span>
+            {/* 
+              Marquee Mask Container Box
+              Uses CSS masks to softly fade out logo edges on either side seamlessly.
+            */}
+            <div className="w-full overflow-hidden border-t border-white/5 pt-8 relative [mask-image:linear-gradient(to_right,transparent_0%,#000_10%,#000_90%,transparent_100%)]">
+              <div className="animate-marquee-infinite gap-16 items-center pr-16 select-none opacity-60 hover:opacity-100 transition-opacity duration-300">
+                {/* Track Group A */}
+                <div className="flex items-center gap-16 shrink-0">
+                  <div className="w-16 h-8 flex items-center justify-center">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-full h-full fill-white"
+                    >
+                      <path d="M21 6.5c-1.5 1.7-4.5 3.3-8.5 4.5-3.5 1-6.5 1.2-8.5.5-1-.3-1.5-.8-1.5-1.5 0-1.2 1.5-3 4-4.5.5-.3 1-.3.8.3-.3 1.2.2 2.5 1.5 3.5 1.8 1.2 4.5 1.5 7.5.5 3-1 5.5-2.5 6.5-4 .3-.5.7-.2.2.7z" />
+                    </svg>
+                  </div>
+                  <div className="font-display text-3xl font-black italic text-white leading-none">
+                    G<span className="text-kh-pink text-xl -ml-0.5">⚡</span>
+                  </div>
+                  <div className="font-condensed font-bold text-white text-base tracking-wider italic whitespace-nowrap">
+                    THE STINGER
+                  </div>
+                  <div className="font-condensed font-bold text-white text-lg tracking-widest italic whitespace-nowrap">
+                    BOUNCEWEAR
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="font-display font-black tracking-tighter text-xl flex items-center leading-none">
+                      <span className="text-kh-pink">BODY</span>
+                      <span className="text-white">ARMOR</span>
+                    </div>
+                    <span className="text-[7px] text-zinc-400 tracking-widest uppercase mt-0.5 font-condensed">
+                      SPORTS DRINK
+                    </span>
+                  </div>
                 </div>
-                <span className="text-[8px] text-white tracking-widest uppercase mt-1">
-                  Sports Drink
-                </span>
+
+                {/* Duplicate Track Group B (Enables Seamless Loop Assembly) */}
+                <div
+                  className="flex items-center gap-16 shrink-0"
+                  aria-hidden="true"
+                >
+                  <div className="w-16 h-8 flex items-center justify-center">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-full h-full fill-white"
+                    >
+                      <path d="M21 6.5c-1.5 1.7-4.5 3.3-8.5 4.5-3.5 1-6.5 1.2-8.5.5-1-.3-1.5-.8-1.5-1.5 0-1.2 1.5-3 4-4.5.5-.3 1-.3.8.3-.3 1.2.2 2.5 1.5 3.5 1.8 1.2 4.5 1.5 7.5.5 3-1 5.5-2.5 6.5-4 .3-.5.7-.2.2.7z" />
+                    </svg>
+                  </div>
+                  <div className="font-display text-3xl font-black italic text-white leading-none">
+                    G<span className="text-kh-pink text-xl -ml-0.5">⚡</span>
+                  </div>
+                  <div className="font-condensed font-bold text-white text-base tracking-wider italic whitespace-nowrap">
+                    THE STINGER
+                  </div>
+                  <div className="font-condensed font-bold text-white text-lg tracking-widest italic whitespace-nowrap">
+                    BOUNCEWEAR
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="font-display font-black tracking-tighter text-xl flex items-center leading-none">
+                      <span className="text-kh-pink">BODY</span>
+                      <span className="text-white">ARMOR</span>
+                    </div>
+                    <span className="text-[7px] text-zinc-400 tracking-widest uppercase mt-0.5 font-condensed">
+                      SPORTS DRINK
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
