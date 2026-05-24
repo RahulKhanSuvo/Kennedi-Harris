@@ -1,147 +1,137 @@
+"use client";
+
+import { motion } from "motion/react";
 import { Star, User, GraduationCap, Users, ArrowRight } from "lucide-react";
-import { motion, type Variants } from "motion/react";
 import aboutImg from "@/assets/me-removebg-preview.png";
 import { Button } from "@/components/ui/button";
-
-const fluidSpring = [0.16, 1, 0.3, 1] as const;
-
-const scrollViewport = {
-  once: true,
-  amount: 0.15,
-} as const;
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06 },
-  },
-};
-
-const elementFadeVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.75, ease: fluidSpring },
-  },
-};
-
-const traitsGridVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.05, delayChildren: 0.2 },
-  },
-};
-
-const traitItemVariants: Variants = {
-  hidden: { opacity: 0, x: 20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: fluidSpring },
-  },
-};
+import Container from "@/components/common/Container";
 
 const features = [
   {
     icon: Star,
     title: "COMPETITIVE",
-    desc: "Relentless on both ends of the floor",
+    desc: "Relentless on both ends",
   },
   {
     icon: User,
     title: "LEADER",
-    desc: "Vocal and leads completely by example",
+    desc: "Leads by example",
   },
   {
     icon: GraduationCap,
     title: "STUDENT",
-    desc: "Academic driven and elite focus",
+    desc: "Academic driven",
   },
   {
     icon: Users,
     title: "TEAM FIRST",
-    desc: "Achieving true success together",
+    desc: "Success together",
   },
 ];
 
+// Left Side: Image Slide-In
+const imageContainerVariants = {
+  hidden: { opacity: 0, x: -50, scale: 0.95 },
+  show: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 60, damping: 16 },
+  },
+} as const;
+
+// Middle Side: Text Blocks Fade-Up
+const contentContainerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 65, damping: 14, delay: 0.15 },
+  },
+} as const;
+
+// Right Side: Staggered Traits List
+const traitsListVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.3 },
+  },
+} as const;
+
+const traitItemVariants = {
+  hidden: { opacity: 0, x: 30, skewX: -4 },
+  show: {
+    opacity: 1,
+    x: 0,
+    skewX: -4,
+    transition: { type: "spring", stiffness: 90, damping: 14 },
+  },
+} as const;
+
 export default function AboutSection() {
   return (
-    <section
-      id="about"
-      className="bg-kh-dark relative overflow-hidden py-24 border-t border-white/5"
-    >
-      {/* Structural Accent Assets */}
-      <div className="absolute right-0 top-0 w-[400px] h-[400px] bg-kh-pink/[0.01] blur-[120px] rounded-full pointer-events-none z-0" />
-      <div className="absolute left-1/3 top-1/4 w-[1px] h-2/3 bg-white/[0.02] hidden lg:block pointer-events-none z-0" />
-
-      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12 relative z-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={scrollViewport}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center"
-        >
-          {/* Left Frame - Graphic Mask & Athlete Media Showcase */}
+    <section className="bg-kh-dark relative overflow-hidden">
+      <Container>
+        <div className="flex flex-col lg:flex-row items-stretch justify-center">
+          {/* Left - Image Column */}
           <motion.div
-            variants={elementFadeVariants}
-            className="col-span-1 lg:col-span-5 flex justify-center lg:justify-end relative"
+            variants={imageContainerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            className="w-full lg:flex-1 relative flex justify-center lg:justify-end items-center will-change-transform"
           >
-            <div className="dot-grid absolute w-32 h-[60%] -left-6 top-[10%] opacity-20 pointer-events-none" />
+            <div className="dot-grid absolute w-32 h-[60%] -left-10 top-[10%] opacity-30"></div>
+            <div className="absolute left-0 bottom-0 w-2 h-full transform -skew-x-24 -translate-x-4 hidden lg:block bg-[linear-gradient(to_top,#0046c0_0%,#0046c0_50%,#f1136a_50%,#f1136a_100%)]" />
+            <div className="absolute left-0 bottom-0 w-2 h-2/5 bg-linear-to-t from-kh-blue to-transparent transform -skew-x-24 translate-x-10 hidden lg:block" />
 
-            {/* Split Color Technical Accent bar */}
-            <div className="absolute left-0 top-0 bottom-0 w-[3px] transform -skew-x-12 -translate-x-6 hidden lg:block bg-gradient-to-b from-kh-pink via-kh-blue to-transparent" />
-
-            <div className="relative w-full max-w-[360px] aspect-[3/4] bg-neutral-950/40 border border-white/5 rounded-2xl overflow-hidden group shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none" />
-
+            <div className="relative z-10 w-full max-w-[380px] aspect-3/4 rounded overflow-hidden bg-linear-to-b  shadow-2xl">
               <img
                 src={aboutImg}
-                alt="Kennedi Harris Portrait"
-                className="w-full h-full object-contain relative z-10 transition-transform duration-700 ease-out group-hover:scale-103"
+                alt="About Kennedi"
+                className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)]"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
-                  const container = e.currentTarget.parentElement;
-                  if (container) {
-                    container.classList.add(
-                      "flex",
-                      "items-center",
-                      "justify-center",
-                    );
-                    container.innerHTML =
-                      '<div class="text-zinc-600 font-mono text-xs tracking-widest">MEDIA_MISSING //</div>';
-                  }
+                  e.currentTarget.parentElement?.classList.add(
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                  );
+                  e.currentTarget.parentElement!.innerHTML =
+                    '<div class="text-kh-gray font-condensed tracking-wider text-xs">IMAGE PLACEHOLDER</div>';
                 }}
               />
-
-              {/* Bold Floating Uniform Identity Tag */}
-              <div className="absolute bottom-6 right-6 font-display text-8xl font-black italic select-none leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/[0.08] to-transparent z-0">
-                05
+              <div className="absolute bottom-6 right-8 font-display text-[110px] leading-none outline-text opacity-25 select-none font-black tracking-tighter">
+                11
               </div>
             </div>
           </motion.div>
 
-          {/* Center Frame - Editorial Core Narrative Statement */}
-          <div className="col-span-1 lg:col-span-4 flex flex-col gap-6">
-            <div className="font-mono font-bold tracking-[0.3em] text-kh-pink text-xs uppercase">
-              ATHLETE PROFILE //
+          {/* Middle - Narrative Biography Block */}
+          <motion.div
+            variants={contentContainerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            className="w-full lg:flex-1 flex flex-col justify-center gap-6 will-change-transform text-center lg:text-left items-center lg:items-start"
+          >
+            <div className="font-condensed font-black tracking-[0.2em] text-kh-pink text-xs sm:text-sm uppercase">
+              ABOUT KENNEDI
             </div>
 
-            <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white uppercase leading-[0.9] tracking-tighter">
+            <h2 className="font-condensed font-black text-4xl sm:text-6xl xl:text-7xl text-white uppercase leading-[0.92] tracking-tight italic">
               PURPOSE DRIVES.
               <br />
               <span className="text-kh-pink">PASSION DEFINES.</span>
             </h2>
 
-            <div className="text-zinc-400 text-sm sm:text-base leading-relaxed space-y-4 font-sans font-light">
+            <div className="text-gray-400 text-sm md:text-base leading-relaxed space-y-4 font-sans font-light max-w-xl">
               <p>
                 Kennedi Harris is a Class of 2030 basketball prospect known for
                 her rare combination of size, versatility, rebounding, shot
-                blocking, and guard-level skill. At 6'4", she impacts the game
-                on both ends of the floor with the ability to score, defend,
+                blocking, and guard-level skill. At 6'4, she impacts the game on
+                both ends of the floor with the ability to score, defend,
                 rebound, push the ball, and create opportunities for her team.
               </p>
               <p>
@@ -152,47 +142,45 @@ export default function AboutSection() {
               </p>
             </div>
 
-            <div className="pt-6 border-t border-white/5 mt-4">
+            <div className="pt-2 border-t border-white/5 mt-2 w-full flex justify-center lg:justify-start">
               <Button
-                variant="outline"
-                className="inline-flex items-center gap-3 font-condensed font-black tracking-widest text-white border-white/10 hover:border-kh-pink hover:bg-kh-pink/5 hover:text-kh-pink transition-all uppercase text-xs px-6 py-5 group rounded-xl cursor-pointer"
+                variant="kh-outline"
+                className="inline-flex items-center gap-3 font-condensed font-black tracking-widest text-kh-blue border-kh-blue hover:text-cyan-400 hover:border-cyan-400 transition-all uppercase text-xs sm:text-sm group py-6 px-6 animate-none"
               >
                 LEARN MORE ABOUT KENNEDI
-                <ArrowRight
-                  size={14}
-                  className="transform group-hover:translate-x-1 transition-transform duration-300"
-                />
+                <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform stroke-[2.5]" />
               </Button>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Frame - Structured Trait System Block */}
+          {/* Right - Traits Performance Column */}
           <motion.div
-            variants={traitsGridVariants}
-            className="col-span-1 lg:col-span-3 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-white/5 pt-12 lg:pt-0 lg:pl-8 gap-6 w-full"
+            variants={traitsListVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="w-full lg:w-[35%] flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-white/10 pt-10 lg:pt-0 lg:pl-10 gap-4 will-change-transform"
           >
             {features.map((item, index) => {
-              const IconComponent = item.icon;
-
+              const Icon = item.icon;
               return (
                 <motion.div
                   key={index}
                   variants={traitItemVariants}
-                  className="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-white/5 hover:bg-neutral-950/20 transition-all duration-300 group/trait"
+                  whileHover={{ x: 6 }}
+                  className="flex items-center gap-4 bg-white/[0.01] hover:bg-white/[0.03] border border-white/0 hover:border-white/5 p-3.5 rounded transition-all duration-300 group skew-x-[-4deg]"
                 >
-                  {/* Dynamic Action Trigger Node */}
-                  <div className="rounded-xl border border-white/10 text-zinc-500 bg-neutral-900/40 p-3.5 group-hover/trait:border-kh-pink/50 group-hover/trait:text-kh-pink group-hover/trait:bg-kh-pink/5 transition-all duration-300 shadow-md">
-                    <IconComponent
-                      strokeWidth={1.75}
-                      className="w-5 h-5 transition-transform duration-500 group-hover/trait:rotate-[8deg]"
-                    />
+                  {/* Icon Circle Shield */}
+                  <div className="rounded-full border-2 border-kh-pink p-3.5 text-kh-pink group-hover:bg-kh-pink group-hover:text-white group-hover:shadow-[0_0_15px_rgba(234,76,137,0.4)] transition-all duration-300 shrink-0 skew-x-[4deg]">
+                    <Icon strokeWidth={2.5} className="w-5 h-5" />
                   </div>
 
-                  <div className="flex flex-col gap-0.5">
-                    <div className="font-display font-black italic text-sm tracking-wide text-white uppercase transition-colors group-hover/trait:text-kh-pink">
+                  {/* Text Descriptors */}
+                  <div className="skew-x-[4deg]">
+                    <div className="font-condensed font-black tracking-wider text-white text-base uppercase leading-tight">
                       {item.title}
                     </div>
-                    <div className="text-zinc-500 text-xs font-sans font-medium">
+                    <div className="text-gray-400 text-xs font-mono uppercase tracking-wider mt-0.5">
                       {item.desc}
                     </div>
                   </div>
@@ -200,8 +188,8 @@ export default function AboutSection() {
               );
             })}
           </motion.div>
-        </motion.div>
-      </div>
+        </div>
+      </Container>
     </section>
   );
 }

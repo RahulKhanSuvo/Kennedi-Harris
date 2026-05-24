@@ -28,7 +28,7 @@ const itemRevealLeft: Variants = {
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden hero-glow-blue bg-black">
+    <section className="relative min-h-[90vh] flex flex-col justify-center lg:justify-end overflow-hidden hero-glow-blue bg-black">
       {/* Background Graphic Engine */}
       <motion.div
         initial={{ opacity: 0, scale: 1.05 }}
@@ -58,32 +58,33 @@ export default function HeroSection() {
         </motion.span>
       </div>
 
-      <Container className="relative z-10 flex flex-col lg:flex-row items-center justify-between pt-16">
+      {/* Configured lg:items-end to align bottom-line frameworks dynamically */}
+      <Container className="relative z-10 flex flex-col lg:flex-row items-center lg:items-end justify-between pt-24 h-full w-full">
         {/* Left Typography Matrix */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="w-full lg:w-[45%] flex flex-col items-start gap-2"
+          className="w-full lg:w-[45%] flex flex-col items-start gap-2 lg:pb-16"
         >
           <motion.div
             variants={itemRevealLeft}
-            className="font-condensed font-bold tracking-[0.2em] text-kh-pink text-sm uppercase"
+            className="font-condensed font-bold tracking-[0.2em] text-kh-pink text-base uppercase"
           >
-            Class of 2030 // SCOUTING LOG
+            Class of 2030
           </motion.div>
 
           <div className="flex flex-col overflow-hidden">
             <motion.h1
               variants={itemRevealLeft}
-              className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] leading-[0.85] text-white tracking-wider uppercase"
+              className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] text-white uppercase"
             >
               KENNEDI
             </motion.h1>
             <motion.h1
               variants={itemRevealLeft}
-              className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] leading-[0.85] text-kh-pink tracking-wider uppercase"
+              className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] text-kh-pink uppercase"
             >
               HARRIS
             </motion.h1>
@@ -91,7 +92,7 @@ export default function HeroSection() {
 
           <motion.div
             variants={itemRevealLeft}
-            className="font-condensed font-semibold tracking-widest text-white text-xl sm:text-2xl border-l-2 border-cyan-400 pl-3 mt-1"
+            className="font-condensed font-semibold tracking-widest text-white text-xl sm:text-2xl"
           >
             6'4 GUARD / FORWARD
           </motion.div>
@@ -131,8 +132,11 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Right Athlete Cutout Frame */}
-        <div className="w-full lg:w-[55%] h-full flex justify-start items-start relative mt-12 lg:mt-0">
+        {/* 
+          Right Athlete Cutout Frame 
+          Forced layout tracking rules using items-end and self-end down to the pixel grid baseline 
+        */}
+        <div className="w-full lg:w-[55%] flex justify-center lg:justify-end items-end lg:self-end relative mt-12 lg:mt-0 overflow-visible">
           {/* Ambient Identity Rings */}
           <div className="absolute bottom-[-10%] left-[25%] -translate-x-1/2 pointer-events-none h-[300px] w-[300px] rounded-full bg-[#ec4899] opacity-20 blur-[80px]" />
           <div className="absolute bottom-0 right-0 pointer-events-none h-[400px] w-[500px] rounded-tl-[100px] bg-gradient-to-br from-[#06b6d4] to-[#3b82f6] opacity-15 blur-[100px]" />
@@ -152,19 +156,19 @@ export default function HeroSection() {
             <span className="text-white">#11</span>
           </motion.div>
 
-          {/* Main Visual Player Array Wrapper */}
-          <div className="relative z-10 w-full flex justify-start">
+          {/* Main Visual Player Array Wrapper clamped completely to bottom boundary */}
+          <div className="relative z-10 w-full flex justify-center lg:justify-end items-end">
             <motion.div
               initial={{ opacity: 0, y: 60, scale: 0.97 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.85, delay: 0.35, ease: kineticSpring }}
-              className="w-[80%] flex items-center justify-center overflow-hidden will-change-transform"
+              className="w-[85%] md:w-[70%] lg:w-[85%] xl:w-[80%] flex items-end justify-center overflow-hidden will-change-transform"
             >
               <img
                 src={heroImg}
                 alt="Kennedi Harris Court Profile"
-                className="w-full h-full object-cover object-top contrast-[1.05]"
+                className="w-full h-auto object-contain block align-bottom contrast-[1.05]"
                 loading="eager"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";

@@ -21,7 +21,7 @@ const customMarkerIcon = L.divIcon({
 
 const BasketballIcon = () => (
   <div className="w-14 h-14 rounded-xl border border-white/5 flex items-center justify-center bg-[#111115] text-kh-pink mb-6 shrink-0 relative group-hover:border-kh-pink/30 transition-colors shadow-lg">
-    <div className="absolute inset-0 bg-gradient-to-br from-kh-pink/5 to-transparent rounded-xl" />
+    <div className="absolute inset-0 bg-linear-to-br from-kh-pink/5 to-transparent rounded-xl" />
     <svg
       className="w-7 h-7 relative z-10"
       viewBox="0 0 24 24"
@@ -52,6 +52,41 @@ export function MapSection() {
 
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* RIGHT MAP FRAME CANVAS (7 Columns) — Editorial Interactive Frame */}
+          <div className="lg:col-span-7 order-1 lg:order-2 relative w-full">
+            {/* Soft Ambient Shadow Backdrop Glow */}
+            <div className="absolute -inset-2 bg-linear-to-r from-kh-pink/10 to-cyan-500/10 rounded-2xl opacity-40 blur-2xl pointer-events-none" />
+
+            <div className="relative aspect-video lg:aspect-16/10 w-full bg-[#111115] border border-white/10 p-3 rounded-2xl shadow-2xl overflow-hidden group/map">
+              {/* Internal Map Rendering Window Container */}
+              <div className="w-full h-full rounded-xl overflow-hidden relative z-0">
+                <MapContainer
+                  center={position}
+                  zoom={11}
+                  scrollWheelZoom={false}
+                  className="w-full h-full absolute inset-0 filter grayscale contrast-[1.08] brightness-[0.85]"
+                  style={{ background: "#050508" }}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                    url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                  />
+                  <Marker position={position} icon={customMarkerIcon} />
+                </MapContainer>
+
+                {/* Aesthetic High-Contrast Vignette Corner Film Shield Layer */}
+                <div className="absolute inset-0 pointer-events-none bg-linear-to-t from-black/40 via-transparent to-black/20 z-10" />
+              </div>
+
+              {/* Float Floating Utility Coordinate Tag */}
+              <div className="absolute bottom-6 right-6 bg-[#0c0c0f]/90 border border-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-xl flex items-center gap-2 z-20 pointer-events-none">
+                <Target size={12} className="text-cyan-400" />
+                <span className="font-condensed text-[9px] tracking-widest text-gray-400 uppercase">
+                  32.613° N / 83.599° W
+                </span>
+              </div>
+            </div>
+          </div>
           {/* LEFT CONTENT BLOCK (5 Columns) — Premium Headquarters Copy */}
           <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center group">
             <BasketballIcon />
@@ -93,42 +128,6 @@ export function MapSection() {
                 VIEW FULL SCHEDULE
                 <Calendar className="w-4 h-4 text-kh-pink group-hover/btn:scale-110 transition-transform" />
               </Link>
-            </div>
-          </div>
-
-          {/* RIGHT MAP FRAME CANVAS (7 Columns) — Editorial Interactive Frame */}
-          <div className="lg:col-span-7 order-1 lg:order-2 relative w-full">
-            {/* Soft Ambient Shadow Backdrop Glow */}
-            <div className="absolute -inset-2 bg-gradient-to-r from-kh-pink/10 to-cyan-500/10 rounded-2xl opacity-40 blur-2xl pointer-events-none" />
-
-            <div className="relative aspect-video lg:aspect-[16/10] w-full bg-[#111115] border border-white/10 p-3 rounded-2xl shadow-2xl overflow-hidden group/map">
-              {/* Internal Map Rendering Window Container */}
-              <div className="w-full h-full rounded-xl overflow-hidden relative z-0">
-                <MapContainer
-                  center={position}
-                  zoom={11}
-                  scrollWheelZoom={false}
-                  className="w-full h-full absolute inset-0 filter grayscale contrast-[1.08] brightness-[0.85]"
-                  style={{ background: "#050508" }}
-                >
-                  <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                    url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-                  />
-                  <Marker position={position} icon={customMarkerIcon} />
-                </MapContainer>
-
-                {/* Aesthetic High-Contrast Vignette Corner Film Shield Layer */}
-                <div className="absolute inset-0 pointer-events-none bg-linear-to-t from-black/40 via-transparent to-black/20 z-10" />
-              </div>
-
-              {/* Float Floating Utility Coordinate Tag */}
-              <div className="absolute bottom-6 right-6 bg-[#0c0c0f]/90 border border-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-xl flex items-center gap-2 z-20 pointer-events-none">
-                <Target size={12} className="text-cyan-400" />
-                <span className="font-condensed text-[9px] tracking-widest text-gray-400 uppercase">
-                  32.613° N / 83.599° W
-                </span>
-              </div>
             </div>
           </div>
         </div>

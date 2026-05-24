@@ -1,5 +1,6 @@
 import { Play, ArrowRight, Pause } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, type Variants } from "motion/react";
 import mainVideo from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
 import video1 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
 import video2 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.15.05-PM.mp4";
@@ -30,6 +31,21 @@ const highlights: HighlightItem[] = [
   },
 ];
 
+// Motion animation presets
+const containerVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, x: 20 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
 export default function HighlightsSection() {
   const [currentVideo, setCurrentVideo] = useState<string>(mainVideo);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -37,13 +53,12 @@ export default function HighlightsSection() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const sidebarVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  // Synchronized Engine playback hook handles dynamic context changing safely
   useEffect(() => {
     if (videoRef.current && isPlaying) {
       videoRef.current.muted = false;
       videoRef.current.play().catch(() => setIsPlaying(false));
     }
-  }, [currentVideo]);
+  }, [currentVideo, isPlaying]);
 
   const handlePlayPause = () => {
     if (!videoRef.current) return;
@@ -78,12 +93,18 @@ export default function HighlightsSection() {
       video.play().catch(() => {});
     } else {
       video.pause();
-      video.currentTime = 0; // Rewinds clip matrix back to home frame cleanly
+      video.currentTime = 0;
     }
   };
 
   return (
-    <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      className="w-full flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch"
+    >
       {/* Main Theatre Player Display Platform */}
       <div className="w-full lg:w-2/3 flex flex-col gap-4">
         <h3 className="font-condensed font-semibold text-base xl:text-xl tracking-widest text-white uppercase">
@@ -102,23 +123,42 @@ export default function HighlightsSection() {
             playsInline
           />
 
-          {/* Action Trigger Interface Overlay Layer */}
+          {/* Action Trigger Interface Overlay Layer with AnimatePresence */}
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/80 flex items-center justify-center bg-black/20 md:opacity-0 group-hover:opacity-100 transform scale-95 group-hover:scale-100 transition-all duration-300 backdrop-blur-xs hover:bg-kh-pink/20 hover:border-kh-pink">
-              {isPlaying ? (
-                <Pause
-                  className="text-white group-hover:text-kh-pink"
-                  size={28}
-                  fill="currentColor"
-                />
-              ) : (
-                <Play
-                  className="text-white group-hover:text-kh-pink ml-1.5"
-                  size={28}
-                  fill="currentColor"
-                />
-              )}
-            </div>
+            <motion.div
+              animate={{
+                scale: isPlaying ? [1, 0.95, 1] : 1,
+                opacity: isPlaying ? 0.3 : 1,
+              }}
+              whileHover={{ scale: 1.05, opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/80 flex items-center justify-center bg-black/20 md:opacity-0 group-hover:opacity-100 backdrop-blur-xs hover:bg-kh-pink/20 hover:border-kh-pink text-white hover:text-kh-pink transition-colors"
+            >
+              <AnimatePresence mode="wait">
+                {isPlaying ? (
+                  <motion.div
+                    key="pause"
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.7 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <Pause size={28} fill="currentColor" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="play"
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.7 }}
+                    transition={{ duration: 0.15 }}
+                    className="ml-1.5"
+                  >
+                    <Play size={28} fill="currentColor" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -129,14 +169,17 @@ export default function HighlightsSection() {
           {highlights.map((item, index) => {
             const isActive = currentVideo === item.video;
             return (
-              <div
+              <motion.div
+                layout
+                variants={itemVariants}
                 key={`${item.alt}-${index}`}
                 onClick={() => handleSidebarClick(item.video)}
                 onMouseEnter={() => handleSidebarHover(index, true)}
                 onMouseLeave={() => handleSidebarHover(index, false)}
-                className={`flex gap-4 p-2 rounded-lg cursor-pointer transition-all duration-200 border ${
+                whileHover={{ x: 4 }}
+                className={`flex gap-4 p-2 rounded-lg cursor-pointer transition-all duration-300 border group ${
                   isActive
-                    ? "bg-white/5 border-kh-pink/30 shadow-md"
+                    ? "bg-white/5 border-kh-pink/40 shadow-lg shadow-kh-pink/[0.02]"
                     : "border-transparent bg-transparent hover:bg-white/[0.03]"
                 }`}
               >
@@ -147,17 +190,23 @@ export default function HighlightsSection() {
                       sidebarVideoRefs.current[index] = el;
                     }}
                     src={item.video}
-                    className="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition-opacity"
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition-opacity duration-300"
                     loop
                     muted
                     playsInline
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/10">
-                    <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-200 ${
+                    <motion.div
+                      animate={{
+                        scale: isActive ? 1.05 : 1,
+                        backgroundColor: isActive
+                          ? "rgba(234, 76, 137, 1)"
+                          : "rgba(0, 0, 0, 0.6)",
+                      }}
+                      className={`w-7 h-7 rounded-full flex items-center justify-center border transition-colors duration-300 ${
                         isActive
-                          ? "bg-kh-pink border-kh-pink"
-                          : "bg-black/60 border-white/40 group-hover:border-kh-pink group-hover:bg-kh-pink/20"
+                          ? "border-kh-pink"
+                          : "border-white/40 group-hover:border-kh-pink"
                       }`}
                     >
                       <Play
@@ -165,14 +214,14 @@ export default function HighlightsSection() {
                         size={10}
                         fill="currentColor"
                       />
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
 
                 {/* Metadata Meta Strip Titles */}
                 <div className="flex flex-col justify-center min-w-0 flex-1">
                   <p
-                    className={`text-xs sm:text-sm font-sans font-semibold tracking-wide line-clamp-2 leading-snug transition-colors duration-200 ${
+                    className={`text-xs sm:text-sm font-sans font-semibold tracking-wide line-clamp-2 leading-snug transition-colors duration-300 ${
                       isActive
                         ? "text-kh-pink"
                         : "text-zinc-100 group-hover:text-kh-pink"
@@ -186,13 +235,18 @@ export default function HighlightsSection() {
                     </span>
                   )}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Global Redirect Core Call-To-Action Link Button */}
-        <div className="border border-kh-pink/20 hover:border-kh-pink/60 rounded-xl overflow-hidden group cursor-pointer transition-all duration-300 bg-kh-pink/[0.02] hover:bg-kh-pink/[0.04]">
+        <motion.div
+          variants={itemVariants}
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          className="border border-kh-pink/20 hover:border-kh-pink/60 rounded-xl overflow-hidden group cursor-pointer transition-all duration-300 bg-kh-pink/[0.02] hover:bg-kh-pink/[0.04]"
+        >
           <a
             href="#"
             className="flex items-center justify-between p-4 font-condensed font-bold text-xs sm:text-sm tracking-widest text-kh-pink uppercase select-none"
@@ -203,8 +257,8 @@ export default function HighlightsSection() {
               className="transform group-hover:translate-x-1.5 transition-transform duration-300"
             />
           </a>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

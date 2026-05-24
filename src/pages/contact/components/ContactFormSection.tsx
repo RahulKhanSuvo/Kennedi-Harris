@@ -77,7 +77,7 @@ export function ContactFormSection() {
   return (
     <section
       id="contact-form"
-      className="relative py-24 bg-gradient-to-b from-black to-kh-dark-2/20 border-t border-white/5 scroll-mt-20 overflow-hidden"
+      className="relative py-24 bg-linear-to-b from-black to-kh-dark-2/20 border-t border-white/5 scroll-mt-20 overflow-hidden"
     >
       {/* Abstract background ambient glowing orbs */}
       <div className="absolute top-1/4 left-[-10%] w-[400px] h-[400px] bg-kh-blue/5 rounded-full blur-[120px] pointer-events-none" />
@@ -89,9 +89,9 @@ export function ContactFormSection() {
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Panel - Premium Glassmorphic Form Card */}
-          <div className="lg:col-span-7 bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-2xl p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] relative overflow-hidden group">
+          <div className="lg:col-span-7 bg-white/2 backdrop-blur-xl border border-white/5 rounded p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] relative overflow-hidden group">
             {/* Top border glowing line indicator style */}
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-kh-blue via-kh-pink to-transparent opacity-70" />
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-linear-to-r from-kh-blue via-kh-pink to-transparent opacity-70" />
 
             <div className="mb-8">
               <h2 className="font-condensed font-black text-2xl md:text-3xl text-white uppercase tracking-wider mb-2">

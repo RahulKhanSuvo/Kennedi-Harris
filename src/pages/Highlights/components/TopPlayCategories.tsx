@@ -34,12 +34,12 @@ export default function TopPlayCategories() {
     <section className="relative bg-black py-24 lg:py-36 border-t border-white/5 overflow-hidden">
       <Container className="relative z-10 w-full flex flex-col gap-12">
         <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <div className="h-2 w-2 bg-cyan-400 rotate-45 animate-pulse"></div>
             <h3 className="font-mono text-xs tracking-[0.4em] text-zinc-500 uppercase font-black">
               TOP PLAY CATEGORIES
             </h3>
-          </div>
+          </div> */}
           <span className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none">
             TOP{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-kh-pink">

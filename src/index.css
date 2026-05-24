@@ -93,12 +93,11 @@
   body {
     @apply bg-background text-foreground;
     font-family: "Inter", sans-serif;
-    overflow-x: hidden;
   }
 
-  html {
+  /* html {
     scroll-behavior: smooth;
-  }
+  } */
 }
 
 /* ---- Custom Font Utilities ---- */
@@ -165,30 +164,24 @@
 
 /* ---- Glow overlays ---- */
 .hero-glow-pink {
-  background: radial-gradient(
-    ellipse 700px 600px at 72% 55%,
-    rgba(232, 23, 106, 0.2) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse 700px 600px at 72% 55%,
+      rgba(232, 23, 106, 0.2) 0%,
+      transparent 70%);
 }
 
 .hero-glow-blue {
-  background: radial-gradient(
-    ellipse 600px 700px at 85% 35%,
-    rgba(26, 64, 200, 0.28) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse 600px 700px at 85% 35%,
+      rgba(26, 64, 200, 0.28) 0%,
+      transparent 70%);
 }
 
 /* ---- Thin gradient divider ---- */
 .section-divider {
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(232, 23, 106, 0.5),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(232, 23, 106, 0.5),
+      transparent);
 }
 
 /* ---- Vertical separator for stat bar items ---- */
@@ -342,6 +335,7 @@
 }
 
 @keyframes pulse-glow {
+
   0%,
   100% {
     opacity: 0.5;
@@ -357,12 +351,10 @@
 }
 
 .dot-grid {
-  background: linear-gradient(
-    135deg,
-    rgba(241, 19, 108, 0) 0%,
-    #a855f7 50%,
-    #2564eb8f 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(241, 19, 108, 0) 0%,
+      #a855f7 50%,
+      #2564eb8f 100%);
 
   -webkit-mask-image: radial-gradient(circle, #000 1px, transparent 1px);
   -webkit-mask-size: 20px 20px;
@@ -404,4 +396,17 @@
 
 .leaflet-container .leaflet-control-attribution a {
   color: #e8176a !important;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }

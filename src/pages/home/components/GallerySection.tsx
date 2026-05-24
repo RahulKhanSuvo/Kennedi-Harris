@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, type Variants } from "motion/react";
 import gal1 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
 import gal2 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
@@ -76,11 +78,12 @@ export default function GallerySection() {
               </a>
             </div>
 
+            {/* Configured to trigger animation engine exactly at 30% section view threshold */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={{ once: true, amount: 0.3 }}
               className="grid grid-cols-2 sm:grid-cols-4 gap-3"
             >
               {imageArray.map((img, index) => (

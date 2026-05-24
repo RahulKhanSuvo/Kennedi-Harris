@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, type MouseEvent } from "react";
-import { Play, Pause, RotateCcw } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Play, Pause, RotateCcw, Film } from "lucide-react";
 import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 
@@ -54,7 +54,6 @@ const BROADCAST_PLAYLIST: PlaylistItem[] = [
   },
 ];
 
-// Motion Animation Profiles with Explicit Variants Typing to fix cubic-bezier inference errors
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -64,30 +63,16 @@ const fadeInUp: Variants = {
   },
 };
 
-const playlistContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.2 },
-  },
-};
-
-const playlistItem: Variants = {
-  hidden: { opacity: 0, x: 20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
 export default function MediaBroadcastCenter() {
   const [currentTrack, setCurrentTrack] = useState<PlaylistItem>(
     BROADCAST_PLAYLIST[0],
   );
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Hot-swap stream sources securely on state changes
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.load();
@@ -96,6 +81,37 @@ export default function MediaBroadcastCenter() {
       }
     }
   }, [currentTrack]);
+
+  // Intersection Observer config for handling track auto-swaps via scroll heights
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-25% 0px -45% 0px",
+      threshold: 0.2,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Number(entry.target.getAttribute("data-index"));
+          if (!isNaN(index) && BROADCAST_PLAYLIST[index]) {
+            setCurrentTrack(BROADCAST_PLAYLIST[index]);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
+    );
+
+    itemsRef.current.forEach((item) => {
+      if (item) observer.observe(item);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handlePlayToggle = () => {
     if (!videoRef.current) return;
@@ -111,12 +127,12 @@ export default function MediaBroadcastCenter() {
   };
 
   return (
-    <section className="py-24 lg:py-32 bg-black relative overflow-hidden border-t border-white/5">
-      <div className="absolute left-[-10%] top-1/4 w-[500px] h-[500px] bg-cyan-500/5 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute right-[-10%] bottom-1/4 w-[500px] h-[500px] bg-kh-pink/5 blur-[150px] rounded-full pointer-events-none" />
+    <section className="py-24 lg:py-32 bg-black relative border-t border-white/5">
+      <div className="absolute left-[-10%] top-1/4 w-[600px] h-[600px] bg-cyan-500/5 blur-[180px] rounded-full pointer-events-none" />
+      <div className="absolute right-[-10%] bottom-1/4 w-[600px] h-[600px] bg-kh-pink/5 blur-[180px] rounded-full pointer-events-none" />
 
       <Container className="w-full flex flex-col gap-12">
-        {/* Animated Header Matrix */}
+        {/* Header Section */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -124,196 +140,171 @@ export default function MediaBroadcastCenter() {
           variants={fadeInUp}
           className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6"
         >
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <div className="h-2 w-2 bg-kh-pink rotate-45 animate-pulse" />
             <h3 className="font-mono text-xs tracking-[0.4em] text-zinc-500 uppercase font-black">
-              BROADCAST LOG // FILM ANALYTICS
+              BROADCAST CONFIG // SCROLL DECK
             </h3>
-          </div>
+          </div> */}
           <span className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none">
-            GAME TAPE{" "}
+            FILM ROOM{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-kh-pink to-cyan-400">
-              FILM ROOM
+              SYNC DECK
             </span>
           </span>
         </motion.div>
 
-        {/* Layout Grid container with coordinated entry states */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch w-full">
-          {/* Main Cinema Viewport */}
-          <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.99 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-8 flex flex-col justify-between group relative border border-white/10 bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:border-white/20"
-          >
-            <div
-              onClick={handlePlayToggle}
-              className="relative aspect-video w-full overflow-hidden bg-black flex items-center justify-center cursor-pointer"
-            >
-              <video
-                ref={videoRef}
-                className="w-full h-full object-cover"
-                preload="metadata"
-                playsInline
-                poster={mainHighlightImg}
+        {/* Dynamic Multi-Scroll Layout */}
+        <div className="flex flex-col lg:flex-row gap-12 items-start relative w-full">
+          {/* LEFT COMPONENT: Sticky Cinema Viewport Matrix */}
+          <div className="w-full lg:w-[58%] lg:sticky lg:top-28 z-30 transition-all duration-300">
+            <div className="flex flex-col justify-between group relative border border-white/10 bg-zinc-950 rounded overflow-hidden shadow-2xl">
+              <div
+                onClick={handlePlayToggle}
+                className="relative aspect-video w-full overflow-hidden bg-black flex items-center justify-center cursor-pointer"
               >
-                <source src={currentTrack.videoUrl} type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+                <video
+                  ref={videoRef}
+                  className="w-full h-full object-cover"
+                  preload="metadata"
+                  playsInline
+                  poster={mainHighlightImg}
+                >
+                  <source src={currentTrack.videoUrl} type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
 
-              {!isPlaying && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-20 h-20 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center transform transition-all duration-500 group-hover:scale-110 group-hover:bg-kh-pink group-hover:border-kh-pink group-hover:shadow-[0_0_50px_rgba(236,72,153,0.4)]">
-                    <Play fill="white" className="w-8 h-8 ml-1 text-white" />
+                {!isPlaying && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-20 h-20 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center transform transition-all duration-500 group-hover:scale-110 group-hover:bg-kh-pink group-hover:border-kh-pink group-hover:shadow-[0_0_50px_rgba(236,72,153,0.4)]">
+                      <Play fill="white" className="w-8 h-8 ml-1 text-white" />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* HUD Controls */}
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black via-black/80 to-transparent p-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                      e.stopPropagation();
-                      handlePlayToggle();
-                    }}
-                    className="text-white hover:text-kh-pink transition-colors cursor-pointer"
-                  >
-                    {isPlaying ? (
-                      <Pause className="w-5 h-5 fill-white" />
-                    ) : (
-                      <Play className="w-5 h-5 fill-white" />
-                    )}
-                  </button>
-                  <span className="font-mono text-[11px] text-zinc-400 tracking-widest">
-                    {isPlaying ? "// LIVE TRANSMISSION" : "// BROADCAST PAUSED"}
-                  </span>
-                </div>
-                <div className="flex items-center gap-4">
+                {/* HUD Overlay Panel */}
+                <div className="absolute bottom-0 inset-x-0 bg-linear-to-t from-black via-black/80 to-transparent p-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        e.stopPropagation();
+                        handlePlayToggle();
+                      }}
+                      className="text-white hover:text-kh-pink transition-colors cursor-pointer"
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-5 h-5 fill-white" />
+                      ) : (
+                        <Play className="w-5 h-5 fill-white" />
+                      )}
+                    </button>
+                    <span className="font-mono text-[11px] text-zinc-400 tracking-widest animate-pulse">
+                      {isPlaying
+                        ? "// STREAM_SYNC_ACTIVE"
+                        : "// FEED_READY_STANDBY"}
+                    </span>
+                  </div>
                   <span className="font-mono text-xs text-white bg-white/10 px-2 py-0.5 rounded-sm border border-white/5">
                     {currentTrack.duration}
                   </span>
                 </div>
               </div>
-            </div>
 
-            {/* Viewport Metadata Card */}
-            <div className="p-6 bg-zinc-950 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="font-mono text-[9px] tracking-widest text-kh-pink font-bold border border-kh-pink/20 bg-kh-pink/5 px-2 py-0.5 uppercase">
+              {/* Viewport Control Panel Bar */}
+              <div className="p-5 bg-zinc-950 border-t border-white/5 flex items-center justify-between gap-4">
+                <div className="min-w-0">
+                  <span className="font-mono text-[9px] tracking-widest text-cyan-400 font-bold border border-cyan-400/20 bg-cyan-400/5 px-2 py-0.5 uppercase">
                     {currentTrack.tag}
                   </span>
-                  <span className="font-mono text-[10px] text-zinc-500 font-semibold tracking-wider">
-                    // SYSTEM_FEED_ACTIVE
-                  </span>
+                  <h4 className="font-display text-xl lg:text-2xl tracking-tighter text-white uppercase mt-2 truncate">
+                    {currentTrack.title}
+                  </h4>
                 </div>
-                <h4 className="font-display text-2xl lg:text-3xl tracking-tighter text-white uppercase leading-none">
-                  {currentTrack.title}
-                </h4>
-                <p className="text-zinc-400 font-condensed text-xs uppercase tracking-widest mt-2">
-                  {currentTrack.subtitle}
-                </p>
+                <button
+                  onClick={() => {
+                    if (videoRef.current) {
+                      videoRef.current.currentTime = 0;
+                      if (!isPlaying) handlePlayToggle();
+                    }
+                  }}
+                  className="p-3 rounded-xl bg-zinc-900 border border-white/5 hover:border-kh-pink/30 text-zinc-400 hover:text-kh-pink transition-all duration-300 cursor-pointer"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </button>
               </div>
-              <button
-                onClick={() => {
-                  if (videoRef.current) {
-                    videoRef.current.currentTime = 0;
-                    if (!isPlaying) handlePlayToggle();
-                  }
-                }}
-                className="p-3 rounded-xl bg-zinc-900 border border-white/5 hover:border-cyan-400/30 text-zinc-400 hover:text-cyan-400 transition-all duration-300 cursor-pointer"
-              >
-                <RotateCcw className="w-4 h-4" />
-              </button>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Sidebar Area with Cascading List Items */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={playlistContainer}
-            className="lg:col-span-4 flex flex-col bg-zinc-950 border border-white/10 rounded-2xl p-5 justify-between gap-6 shadow-2xl"
-          >
-            <div className="flex flex-col gap-3.5 flex-grow justify-start">
-              <span className="font-mono text-[10px] text-zinc-500 font-bold tracking-[0.2em] uppercase mb-1">
-                // SELECT ARCHIVE SOURCE:
-              </span>
+          {/* RIGHT COMPONENT: Scroll-Triggered Archive Module Timeline */}
+          <div className="w-full lg:w-[42%] flex flex-col gap-8 pb-32">
+            {/* <div className="font-mono text-[10px] text-zinc-500 font-bold tracking-[0.2em] uppercase sticky top-28 bg-black py-2 z-10 border-b border-white/5 mb-2 hidden lg:block">
+              // SCROLL VERTICALLY TO TRANSITION SOURCES
+            </div> */}
 
-              {BROADCAST_PLAYLIST.map((item) => {
-                const isSelected = currentTrack.id === item.id;
-                return (
-                  <motion.div
-                    variants={playlistItem}
-                    key={item.id}
-                    onClick={() => {
-                      setCurrentTrack(item);
-                      setIsPlaying(true);
-                    }}
-                    className={`group/item flex items-center gap-4 p-3 rounded-xl border transition-all duration-500 cursor-pointer ${
-                      isSelected
-                        ? "bg-kh-pink/5 border-kh-pink/30 shadow-[0_0_25px_rgba(236,72,153,0.05)]"
-                        : "bg-transparent border-white/5 hover:bg-white/[0.02] hover:border-white/10"
-                    }`}
-                  >
-                    <div className="relative w-20 h-14 shrink-0 rounded-lg overflow-hidden bg-black border border-white/10 flex items-center justify-center">
-                      <div className="absolute inset-0 bg-zinc-900 flex items-center justify-center opacity-80 group-hover/item:opacity-100 transition-opacity">
-                        <div
-                          className={`w-8 h-8 rounded-full border flex items-center justify-center backdrop-blur-xs transition-all duration-300 ${
-                            isSelected
-                              ? "bg-kh-pink border-kh-pink text-white"
-                              : "border-white/20 bg-black/50 group-hover/item:bg-cyan-400 group-hover/item:border-cyan-400"
-                          }`}
-                        >
-                          <Play
-                            fill="white"
-                            className="w-3 h-3 ml-0.5 text-white"
-                          />
-                        </div>
-                      </div>
+            {BROADCAST_PLAYLIST.map((item, index) => {
+              const isSelected = currentTrack.id === item.id;
+              return (
+                <div
+                  key={item.id}
+                  data-index={index}
+                  ref={(el) => {
+                    itemsRef.current[index] = el;
+                  }}
+                  className={`flex flex-col gap-4 p-6 md:p-8 rounded border transition-all duration-500 min-h-[220px] justify-center ${
+                    isSelected
+                      ? "bg-gradient-to-br from-zinc-900/80 to-zinc-950 border-kh-pink/40 shadow-[0_10px_40px_rgba(236,72,153,0.06)]"
+                      : "bg-zinc-950/20 border-white/5 opacity-40 lg:hover:opacity-70"
+                  }`}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span
+                      className={`font-mono text-xs tracking-widest font-black ${isSelected ? "text-kh-pink" : "text-zinc-600"}`}
+                    >
+                      [{String(index + 1).padStart(2, "0")}] //{" "}
+                      {item.id.toUpperCase()}
+                    </span>
+                    <div
+                      className={`p-2 rounded-lg border transition-colors ${
+                        isSelected
+                          ? "border-kh-pink/20 bg-kh-pink/5 text-kh-pink"
+                          : "border-white/5 bg-zinc-900 text-zinc-500"
+                      }`}
+                    >
+                      <Film className="w-4 h-4" />
                     </div>
+                  </div>
 
-                    <div className="flex-grow min-w-0 flex flex-col gap-0.5">
-                      <span
-                        className={`font-mono text-[8px] tracking-widest font-black ${isSelected ? "text-kh-pink" : "text-zinc-500"}`}
-                      >
-                        {item.id.toUpperCase()}
-                      </span>
-                      <h5
-                        className={`font-condensed font-black text-sm uppercase tracking-wide truncate transition-colors duration-300 ${
-                          isSelected
-                            ? "text-white"
-                            : "text-zinc-300 group-hover/item:text-cyan-400"
-                        }`}
-                      >
-                        {item.title}
-                      </h5>
-                      <p className="text-[11px] text-zinc-500 font-medium font-condensed tracking-wider uppercase truncate">
-                        {item.tag}
-                      </p>
-                    </div>
+                  <div className="flex flex-col gap-1.5 mt-2">
+                    <h4
+                      className={`font-display text-2xl uppercase tracking-tight transition-colors duration-300 ${
+                        isSelected ? "text-white" : "text-zinc-400"
+                      }`}
+                    >
+                      {item.title}
+                    </h4>
+                    <p className="text-zinc-500 font-condensed text-xs uppercase tracking-widest">
+                      {item.subtitle}
+                    </p>
+                  </div>
 
-                    <div className="text-xs font-mono text-zinc-500 group-hover/item:text-white transition-colors shrink-0 self-center pl-2">
-                      {item.duration}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <div className="w-full bg-zinc-900/60 border border-white/5 p-4 rounded-xl font-mono text-[10px] text-zinc-500 tracking-wide uppercase leading-relaxed">
-              <span className="text-cyan-400 font-bold">
-                // ANALYTICS UNIT READY
-              </span>{" "}
-              <br />
-              Tap any tactical source file from the archive array to hot-swap
-              live frame synchronization instantly.
-            </div>
-          </motion.div>
+                  <div className="flex items-center gap-3 mt-4 border-t border-white/5 pt-4">
+                    <span className="font-mono text-[10px] text-zinc-400 bg-white/5 px-2 py-1 rounded-sm">
+                      DURATION: {item.duration}
+                    </span>
+                    <span
+                      className={`font-mono text-[10px] px-2 py-1 rounded-sm ${
+                        isSelected
+                          ? "bg-cyan-500/10 text-cyan-400"
+                          : "bg-zinc-900 text-zinc-500"
+                      }`}
+                    >
+                      {item.tag}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </Container>
     </section>

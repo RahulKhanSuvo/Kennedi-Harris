@@ -14,7 +14,7 @@ export default function ScheduleHeroSection() {
       </div>
 
       {/* Elegant Linear Gradient Shadow */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-zinc-950/40 to-black"></div>
+      <div className="absolute inset-0 z-0 bg-linear-to-b from-black via-zinc-950/40 to-black"></div>
       <div className="absolute bottom-0 right-0 pointer-events-none h-[300px] w-[500px] bg-cyan-500/10 blur-[120px]"></div>
 
       <Container className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12 w-full">
@@ -27,7 +27,7 @@ export default function ScheduleHeroSection() {
           <h1 className="font-display text-6xl sm:text-7xl lg:text-8xl tracking-tighter leading-[0.85] uppercase text-white">
             2026
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-white">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-pink-400 to-white">
               SEASON
             </span>
             <br />

@@ -6,10 +6,10 @@ export function ContactHero() {
     <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[#09090b] border-b border-white/5 overflow-hidden">
       {/* Structural Subtle Layout Overlays */}
       <div className="absolute inset-0 dot-grid opacity-[0.08] pointer-events-none" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gradient-to-r from-kh-pink/5 to-cyan-500/5 blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-linear-to-r from-kh-pink/5 to-cyan-500/5 blur-[130px] pointer-events-none" />
 
       {/* Decorative Giant Editorial Background Watermark */}
-      <div className="absolute -right-20 top-1/4 text-[16vw] font-display font-black text-white/[0.01] uppercase select-none tracking-tighter leading-none pointer-events-none">
+      <div className="absolute -right-20 top-1/4 text-[16vw] font-display font-black text-white/1 uppercase select-none tracking-tighter leading-none pointer-events-none">
         CONNECT // 11
       </div>
 
@@ -18,7 +18,7 @@ export function ContactHero() {
         <div className="lg:col-span-7 flex flex-col justify-center">
           {/* Section Breadcrumb Track Badge */}
           <div className="font-condensed font-bold tracking-[0.25em] text-kh-pink text-xs uppercase mb-3 flex items-center gap-2">
-            <span className="w-6 h-[1px] bg-kh-pink inline-block" />
+            <span className="w-6 h-px bg-kh-pink inline-block" />
             Get In Touch
           </div>
 
@@ -26,7 +26,7 @@ export function ContactHero() {
           <h1 className="font-display text-5xl sm:text-7xl xl:text-8xl font-black leading-[0.85] tracking-tight text-white uppercase mb-8">
             LET'S CONNECT.
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-kh-pink via-[#d946ef] to-white">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-kh-pink via-[#d946ef] to-white">
               LET'S ELEVATE.
             </span>
           </h1>
@@ -42,7 +42,7 @@ export function ContactHero() {
           <div className="flex items-center gap-4">
             <a
               href="#contact-form-section"
-              className="px-6 py-3.5 bg-white hover:bg-kh-pink text-black hover:text-white font-condensed font-bold text-xs tracking-widest uppercase rounded-lg transition-all duration-300 flex items-center gap-2.5 shadow-lg group"
+              className="px-6 py-3.5 bg-white hover:bg-kh-pink text-black hover:text-white font-condensed font-bold text-xs tracking-widest uppercase rounded transition-all duration-300 flex items-center gap-2.5 shadow-lg group"
             >
               <Send
                 size={14}
@@ -62,7 +62,7 @@ export function ContactHero() {
 
         {/* RIGHT COLUMN (5 Columns) — Premium Digital Rolodex Card */}
         <div className="lg:col-span-5 w-full flex justify-center lg:justify-end">
-          <div className="w-full max-w-sm bg-[#111115] border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden group">
+          <div className="w-full max-w-sm bg-[#111115] border border-white/10 rounded p-6 md:p-8 shadow-2xl relative overflow-hidden group">
             {/* Subtle inner grid glow accent */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-kh-pink/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute inset-0 dot-grid opacity-[0.05] z-0" />
@@ -91,7 +91,7 @@ export function ContactHero() {
               </div>
 
               <div className="flex gap-4 items-center group/item">
-                <div className="h-10 w-10 shrink-0 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 group-hover/item:border-cyan-400/40 transition-colors">
+                <div className="h-10 w-10 shrink-0 rounded bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 group-hover/item:border-cyan-400/40 transition-colors">
                   <Phone size={16} />
                 </div>
                 <div>
