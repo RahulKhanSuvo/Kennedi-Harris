@@ -27,9 +27,7 @@ export default function ScheduleHeroSection() {
           <h1 className="font-display text-6xl sm:text-7xl lg:text-8xl tracking-tighter leading-[0.85] uppercase text-white">
             2026
             <br />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-pink-400 to-white">
-              SEASON
-            </span>
+            <span className=" text-kh-pink">SEASON</span>
             <br />
             SCHEDULE
           </h1>

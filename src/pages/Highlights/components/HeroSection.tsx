@@ -71,7 +71,7 @@ export default function HighlightsHeroSection() {
 
       {/* Cyber Grid Overlay */}
       <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(to_right,#06b6d4_1px,transparent_1px),linear-gradient(to_bottom,#06b6d4_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/20 via-black/70 to-black"></div>
+      <div className="absolute inset-0 z-0 bg-linear-to-b from-black/20 via-black/70 to-black"></div>
 
       {/* Ambient Neon Flares */}
       <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 pointer-events-none h-[300px] w-[600px] rounded-full bg-cyan-500/20 blur-[120px]"></div>
@@ -101,8 +101,8 @@ export default function HighlightsHeroSection() {
             variants={textItemVariants}
             className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter leading-none mb-4 uppercase"
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400">
-              THE REEL DEPT.
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-white via-gray-200 to-gray-400">
+              THE <span className="text-kh-pink">REEL</span> DEPT.
             </span>
           </motion.h1>
 

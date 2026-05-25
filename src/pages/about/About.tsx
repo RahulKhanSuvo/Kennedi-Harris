@@ -1,11 +1,11 @@
 import { Timeline } from "./components/Timeline";
 import { ByTheNumbers } from "./components/ByTheNumbers";
 import { CoreValues } from "./components/CoreValues";
-import AboutHero from "./components/AboutHero";
 import Container from "@/components/common/Container";
 import ContactForm from "@/components/common/ContactForm";
 import AthleteBanner from "@/components/common/AthleteBanner";
 import { BeyondTheGame } from "./components/BeyondTheGame";
+import { AboutHero } from "./components/AboutHero";
 
 export default function About() {
   return (

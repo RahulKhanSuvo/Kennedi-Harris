@@ -1,232 +1,318 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
-import { Target, Activity, Users, Star } from "lucide-react";
-import meImg from "../../../assets/me-removebg-preview.png";
+import { motion, useScroll, type Variants } from "motion/react";
+import { Award, Trophy, Target, Sparkles, Flame } from "lucide-react";
 import Container from "@/components/common/Container";
+
+// TO THE DEVELOPER: Import your dynamic media assets here
+// import earlyLifeImg from "@/assets/timeline/early-life.png";
+// import tournamentImg from "@/assets/timeline/first-victory.png";
+// import trainingImg from "@/assets/timeline/training.png";
+import meImg from "../../../assets/me-removebg-preview.png";
 
 const TIMELINE_DATA = [
   {
     id: 1,
-    title: "EARLY BEGINNINGS",
+    tag: "ORIGIN STORY",
+    title: "KENNEDI'S EARLY BEGINNINGS",
+    subtitle: "TRAINED BY A PRO // AGE 6",
     description:
-      "My Dad started teaching me basketball when I was 6 years old. I fell in love with the game and it became my passion",
-    date: "2016 - 2018",
+      "Kennedi Harris was born with a love for sports. At the tender age of 6, she discovered her passion for basketball from her Dad, Ken, who used to teach her the game. Growing up in an environment built on discipline, she quickly developed her foundational skills and began dominating local leagues.",
+    stats: { value: "7", label: "Youth Leagues" },
     icon: Target,
   },
   {
     id: 2,
-    title: "DEVELOPING THE GAME",
+    tag: "COMPETITIVE RISE",
+    title: "FIRST TOURNAMENT VICTORY",
+    subtitle: "THE BREAKOUT YEAR",
     description:
-      "Years of hard work, training, and learning the game inside and out helped me grow on and off the court.",
-    date: "2019 - 2021",
-    icon: Target,
+      "In her early years, Kennedi participated in various youth leagues, where she not only honed her skills but also learned the core components of elite teamwork. Her strategic gameplay, defensive length, and clutch scoring mechanics led her team to its first major championship series.",
+    stats: { value: "37", label: "Tournaments Played" },
+    icon: Trophy,
   },
   {
     id: 3,
-    title: "RISING COMPETITOR",
+    tag: "ELITE EVOLUTION",
+    title: "COMMITMENT TO TRAINING",
+    subtitle: "DAILY GRIND REQUISITES",
     description:
-      "Competing at a high level and facing tough opponents pushed me to elevate my game and mindset.",
-    date: "2022 - 2023",
-    icon: Activity,
+      "Kennedi’s dedication to high-performance development is evident in her daily training sessions. From morning ball-handling complexes to high-intensity vertical track routines, her commitment to elevating her skill ceiling serves as an inspiration to her peers.",
+    stats: { value: "100+", label: "Elite Peers Faced" },
+    icon: Flame,
   },
   {
     id: 4,
-    title: "FBC UNITED",
+    tag: "CURRENT RECOGNITION",
+    title: "ACCOLADES & MILESTONES",
+    subtitle: "NATIONAL HARDWARE PROFILE",
     description:
-      "Proud to represent FBC United and continue building toward my future goals.",
-    date: "2022 - PRESENT",
-    icon: Users,
-  },
-  {
-    id: 5,
-    title: "THE FUTURE",
-    description:
-      "Focused on growth, impact, and leaving a legacy that inspires the next generation.",
-    date: "2030 & BEYOND",
-    icon: Star,
+      "Throughout her rising youth basketball trajectory, Kennedi has picked up numerous personal accolades, MVP honors, and defensive player recognition awards. This structural framework keeps her focused on long-term execution and high-profile team legacy.",
+    stats: { value: "9", label: "Major Awards" },
+    icon: Award,
   },
 ];
 
 export function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const timelineGridRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 70%", "end 60%"],
-  });
-
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 25,
-    restDelta: 0.001,
+    target: timelineGridRef,
+    offset: ["start 30%", "end center"],
   });
 
   return (
     <section
       ref={containerRef}
-      className="py-24 bg-gradient-to-b from-kh-dark to-neutral-950 relative overflow-hidden border-t border-white/5"
+      id="about"
+      className="py-14 bg-[#0a0a0c] relative overflow-hidden border-t border-white/5"
     >
-      <div className="absolute top-0 right-0 w-96 h-96 bg-kh-blue/5 rounded-full filter blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-kh-pink/5 rounded-full filter blur-[120px] pointer-events-none" />
+      {/* Dynamic Cyber Grid & Lighting Framework */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#141416_1px,transparent_1px),linear-gradient(to_bottom,#141416_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-70 pointer-events-none" />
 
-      <Container>
-        {/* Intro Section */}
-        <div className="flex flex-col items-center text-center mb-28 max-w-2xl mx-auto">
-          <span className="text-kh-pink font-condensed tracking-[0.25em] uppercase font-black text-xs sm:text-sm mb-3 bg-kh-pink/10 px-3 py-1 rounded-sm border border-kh-pink/10">
-            CHRONOLOGICAL LEGACY
-          </span>
+      {/* Massive Ambient Lighting Nodes */}
+      <div className="absolute top-0 right-0 w-[600px] xl:w-[900px] h-[600px] xl:h-[900px] bg-kh-blue/5 rounded-full filter blur-[180px] pointer-events-none animate-pulse duration-[8s]" />
+      <div className="absolute bottom-1/4 left-0 w-[600px] xl:w-[900px] h-[600px] xl:h-[900px] bg-kh-pink/5 rounded-full filter blur-[180px] pointer-events-none animate-pulse duration-[10s]" />
 
-          <h2 className="font-display text-5xl md:text-7xl font-black italic uppercase leading-[0.9] tracking-tight text-white mb-6">
-            BUILT ON FAITH.
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-kh-pink to-pink-500">
-              DRIVEN BY PURPOSE.
+      <Container className="max-w-7xl 2xl:max-w-[1600px] px-6 md:px-12 relative z-10">
+        {/* Editorial Heading Grid Matrix */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-40 xl:mb-56 items-end">
+          <div className="lg:col-span-8">
+            <span className="text-kh-pink font-condensed tracking-[0.3em] uppercase font-black text-xs xl:text-sm block mb-4">
+              // CHRONOLOGICAL LEGACY
             </span>
-          </h2>
-
-          <p className="text-gray-400 font-sans font-light text-sm md:text-base leading-relaxed">
-            From early mornings to late-night grind sessions, every single
-            developmental block has engineered the performance capacity seen on
-            the court today.
-          </p>
+            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[110px] font-black uppercase leading-[0.8] tracking-tighter text-white">
+              BUILT ON FAITH.
+              <br />
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-kh-pink to-white">
+                DRIVEN BY PURPOSE.
+              </span>
+            </h2>
+          </div>
+          <div className="lg:col-span-4 border-l border-white/10 pl-6 xl:pl-10 pb-2">
+            <p className="text-zinc-400 font-sans font-light text-base md:text-lg xl:text-xl leading-relaxed max-w-md xl:max-w-xl">
+              Kennedi Harris has been making waves in the basketball universe
+              since she was just 6 years old. Explore the critical inflection
+              milestones that continue to sculpt her elite game layout.
+            </p>
+          </div>
         </div>
 
-        {/* Outer Layout Frame — Expanded max-w to host the larger cards beautifully */}
-        <div className="relative mt-12 max-w-6xl mx-auto px-4 sm:px-0">
-          {/* Background Track Rail */}
-          <div className="absolute left-8 lg:left-1/2 top-4 bottom-24 w-[2px] bg-neutral-900 transform lg:-translate-x-1/2 pointer-events-none" />
+        {/* Chronological Grid Frame */}
+        <div ref={timelineGridRef} className="relative">
+          {/* Kinetic Axis Bar Track */}
+          <div className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-px bg-zinc-900 transform lg:-translate-x-1/2 pointer-events-none" />
 
-          {/* Active Liquid Laser Line */}
+          {/* Active 1:1 Laser Line Progress Indicator */}
           <motion.div
-            style={{ scaleY }}
-            className="absolute left-8 lg:left-1/2 top-4 bottom-24 w-[2px] bg-gradient-to-b from-kh-pink via-pink-500 to-kh-blue origin-top transform lg:-translate-x-1/2 pointer-events-none z-10"
+            style={{ scaleY: scrollYProgress }}
+            className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-px bg-linear-to-b from-kh-pink via-pink-500 to-cyan-500 origin-top transform lg:-translate-x-1/2 pointer-events-none z-10"
           />
 
-          <div className="space-y-20 lg:space-y-28 relative">
+          <div className="space-y-40 xl:space-y-56">
             {TIMELINE_DATA.map((item, index) => {
-              const Icon = item.icon;
               const isEven = index % 2 === 0;
-
               return (
-                <TimelineItem
-                  key={item.id}
-                  item={item}
-                  isEven={isEven}
-                  Icon={Icon}
-                />
+                <TimelineBlock key={item.id} item={item} isEven={isEven} />
               );
             })}
           </div>
         </div>
 
-        {/* Spotlight Athlete Cutout Footer */}
-        <div className="mt-32 relative max-w-xs mx-auto flex flex-col items-center">
-          <div className="relative w-full aspect-square max-h-[260px] flex items-end justify-center rounded-full bg-gradient-to-t from-kh-pink/10 via-transparent to-transparent border border-white/5 p-4 overflow-hidden">
-            <div className="absolute inset-0 dot-grid opacity-15" />
-            <img
-              src={meImg}
-              alt="Kennedi Harris Action Profile"
-              className="w-auto h-[110%] object-contain object-bottom drop-shadow-[0_12px_20px_rgba(0,0,0,0.8)] transform hover:scale-105 transition-transform duration-500"
-            />
+        {/* Dynamic Ultra-Wide Athlete Quote Section */}
+        <div className="mt-56 xl:mt-72 bg-neutral-950/40 border border-white/5 rounded-3xl p-8 md:p-12 xl:p-20 relative overflow-hidden max-w-7xl 2xl:max-w-[1400px] mx-auto backdrop-blur-xl shadow-3xl">
+          <div className="absolute inset-0 bg-gradient-to-r from-kh-pink/[0.03] to-transparent pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 items-center">
+            <div className="lg:col-span-4 flex justify-center">
+              <div className="relative w-64 xl:w-80 aspect-square rounded-full bg-gradient-to-t from-kh-pink/20 to-transparent border border-white/10 overflow-hidden group">
+                <img
+                  src={meImg}
+                  alt="Kennedi Harris Court Profile"
+                  className="w-full h-[115%] object-contain object-bottom filter brightness-110 group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+              </div>
+            </div>
+
+            <div className="lg:col-span-8 space-y-6 xl:space-y-8">
+              <div className="flex items-center gap-2 text-kh-pink font-condensed tracking-widest text-xs xl:text-sm uppercase font-bold">
+                <Sparkles size={14} /> PLAYER REFLECTIONS
+              </div>
+              <blockquote className="font-display text-2xl md:text-4xl xl:text-5xl italic uppercase text-zinc-100 leading-snug tracking-wide">
+                "Basketball is more than just a game for me; it’s a way of life.
+                Every time I step onto the court, I feel a sense of freedom and
+                excitement. My passion drives me to improve every single day."
+              </blockquote>
+              <div className="text-zinc-500 font-condensed text-xs xl:text-sm uppercase tracking-widest font-bold">
+                — KENNEDI HARRIS // CLASS OF 2030
+              </div>
+            </div>
           </div>
-          <div className="h-[2px] w-1/2 bg-gradient-to-r from-transparent via-kh-pink/40 to-transparent mt-4" />
         </div>
       </Container>
     </section>
   );
 }
 
-interface TimelineItemProps {
+interface TimelineBlockProps {
   item: (typeof TIMELINE_DATA)[0];
   isEven: boolean;
-  Icon: React.ComponentType<{ className?: string }>;
 }
 
-function TimelineItem({ item, isEven, Icon }: TimelineItemProps) {
-  const itemRef = useRef<HTMLDivElement>(null);
+function TimelineBlock({ item, isEven }: TimelineBlockProps) {
+  const Icon = item.icon;
 
-  const { scrollYProgress } = useScroll({
-    target: itemRef,
-    offset: ["start 85%", "start 45%"],
-  });
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
+      },
+    },
+  };
 
-  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [0, 0.4, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.94, 0.97, 1]); // Slightly adjusted base scale to keep it crisp
-  const xOffset = useTransform(scrollYProgress, [0, 1], [isEven ? 40 : -40, 0]);
+  const shutterUpVariants: Variants = {
+    hidden: { y: "115%", opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
 
-  const nodeBg = useTransform(
-    scrollYProgress,
-    [0, 0.85],
-    ["rgba(10,10,10,1)", "rgba(234,76,137,1)"],
-  );
-  const nodeScale = useTransform(
-    scrollYProgress,
-    [0, 0.7, 0.85],
-    [1, 0.9, 1.15],
-  );
-  const nodeBorder = useTransform(
-    scrollYProgress,
-    [0, 0.85],
-    ["rgba(234,76,137,0.3)", "rgba(255,255,255,1)"],
-  );
+  const complexImageVariants: Variants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.9,
+      y: 60,
+      rotateZ: isEven ? 3 : -3,
+      skewY: isEven ? 2 : -2,
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      rotateZ: 0,
+      skewY: 0,
+      transition: {
+        duration: 1.1,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
 
   return (
-    <div
-      ref={itemRef}
-      className={`relative flex flex-col lg:flex-row items-start ${isEven ? "lg:justify-start" : "lg:justify-end"} w-full`}
-    >
-      {/* Central Interactive Node */}
+    <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 xl:gap-24 items-center w-full min-h-[420px]">
+      {/* Central Timeline Point Marker Pin */}
+      <div className="absolute left-4 lg:left-1/2 top-1/2 w-3.5 h-3.5 rounded-full bg-[#0a0a0c] border-2 border-kh-pink transform -translate-x-1/2 -translate-y-1/2 z-20 shadow-[0_0_15px_rgba(234,76,137,0.6)]" />
+
+      {/* TEXT CONTENT COLUMN */}
       <motion.div
-        style={{
-          backgroundColor: nodeBg,
-          scale: nodeScale,
-          borderColor: nodeBorder,
-        }}
-        className="absolute left-8 lg:left-1/2 top-8 w-11 h-11 rounded-xs border-2 transform -translate-x-1/2 z-20 shadow-[0_0_20px_rgba(234,76,137,0.1)] flex items-center justify-center transition-all duration-150"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-15% 0px -15% 0px" }}
+        className={`pl-12 lg:pl-0 lg:col-span-6 space-y-5 xl:space-y-7 ${
+          isEven
+            ? "lg:order-1 lg:text-right lg:pr-16 xl:pr-24"
+            : "lg:order-2 lg:pl-16 xl:pl-24"
+        }`}
       >
-        <Icon className="w-5 h-5 text-white stroke-[2.5]" />
-      </motion.div>
-
-      {/* Enlarged Card Frame Component */}
-      <motion.div
-        style={{
-          opacity,
-          scale,
-          x: xOffset,
-          skewX: -4,
-        }}
-        whileHover={{
-          y: -5,
-          borderColor: "rgba(234,76,137,0.5)",
-          boxShadow: "0 30px 45px -15px rgba(0,0,0,0.85)",
-        }}
-        className="w-full lg:w-[47%] ml-16 lg:ml-0 border border-white/5 bg-linear-to-br from-neutral-900/90 via-neutral-950/95 to-black p-8 rounded-md relative group transition-all duration-300 select-none will-change-transform shadow-xl"
-      >
-        {/* Neon Bracket Corners */}
-        <div className="absolute top-0 left-0 w-16 h-[2px] bg-kh-pink group-hover:w-24 transition-all duration-300" />
-        <div className="absolute bottom-0 right-0 w-16 h-[2px] bg-kh-blue group-hover:w-24 transition-all duration-300" />
-
-        {/* Card Headline Strip */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4 mb-4 skew-x-[4deg]">
-          <h3 className="font-condensed font-black text-2xl tracking-wide text-white uppercase group-hover:text-kh-pink transition-colors">
-            {item.title}
-          </h3>
-
-          <span className="font-mono text-xs font-black tracking-widest text-kh-blue-light bg-kh-blue/10 border border-kh-blue/20 px-3 py-1.5 rounded-xs uppercase shrink-0 w-max">
-            {item.date}
-          </span>
+        {/* Tag Shutter */}
+        <div
+          className={`overflow-hidden flex ${isEven ? "lg:justify-end" : "justify-start"}`}
+        >
+          <motion.div
+            variants={shutterUpVariants}
+            className="flex items-center gap-4"
+          >
+            <span className="font-condensed text-xs xl:text-sm font-black tracking-widest text-kh-pink bg-kh-pink/10 px-3 py-1.5 rounded-xs uppercase">
+              {item.tag}
+            </span>
+            <span className="font-mono text-xs xl:text-sm text-zinc-500 font-bold">
+              {item.subtitle}
+            </span>
+          </motion.div>
         </div>
 
-        {/* Narrative Paragraph */}
-        <p className="text-gray-400 font-sans font-light text-base leading-relaxed tracking-wide skew-x-[4deg]">
-          {item.description}
-        </p>
+        {/* Title Shutter */}
+        <div className="overflow-hidden py-1">
+          <motion.h3
+            variants={shutterUpVariants}
+            className="font-display text-3xl md:text-4xl xl:text-5xl 2xl:text-6xl font-black uppercase text-white tracking-tight leading-none"
+          >
+            {item.title}
+          </motion.h3>
+        </div>
 
-        {/* Asymmetrical Large Identifier Index */}
-        <div className="absolute bottom-2 right-6 font-display text-8xl font-black text-white/1.5 select-none leading-none tracking-tighter group-hover:text-kh-pink/3 transition-colors duration-300">
-          0{item.id}
+        {/* Description Shutter */}
+        <div className="overflow-hidden">
+          <motion.p
+            variants={shutterUpVariants}
+            className={`text-zinc-400 font-sans font-light text-base xl:text-xl xl:leading-relaxed leading-relaxed max-w-2xl ${
+              isEven ? "lg:ml-auto" : "lg:mr-auto"
+            }`}
+          >
+            {item.description}
+          </motion.p>
+        </div>
+
+        {/* Dynamic KPI Widget Component */}
+        <div
+          className={`pt-4 flex ${isEven ? "lg:justify-end" : "justify-start"}`}
+        >
+          <motion.div
+            variants={shutterUpVariants}
+            className="bg-neutral-950/50 border border-white/5 rounded-2xl p-5 xl:p-6 flex items-center gap-5 min-w-[240px] xl:min-w-[280px] shadow-2xl backdrop-blur-md hover:border-kh-pink/30 transition-colors duration-300"
+          >
+            <div className="w-12 h-12 xl:w-14 xl:h-14 rounded-xl bg-zinc-900/80 border border-white/10 flex items-center justify-center text-kh-pink shrink-0">
+              <Icon size={22} className="xl:w-6 xl:h-6" />
+            </div>
+            <div className="text-left">
+              <div className="font-display text-2xl xl:text-4xl font-black text-white leading-none tracking-tight">
+                {item.stats.value}
+              </div>
+              <div className="font-condensed text-[10px] xl:text-xs text-zinc-500 uppercase tracking-widest font-bold mt-1.5">
+                {item.stats.label}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* VISUAL IMAGE HOLDER CANVAS */}
+      <motion.div
+        variants={complexImageVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-15% 0px -15% 0px" }}
+        className={`pl-12 lg:pl-0 lg:col-span-6 ${isEven ? "lg:order-2 lg:pl-16 xl:pr-0" : "lg:order-1 lg:pr-16 xl:pl-0"}`}
+      >
+        <div className="w-full aspect-16/10 xl:aspect-video bg-neutral-950/80 border border-white/5 rounded-2xl overflow-hidden relative group shadow-2xl backdrop-blur-xs">
+          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none" />
+
+          {/* Technical Blueprint Wireframe Layer */}
+          <div className="absolute inset-0 flex flex-col justify-between p-8 xl:p-12 opacity-30 group-hover:opacity-50 transition-opacity duration-500 select-none">
+            <div className="flex justify-between items-start">
+              <div className="font-mono text-[11px] xl:text-xs text-zinc-600">
+                // DATA_MATRIX_0{item.id}
+              </div>
+              <div className="font-mono text-[11px] xl:text-xs text-zinc-600">
+                SYS_PROSPECT_PRO
+              </div>
+            </div>
+            <div className="font-display text-7xl md:text-8xl xl:text-9xl font-black text-zinc-800/40 tracking-tighter leading-none">
+              HARRIS 11
+            </div>
+          </div>
+
+          {/* Premium Highlight Trim Bars */}
+          <div className="absolute bottom-0 left-0 w-16 h-[2px] bg-kh-pink group-hover:w-28 transition-all duration-300 z-20" />
+          <div className="absolute top-0 right-0 w-16 h-[2px] bg-cyan-500 group-hover:w-28 transition-all duration-300 z-20" />
         </div>
       </motion.div>
     </div>
