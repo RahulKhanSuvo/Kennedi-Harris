@@ -10,7 +10,7 @@ export function GalleryHero() {
       {/* Decorative Editorial Background Text Grid */}
       <div className="absolute inset-0 dot-grid opacity-[0.1] pointer-events-none" />
       <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-kh-pink/5 blur-[150px] pointer-events-none" />
-      <div className="absolute -left-12 top-1/3 text-[14vw] font-display font-black text-white/[0.01] uppercase select-none tracking-tighter leading-none pointer-events-none">
+      <div className="absolute -left-12 top-1/3 text-[14vw] font-display font-black text-white/1 uppercase select-none tracking-tighter leading-none pointer-events-none">
         VISUALS // 11
       </div>
 
@@ -85,7 +85,7 @@ export function GalleryHero() {
         {/* RIGHT COLUMN (5 Columns) — Premium Layered Graphic Composition */}
         <div className="lg:col-span-5 relative w-full flex items-center justify-center lg:justify-end pt-8 lg:pt-0">
           {/* CHANGED: Adjusted aspect-[4/5] to aspect-[4/4.5] for a slight height reduction */}
-          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none aspect-1/1">
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none aspect-square">
             {/* Background Structural Accent Box */}
             <div className="absolute inset-0 bg-[#111115] border border-white/10 rounded-2xl transform -rotate-3 transition-transform duration-500 hover:rotate-0 shadow-xl overflow-hidden z-0">
               <div className="absolute inset-0 dot-grid opacity-[0.1]" />

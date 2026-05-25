@@ -15,9 +15,9 @@ export function GalleryHeritage() {
         {/* LEFT CANVAS BLOCK (5 Columns) — Raw Archival Media Frame */}
         <div className="lg:col-span-5 order-2 lg:order-1 relative">
           {/* Subtle Ambient Behind Glow */}
-          <div className="absolute -inset-2 bg-gradient-to-r from-kh-pink/20 to-cyan-500/10 rounded-2xl opacity-30 blur-xl pointer-events-none" />
+          <div className="absolute -inset-2 bg-linear-to-r from-kh-pink/20 to-cyan-500/10 rounded-2xl opacity-30 blur-xl pointer-events-none" />
 
-          <div className="relative aspect-[4/5] w-full max-w-[380px] mx-auto lg:max-w-none bg-[#121216] border border-white/10 p-3 rounded-2xl shadow-2xl">
+          <div className="relative aspect-4/5 w-full max-w-[380px] mx-auto lg:max-w-none bg-[#121216] border border-white/10 p-3 rounded-2xl shadow-2xl">
             <div className="w-full h-full rounded-xl bg-[#17171d] overflow-hidden relative flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
               {/* <img src={foundationImg} alt="Early Mentorship & Roots" className="w-full h-full object-cover filter contrast-[1.05] sepia-[0.15]" /> */}
               [ FOUNDATION_ARCHIVE_IMAGE ]
