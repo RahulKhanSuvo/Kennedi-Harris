@@ -24,12 +24,10 @@ export function GalleryHero() {
           </div>
 
           {/* Giant Title Typography Stacks */}
-          <h1 className="font-display text-6xl sm:text-7xl xl:text-8xl font-black leading-[0.85] tracking-tight text-white uppercase mb-8">
+          <h1 className="font-display text-6xl sm:text-7xl xl:text-8xl font-semibold text-white uppercase mb-8">
             MOMENTS.
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-kh-pink via-[#d946ef] to-white">
-              MEMORIES.
-            </span>
+            <span className="text-kh-pink">MEMORIES.</span>
           </h1>
 
           {/* Body Content Description */}
