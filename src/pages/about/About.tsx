@@ -1,6 +1,6 @@
 import { Timeline } from "./components/Timeline";
-import { ByTheNumbers } from "./components/ByTheNumbers";
-import { CoreValues } from "./components/CoreValues";
+// import { ByTheNumbers } from "./components/ByTheNumbers";
+// import { CoreValues } from "./components/CoreValues";
 import Container from "@/components/common/Container";
 import ContactForm from "@/components/common/ContactForm";
 import AthleteBanner from "@/components/common/AthleteBanner";
@@ -14,8 +14,8 @@ export default function About() {
       <Timeline />
       <Container className="">
         <div className=" border bg-kh-dark relative z-10">
-          <ByTheNumbers />
-          <CoreValues />
+          {/* <ByTheNumbers /> */}
+          {/* <CoreValues /> */}
           <BeyondTheGame />
         </div>
       </Container>

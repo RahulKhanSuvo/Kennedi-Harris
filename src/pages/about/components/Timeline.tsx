@@ -106,7 +106,7 @@ export function Timeline() {
           {/* Active 1:1 Laser Line Progress Indicator */}
           <motion.div
             style={{ scaleY: scrollYProgress }}
-            className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-px bg-linear-to-b from-kh-pink via-pink-500 to-cyan-500 origin-top transform lg:-translate-x-1/2 pointer-events-none z-10"
+            className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-1 bg-linear-to-b to-kh-pink from-white origin-top transform lg:-translate-x-1/2 pointer-events-none z-10"
           />
 
           <div className="space-y-40 xl:space-y-56">
