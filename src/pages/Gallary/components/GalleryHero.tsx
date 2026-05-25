@@ -84,7 +84,8 @@ export function GalleryHero() {
 
         {/* RIGHT COLUMN (5 Columns) — Premium Layered Graphic Composition */}
         <div className="lg:col-span-5 relative w-full flex items-center justify-center lg:justify-end pt-8 lg:pt-0">
-          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none aspect-[4/5] relative">
+          {/* CHANGED: Adjusted aspect-[4/5] to aspect-[4/4.5] for a slight height reduction */}
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none aspect-1/1">
             {/* Background Structural Accent Box */}
             <div className="absolute inset-0 bg-[#111115] border border-white/10 rounded-2xl transform -rotate-3 transition-transform duration-500 hover:rotate-0 shadow-xl overflow-hidden z-0">
               <div className="absolute inset-0 dot-grid opacity-[0.1]" />
