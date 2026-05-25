@@ -10,7 +10,8 @@ import {
   AlertCircle,
   ArrowLeft,
 } from "lucide-react";
-import { apiService, AUTH_TOKEN_KEY } from "@/lib/api";
+import { AUTH_TOKEN_KEY } from "@/api/api-client";
+import { authService } from "@/api/services/auth.service";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ export default function Login() {
 
   // Login Mutation using React Query
   const { mutate: handleLogin, isPending } = useMutation({
-    mutationFn: () => apiService.login({ email, password }),
+    mutationFn: () => authService.login({ email, password }),
     onSuccess: (data) => {
       if (data.data?.accessToken) {
         localStorage.setItem(AUTH_TOKEN_KEY, data.data.accessToken);

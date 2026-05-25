@@ -1,4 +1,3 @@
-import mainLayout from "@/layouts/mainLayout";
 import About from "@/pages/about/About";
 import BrandPartner from "@/pages/BrandPartner/BrandPartner";
 import ContactPage from "@/pages/contact/ContactPage";
@@ -10,58 +9,84 @@ import Schedule from "@/pages/Schedule/Schedule";
 import Login from "@/pages/login/Login";
 import Dashboard from "@/pages/admin/Dashboard";
 import AdminProtectedRoute from "@/components/common/AdminProtectedRoute";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate, Outlet } from "react-router";
+import MainLayout from "@/layouts/mainLayout";
+import DashboardLayout from "@/layouts/DashboardLayout";
+import HighlightsPanel from "@/pages/admin/components/HighlightsPanel";
+import CreateHightlight from "@/pages/admin/components/CreateHightlight";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: mainLayout,
+    element: <MainLayout />,
     children: [
       {
         index: true,
-        Component: Home,
+        element: <Home />,
       },
       {
         path: "/about",
-        Component: About,
+        element: <About />,
       },
       {
         path: "/highlights",
-        Component: Highlights,
+        element: <Highlights />,
       },
       {
         path: "/gallery",
-        Component: GallaryPage,
+        element: <GallaryPage />,
       },
       {
         path: "/schedule",
-        Component: Schedule,
+        element: <Schedule />,
       },
       {
         path: "/brand-partners",
-        Component: BrandPartner,
+        element: <BrandPartner />,
       },
       {
         path: "/contact",
-        Component: ContactPage,
+        element: <ContactPage />,
       },
       {
         path: "/media-kit",
-        Component: MediaKit,
+        element: <MediaKit />,
       },
     ],
   },
   {
     path: "/login",
-    Component: Login,
+    element: <Login />,
   },
   {
     path: "/admin",
-    Component: AdminProtectedRoute,
+    element: (
+      <AdminProtectedRoute>
+        <DashboardLayout />
+      </AdminProtectedRoute>
+    ),
     children: [
       {
         index: true,
-        Component: Dashboard,
+        element: <Navigate to="/admin/dashboard" replace />,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "highlights",
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <HighlightsPanel />,
+          },
+          {
+            path: "create",
+            element: <CreateHightlight />,
+          },
+        ],
       },
     ],
   },

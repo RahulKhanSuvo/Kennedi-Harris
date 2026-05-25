@@ -1,6 +1,5 @@
 import { PlayCircle, FileText, Mail } from "lucide-react";
 import { motion, type Variants } from "motion/react";
-import heroImg from "@/assets/modal/hero.png";
 import Container from "@/components/common/Container";
 import backgroundImage from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
 
@@ -26,7 +25,11 @@ const itemRevealLeft: Variants = {
   },
 };
 
-export default function HeroSection() {
+export default function HeroSection({
+  heroImage,
+}: {
+  heroImage: string | undefined;
+}) {
   return (
     <section className="relative min-h-[90vh] flex flex-col justify-center lg:justify-end overflow-hidden hero-glow-blue bg-black">
       {/* Background Graphic Engine */}
@@ -163,22 +166,24 @@ export default function HeroSection() {
               transition={{ duration: 0.85, delay: 0.35, ease: kineticSpring }}
               className="w-[85%] md:w-[70%] lg:w-[85%] xl:w-[80%] flex items-end justify-center overflow-hidden will-change-transform"
             >
-              <img
-                src={heroImg}
-                alt="Kennedi Harris Court Profile"
-                className="w-full h-auto object-contain block align-bottom contrast-[1.05]"
-                loading="eager"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                  e.currentTarget.parentElement?.classList.add(
-                    "flex",
-                    "items-center",
-                    "justify-center",
-                  );
-                  e.currentTarget.parentElement!.innerHTML =
-                    '<div class="text-kh-gray font-condensed tracking-widest border border-white/10 p-12 bg-zinc-950">// DATA FEED MISSING</div>';
-                }}
-              />
+              {heroImage && (
+                <img
+                  src={heroImage}
+                  alt="Kennedi Harris Court Profile"
+                  className="w-full max-h-[750px] object-contain block align-bottom contrast-[1.05]"
+                  loading="eager"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    e.currentTarget.parentElement?.classList.add(
+                      "flex",
+                      "items-center",
+                      "justify-center",
+                    );
+                    e.currentTarget.parentElement!.innerHTML =
+                      '<div class="text-kh-gray font-condensed tracking-widest border border-white/10 p-12 bg-zinc-950">// DATA FEED MISSING</div>';
+                  }}
+                />
+              )}
             </motion.div>
           </div>
         </div>

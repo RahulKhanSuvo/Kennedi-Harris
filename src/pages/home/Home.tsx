@@ -5,14 +5,23 @@ import HeroSection from "./components/HeroSection";
 import HighlightAndSchedule from "./components/HighlightAndSchedule";
 import StatsSection from "./components/StatsSection";
 import AboutSection from "./components/AboutSection";
+import { useQuery } from "@tanstack/react-query";
+import { homeService } from "@/api/services";
+import Preloader from "@/components/common/Preloader";
 
 export default function Home() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["home-active"],
+    queryFn: homeService.getActiveHome,
+  });
+  const { frist_img } = data || {};
+  if (isLoading) return <Preloader />;
   return (
     <div className="flex flex-col w-full bg-kh-dark min-h-screen">
-      <HeroSection />
+      <HeroSection heroImage={frist_img} />
       <BottomInfoBar />
       <AboutSection />
-      <StatsSection />
+      <StatsSection stats={data} isLoading={isLoading} />
       <HighlightAndSchedule />
       <GallerySection />
       <ContactForm />

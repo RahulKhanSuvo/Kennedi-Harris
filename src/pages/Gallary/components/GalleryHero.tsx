@@ -1,9 +1,8 @@
 import { Grid, Layers, ArrowDown } from "lucide-react";
 import Container from "@/components/common/Container";
 
-// TODO: Replace these placeholders with your actual asset imports
-// import galleryHeroMain from "../../../assets/gallery-hero-1.jpg";
-// import galleryHeroSub from "../../../assets/gallery-hero-2.jpg";
+import galleryHeroMain from "@/assets/gallery/12c168ed-4b81-4cd0-a9b7-2dab64e505ea.jpeg";
+import galleryHeroSub from "@/assets/gallery/5a3f0dac-6e17-403f-b599-d526116806c7.jpeg";
 
 export function GalleryHero() {
   return (
@@ -20,7 +19,7 @@ export function GalleryHero() {
         <div className="lg:col-span-7 flex flex-col justify-center">
           {/* Section Breadcrumb Badge */}
           <div className="font-condensed font-bold tracking-[0.25em] text-kh-pink text-xs uppercase mb-3 flex items-center gap-2">
-            <span className="w-6 h-[1px] bg-kh-pink inline-block" />
+            <span className="w-6 h-px bg-kh-pink inline-block" />
             Media Gallery
           </div>
 
@@ -97,12 +96,15 @@ export function GalleryHero() {
 
             {/* Main Foreground Frame Canvas */}
             <div className="absolute inset-4 bg-[#16161c] border border-white/10 rounded-xl transform rotate-2 hover:rotate-0 transition-transform duration-500 shadow-2xl overflow-hidden z-10 flex items-end">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent z-10" />
 
               {/* Main Image Replacement Layer */}
               <div className="w-full h-full bg-[#1c1c24] flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
-                {/* <img src={galleryHeroMain} alt="On Court Action" className="w-full h-full object-cover" /> */}
-                [ COURT_ACTION_IMAGE ]
+                <img
+                  src={galleryHeroMain}
+                  alt="On Court Action"
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Bottom Frame Badge Tag */}
@@ -116,9 +118,12 @@ export function GalleryHero() {
 
             {/* Asymmetrical Offset Floating Secondary Mini-Frame */}
             <div className="absolute -bottom-6 -left-6 sm:-left-10 w-1/2 aspect-square bg-[#1a1a22] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-20 transform -rotate-6 hover:rotate-0 transition-transform duration-300 hidden sm:block">
-              <div className="w-full h-full bg-[#22222a] flex items-center justify-center text-gray-600 font-condensed text-[9px] tracking-wider uppercase text-center p-2">
-                {/* <img src={galleryHeroSub} alt="Training Session" className="w-full h-full object-cover" /> */}
-                [ TRAINING_DETAILS ]
+              <div className="w-full h-full bg-[#22222a] flex items-center justify-center text-gray-600 font-condensed text-[9px] tracking-wider uppercase text-center">
+                <img
+                  src={galleryHeroSub}
+                  alt="Training Session"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>

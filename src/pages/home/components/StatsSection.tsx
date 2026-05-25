@@ -7,21 +7,9 @@ import {
   type Variants,
 } from "motion/react";
 import statsImg from "@/assets/modal/f84dc78b-5abc-44a4-a0cb-07c9baf66f16-scaled.png";
+import { type HomeData } from "@/api/services";
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
-
-interface StatItem {
-  value: string;
-  label: string | string[];
-}
-
-const stats: StatItem[] = [
-  { value: "20+", label: "PPG" },
-  { value: "16+", label: "RPG" },
-  { value: "3+", label: "BPG" },
-  { value: "24+", label: "DOUBLE-DOUBLES" },
-  { value: "31", label: ["REBOUNDS", "SINGLE GAME"] },
-];
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -88,7 +76,25 @@ function DigitCounter({ value }: { value: string }) {
   );
 }
 
-export default function StatsSection() {
+export default function StatsSection({
+  stats,
+  isLoading,
+}: {
+  stats: HomeData | undefined;
+  isLoading: boolean;
+}) {
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const statsList = [
+    { value: stats?.PPG || "0", label: "PPG" },
+    { value: stats?.RPG || "0", label: "RPG" },
+    { value: stats?.BPG || "0", label: "BPG" },
+    { value: stats?.DOUBLE_DOUBLES || "0", label: "DOUBLE-DOUBLES" },
+    { value: stats?.REBOUNDS || "0", label: ["REBOUNDS", "SINGLE GAME"] },
+  ];
+
   return (
     <section className="border-y border-white/10 bg-black/20 relative overflow-hidden py-12 lg:py-16">
       <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12 flex flex-col lg:flex-row gap-12 lg:gap-8 items-stretch">
@@ -110,7 +116,7 @@ export default function StatsSection() {
             viewport={{ once: true, amount: 0.1 }}
             className="grid grid-cols-3 md:grid-cols-5 gap-y-10 gap-x-2 md:gap-x-0 items-start"
           >
-            {stats.map((item, index) => (
+            {statsList?.map((item, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
