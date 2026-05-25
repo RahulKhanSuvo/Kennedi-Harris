@@ -5,11 +5,10 @@ import { motion, useScroll, type Variants } from "motion/react";
 import { Award, Trophy, Target, Sparkles, Flame } from "lucide-react";
 import Container from "@/components/common/Container";
 
-// TO THE DEVELOPER: Import your dynamic media assets here
-// import earlyLifeImg from "@/assets/timeline/early-life.png";
-// import tournamentImg from "@/assets/timeline/first-victory.png";
-// import trainingImg from "@/assets/timeline/training.png";
-import meImg from "../../../assets/me-removebg-preview.png";
+import earlyLifeImg from "@/assets/about/IMG_0524-719x1024.jpg";
+import tournamentImg from "@/assets/about/pic1.jpg";
+import trainingImg from "@/assets/about/pic2.jpg";
+import meImg from "@/assets/modal/cd19294a-d030-4580-9dae-4de0473da04e.png";
 
 const TIMELINE_DATA = [
   {
@@ -21,6 +20,7 @@ const TIMELINE_DATA = [
       "Kennedi Harris was born with a love for sports. At the tender age of 6, she discovered her passion for basketball from her Dad, Ken, who used to teach her the game. Growing up in an environment built on discipline, she quickly developed her foundational skills and began dominating local leagues.",
     stats: { value: "7", label: "Youth Leagues" },
     icon: Target,
+    image: earlyLifeImg,
   },
   {
     id: 2,
@@ -31,6 +31,7 @@ const TIMELINE_DATA = [
       "In her early years, Kennedi participated in various youth leagues, where she not only honed her skills but also learned the core components of elite teamwork. Her strategic gameplay, defensive length, and clutch scoring mechanics led her team to its first major championship series.",
     stats: { value: "37", label: "Tournaments Played" },
     icon: Trophy,
+    image: tournamentImg,
   },
   {
     id: 3,
@@ -41,6 +42,7 @@ const TIMELINE_DATA = [
       "Kennedi’s dedication to high-performance development is evident in her daily training sessions. From morning ball-handling complexes to high-intensity vertical track routines, her commitment to elevating her skill ceiling serves as an inspiration to her peers.",
     stats: { value: "100+", label: "Elite Peers Faced" },
     icon: Flame,
+    image: trainingImg,
   },
   {
     id: 4,
@@ -51,6 +53,7 @@ const TIMELINE_DATA = [
       "Throughout her rising youth basketball trajectory, Kennedi has picked up numerous personal accolades, MVP honors, and defensive player recognition awards. This structural framework keeps her focused on long-term execution and high-profile team legacy.",
     stats: { value: "9", label: "Major Awards" },
     icon: Award,
+    image: meImg,
   },
 ];
 
@@ -78,24 +81,24 @@ export function Timeline() {
 
       <Container className=" relative z-10">
         {/* Editorial Heading Grid Matrix */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-40 xl:mb-56 items-end">
+        <div className=" flex  mb-20 items-center text-center flex-col">
           <div className="lg:col-span-8">
             <span className="text-kh-pink font-condensed tracking-[0.3em] uppercase font-black text-xs xl:text-sm block mb-4">
               // CHRONOLOGICAL LEGACY
             </span>
-            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-semibold uppercase  text-white">
+            <h2 className="font-display text-5xl md:text-7xl font-semibold uppercase  text-white">
               BUILT ON FAITH.
               <br />
               <span className="text-kh-pink">DRIVEN BY PURPOSE.</span>
             </h2>
           </div>
-          <div className="lg:col-span-4 border-l border-white/10 pl-6 xl:pl-10 pb-2">
+          {/* <div className="lg:col-span-4 border-l border-white/10 pl-6 xl:pl-10 pb-2">
             <p className="text-zinc-400 font-sans font-light text-base md:text-lg xl:text-xl leading-relaxed max-w-md xl:max-w-xl">
               Kennedi Harris has been making waves in the basketball universe
               since she was just 6 years old. Explore the critical inflection
               milestones that continue to sculpt her elite game layout.
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* Chronological Grid Frame */}
@@ -120,7 +123,7 @@ export function Timeline() {
         </div>
 
         {/* Dynamic Ultra-Wide Athlete Quote Section */}
-        <div className="mt-56 xl:mt-72 bg-neutral-950/40 border border-white/5 rounded-3xl p-8 md:p-12 xl:p-20 relative overflow-hidden max-w-7xl 2xl:max-w-[1400px] mx-auto backdrop-blur-xl shadow-3xl">
+        <div className="mt-56 bg-neutral-950/40 border border-white/5 rounded p-8 md:p-12  relative overflow-hidden max-w-7xl 2xl:max-w-[1400px] mx-auto backdrop-blur-xl shadow-3xl">
           <div className="absolute inset-0 bg-linear-to-r from-kh-pink/3 to-transparent pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 items-center">
@@ -138,7 +141,7 @@ export function Timeline() {
               <div className="flex items-center gap-2 text-kh-pink font-condensed tracking-widest text-xs xl:text-sm uppercase font-bold">
                 <Sparkles size={14} /> PLAYER REFLECTIONS
               </div>
-              <blockquote className="font-display text-2xl md:text-4xl xl:text-5xl italic uppercase text-zinc-100 leading-snug tracking-wide">
+              <blockquote className="font-display text-2xl italic uppercase text-zinc-100 leading-snug tracking-wide">
                 "Basketball is more than just a game for me; it’s a way of life.
                 Every time I step onto the court, I feel a sense of freedom and
                 excitement. My passion drives me to improve every single day."
@@ -291,19 +294,27 @@ function TimelineBlock({ item, isEven }: TimelineBlockProps) {
         className={`pl-12 lg:pl-0 lg:col-span-6 ${isEven ? "lg:order-2 lg:pl-16 xl:pr-0" : "lg:order-1 lg:pr-16 xl:pl-0"}`}
       >
         <div className="w-full aspect-16/10 xl:aspect-video bg-neutral-950/80 border border-white/5 rounded-2xl overflow-hidden relative group shadow-2xl backdrop-blur-xs">
-          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none" />
+          {/* Gradient overlay to keep text/cyber accents legible */}
+          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-transparent z-10 pointer-events-none" />
 
-          {/* Technical Blueprint Wireframe Layer */}
-          <div className="absolute inset-0 flex flex-col justify-between p-8 xl:p-12 opacity-30 group-hover:opacity-50 transition-opacity duration-500 select-none">
+          {/* Actual Timeline Image */}
+          <img
+            src={item.image} // Safe fallback depending on Next.js setup/bundler behavior
+            alt={item.title}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out grayscale-30 group-hover:grayscale-0 opacity-80 group-hover:opacity-100"
+          />
+
+          {/* Technical Blueprint Wireframe Layer (Z-Index bumped so it overlays beautifully on top of your photo) */}
+          <div className="absolute inset-0 flex flex-col justify-between p-8 xl:p-12 opacity-30 group-hover:opacity-50 transition-opacity duration-500 select-none z-20">
             <div className="flex justify-between items-start">
-              <div className="font-mono text-[11px] xl:text-xs text-zinc-600">
+              <div className="font-mono text-[11px] xl:text-xs text-white">
                 // DATA_MATRIX_0{item.id}
               </div>
-              <div className="font-mono text-[11px] xl:text-xs text-zinc-600">
+              <div className="font-mono text-[11px] xl:text-xs text-white">
                 SYS_PROSPECT_PRO
               </div>
             </div>
-            <div className="font-display text-7xl md:text-8xl xl:text-9xl font-black text-zinc-800/40 tracking-tighter leading-none">
+            <div className="font-display text-7xl md:text-8xl xl:text-9xl font-black text-white/10 tracking-tighter leading-none">
               HARRIS 11
             </div>
           </div>

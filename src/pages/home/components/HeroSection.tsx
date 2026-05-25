@@ -80,7 +80,7 @@ export default function HeroSection({
           <div className="flex flex-col overflow-hidden">
             <motion.h1
               variants={itemRevealLeft}
-              className="font-display text-6xl sm:text-7xl lg:text-9xl xl:text-[200px] text-white uppercase"
+              className="font-display text-6xl sm:text-7xl xl:text-8xl xl:text-[200px] font-medium text-white uppercase"
             >
               KENNEDI
             </motion.h1>
