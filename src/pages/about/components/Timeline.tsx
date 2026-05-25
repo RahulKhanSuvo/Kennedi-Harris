@@ -70,25 +70,23 @@ export function Timeline() {
       className="py-14 bg-[#0a0a0c] relative overflow-hidden border-t border-white/5"
     >
       {/* Dynamic Cyber Grid & Lighting Framework */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#141416_1px,transparent_1px),linear-gradient(to_bottom,#141416_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-70 pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#141416_1px,transparent_1px),linear-gradient(to_bottom,#141416_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-70 pointer-events-none" />
 
       {/* Massive Ambient Lighting Nodes */}
       <div className="absolute top-0 right-0 w-[600px] xl:w-[900px] h-[600px] xl:h-[900px] bg-kh-blue/5 rounded-full filter blur-[180px] pointer-events-none animate-pulse duration-[8s]" />
       <div className="absolute bottom-1/4 left-0 w-[600px] xl:w-[900px] h-[600px] xl:h-[900px] bg-kh-pink/5 rounded-full filter blur-[180px] pointer-events-none animate-pulse duration-[10s]" />
 
-      <Container className="max-w-7xl 2xl:max-w-[1600px] px-6 md:px-12 relative z-10">
+      <Container className=" relative z-10">
         {/* Editorial Heading Grid Matrix */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-40 xl:mb-56 items-end">
           <div className="lg:col-span-8">
             <span className="text-kh-pink font-condensed tracking-[0.3em] uppercase font-black text-xs xl:text-sm block mb-4">
               // CHRONOLOGICAL LEGACY
             </span>
-            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[110px] font-black uppercase leading-[0.8] tracking-tighter text-white">
+            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-semibold uppercase  text-white">
               BUILT ON FAITH.
               <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-kh-pink to-white">
-                DRIVEN BY PURPOSE.
-              </span>
+              <span className="text-kh-pink">DRIVEN BY PURPOSE.</span>
             </h2>
           </div>
           <div className="lg:col-span-4 border-l border-white/10 pl-6 xl:pl-10 pb-2">
@@ -123,11 +121,11 @@ export function Timeline() {
 
         {/* Dynamic Ultra-Wide Athlete Quote Section */}
         <div className="mt-56 xl:mt-72 bg-neutral-950/40 border border-white/5 rounded-3xl p-8 md:p-12 xl:p-20 relative overflow-hidden max-w-7xl 2xl:max-w-[1400px] mx-auto backdrop-blur-xl shadow-3xl">
-          <div className="absolute inset-0 bg-gradient-to-r from-kh-pink/[0.03] to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-r from-kh-pink/3 to-transparent pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 items-center">
             <div className="lg:col-span-4 flex justify-center">
-              <div className="relative w-64 xl:w-80 aspect-square rounded-full bg-gradient-to-t from-kh-pink/20 to-transparent border border-white/10 overflow-hidden group">
+              <div className="relative w-64 xl:w-80 aspect-square rounded-full bg-linear-to-t from-kh-pink/20 to-transparent border border-white/10 overflow-hidden group">
                 <img
                   src={meImg}
                   alt="Kennedi Harris Court Profile"
