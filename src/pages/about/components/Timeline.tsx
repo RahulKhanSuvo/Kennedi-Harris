@@ -5,9 +5,10 @@ import { motion, useScroll, type Variants } from "motion/react";
 import { Award, Trophy, Target, Sparkles, Flame } from "lucide-react";
 import Container from "@/components/common/Container";
 
-import earlyLifeImg from "@/assets/about/IMG_0524-719x1024.jpg";
-import tournamentImg from "@/assets/about/pic1.jpg";
-import trainingImg from "@/assets/about/pic2.jpg";
+import earlyLifeImg from "@/assets/about/pic1.avif";
+import tournamentImg from "@/assets/about/pic2.avif";
+import trainingImg from "@/assets/about/pic3.avif";
+import recognitionImg from "@/assets/about/pic4.avif";
 import meImg from "@/assets/modal/cd19294a-d030-4580-9dae-4de0473da04e.png";
 
 const TIMELINE_DATA = [
@@ -53,7 +54,7 @@ const TIMELINE_DATA = [
       "Throughout her rising youth basketball trajectory, Kennedi has picked up numerous personal accolades, MVP honors, and defensive player recognition awards. This structural framework keeps her focused on long-term execution and high-profile team legacy.",
     stats: { value: "9", label: "Major Awards" },
     icon: Award,
-    image: meImg,
+    image: recognitionImg,
   },
 ];
 

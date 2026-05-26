@@ -12,8 +12,8 @@ export default function About() {
     <main className="">
       <AboutHero />
       <Timeline />
-      <Container className="">
-        <div className=" border bg-kh-dark relative z-10">
+      <Container className="py-3">
+        <div className="  bg-kh-dark relative z-10">
           {/* <ByTheNumbers /> */}
           {/* <CoreValues /> */}
           <BeyondTheGame />

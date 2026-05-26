@@ -60,7 +60,7 @@ export function BeyondTheGame() {
   ];
 
   return (
-    <section className="py-3 bg-kh-dark border-t border-white/5 relative overflow-hidden group/section">
+    <section className="py-3 bg-kh-dark relative overflow-hidden group/section">
       {/* Structural environment light arrays */}
       <div className="absolute left-1/4 top-1/4 w-[600px] h-[400px] bg-kh-blue/2 blur-[150px] rounded-full pointer-events-none animate-pulse-glow" />
       <div className="absolute right-10 bottom-0 w-[500px] h-[300px] bg-kh-pink/2 blur-[120px] rounded-full pointer-events-none animate-pulse-glow" />

@@ -148,10 +148,7 @@ export default function MediaBroadcastCenter() {
             </h3>
           </div> */}
           <span className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none">
-            FILM ROOM{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-kh-pink to-cyan-400">
-              SYNC DECK
-            </span>
+            FILM ROOM <span className="text-kh-pink ">SYNC DECK</span>
           </span>
         </motion.div>
 
