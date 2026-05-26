@@ -42,14 +42,14 @@ export function GalleryHeritage() {
         {/* RIGHT TEXT BLOCK (7 Columns) — Narrative Legacy Layout */}
         <div className="lg:col-span-7 order-1 lg:order-2 flex flex-col justify-center">
           <div className="font-condensed font-bold tracking-[0.25em] text-kh-pink text-xs uppercase mb-4 flex items-center gap-2">
-            <span className="w-6 h-[1px] bg-kh-pink inline-block" />
+            <span className="w-6 h-px bg-kh-pink inline-block" />
             The Foundation
           </div>
 
           <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-[0.9] tracking-tight text-white uppercase mb-6">
             ROOTED IN LEGACY.
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-400 to-gray-600">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-white via-gray-400 to-gray-600">
               SHAPED BY MENTORSHIP.
             </span>
           </h2>

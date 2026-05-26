@@ -105,7 +105,7 @@ export default function AboutAndAssets() {
   return (
     <section className="py-24 bg-black relative overflow-hidden">
       {/* Structural Graphic HUD Details: Grid framework lines cutting edge-to-edge */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none opacity-60" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none opacity-60" />
       <div className="absolute inset-x-0 top-[35%] h-px bg-white/10 pointer-events-none opacity-40" />
       <div className="absolute left-[30%] inset-y-0 w-px bg-white/5 pointer-events-none hidden lg:block" />
 
@@ -183,7 +183,7 @@ export default function AboutAndAssets() {
 
                 {/* Card Base Digital Gradient Layer */}
                 <div
-                  className={`absolute inset-0 z-0 bg-gradient-to-br ${asset.bgGradient} opacity-30 transition-opacity duration-500 group-hover:opacity-50`}
+                  className={`absolute inset-0 z-0 bg-linear-to-br ${asset.bgGradient} opacity-30 transition-opacity duration-500 group-hover:opacity-50`}
                 />
 
                 {/* Top Card Metrics Readout Row */}
@@ -208,7 +208,7 @@ export default function AboutAndAssets() {
                   </div>
 
                   {/* Icon Indicator Container to instantly declare what data type is inside */}
-                  <div className="w-12 h-12 shrink-0 border border-white/5 bg-white/[0.01] rounded flex items-center justify-center text-zinc-500 group-hover:text-kh-pink group-hover:border-kh-pink/20 group-hover:bg-kh-pink/[0.02] transition-all duration-300 transform group-hover:rotate-3">
+                  <div className="w-12 h-12 shrink-0 border border-white/5 bg-white/1 rounded flex items-center justify-center text-zinc-500 group-hover:text-kh-pink group-hover:border-kh-pink/20 group-hover:bg-kh-pink/2 transition-all duration-300 transform group-hover:rotate-3">
                     <AssetIcon className="w-5 h-5 stroke-[1.25]" />
                   </div>
                 </div>
@@ -229,7 +229,7 @@ export default function AboutAndAssets() {
                 </div>
 
                 {/* Left Edge Structural Laser Line Highlight */}
-                <div className="absolute left-0 inset-y-0 w-[1px] bg-white/10 scale-y-0 group-hover:scale-y-100 group-hover:bg-kh-pink transition-all duration-300 origin-top" />
+                <div className="absolute left-0 inset-y-0 w-px bg-white/10 scale-y-0 group-hover:scale-y-100 group-hover:bg-kh-pink transition-all duration-300 origin-top" />
               </motion.div>
             );
           })}
