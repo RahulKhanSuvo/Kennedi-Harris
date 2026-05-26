@@ -1,5 +1,40 @@
+"use client";
+
+import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 import { User, Ruler, MapPin, Users } from "lucide-react";
+
+// Parent container coordinates the stagger sequence when 30% visible
+const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08, // Slightly slower stagger for distinct asset loading feel
+    },
+  },
+};
+
+// Tactical alternate card animation: Scale pop with a subtle initial rotation twist
+const technicalPopVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.85,
+    rotateX: -15, // Creates a subtle 3D tilt drop-down look
+    y: 10,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotateX: 0,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 140, // Crisper snap back
+      damping: 16,
+      mass: 0.7,
+    },
+  },
+};
 
 export default function QuickInfo() {
   const infoItems = [
@@ -77,17 +112,24 @@ export default function QuickInfo() {
   ];
 
   return (
-    <section className="relative py-16 bg-gradient-to-b from-kh-dark via-black/20 to-kh-dark border-y border-white/5 overflow-hidden">
+    <section className="relative py-16 bg-gradient-to-b from-kh-dark via-black/20 to-kh-dark border-y border-white/5 overflow-hidden perspective-1000">
       {/* Subtle futuristic background grid line detail */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none opacity-40" />
 
       <Container>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-white/5 rounded-xl border border-white/10 overflow-hidden backdrop-blur-sm">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }} // Triggers precisely when 30% of the element hits screen view
+          variants={containerVariants}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-white/5 rounded-xl border border-white/10 overflow-hidden backdrop-blur-sm shadow-2xl"
+        >
           {infoItems.map((item) => {
             const IconComponent = item.Icon;
             return (
-              <div
+              <motion.div
                 key={item.id}
+                variants={technicalPopVariants}
                 className="group relative flex flex-col items-center justify-between p-6 md:p-8 bg-black/40 text-center transition-all duration-300 hover:bg-white/[0.02]"
               >
                 {/* Subtle Hover Glow Effect */}
@@ -115,10 +157,10 @@ export default function QuickInfo() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

@@ -1,21 +1,70 @@
+import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 import mediaKitBg from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
+
+const backdropVariants: Variants = {
+  hidden: { opacity: 0, scale: 1.3, rotate: 90 },
+  visible: {
+    opacity: 0.2,
+    scale: 1.25,
+    rotate: 90,
+    transition: { duration: 1.8, ease: "easeOut" },
+  },
+};
+
+const textBlockVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+const vaultContainerVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.98, y: 15 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+      staggerChildren: 0.08,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const assetItemVariants: Variants = {
+  hidden: { opacity: 0, x: 15 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { type: "spring", stiffness: 120, damping: 14 },
+  },
+};
 
 export default function MediaKitHeroSection() {
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-black pt-32 pb-20">
       {/* Deep Space Cosmic Backdrop */}
-      <div className="absolute inset-0 z-0 opacity-20 mix-blend-screen pointer-events-none">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={backdropVariants}
+        className="absolute inset-0 z-0 mix-blend-screen pointer-events-none"
+      >
         <img
           src={mediaKitBg}
           alt="Cosmic Horizon"
-          className="w-full h-full object-cover scale-125 rotate-90 filter hue-rotate-30 brightness-50"
+          className="w-full h-full object-cover filter hue-rotate-30 brightness-50"
         />
-      </div>
+      </motion.div>
 
       {/* Cybernetic Structural Grid Overlays */}
       <div className="absolute inset-0 z-0 opacity-10 bg-[linear-gradient(to_right,#06b6d4_1px,transparent_1px),linear-gradient(to_bottom,#06b6d4_1px,transparent_1px)] bg-[size:5rem_5rem]"></div>
-      <div className="absolute inset-0 z-0 bg-linear-to-b from-black via-transparent to-black"></div>
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-transparent to-black"></div>
 
       {/* High-intensity Ambient Backlights */}
       <div className="absolute top-[25%] right-[-10%] pointer-events-none h-[450px] w-[450px] rounded-full bg-cyan-500/10 blur-[130px]"></div>
@@ -23,18 +72,23 @@ export default function MediaKitHeroSection() {
 
       <Container className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16 w-full">
         {/* Left Column: Authentic Basketball Editorial Copy */}
-        <div className="flex flex-col gap-5 w-full lg:w-[50%] text-left animate-fade-in-up">
-          <div className="inline-flex items-center gap-3 px-3 py-1 bg-zinc-900 border border-white/10 w-fit">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={textBlockVariants}
+          className="flex flex-col gap-5 w-full lg:w-[50%] text-left"
+        >
+          {/* <div className="inline-flex items-center gap-3 px-3 py-1 bg-zinc-900 border border-white/10 w-fit">
             <span className="w-2 h-2 rounded-full bg-kh-pink"></span>
             <span className="text-gray-400 font-mono text-[10px] uppercase tracking-[0.25em] font-bold">
               Player Profile & Media Hub // No. 11
             </span>
-          </div>
+          </div> */}
 
-          <h1 className="font-display text-6xl sm:text-7xl lg:text-8xl uppercase text-white">
+          <h1 className="font-display text-6xl sm:text-7xl lg:text-8xl uppercase text-white m-0 tracking-tighter leading-[0.9]">
             ATHLETE
             <br />
-            <span className="text-kh-pink ">DOSSIER</span>
+            <span className="text-kh-pink">DOSSIER</span>
             <br />& PRESS
           </h1>
 
@@ -61,10 +115,15 @@ export default function MediaKitHeroSection() {
               Watch Highlight Reel ↓
             </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Column: Premium Basketball Player File Vault */}
-        <div className="w-full lg:w-[45%] max-w-md lg:max-w-full animate-fade-in">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={vaultContainerVariants}
+          className="w-full lg:w-[45%] max-w-md lg:max-w-full"
+        >
           <div className="relative border border-white/10 bg-zinc-950/70 backdrop-blur-md p-6 sm:p-8 rounded-none shadow-[0_30px_70px_rgba(0,0,0,0.9)] before:absolute before:inset-0 before:border-l-2 before:border-cyan-400 before:h-1/3">
             {/* Top Operational Status Header */}
             <div className="flex justify-between items-center border-b border-white/5 pb-4 mb-6 font-mono text-[10px] text-gray-500 uppercase tracking-widest">
@@ -75,9 +134,12 @@ export default function MediaKitHeroSection() {
             {/* Premium Basketball Asset Folders */}
             <div className="space-y-4">
               {/* Asset Item 1 - Action Photos */}
-              <div className="flex items-center justify-between p-4 bg-black/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 group">
+              <motion.div
+                variants={assetItemVariants}
+                className="flex items-center justify-between p-4 bg-black/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 group cursor-pointer"
+              >
                 <div className="flex items-center gap-3">
-                  <div className="text-cyan-400 text-2xl font-light select-none">
+                  <div className="text-cyan-400 text-2xl font-light select-none transition-transform duration-300 group-hover:scale-110">
                     🏀
                   </div>
                   <div className="text-left">
@@ -92,12 +154,15 @@ export default function MediaKitHeroSection() {
                 <span className="text-xs font-mono text-gray-400 group-hover:text-cyan-400 transition-colors pr-1">
                   PNG/JPG
                 </span>
-              </div>
+              </motion.div>
 
               {/* Asset Item 2 - Physical Stats & Measurements */}
-              <div className="flex items-center justify-between p-4 bg-black/40 border border-white/5 hover:border-kh-pink/30 transition-all duration-300 group">
+              <motion.div
+                variants={assetItemVariants}
+                className="flex items-center justify-between p-4 bg-black/40 border border-white/5 hover:border-kh-pink/30 transition-all duration-300 group cursor-pointer"
+              >
                 <div className="flex items-center gap-3">
-                  <div className="text-kh-pink text-2xl font-light select-none">
+                  <div className="text-kh-pink text-2xl font-light select-none transition-transform duration-300 group-hover:scale-110">
                     📋
                   </div>
                   <div className="text-left">
@@ -112,12 +177,15 @@ export default function MediaKitHeroSection() {
                 <span className="text-xs font-mono text-gray-400 group-hover:text-kh-pink transition-colors pr-1">
                   PDF
                 </span>
-              </div>
+              </motion.div>
 
               {/* Asset Item 3 - Official Bio & Background */}
-              <div className="flex items-center justify-between p-4 bg-black/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 group">
+              <motion.div
+                variants={assetItemVariants}
+                className="flex items-center justify-between p-4 bg-black/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 group cursor-pointer"
+              >
                 <div className="flex items-center gap-3">
-                  <div className="text-cyan-400 text-2xl font-light select-none">
+                  <div className="text-cyan-400 text-2xl font-light select-none transition-transform duration-300 group-hover:scale-110">
                     🆔
                   </div>
                   <div className="text-left">
@@ -132,7 +200,7 @@ export default function MediaKitHeroSection() {
                 <span className="text-xs font-mono text-gray-400 group-hover:text-cyan-400 transition-colors pr-1">
                   DOCX
                 </span>
-              </div>
+              </motion.div>
             </div>
 
             {/* Basketball Distribution Note */}
@@ -143,7 +211,7 @@ export default function MediaKitHeroSection() {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );
