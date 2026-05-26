@@ -1,4 +1,5 @@
-import { Play } from "lucide-react";
+import { useState } from "react";
+import { Play, Disc } from "lucide-react";
 import Container from "@/components/common/Container";
 
 import img1 from "@/assets/gallery/jumping5.avif";
@@ -12,6 +13,7 @@ const TAPE_LOGS = [
     count: "28 REELS",
     img: img1,
     metric: "24.5 PPG",
+    tagline: "Perimeter conversion & isolation drive tape.",
   },
   {
     id: "02",
@@ -19,6 +21,7 @@ const TAPE_LOGS = [
     count: "24 REELS",
     img: img2,
     metric: "3.2 BPG",
+    tagline: "Paint dominance, rim protection & switches.",
   },
   {
     id: "03",
@@ -26,70 +29,149 @@ const TAPE_LOGS = [
     count: "18 REELS",
     img: img3,
     metric: "8.1 APG",
+    tagline: "Transition anchors & open court distribution.",
   },
 ];
 
 export default function TopPlayCategories() {
+  const [activePanel, setActivePanel] = useState<string | null>("01");
+
   return (
     <section className="relative bg-black py-24 lg:py-36 border-t border-white/5 overflow-hidden">
+      {/* Background Graphic Lines */}
+      <div className="absolute top-0 right-1/4 w-[1px] h-full bg-white/[0.02] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[1px] h-full bg-white/[0.02] pointer-events-none" />
+
       <Container className="relative z-10 w-full flex flex-col gap-12">
-        <div className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
-          {/* <div className="flex items-center gap-3">
-            <div className="h-2 w-2 bg-cyan-400 rotate-45 animate-pulse"></div>
-            <h3 className="font-mono text-xs tracking-[0.4em] text-zinc-500 uppercase font-black">
-              TOP PLAY CATEGORIES
+        {/* Section Header */}
+        <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6 text-left">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="font-mono text-[9px] tracking-[0.3em] text-gray-500 uppercase font-bold">
+                BROADCAST LOGS
+              </span>
+            </div>
+            <h3 className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none m-0">
+              TOP <span className="text-kh-pink">PLAY CATEGORIES</span>
             </h3>
-          </div> */}
-          <span className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none">
-            TOP <span className="text-kh-pink">PLAY CATEGORIES</span>
-          </span>
+          </div>
+          <p className="text-gray-500 font-mono text-[10px] uppercase tracking-widest max-w-xs md:text-right">
+            Select interactive telemetry tracks to stream archived court
+            footage.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
-          {TAPE_LOGS.map((tape, index) => {
-            const isWide = index === 1;
+        {/* Dynamic Multi-Panel Accordion Track */}
+        <div className="flex flex-col lg:flex-row items-stretch w-full h-[700px] lg:h-[480px] bg-zinc-950 border border-white/10 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+          {TAPE_LOGS.map((tape) => {
+            const isActive = activePanel === tape.id;
+
             return (
               <div
                 key={tape.id}
-                className={`group relative overflow-hidden bg-zinc-950 border border-white/10 h-[380px] lg:h-[440px] cursor-pointer transition-all duration-700 ease-out shadow-2xl ${
-                  isWide ? "md:col-span-6" : "md:col-span-3"
+                onMouseEnter={() => setActivePanel(tape.id)}
+                className={`relative cursor-pointer transition-all duration-700 ease-out flex flex-col justify-between p-6 sm:p-8 overflow-hidden group ${
+                  isActive
+                    ? "lg:flex-[2.2] bg-zinc-900"
+                    : "lg:flex-[1] bg-black"
                 }`}
               >
-                <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+                {/* Background Image Layer */}
+                <div className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden">
                   <img
                     src={tape.img}
                     alt={tape.title}
-                    className="w-full h-full object-cover object-center grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    className={`w-full h-full object-cover object-center transition-all duration-1000 ${
+                      isActive
+                        ? "scale-105 grayscale-0 contrast-100 opacity-30"
+                        : "scale-100 grayscale contrast-125 opacity-15 group-hover:opacity-25"
+                    }`}
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-black/20 group-hover:from-black/90 transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
                 </div>
 
-                <div className="absolute top-6 inset-x-6 z-10 flex items-center justify-between pointer-events-none">
-                  <span className="font-mono text-[10px] text-zinc-500 group-hover:text-cyan-400 transition-colors font-semibold tracking-widest">
-                    // FEED_{tape.id}
-                  </span>
-                  <span className="font-mono text-[10px] text-kh-pink border border-kh-pink/20 bg-black/40 px-2 py-0.5 tracking-wider font-bold">
+                {/* Top Core Status Layout */}
+                <div className="relative z-10 flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    <Disc
+                      className={`w-3 h-3 text-cyan-400 ${isActive ? "animate-spin" : "opacity-40"}`}
+                      style={{ animationDuration: "3s" }}
+                    />
+                    <span className="font-mono text-[10px] text-gray-500 tracking-widest uppercase">
+                      CH_{tape.id}
+                    </span>
+                  </div>
+
+                  {/* Performance Metric Box */}
+                  <div
+                    className={`font-mono text-xs border transition-all duration-500 px-3 py-1 bg-black/60 font-bold tracking-wide ${
+                      isActive
+                        ? "border-kh-pink text-kh-pink"
+                        : "border-white/10 text-gray-400"
+                    }`}
+                  >
                     {tape.metric}
-                  </span>
+                  </div>
                 </div>
 
-                <div className="absolute bottom-6 inset-x-6 z-10 flex flex-col items-start gap-1">
-                  <span className="font-mono text-[9px] tracking-[0.2em] text-kh-pink font-bold uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                    {tape.count}
-                  </span>
-                  <h4 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-tighter text-white leading-none uppercase">
-                    {tape.title}
-                  </h4>
-                </div>
-
-                <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                  <div className="w-14 h-14 rounded-full border border-white/20 bg-black/20 backdrop-blur-xs flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 group-hover:border-kh-pink transition-all duration-500">
-                    <div className="w-10 h-10 rounded-full bg-kh-pink flex items-center justify-center text-white">
+                {/* Middle Action Ring Reveal (Only pops explicitly when layout shifts) */}
+                <div
+                  className={`absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none transition-all duration-500 z-10 ${
+                    isActive ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                  }`}
+                >
+                  <div className="w-16 h-16 rounded-full border border-kh-pink/40 bg-black/50 backdrop-blur-md flex items-center justify-center shadow-2xl shadow-kh-pink/10">
+                    <div className="w-11 h-11 rounded-full bg-kh-pink flex items-center justify-center text-white">
                       <Play fill="white" className="w-4 h-4 ml-0.5" />
                     </div>
                   </div>
                 </div>
-                <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-cyan-400 via-kh-pink to-white group-hover:w-full transition-all duration-500"></div>
+
+                {/* Bottom Details Typography Block */}
+                <div className="relative z-10 text-left flex flex-col items-start w-full">
+                  {/* Count String */}
+                  <span
+                    className={`font-mono text-[9px] tracking-[0.25em] text-cyan-400 font-bold uppercase transition-all duration-500 ${
+                      isActive
+                        ? "opacity-100 translate-y-0"
+                        : "lg:opacity-0 lg:translate-y-4"
+                    }`}
+                  >
+                    {tape.count} AVAILABLE
+                  </span>
+
+                  {/* Category Giant Title */}
+                  <h4 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-none uppercase mt-1 mb-3">
+                    {tape.title}
+                  </h4>
+
+                  {/* Summary string showing only when expanded */}
+                  <div
+                    className={`w-full overflow-hidden transition-all duration-500 ease-out flex items-center justify-between gap-4 ${
+                      isActive
+                        ? "max-h-16 opacity-100 translate-y-0"
+                        : "max-h-0 opacity-0 lg:translate-y-4"
+                    }`}
+                  >
+                    <p className="text-gray-400 font-sans font-light text-xs sm:text-sm max-w-sm leading-relaxed">
+                      {tape.tagline}
+                    </p>
+                    <div className="h-8 w-8 rounded-full border border-white/10 flex items-center justify-center text-white bg-white/5 shrink-0 lg:hidden">
+                      <Play
+                        fill="white"
+                        className="w-2.5 h-2.5 ml-0.5 text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Edge Running Scan Gradient Border Highlight */}
+                <div
+                  className={`absolute bottom-0 left-0 h-[3px] transition-all duration-700 bg-gradient-to-r from-cyan-400 via-kh-pink to-white ${
+                    isActive ? "w-full" : "w-0"
+                  }`}
+                />
               </div>
             );
           })}
