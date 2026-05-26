@@ -1,7 +1,11 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
+
+declare global {
+  interface Window {
+    lenis: Lenis | null;
+  }
+}
 
 export default function SmoothScrollProvider({
   children,
@@ -23,6 +27,7 @@ export default function SmoothScrollProvider({
     });
 
     lenisRef.current = lenis;
+    window.lenis = lenis;
 
     // Connect Lenis to the browser's global render frame loop
     function raf(time: number) {
@@ -35,6 +40,7 @@ export default function SmoothScrollProvider({
     // Clean up on component unmount
     return () => {
       lenis.destroy();
+      window.lenis = null;
     };
   }, []);
 
