@@ -86,7 +86,7 @@ export function BeyondTheGame() {
           {bentoItems.map((item, index) => (
             <div
               key={index}
-              className={`${item.span} group/frame relative overflow-hidden rounded md:rounded border border-white/5 bg-linear-to-br from-neutral-900/40 to-neutral-950/60 p-6 flex flex-col justify-between transition-all duration-300 hover:border-white/10`}
+              className={`${item.span} group/frame relative overflow-hidden rounded border border-white/5 bg-linear-to-br from-neutral-900/40 to-neutral-950/60 p-6 flex flex-col justify-between transition-all duration-300 hover:border-white/10`}
             >
               {/* RENDERING BLOCKS DEPENDING ON ELEMENT TYPE MATRICES */}
 
@@ -108,7 +108,7 @@ export function BeyondTheGame() {
                 <div
                   className={`absolute inset-0 bg-linear-to-br ${item.bgGradient} p-6 flex flex-col justify-between h-full w-full`}
                 >
-                  <div className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                  <div className="w-9 h-9 rounded bg-white/5 border border-white/10 flex items-center justify-center">
                     {item.icon && (
                       <item.icon className="w-4 h-4 text-kh-pink" />
                     )}
@@ -175,7 +175,7 @@ export function BeyondTheGame() {
               )}
 
               {/* Universal Fine Ambient Inner Border Border Shines */}
-              <div className="absolute inset-0 rounded-xl md:rounded-2xl border border-white/0 group-hover/frame:border-white/10 transition-colors duration-500 pointer-events-none z-30" />
+              <div className="absolute inset-0 rounded border border-white/0 group-hover/frame:border-white/10 transition-colors duration-500 pointer-events-none z-30" />
             </div>
           ))}
         </div>
