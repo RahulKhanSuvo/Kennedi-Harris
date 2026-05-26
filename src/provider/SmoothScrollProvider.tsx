@@ -15,15 +15,15 @@ export default function SmoothScrollProvider({
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis with premium feel configuration
     const lenis = new Lenis({
-      duration: 1.2, // Speed of the smooth scroll animation (in seconds)
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Clean kinetic easing curve
+      // We use lerp (Linear Interpolation) instead of duration for an ultra-smooth, physics-based inertial glide.
+      // 0.07 is the premium sweet spot: lower is smoother and more fluid, higher is more responsive.
+      lerp: 0.07,
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1, // Adjust scroll responsiveness sensitivity
-      touchMultiplier: 2,
+      wheelMultiplier: 0.9, // Slightly gentler scrolling steps for an elegant feel
+      touchMultiplier: 1.5,
     });
 
     lenisRef.current = lenis;
