@@ -2,6 +2,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { motion, type Variants } from "motion/react";
 import Container from "./Container";
+import { NavLink } from "react-router";
 
 const fluidSpring = [0.16, 1, 0.3, 1] as const;
 
@@ -53,20 +54,20 @@ export default function Footer() {
             variants={footerColumnVariants}
             className="flex flex-col space-y-6"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-8">
               {/* Aggressive Monogram Badge */}
-              <div className="flex font-display text-7xl font-black italic tracking-tighter leading-none select-none">
+              <div className="flex font-display text-8xl font-black italic tracking-tighter leading-none select-none">
                 <span className="text-white">K</span>
                 <span className="text-kh-pink -ml-1.5 transform translate-y-1">
                   H
                 </span>
               </div>
               <div className="flex flex-col">
-                <span className="font-display text-lg font-black tracking-tight leading-none uppercase italic">
+                <span className="font-display text-2xl font-black tracking-tight leading-none uppercase">
                   KENNEDI HARRIS
                 </span>
                 <span className="text-[10px] tracking-[0.4em] text-kh-pink font-mono font-black mt-1 uppercase">
-                  HOOPS // 05
+                  HOOPS // 11
                 </span>
               </div>
             </div>
@@ -87,22 +88,26 @@ export default function Footer() {
             </h4>
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-xs sm:text-sm text-zinc-400 font-medium">
               {[
-                { label: "Home", href: "#home" },
-                { label: "Media Kit", href: "#media" },
-                { label: "About", href: "#about" },
-                { label: "Partners", href: "#partners" },
-                { label: "Highlights", href: "#highlights" },
-                { label: "Gallery", href: "#gallery" },
-                { label: "Schedule", href: "#schedule" },
-                { label: "Contact", href: "#contact" },
+                { label: "Home", href: "/" },
+                { label: "Media Kit", href: "/media-kit" },
+                { label: "About", href: "/about" },
+                { label: "Partners", href: "/partners" },
+                { label: "Highlights", href: "/highlights" },
+                { label: "Gallery", href: "/gallery" },
+                { label: "Schedule", href: "/schedule" },
+                { label: "Contact", href: "/contact" },
               ].map((link, i) => (
-                <a
+                <NavLink
                   key={i}
-                  href={link.href}
-                  className="hover:text-kh-pink transform hover:translate-x-1 transition-all duration-300 flex items-center gap-1 group"
+                  to={link.href}
+                  className={({ isActive }: { isActive: boolean }) =>
+                    isActive
+                      ? "text-kh-pink transform hover:translate-x-1 transition-all duration-300 flex items-center gap-1 group"
+                      : "hover:text-kh-pink transform hover:translate-x-1 transition-all duration-300 flex items-center gap-1 group"
+                  }
                 >
                   {link.label}
-                </a>
+                </NavLink>
               ))}
             </div>
           </motion.div>
