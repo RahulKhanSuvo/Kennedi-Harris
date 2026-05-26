@@ -250,7 +250,7 @@ export default function MediaBroadcastCenter() {
                   }}
                   className={`flex flex-col gap-4 p-6 md:p-8 rounded border transition-all duration-500 min-h-[220px] justify-center ${
                     isSelected
-                      ? "bg-gradient-to-br from-zinc-900/80 to-zinc-950 border-kh-pink/40 shadow-[0_10px_40px_rgba(236,72,153,0.06)]"
+                      ? "bg-linear-to-br from-zinc-900/80 to-zinc-950 border-kh-pink/40 shadow-[0_10px_40px_rgba(236,72,153,0.06)]"
                       : "bg-zinc-950/20 border-white/5 opacity-40 lg:hover:opacity-70"
                   }`}
                 >
