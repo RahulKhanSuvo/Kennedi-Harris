@@ -28,19 +28,15 @@ const itemVariants: Variants = {
   },
 };
 
-// Reusable Count Core Engine
 function DigitCounter({ value }: { value: string }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
-
-  // Extract number and suffix character safely (e.g., "20+" -> target: 20, suffix: "+")
   const numericTarget = parseInt(value, 10) || 0;
-  const suffix = value.replace(/[0-9]/g, "");
+  const suffix = value.replace(/[0-9.]/g, "");
 
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.floor(latest));
 
   useEffect(() => {
-    // Set up an IntersectionObserver to trigger counting only when the stat enters view
     const node = nodeRef.current;
     if (!node) return;
 
@@ -84,7 +80,11 @@ export default function StatsSection({
   isLoading: boolean;
 }) {
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center py-16 text-zinc-500 font-mono text-sm tracking-widest">
+        LOADING_STAT_MATRIX...
+      </div>
+    );
   }
 
   const statsList = [
@@ -97,68 +97,70 @@ export default function StatsSection({
 
   return (
     <section className="border-y border-white/10 bg-black/20 relative overflow-hidden py-12 lg:py-16">
-      <div className="max-w-[1920px] w-full mx-auto px-6 lg:px-12 flex flex-col lg:flex-row gap-12 lg:gap-8 items-stretch">
+      <div className="max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-12 flex flex-col lg:flex-row gap-12 lg:gap-8 items-stretch">
         {/* Left Stat Array */}
         <div className="flex flex-col w-full lg:w-[72%]">
           {/* Header Title Section */}
-          <div className="flex items-center gap-4 mb-10">
-            <h3 className="font-condensed font-semibold text-base xl:text-lg tracking-widest text-white uppercase">
+          <div className="flex items-center gap-4 mb-10 justify-center lg:justify-start">
+            <h3 className="font-condensed font-semibold text-sm sm:text-base xl:text-lg tracking-widest text-white uppercase">
               BY THE NUMBERS
             </h3>
             <div className="h-px w-12 bg-kh-pink"></div>
           </div>
 
-          {/* Grid Layout Engine */}
+          {/* Responsive Layout Engine: 1 column on mobile, 5 columns on desktop */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
-            className="grid grid-cols-3 md:grid-cols-5 gap-y-10 gap-x-2 md:gap-x-0 items-start"
+            className="grid grid-cols-1 md:grid-cols-5 gap-y-8 md:gap-y-0 items-start"
           >
-            {statsList?.map((item, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className={`flex flex-col items-center relative text-center px-2
-                  ${index < 4 ? "md:border-r border-white/10" : ""}
-                  ${index === 2 ? "border-r-0 md:border-r" : ""}
-                  ${index % 3 === 2 ? "max-md:border-r-0" : "max-md:border-r max-md:border-white/5"}
-                  ${index >= 3 ? "max-md:col-span-1.5" : ""}
-                `}
-              >
-                <div className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-white leading-none tracking-tight">
-                  <DigitCounter value={item.value} />
-                </div>
+            {statsList?.map((item, index) => {
+              const isLast = index === statsList.length - 1;
+              return (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className={`flex flex-col items-center relative text-center px-4 w-full
+                    ${!isLast ? "md:border-r border-white/10 pb-6 md:pb-0 border-b md:border-b-0" : ""} 
+                  `}
+                >
+                  {/* Stat Number */}
+                  <div className="font-display text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl text-white leading-none tracking-tight">
+                    <DigitCounter value={item.value} />
+                  </div>
 
-                <div className="font-condensed font-bold text-xs sm:text-sm tracking-widest text-kh-pink mt-3 uppercase max-w-[140px] mx-auto leading-tight">
-                  {Array.isArray(item.label)
-                    ? item.label.map((line, i) => (
-                        <div
-                          key={i}
-                          className={
-                            i > 0 ? "text-[10px] text-zinc-400 mt-0.5" : ""
-                          }
-                        >
-                          {line}
-                        </div>
-                      ))
-                    : item.label}
-                </div>
-              </motion.div>
-            ))}
+                  {/* Label */}
+                  <div className="font-condensed font-bold text-xs sm:text-sm tracking-widest text-kh-pink mt-3 uppercase max-w-[160px] mx-auto leading-tight">
+                    {Array.isArray(item.label)
+                      ? item.label.map((line, i) => (
+                          <div
+                            key={i}
+                            className={
+                              i > 0 ? "text-[10px] text-zinc-400 mt-0.5" : ""
+                            }
+                          >
+                            {line}
+                          </div>
+                        ))
+                      : item.label}
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
 
         {/* Right Dynamic Live Box */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: kineticSpring, delay: 0.2 }}
-          className="w-full lg:w-[28%] flex flex-row items-center gap-6 bg-neutral-900/40 p-5 rounded border border-white/10 backdrop-blur-sm"
+          className="w-full lg:w-[28%] flex flex-row items-center justify-center lg:justify-start gap-5 sm:gap-6 bg-neutral-900/40 p-5 rounded border border-white/10 backdrop-blur-sm self-center lg:self-auto max-w-md lg:max-w-none mt-4 lg:mt-0"
         >
-          <div className="w-20 h-24 bg-zinc-950 rounded overflow-hidden shrink-0 border border-white/5">
+          <div className="w-16 h-20 sm:w-20 sm:h-24 bg-zinc-950 rounded overflow-hidden shrink-0 border border-white/5">
             <img
               src={statsImg}
               alt="Live Scout Log Data"
@@ -177,8 +179,8 @@ export default function StatsSection({
             />
           </div>
 
-          <div className="flex flex-col justify-center gap-3 h-full">
-            <div className="font-condensed font-bold text-base tracking-widest text-white uppercase leading-snug">
+          <div className="flex flex-col justify-center gap-2 sm:gap-3 h-full">
+            <div className="font-condensed font-bold text-sm sm:text-base tracking-widest text-white uppercase leading-snug">
               STATS UPDATED
               <br />
               THROUGHOUT
