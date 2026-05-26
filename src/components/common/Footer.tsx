@@ -36,7 +36,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#030405] text-white font-sans pt-20 pb-8 border-t border-white/5 relative overflow-hidden">
       {/* Heavy Sub-Layer Sports Watermark Accent */}
-      <div className="absolute right-0 bottom-0 font-display text-[16vw] italic font-black text-white/[0.01] select-none tracking-tighter leading-none pointer-events-none uppercase z-0">
+      <div className="absolute right-0 bottom-0 font-display text-[16vw] italic font-black text-white/1 select-none tracking-tighter leading-none pointer-events-none uppercase z-0">
         HARRIS_05
       </div>
 

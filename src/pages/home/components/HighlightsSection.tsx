@@ -1,9 +1,11 @@
-import { Play, ArrowRight, Pause } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import mainVideo from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
 import video1 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
 import video2 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.15.05-PM.mp4";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 interface HighlightItem {
   video: string;
@@ -245,18 +247,15 @@ export default function HighlightsSection() {
           variants={itemVariants}
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
-          className="border border-kh-pink/20 hover:border-kh-pink/60 rounded-xl overflow-hidden group cursor-pointer transition-all duration-300 bg-kh-pink/2 hover:bg-kh-pink/4"
         >
-          <a
-            href="#"
-            className="flex items-center justify-between p-4 font-condensed font-bold text-xs sm:text-sm tracking-widest text-kh-pink uppercase select-none"
+          <Button
+            variant="new"
+            size="lg"
+            asChild
+            className="w-full bg-kh-pink text-white"
           >
-            VIEW FULL HIGHLIGHTZ PROFILE
-            <ArrowRight
-              size={14}
-              className="transform group-hover:translate-x-1.5 transition-transform duration-300"
-            />
-          </a>
+            <Link to="/kennedy">VIEW FULL HIGHLIGHTZ PROFILE</Link>
+          </Button>
         </motion.div>
       </div>
     </motion.div>

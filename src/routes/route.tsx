@@ -14,6 +14,7 @@ import MainLayout from "@/layouts/mainLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import HighlightsPanel from "@/pages/admin/components/HighlightsPanel";
 import CreateHightlight from "@/pages/admin/components/CreateHightlight";
+import NotFound from "@/pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/media-kit",
         element: <MediaKit />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
