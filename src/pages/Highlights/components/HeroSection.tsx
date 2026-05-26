@@ -1,10 +1,18 @@
-import { useRef } from "react";
+"use client";
+
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 import highlightBg from "@/assets/backgroud/c69918f4f554463198439ed55b120532.avif";
+import videoClip from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
 
 export default function HighlightsHeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Functional Interface States
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState("0:00");
 
   // Background Parallax Tracking
   const { scrollYProgress } = useScroll({
@@ -14,6 +22,53 @@ export default function HighlightsHeroSection() {
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   const backgroundScale = useTransform(scrollYProgress, [0, 1], [1.1, 1.15]);
+
+  // Video State Handler
+  const handleTogglePlay = () => {
+    if (!videoRef.current) return;
+
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  // Dynamically Capture Video Duration Metatags
+  const handleLoadedMetadata = () => {
+    if (!videoRef.current) return;
+    const totalSeconds = videoRef.current.duration;
+
+    if (isNaN(totalSeconds)) return;
+
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    setDuration(`${minutes}:${formattedSeconds}`);
+  };
+
+  // Sync state correctly if video ends naturally or user exits fullscreen controls
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    const handleVideoEnded = () => setIsPlaying(false);
+    const handlePauseState = () => setIsPlaying(false);
+    const handlePlayState = () => setIsPlaying(true);
+
+    videoEl.addEventListener("ended", handleVideoEnded);
+    videoEl.addEventListener("pause", handlePauseState);
+    videoEl.addEventListener("play", handlePlayState);
+
+    return () => {
+      videoEl.removeEventListener("ended", handleVideoEnded);
+      videoEl.removeEventListener("pause", handlePauseState);
+      videoEl.removeEventListener("play", handlePlayState);
+    };
+  }, []);
 
   // Content Stagger Variants
   const textContainerVariants: Variants = {
@@ -36,7 +91,6 @@ export default function HighlightsHeroSection() {
     },
   };
 
-  // Video Frame Variant
   const videoPlayerVariants: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.96 },
     show: {
@@ -47,7 +101,7 @@ export default function HighlightsHeroSection() {
         type: "spring",
         stiffness: 55,
         damping: 15,
-        delay: 0.4, // Delays beautifully right after text finishes staggering
+        delay: 0.4,
       },
     },
   };
@@ -60,7 +114,7 @@ export default function HighlightsHeroSection() {
       {/* 1. Starfield / Nebula Background (Parallax-Enhanced) */}
       <motion.div
         style={{ y: backgroundY, scale: backgroundScale }}
-        className="absolute inset-0 z-0 opacity-40 mix-blend-screen will-change-transform"
+        className="absolute inset-0 z-0 opacity-40 mix-blend-screen will-change-transform pointer-events-none"
       >
         <img
           src={highlightBg}
@@ -70,8 +124,8 @@ export default function HighlightsHeroSection() {
       </motion.div>
 
       {/* Cyber Grid Overlay */}
-      <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(to_right,#06b6d4_1px,transparent_1px),linear-gradient(to_bottom,#06b6d4_1px,transparent_1px)] bg-size-[4rem_4rem]"></div>
-      <div className="absolute inset-0 z-0 bg-linear-to-b from-black/20 via-black/70 to-black"></div>
+      <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(to_right,#06b6d4_1px,transparent_1px),linear-gradient(to_bottom,#06b6d4_1px,transparent_1px)] bg-size-[4rem_4rem] pointer-events-none"></div>
+      <div className="absolute inset-0 z-0 bg-linear-to-b from-black/20 via-black/70 to-black pointer-events-none"></div>
 
       {/* Ambient Neon Flares */}
       <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 pointer-events-none h-[300px] w-[600px] rounded-full bg-cyan-500/20 blur-[120px]"></div>
@@ -116,7 +170,7 @@ export default function HighlightsHeroSection() {
           </motion.p>
         </motion.div>
 
-        {/* 2. THE HIGHLIGHT SCREEN - Viewport Spring Pop */}
+        {/* 2. THE HIGHLIGHT SCREEN */}
         <motion.div
           variants={videoPlayerVariants}
           initial="hidden"
@@ -124,47 +178,68 @@ export default function HighlightsHeroSection() {
           viewport={{ once: true, margin: "-60px" }}
           className="relative w-full max-w-4xl aspect-video bg-gray-900/40 border border-white/10 rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] group backdrop-blur-md will-change-transform"
         >
-          {/* Cyber Video Frame Corner UI Brackets */}
-          <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-cyan-400 opacity-60"></div>
-          <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-cyan-400 opacity-60"></div>
-          <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-cyan-400 opacity-60"></div>
-          <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-cyan-400 opacity-60"></div>
+          {/* Active Live Native Video Element Tag */}
+          <video
+            ref={videoRef}
+            src={videoClip}
+            preload="metadata"
+            onLoadedMetadata={handleLoadedMetadata}
+            onClick={handleTogglePlay}
+            controls={isPlaying} // Shows native player controls only while actively running
+            className="w-full h-full object-cover relative z-0"
+          />
 
-          {/* Video Metadata overlay */}
-          <div className="absolute top-4 left-10 font-mono text-[10px] text-cyan-400 tracking-wider hidden sm:block">
-            REC [•] 4K HDR // 60FPS // CAM_A
+          {/* HUD Overlay Interface Frame (Hides smoothly when playing) */}
+          <div
+            className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-500 ${isPlaying ? "opacity-0" : "opacity-100"}`}
+          >
+            {/* Cyber Video Frame Corner UI Brackets */}
+            <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-cyan-400 opacity-60"></div>
+            <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-cyan-400 opacity-60"></div>
+            <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-cyan-400 opacity-60"></div>
+            <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-cyan-400 opacity-60"></div>
+
+            {/* Video Metadata overlay */}
+            <div className="absolute top-4 left-10 font-mono text-[10px] text-cyan-400 tracking-wider hidden sm:block">
+              REC [•] 4K HDR // 60FPS // CAM_A
+            </div>
+
+            {/* Simulated Dark Video Thumbnail backdrop */}
+            <div className="absolute inset-0 bg-linear-to-tr from-black via-transparent to-pink-500/10 mix-blend-color-dodge"></div>
           </div>
 
-          {/* Simulated Dark Video Thumbnail backdrop */}
-          <div className="absolute inset-0 bg-linear-to-tr from-black via-transparent to-pink-500/10 mix-blend-color-dodge"></div>
-
-          {/* Main Action Content Center Placeholder */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-black/40 group-hover:bg-black/30 transition-all duration-300">
-            {/* Pulsing Glowing Play Button Trigger */}
-            <button className="relative flex items-center justify-center w-20 h-20 rounded-full bg-white text-black transition-all duration-300 transform group-hover:scale-110 shadow-[0_0_30px_rgba(255,255,255,0.3)] group-hover:shadow-[0_0_40px_rgba(236,72,153,0.6)] group-hover:bg-kh-pink group-hover:text-white cursor-pointer z-20">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                className="w-8 h-8 ml-1"
+          {/* Playback Control Trigger Module Cover (Blocks clicks and overrides overlay HUD actions) */}
+          {!isPlaying && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-black/40 group-hover:bg-black/30 transition-all duration-300 z-20">
+              {/* Pulsing Glowing Play Button Trigger */}
+              <button
+                onClick={handleTogglePlay}
+                className="relative flex items-center justify-center w-20 h-20 rounded-full bg-white text-black transition-all duration-300 transform group-hover:scale-110 shadow-[0_0_30px_rgba(255,255,255,0.3)] group-hover:shadow-[0_0_40px_rgba(236,72,153,0.6)] group-hover:bg-kh-pink group-hover:text-white cursor-pointer z-30"
               >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  className="w-8 h-8 ml-1"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </button>
 
-            <span className="mt-4 font-condensed text-white tracking-widest font-bold uppercase text-sm group-hover:text-cyan-300 transition-colors duration-300">
-              Play 2026 Season Mixtape
-            </span>
-            <span className="text-xs text-gray-500 font-mono mt-1">
-              Duration: 4:12
-            </span>
-          </div>
+              <span className="mt-4 font-condensed text-white tracking-widest font-bold uppercase text-sm group-hover:text-cyan-300 transition-colors duration-300">
+                Play 2026 Season Mixtape
+              </span>
+              <span className="text-xs text-gray-500 font-mono mt-1">
+                Duration: {duration}
+              </span>
+            </div>
+          )}
 
           {/* Subtle scanning line effect across video */}
-          <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-white/5 via-transparent to-transparent h-[10%] w-full animate-scan opacity-20"></div>
+          <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-white/5 via-transparent to-transparent h-[10%] w-full animate-scan opacity-20 z-10"></div>
         </motion.div>
 
-        {/* Quick Filter Navigation underneath the screen (Fades in slightly late) */}
+        {/* Quick Filter Navigation */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
