@@ -53,10 +53,6 @@ const router = createBrowserRouter([
         path: "/media-kit",
         element: <MediaKit />,
       },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
     ],
   },
   {
@@ -94,6 +90,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 export default router;
