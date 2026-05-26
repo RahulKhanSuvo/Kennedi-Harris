@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
-import highlightBg from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
+import highlightBg from "@/assets/backgroud/c69918f4f554463198439ed55b120532.avif";
 
 export default function HighlightsHeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,12 +65,12 @@ export default function HighlightsHeroSection() {
         <img
           src={highlightBg}
           alt="Space Background"
-          className="w-full h-full object-cover rotate-180"
+          className="w-full h-full object-cover "
         />
       </motion.div>
 
       {/* Cyber Grid Overlay */}
-      <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(to_right,#06b6d4_1px,transparent_1px),linear-gradient(to_bottom,#06b6d4_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+      <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(to_right,#06b6d4_1px,transparent_1px),linear-gradient(to_bottom,#06b6d4_1px,transparent_1px)] bg-size-[4rem_4rem]"></div>
       <div className="absolute inset-0 z-0 bg-linear-to-b from-black/20 via-black/70 to-black"></div>
 
       {/* Ambient Neon Flares */}
@@ -136,7 +136,7 @@ export default function HighlightsHeroSection() {
           </div>
 
           {/* Simulated Dark Video Thumbnail backdrop */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-black via-transparent to-pink-500/10 mix-blend-color-dodge"></div>
+          <div className="absolute inset-0 bg-linear-to-tr from-black via-transparent to-pink-500/10 mix-blend-color-dodge"></div>
 
           {/* Main Action Content Center Placeholder */}
           <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-black/40 group-hover:bg-black/30 transition-all duration-300">

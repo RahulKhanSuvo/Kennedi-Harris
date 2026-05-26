@@ -47,6 +47,17 @@ const STATS = [
     highlight: true,
   },
 ];
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.2, 0.8, 0.2, 1],
+    },
+  },
+} as const;
 
 // Stagger arrangement configurations
 const gridContainerVariants = {
@@ -79,16 +90,33 @@ export function SeasonStats() {
   return (
     <section className="py-16 relative overflow-hidden bg-black/20">
       {/* Decorative Sport Tech Lines */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+      <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent"></div>
 
       <Container>
         {/* Section Header with Aggressive Sports Styling */}
-        <div className="flex items-center gap-4 mb-8 border-l-4 border-kh-pink pl-4">
+        {/* <div className="flex items-center gap-4 mb-8 border-l-4 border-kh-pink pl-4">
           <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-kh-pink">
-            SEASON LEADERSHIP METRICS
+
           </span>
           <div className="h-[2px] bg-white/5 flex-grow hidden sm:block"></div>
-        </div>
+        </div> */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6"
+        >
+          {/* <div className="flex items-center gap-3">
+                    <div className="h-2 w-2 bg-kh-pink rotate-45 animate-pulse" />
+                    <h3 className="font-mono text-xs tracking-[0.4em] text-zinc-500 uppercase font-black">
+                      BROADCAST CONFIG // SCROLL DECK
+                    </h3>
+                  </div> */}
+          <span className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none">
+            SEASON LEADERSHIP <span className="text-kh-pink ">METRICS</span>
+          </span>
+        </motion.div>
 
         {/* Dynamic Grid Container triggering at 30% viewport intersection */}
         <motion.div
@@ -113,8 +141,8 @@ export function SeasonStats() {
                 }}
                 className={`relative border p-6 flex flex-col justify-between items-start text-left group skew-x-[-4deg] transition-all duration-300 will-change-transform rounded-sm select-none ${
                   stat.highlight
-                    ? "bg-gradient-to-br from-kh-pink/10 via-black/60 to-black border-kh-pink/30 shadow-[0_10px_30px_-15px_rgba(234,76,137,0.3)]"
-                    : "bg-gradient-to-br from-neutral-900/60 to-black border-white/5 shadow-xl"
+                    ? "bg-linear-to-br from-kh-pink/10 via-black/60 to-black border-kh-pink/30 shadow-[0_10px_30px_-15px_rgba(234,76,137,0.3)]"
+                    : "bg-linear-to-br from-neutral-900/60 to-black border-white/5 shadow-xl"
                 }`}
               >
                 {/* Asymmetric Tech Corner Tag */}
@@ -122,7 +150,7 @@ export function SeasonStats() {
                   className={`absolute top-0 right-0 w-8 h-8 flex items-center justify-center border-b border-l transition-colors duration-300 ${
                     stat.highlight
                       ? "border-kh-pink/20 bg-kh-pink/10 text-kh-pink"
-                      : "border-white/5 bg-white/[0.02] text-gray-500 group-hover:text-white"
+                      : "border-white/5 bg-white/2 text-gray-500 group-hover:text-white"
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5 skew-x-[4deg]" />

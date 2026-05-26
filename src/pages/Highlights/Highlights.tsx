@@ -7,8 +7,6 @@ import TestimonialSlider from "./components/TestimonialSlider";
 import HighlightsSection from "./components/HighlightsSection";
 
 export default function Highlights() {
-  // Scroll to top on mount
-
   return (
     <main className="min-h-screen text-foreground flex flex-col w-full">
       <HeroSection />

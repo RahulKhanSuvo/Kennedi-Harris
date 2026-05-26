@@ -41,10 +41,7 @@ export default function TopPlayCategories() {
             </h3>
           </div> */}
           <span className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none">
-            TOP{" "}
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-kh-pink">
-              PLAY CATEGORIES
-            </span>
+            TOP <span className="text-kh-pink">PLAY CATEGORIES</span>
           </span>
         </div>
 
