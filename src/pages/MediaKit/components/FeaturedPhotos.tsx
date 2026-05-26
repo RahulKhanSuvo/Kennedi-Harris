@@ -71,12 +71,6 @@ export default function FeaturedPhotos() {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 border-b border-white/5 pb-8 relative">
           <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-kh-pink rounded-full animate-pulse" />
-              <span className="text-kh-pink font-condensed tracking-[0.3em] uppercase font-bold text-xs">
-                VISUAL MATRICES
-              </span>
-            </div>
             <h2 className="font-display text-4xl md:text-5xl text-white uppercase tracking-tight font-black">
               FEATURED{" "}
               <span className="text-transparent bg-clip-text bg-linear-to-r from-kh-pink to-pink-500">
@@ -101,7 +95,7 @@ export default function FeaturedPhotos() {
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className={`relative rounded-2xl overflow-hidden group cursor-pointer border border-white/5 bg-neutral-900/40 transition-all duration-500 hover:border-kh-pink/40 shadow-2xl hover:shadow-kh-pink/5 ${photo.gridClass}`}
+              className={`relative rounded overflow-hidden group cursor-pointer border border-white/5 bg-neutral-900/40 transition-all duration-500 hover:border-kh-pink/40 shadow-2xl hover:shadow-kh-pink/5 ${photo.gridClass}`}
             >
               {/* Image Engine with specialized responsive object placement */}
               <div className="w-full h-full overflow-hidden relative">
