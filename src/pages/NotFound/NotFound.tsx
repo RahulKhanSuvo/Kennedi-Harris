@@ -104,8 +104,8 @@ export default function NotFound() {
               variants={itemVariants}
               className="border border-white/5 rounded-2xl bg-kh-dark-2/60 backdrop-blur-md p-6 max-w-xl shadow-2xl relative overflow-hidden"
             >
-              <div className="absolute top-0 left-0 w-24 h-[1px] bg-kh-pink" />
-              <div className="absolute bottom-0 right-0 w-24 h-[1px] bg-kh-blue" />
+              <div className="absolute top-0 left-0 w-24 h-px bg-kh-pink" />
+              <div className="absolute bottom-0 right-0 w-24 h-px bg-kh-blue" />
 
               <div className="flex items-center gap-2 border-b border-white/5 pb-3 mb-4">
                 <Info size={14} className="text-kh-blue" />
