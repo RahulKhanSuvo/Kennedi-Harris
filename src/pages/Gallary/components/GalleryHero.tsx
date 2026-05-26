@@ -1,8 +1,8 @@
 import { Grid, Layers, ArrowDown } from "lucide-react";
 import Container from "@/components/common/Container";
 
-import galleryHeroMain from "@/assets/gallery/12c168ed-4b81-4cd0-a9b7-2dab64e505ea.jpeg";
-import galleryHeroSub from "@/assets/gallery/5a3f0dac-6e17-403f-b599-d526116806c7.jpeg";
+import galleryHeroMain from "@/assets/gallery/dribling3.avif";
+import galleryHeroSub from "@/assets/gallery/working.avif";
 
 export function GalleryHero() {
   return (

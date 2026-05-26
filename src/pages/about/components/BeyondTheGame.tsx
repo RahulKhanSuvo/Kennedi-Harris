@@ -2,10 +2,10 @@ import { MdOutlineInsertPhoto } from "react-icons/md";
 import { FiTrendingUp, FiActivity } from "react-icons/fi";
 import Container from "@/components/common/Container";
 
-import gal1 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
-import gal2 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
-import gal3 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
-import gal4 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
+import gal1 from "@/assets/gallery/working.avif";
+import gal2 from "@/assets/gallery/jump1.avif";
+import gal3 from "@/assets/gallery/dribling3.avif";
+import gal4 from "@/assets/gallery/jump2.avif";
 
 export function BeyondTheGame() {
   // Configured mixed-media layout slots spanning across multiple grid pathways

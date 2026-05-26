@@ -1,12 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import { BsInstagram } from "react-icons/bs";
-import img1 from "../../../assets/gal-1.png";
-import img2 from "../../../assets/gal-2.png";
-import img3 from "../../../assets/gal-3.png";
-import img4 from "../../../assets/gal-4.png";
+import img1 from "@/assets/gallery/looking.avif";
+import img2 from "@/assets/gallery/looking2.avif";
+import img3 from "@/assets/gallery/dribling3.avif";
 
 export function InstagramSection() {
-  const images = [img1, img2, img3, img4];
+  const images = [img1, img2, img3];
 
   return (
     <section className="border-t border-b border-white/5 py-20 bg-[#09090b] relative overflow-hidden">

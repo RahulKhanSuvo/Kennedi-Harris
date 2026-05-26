@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import { ArrowUpRight, Activity, ShieldCheck, Zap } from "lucide-react";
 import Container from "@/components/common/Container";
 import heroBgImg from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26ucl.avif";
-import heroPlayerImg from "@/assets/gallery/934a20cc-5406-4916-8cf6-5bc1b61c7eb9.jpeg";
+import heroPlayerImg from "@/assets/gallery/jump2.avif";
 
 export function AboutHero() {
   const containerRef = useRef<HTMLDivElement>(null);

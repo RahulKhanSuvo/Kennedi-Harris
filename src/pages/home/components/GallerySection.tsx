@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, type Variants } from "motion/react";
-import gal1 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
-import gal2 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
+import gal1 from "@/assets/gallery/drib2.avif";
+import gal2 from "@/assets/gallery/dribliing.avif";
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
 

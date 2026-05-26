@@ -4,7 +4,7 @@ import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 
 // Core Broadcast Media Assets
-import mainHighlightImg from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
+import mainHighlightImg from "@/assets/gallery/looking2.avif";
 import video1 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
 import video2 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.15.05-PM.mp4";
 import video3 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";

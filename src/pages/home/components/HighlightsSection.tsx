@@ -179,8 +179,8 @@ export default function HighlightsSection() {
                 whileHover={{ x: 4 }}
                 className={`flex gap-4 p-2 rounded-lg cursor-pointer transition-all duration-300 border group ${
                   isActive
-                    ? "bg-white/5 border-kh-pink/40 shadow-lg shadow-kh-pink/[0.02]"
-                    : "border-transparent bg-transparent hover:bg-white/[0.03]"
+                    ? "bg-white/5 border-kh-pink/40 shadow-lg shadow-kh-pink/2"
+                    : "border-transparent bg-transparent hover:bg-white/3"
                 }`}
               >
                 {/* Micro Preview Node Window */}
@@ -245,7 +245,7 @@ export default function HighlightsSection() {
           variants={itemVariants}
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
-          className="border border-kh-pink/20 hover:border-kh-pink/60 rounded-xl overflow-hidden group cursor-pointer transition-all duration-300 bg-kh-pink/[0.02] hover:bg-kh-pink/[0.04]"
+          className="border border-kh-pink/20 hover:border-kh-pink/60 rounded-xl overflow-hidden group cursor-pointer transition-all duration-300 bg-kh-pink/2 hover:bg-kh-pink/4"
         >
           <a
             href="#"

@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { ImageIcon, Film, Trophy, Flame } from "lucide-react";
 import Container from "@/components/common/Container";
-import image1 from "@/assets/gallery/af5d1be2-879a-4fe8-9b30-1573fdab0236.jpeg";
-import image2 from "@/assets/gallery/a84e107a-2998-4ccc-bd2b-f19d6190ba07.jpeg";
-import image3 from "@/assets/gallery/a7286e71-4987-4e08-a51c-dd0ca0b09558.jpeg";
-import image4 from "@/assets/gallery/934a20cc-5406-4916-8cf6-5bc1b61c7eb9.jpeg";
-import image5 from "@/assets/gallery/79dfa626-ee91-46e1-baaa-6512749032da.jpeg";
-import image6 from "@/assets/gallery/1eacf89b-2aff-430c-8936-4008aad10692.jpeg";
-import image7 from "@/assets/gallery/af5d1be2-879a-4fe8-9b30-1573fdab0236.jpeg";
-import image8 from "@/assets/gallery/a84e107a-2998-4ccc-bd2b-f19d6190ba07.jpeg";
-import image9 from "@/assets/gallery/a7286e71-4987-4e08-a51c-dd0ca0b09558.jpeg";
-import image10 from "@/assets/gallery/934a20cc-5406-4916-8cf6-5bc1b61c7eb9.jpeg";
-import image11 from "@/assets/gallery/79dfa626-ee91-46e1-baaa-6512749032da.jpeg";
-import image12 from "@/assets/gallery/1eacf89b-2aff-430c-8936-4008aad10692.jpeg";
+import image1 from "@/assets/gallery/drib2.avif";
+import image2 from "@/assets/gallery/dribliing.avif";
+import image3 from "@/assets/gallery/dribling3.avif";
+import image4 from "@/assets/gallery/working.avif";
+import image5 from "@/assets/gallery/jump2.avif";
+import image6 from "@/assets/gallery/jumping3.avif";
+import image7 from "@/assets/gallery/jumping4.avif";
+import image8 from "@/assets/gallery/jumping5.avif";
+import image9 from "@/assets/gallery/wantit.avif";
+import image10 from "@/assets/gallery/looking2.avif";
+import image11 from "@/assets/gallery/looking.avif";
+import image12 from "@/assets/gallery/jump1.avif";
 
 // Types for our gallery items
 interface GalleryItem {

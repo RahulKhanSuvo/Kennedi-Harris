@@ -1,9 +1,9 @@
 import { Play } from "lucide-react";
 import Container from "@/components/common/Container";
 
-import img1 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
-import img2 from "@/assets/gallery/63ce7a6eaf1e457d9d3d6b21831e11fb.png";
-import img3 from "@/assets/gallery/5a4aa84e54514436ab82f7ca560e29a7.png";
+import img1 from "@/assets/gallery/jumping5.avif";
+import img2 from "@/assets/gallery/jumping4.avif";
+import img3 from "@/assets/gallery/working.avif";
 
 const TAPE_LOGS = [
   {

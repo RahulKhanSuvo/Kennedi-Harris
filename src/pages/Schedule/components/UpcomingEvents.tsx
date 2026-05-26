@@ -1,8 +1,8 @@
 import { Calendar, MapPin, Clock } from "lucide-react";
 import { motion, type Variants } from "motion/react";
-import bg1 from "../../../assets/gal-1.png";
-import bg2 from "../../../assets/gal-2.png";
-import bg3 from "../../../assets/gal-3.png";
+import bg1 from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26ucl.avif";
+import bg2 from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26ucl.avif";
+import bg3 from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26ucl.avif";
 import Container from "@/components/common/Container";
 
 const UPCOMING_DATA = [
