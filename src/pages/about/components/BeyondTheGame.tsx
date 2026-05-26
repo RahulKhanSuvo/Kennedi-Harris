@@ -69,7 +69,7 @@ export function BeyondTheGame() {
         {/* Section Header Frame */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-8">
           <div className="flex flex-col gap-1.5">
-            <h2 className="font-display text-4xl md:text-6xl font-black italic uppercase leading-[0.9] tracking-tight text-white">
+            <h2 className="font-display text-4xl md:text-6xl font-medium uppercase text-white">
               BEYOND THE <span className="text-kh-pink">GAME</span>
             </h2>
           </div>
@@ -180,7 +180,7 @@ export function BeyondTheGame() {
 
         {/* Controlled Action Button Anchor */}
         <div className="flex items-center justify-center pt-16">
-          <button className="group/btn flex items-center justify-center gap-2.5 px-7 py-3.5 border border-kh-pink/20 hover:border-kh-pink bg-kh-pink/[0.01] hover:bg-kh-pink/[0.03] text-kh-pink hover:text-white rounded-xl font-condensed font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:shadow-[0_0_35px_-5px_rgba(236,72,153,0.15)]">
+          <button className="group/btn flex items-center justify-center gap-2.5 px-7 py-3.5 border border-kh-pink/20 hover:border-kh-pink bg-kh-pink/1 hover:bg-kh-pink/3 text-kh-pink hover:text-white rounded-xl font-condensed font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:shadow-[0_0_35px_-5px_rgba(236,72,153,0.15)]">
             VIEW FULL GALLERY
             <MdOutlineInsertPhoto className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110" />
           </button>
