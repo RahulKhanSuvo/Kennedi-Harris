@@ -143,7 +143,7 @@ export default function AboutSection() {
             </div>
 
             <div className="pt-2 border-t border-white/5 mt-2 w-full flex justify-center lg:justify-start">
-              <Button variant="khOutline" className="group">
+              <Button variant="khOutlineLight" className="group">
                 LEARN MORE ABOUT KENNEDI
                 <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform stroke-[2.5]" />
               </Button>
@@ -165,7 +165,7 @@ export default function AboutSection() {
                   key={index}
                   variants={traitItemVariants}
                   whileHover={{ x: 6 }}
-                  className="flex items-center gap-4 bg-white/[0.01] hover:bg-white/[0.03] border border-white/0 hover:border-white/5 p-3.5 rounded transition-all duration-300 group skew-x-[-4deg]"
+                  className="flex items-center gap-4 bg-white/1 hover:bg-white/3 border border-white/0 hover:border-white/5 p-3.5 rounded transition-all duration-300 group skew-x-[-4deg]"
                 >
                   {/* Icon Circle Shield */}
                   <div className="rounded-full border-2 border-kh-pink p-3.5 text-kh-pink group-hover:bg-kh-pink group-hover:text-white group-hover:shadow-[0_0_15px_rgba(234,76,137,0.4)] transition-all duration-300 shrink-0 skew-x-[4deg]">
