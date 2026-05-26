@@ -1,4 +1,3 @@
-import React from "react";
 import { Activity, RefreshCw, Eye, Edit3 } from "lucide-react";
 import { motion } from "motion/react";
 

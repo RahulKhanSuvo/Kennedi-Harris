@@ -13,6 +13,7 @@ import image9 from "@/assets/gallery/wantit.avif";
 import image10 from "@/assets/gallery/looking2.avif";
 import image11 from "@/assets/gallery/looking.avif";
 import image12 from "@/assets/gallery/jump1.avif";
+import MediaLightboxModal from "@/components/common/MediaLightboxModal";
 
 // Types for our gallery items
 interface GalleryItem {
@@ -22,7 +23,7 @@ interface GalleryItem {
   tag: string;
   aspectRatio: string; // Tailored for editorial masonry rhythm
   imagePlaceholder: string;
-  imageSrc: string;
+  src: string;
 }
 
 const CATEGORIES = [
@@ -40,7 +41,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "Studio",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    imageSrc: image1,
+    src: image1,
   },
   {
     id: 2,
@@ -49,7 +50,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "In-Game",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    imageSrc: image2,
+    src: image2,
   },
   {
     id: 3,
@@ -58,7 +59,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "The Grind",
     aspectRatio: "aspect-square",
     imagePlaceholder: "[ DRILL_SESSION_SQUARE ]",
-    imageSrc: image3,
+    src: image3,
   },
   {
     id: 4,
@@ -67,7 +68,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "In-Game",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ FAST_BREAK_PORTRAIT ]",
-    imageSrc: image4,
+    src: image4,
   },
   {
     id: 5,
@@ -76,7 +77,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "Studio",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    imageSrc: image5,
+    src: image5,
   },
   {
     id: 6,
@@ -85,7 +86,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "Conditioning",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ VERT_TRAINING_WIDE ]",
-    imageSrc: image6,
+    src: image6,
   },
   {
     id: 7,
@@ -94,7 +95,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "Studio",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    imageSrc: image7,
+    src: image7,
   },
   {
     id: 8,
@@ -103,7 +104,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "In-Game",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    imageSrc: image8,
+    src: image8,
   },
   {
     id: 9,
@@ -112,7 +113,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "The Grind",
     aspectRatio: "aspect-square",
     imagePlaceholder: "[ DRILL_SESSION_SQUARE ]",
-    imageSrc: image9,
+    src: image9,
   },
   {
     id: 10,
@@ -121,7 +122,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "In-Game",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ FAST_BREAK_PORTRAIT ]",
-    imageSrc: image10,
+    src: image10,
   },
   {
     id: 11,
@@ -130,7 +131,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "Studio",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    imageSrc: image11,
+    src: image11,
   },
   {
     id: 12,
@@ -139,7 +140,7 @@ const GALLERY_DATA: GalleryItem[] = [
     tag: "Conditioning",
     aspectRatio: "aspect-[4/5]",
     imagePlaceholder: "[ VERT_TRAINING_WIDE ]",
-    imageSrc: image12,
+    src: image12,
   },
 ];
 
@@ -151,7 +152,26 @@ export function GalleryGrid() {
   const filteredItems = GALLERY_DATA.filter(
     (item) => activeCategory === "all" || item.category === activeCategory,
   );
+  const [selectedPhoto, setSelectedPhoto] = useState<GalleryItem | null>(null);
+  const handleNext = () => {
+    if (!selectedPhoto) return;
+    const currentIndex = GALLERY_DATA.findIndex(
+      (p) => p.id === selectedPhoto.id,
+    );
+    setSelectedPhoto(GALLERY_DATA[(currentIndex + 1) % GALLERY_DATA.length]);
+  };
 
+  const handlePrev = () => {
+    if (!selectedPhoto) return;
+    const currentIndex = GALLERY_DATA.findIndex(
+      (p) => p.id === selectedPhoto.id,
+    );
+    setSelectedPhoto(
+      GALLERY_DATA[
+        (currentIndex - 1 + GALLERY_DATA.length) % GALLERY_DATA.length
+      ],
+    );
+  };
   return (
     <section id="gallery-grid" className="py-20 bg-[#09090b] relative">
       <Container>
@@ -186,7 +206,8 @@ export function GalleryGrid() {
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className={`relative break-inside-avoid w-full ${item.aspectRatio} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-all duration-500 hover:border-white/20`}
+              onClick={() => setSelectedPhoto(item)}
+              className={`relative break-inside-avoid w-full ${item.aspectRatio} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-all duration-500 hover:border-white/20 cursor-pointer`}
             >
               {/* Image Canvas Container */}
               <div className="w-full h-full bg-[#16161c] relative overflow-hidden transition-transform duration-700 group-hover:scale-105">
@@ -197,7 +218,7 @@ export function GalleryGrid() {
 
                 {/* Media Image Layer */}
                 <img
-                  src={item.imageSrc}
+                  src={item.src}
                   alt={item.title}
                   className="absolute inset-0 w-full h-full object-cover z-0"
                 />
@@ -242,6 +263,21 @@ export function GalleryGrid() {
           </div>
         )}
       </Container>
+      <MediaLightboxModal
+        isOpen={selectedPhoto !== null}
+        onClose={() => setSelectedPhoto(null)}
+        activeItem={
+          selectedPhoto
+            ? {
+                id: selectedPhoto.id,
+                src: selectedPhoto.src,
+                alt: selectedPhoto.title,
+              }
+            : null
+        }
+        onNext={handleNext}
+        onPrev={handlePrev}
+      />
     </section>
   );
 }
