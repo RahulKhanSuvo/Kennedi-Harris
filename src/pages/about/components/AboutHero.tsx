@@ -1,10 +1,25 @@
-import { motion, type Variants } from "motion/react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import { ArrowUpRight, Activity, ShieldCheck, Zap } from "lucide-react";
 import Container from "@/components/common/Container";
-
+import heroBgImg from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26ucl.avif";
 import heroPlayerImg from "@/assets/gallery/934a20cc-5406-4916-8cf6-5bc1b61c7eb9.jpeg";
 
 export function AboutHero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Background Parallax Scroll Engine
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Layer 1: Distant Sky Background
+  const skyY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const skyScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+
+  // Layer 2: Geometric Foreground / Court Line Overlays (Moves faster for 3D depth)
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -36,55 +51,29 @@ export function AboutHero() {
   };
 
   return (
-    <section className="relative min-h-screen pt-36 pb-24 bg-[#0a0a0c] overflow-hidden flex items-center border-b border-white/5">
-      {/* ================= BACKGROUND SYSTEM SHIFT ================= */}
-      {/* 1. High-Density Tactical Dot Matrix Pattern instead of a line grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#1e1e24_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_50%,transparent_100%)] opacity-60 pointer-events-none" />
+    <section
+      ref={containerRef}
+      className="relative min-h-screen pt-36 pb-24 bg-[#0a0a0c] overflow-hidden flex items-center border-b border-white/5"
+    >
+      {/* ================= STACKED BACKGROUND PARALLAX LAYER SYSTEM ================= */}
 
-      {/* 2. Abstract Court Vector Lines (Creates unique layout angles behind content) */}
-      <div className="absolute top-0 right-0 w-full h-full opacity-[0.02] pointer-events-none select-none">
-        <svg
-          width="100%"
-          height="100%"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <line
-            x1="-10%"
-            y1="20%"
-            x2="110%"
-            y2="50%"
-            stroke="white"
-            strokeWidth="2"
-          />
-          <line
-            x1="30%"
-            y1="-10%"
-            x2="80%"
-            y2="110%"
-            stroke="white"
-            strokeWidth="1.5"
-          />
-          <circle
-            cx="75%"
-            cy="40%"
-            r="300"
-            stroke="white"
-            strokeWidth="2"
-            strokeDasharray="8 8"
-          />
-        </svg>
-      </div>
+      {/* 1. Base Layer: Deep Night Sky Background */}
+      <motion.div
+        style={{
+          backgroundImage: `url(${heroBgImg})`,
+          y: skyY,
+          scale: skyScale,
+        }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70 pointer-events-none will-change-transform z-0"
+      />
 
-      {/* 3. Deep Vignette Radial Mask to isolate glow fields */}
-      <div className="absolute inset-0 bg-radial-[at_70%_30%] from-kh-pink/[0.04] via-kh-blue/[0.02] to-transparent pointer-events-none" />
+      {/* 2. Blur Overlay (Sits right over base image before tints apply) */}
+      <div className="absolute inset-0 backdrop-blur-[5px] z-0 pointer-events-none"></div>
+      {/* DARK TO WHITE OVERLAY */}
+      <div className="absolute inset-0 bg-linear-to-l from-transparent to-black pointer-events-none z-10"></div>
 
-      {/* 4. Layered Kinetic Ambient Lighting Nodes */}
-      <div className="absolute -top-40 -left-40 w-[600px] xl:w-[900px] h-[600px] xl:h-[900px] bg-cyan-500/[0.03] rounded-full filter blur-[150px] pointer-events-none animate-pulse duration-[14s]" />
-      <div className="absolute top-1/2 right-[-10%] w-[700px] xl:w-[1100px] h-[700px] xl:h-[1100px] bg-kh-pink/[0.06] rounded-full filter blur-[180px] pointer-events-none animate-pulse duration-[8s]" />
-      {/* ========================================================== */}
-
-      <Container className=" relative z-10 w-full">
+      {/* ================= FOREGROUND CONTENT SYSTEM ================= */}
+      <Container className="relative z-30 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* LEFT COLUMN: HERO MARKETING TEXT MATRIX */}
           <motion.div
@@ -93,32 +82,16 @@ export function AboutHero() {
             animate="visible"
             className="lg:col-span-7 space-y-8 xl:space-y-10"
           >
-            {/* Live Status Badge
-            <div className="overflow-hidden inline-block">
-              <motion.div
-                variants={shutterUpVariants}
-                className="flex items-center gap-2.5 bg-neutral-950/80 border border-white/10 rounded-full pl-2 pr-4 py-1.5 backdrop-blur-md"
-              >
-                <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-kh-pink opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-kh-pink"></span>
-                </span>
-                <span className="font-mono text-[10px] xl:text-xs text-zinc-400 uppercase tracking-widest font-bold">
-                  PROJECT // HARRIS_EVOLUTION_2030
-                </span>
-              </motion.div>
-            </div> */}
-
             {/* Main Hardcore Display Typography */}
             <div className="space-y-3 xl:space-y-4">
               <div className="overflow-hidden py-1">
                 <motion.h1
                   variants={shutterUpVariants}
-                  className="font-display text-6xl md:text-8xl xl:text-9xl 2xl:text-[130px] font-semibold  uppercase text-white"
+                  className="font-display text-6xl md:text-8xl xl:text-9xl 2xl:text-[130px] font-semibold uppercase text-white leading-none"
                 >
                   UNLEASHING
                   <br />
-                  <span className=" text-kh-pink">ELITE TALENT.</span>
+                  <span className="text-kh-pink">ELITE TALENT.</span>
                 </motion.h1>
               </div>
             </div>
@@ -197,7 +170,7 @@ export function AboutHero() {
             variants={fadeScaleVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-5 relative flex justify-center items-center"
+            className="lg:col-span-5 relative flex justify-center items-center will-change-transform"
           >
             {/* Cyber HUD Accent Box */}
             <div className="w-full aspect-square xl:aspect-4/5 max-w-md xl:max-w-xl bg-neutral-950/40 border border-white/5 rounded-3xl relative overflow-hidden shadow-3xl backdrop-blur-md group">
@@ -258,21 +231,11 @@ export function AboutHero() {
 
               {/* PRIMARY PROSPECT PORTRAIT ANCHOR */}
               <div className="absolute inset-0 flex justify-center">
-                {/* UNCOMMENT & MOUNT IMAGE WHEN ASSET IS READY */}
-
                 <img
                   src={heroPlayerImg}
                   alt="Kennedi Harris Main Presentation Profile"
                   className="w-full h-full object-contain object-bottom filter brightness-110 saturate-[0.9] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                 />
-
-                {/* Fallback Display Graphic Place-Card */}
-                {/* <div className="mb-24 text-center space-y-2 pointer-events-none opacity-40 group-hover:opacity-60 transition-opacity duration-500">
-                  <Sparkles size={24} className="mx-auto text-kh-pink animate-spin duration-[6s]" />
-                  <div className="font-condensed text-xs text-zinc-500 uppercase tracking-widest font-black">
-                    [ MOUNT PORTRAIT ASSET HERE ]
-                  </div>
-                </div> */}
               </div>
 
               {/* Cyber Highlight Trim Borders */}
