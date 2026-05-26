@@ -248,12 +248,7 @@ export default function HighlightsSection() {
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
         >
-          <Button
-            variant="new"
-            size="lg"
-            asChild
-            className="w-full bg-kh-pink text-white"
-          >
+          <Button variant="khPrimary" asChild className="w-full">
             <Link to="/kennedy">VIEW FULL HIGHLIGHTZ PROFILE</Link>
           </Button>
         </motion.div>

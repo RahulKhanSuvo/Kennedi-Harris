@@ -234,57 +234,95 @@
 
 /* ---- CTA buttons ---- */
 .btn-primary {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: #e8176a;
-  color: #fff;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: #ffffff;
+  color: #000000;
   font-family: "Barlow Condensed", sans-serif;
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
+  font-weight: 900;
   text-transform: uppercase;
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  /* text-sm */
+  padding: 0.75rem 1.5rem;
+  /* responsive base padding */
+  border-radius: 0.75rem;
+  /* rounded-xl */
+  box-shadow: 0 4px 30px rgba(255, 255, 255, 0.15);
   border: none;
   cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.15s;
+  transition: transform 0.3s ease, background-color 0.3s;
   white-space: nowrap;
 }
 
-.btn-primary:hover {
-  background: #ff1e78;
-  transform: translateY(-1px);
+@media (min-width: 1280px) {
+  .btn-primary {
+    font-size: 1rem;
+    padding: 1rem 2rem;
+  }
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: translateX(-100%);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover::before {
+  transform: translateX(100%);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
 }
 
 .btn-outline {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  background: transparent;
-  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(10, 10, 12, 0.4);
+  color: #d4d4d8;
+  /* text-zinc-300 */
   font-family: "Barlow Condensed", sans-serif;
   font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  font-size: 0.875rem;
+  /* text-sm */
+  padding: 0.75rem 1.5rem;
+  /* responsive base padding */
+  border-radius: 0.75rem;
+  /* rounded-xl */
+  backdrop-filter: blur(12px);
   cursor: pointer;
-  transition:
-    border-color 0.2s,
-    background 0.2s,
-    transform 0.15s;
+  transition: all 0.3s ease;
   white-space: nowrap;
 }
 
+@media (min-width: 1280px) {
+  .btn-outline {
+    font-size: 1rem;
+    padding: 1rem 2rem;
+  }
+}
+
 .btn-outline:hover {
-  border-color: #e8176a;
-  background: rgba(232, 23, 106, 0.08);
-  transform: translateY(-1px);
+  background-color: rgba(10, 10, 12, 0.8);
+  border-color: rgba(232, 23, 106, 0.4);
+  /* border-kh-pink/40 */
+  color: #ffffff;
+}
+
+.btn-outline:active {
+  transform: scale(0.95);
 }
 
 /* ---- Trait card ---- */

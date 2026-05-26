@@ -182,10 +182,10 @@ export function BeyondTheGame() {
 
         {/* Controlled Action Button Anchor */}
         <div className="flex items-center justify-center pt-16">
-          <Button asChild variant="kh-primary" className="">
+          <Button asChild variant="khPrimary" className="group">
             <Link to={"/gallery"}>
               VIEW FULL GALLERY
-              <MdOutlineInsertPhoto className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110" />
+              <MdOutlineInsertPhoto className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
             </Link>
           </Button>
         </div>

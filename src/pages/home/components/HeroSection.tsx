@@ -1,7 +1,9 @@
-import { PlayCircle, FileText, Mail } from "lucide-react";
+import { PlayCircle, FileText } from "lucide-react";
 import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 import backgroundImage from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
 
@@ -116,21 +118,25 @@ export default function HeroSection({
             variants={itemRevealLeft}
             className="flex flex-wrap gap-4 mt-8"
           >
-            <button className="btn-primary group">
-              <PlayCircle
-                size={18}
-                className="group-hover:rotate-12 transition-transform duration-300"
-              />
-              WATCH HIGHLIGHTS
-            </button>
-            <button className="btn-outline">
-              VIEW MEDIA KIT
-              <FileText size={18} />
-            </button>
-            <button className="btn-outline">
-              CONTACT FOR NIL / RECRUITING
+            <Button variant="khPrimary" asChild className="group">
+              <Link to={"/highlights"}>
+                <PlayCircle
+                  size={18}
+                  className="group-hover:rotate-12 transition-transform duration-300"
+                />
+                WATCH HIGHLIGHTS
+              </Link>
+            </Button>
+            <Button variant="khOutline" asChild>
+              <Link to={"/media-kit"}>
+                <FileText size={18} />
+                VIEW MEDIA KIT
+              </Link>
+            </Button>
+            {/* <Button variant="khOutline" asChild>
               <Mail size={18} />
-            </button>
+              CONTACT FOR NIL / RECRUITING
+            </Button> */}
           </motion.div>
         </motion.div>
 

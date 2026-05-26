@@ -143,10 +143,7 @@ export default function AboutSection() {
             </div>
 
             <div className="pt-2 border-t border-white/5 mt-2 w-full flex justify-center lg:justify-start">
-              <Button
-                variant="kh-outline"
-                className="inline-flex items-center gap-3 font-condensed font-black tracking-widest text-kh-blue border-kh-blue hover:text-cyan-400 hover:border-cyan-400 transition-all uppercase text-xs sm:text-sm group py-6 px-6 animate-none"
-              >
+              <Button variant="khOutline" className="group">
                 LEARN MORE ABOUT KENNEDI
                 <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform stroke-[2.5]" />
               </Button>

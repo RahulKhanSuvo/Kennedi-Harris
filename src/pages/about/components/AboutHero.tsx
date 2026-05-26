@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import { ArrowUpRight, Activity, ShieldCheck, Zap } from "lucide-react";
 import Container from "@/components/common/Container";
+import { Button } from "@/components/ui/button";
 import heroBgImg from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26ucl.avif";
 import heroPlayerImg from "@/assets/gallery/jump2.avif";
 
@@ -113,24 +114,19 @@ export function AboutHero() {
               variants={shutterUpVariants}
               className="flex flex-wrap items-center gap-5 pt-4"
             >
-              <a
-                href="#about"
-                className="group relative inline-flex items-center gap-3 bg-white text-black font-condensed uppercase font-black text-sm xl:text-base px-8 py-4 rounded-xl overflow-hidden transition-transform duration-300 active:scale-95 shadow-[0_4px_30px_rgba(255,255,255,0.15)]"
-              >
-                <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-                EXPLORE TIMELINE
-                <ArrowUpRight
-                  size={18}
-                  className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
-                />
-              </a>
+              <Button asChild variant="khPrimary">
+                <a href="#about" className="group">
+                  EXPLORE TIMELINE
+                  <ArrowUpRight
+                    size={18}
+                    className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
+                  />
+                </a>
+              </Button>
 
-              <a
-                href="#contact"
-                className="group inline-flex items-center gap-2 border border-white/10 bg-neutral-950/40 hover:bg-neutral-950/80 hover:border-kh-pink/40 text-zinc-300 hover:text-white font-condensed uppercase font-bold text-sm xl:text-base px-8 py-4 rounded-xl backdrop-blur-md transition-all duration-300"
-              >
-                PLAYER PROFILE
-              </a>
+              <Button asChild variant="khOutline">
+                <a href="#contact">PLAYER PROFILE</a>
+              </Button>
             </motion.div>
 
             {/* Quick Core Metric Matrix Widgets */}
