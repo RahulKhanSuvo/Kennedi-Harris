@@ -7,15 +7,14 @@ import StatsSection from "./components/StatsSection";
 import AboutSection from "./components/AboutSection";
 import { useQuery } from "@tanstack/react-query";
 import { homeService } from "@/api/services";
-import Preloader from "@/components/common/Preloader";
 
 export default function Home() {
   const { data, isLoading } = useQuery({
     queryKey: ["home-active"],
     queryFn: homeService.getActiveHome,
+    staleTime: Infinity,
   });
   const { frist_img } = data || {};
-  if (isLoading) return <Preloader />;
   return (
     <div className="flex flex-col w-full bg-kh-dark min-h-screen">
       <HeroSection heroImage={frist_img} />
