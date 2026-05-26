@@ -6,6 +6,8 @@ import gal1 from "@/assets/gallery/working.avif";
 import gal2 from "@/assets/gallery/jump1.avif";
 import gal3 from "@/assets/gallery/dribling3.avif";
 import gal4 from "@/assets/gallery/jump2.avif";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 export function BeyondTheGame() {
   // Configured mixed-media layout slots spanning across multiple grid pathways
@@ -180,10 +182,12 @@ export function BeyondTheGame() {
 
         {/* Controlled Action Button Anchor */}
         <div className="flex items-center justify-center pt-16">
-          <button className="group/btn flex items-center justify-center gap-2.5 px-7 py-3.5 border border-kh-pink/20 hover:border-kh-pink bg-kh-pink/1 hover:bg-kh-pink/3 text-kh-pink hover:text-white rounded-xl font-condensed font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:shadow-[0_0_35px_-5px_rgba(236,72,153,0.15)]">
-            VIEW FULL GALLERY
-            <MdOutlineInsertPhoto className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110" />
-          </button>
+          <Button asChild variant="kh-primary" className="">
+            <Link to={"/gallery"}>
+              VIEW FULL GALLERY
+              <MdOutlineInsertPhoto className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110" />
+            </Link>
+          </Button>
         </div>
       </Container>
     </section>

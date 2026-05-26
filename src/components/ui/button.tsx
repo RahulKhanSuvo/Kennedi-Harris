@@ -24,12 +24,6 @@ const buttonVariants = cva(
           "bg-[#E8176A] hover:bg-[#FF1E78] hover:-translate-y-[1px] text-white font-condensed font-bold text-[0.8rem] tracking-[0.1em] uppercase rounded transition-all border-none px-[1.25rem] py-[0.625rem]",
         "kh-outline":
           "bg-transparent border border-white/35 text-white hover:border-[#E8176A] hover:bg-[#E8176A]/8 hover:-translate-y-[1px] font-condensed font-bold text-[0.8rem] tracking-[0.1em] uppercase rounded transition-all px-[1.25rem] py-[0.625rem]",
-
-        // --- NEW HERO EXCLUSIVE PREMIUM VARIANTS ---
-        "kh-hero-primary":
-          "relative bg-white text-black font-condensed uppercase font-black tracking-wide rounded-xl overflow-hidden shadow-[0_4px_30px_rgba(255,255,255,0.15)] transition-transform duration-300 active:scale-95",
-        "kh-hero-profile":
-          "border border-white/10 bg-neutral-950/40 hover:bg-neutral-950/80 hover:border-kh-pink/40 text-zinc-300 hover:text-white font-condensed uppercase font-bold rounded-xl backdrop-blur-md transition-all duration-300",
       },
       size: {
         default:
@@ -43,10 +37,6 @@ const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
-
-        // --- MATCHING RESPONSIVE HERO SIZE BLOCK ---
-        "hero-xl":
-          "h-12 md:h-14 px-6 md:px-8 text-xs sm:text-sm xl:text-base gap-2.5 md:gap-3",
       },
     },
     defaultVariants: {
@@ -61,7 +51,6 @@ function Button({
   variant = "default",
   size = "default",
   asChild = false,
-  children,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
@@ -76,13 +65,7 @@ function Button({
       data-size={size}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
-    >
-      {/* Universal Injection for the custom sweeping shimmer sheen layer when kh-hero-primary is targeted */}
-      {variant === "kh-hero-primary" && (
-        <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/button:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
-      )}
-      {children}
-    </Comp>
+    />
   );
 }
 
