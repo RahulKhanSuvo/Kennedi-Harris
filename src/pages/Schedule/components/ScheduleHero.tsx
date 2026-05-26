@@ -38,7 +38,7 @@ const ticketPopVariants: Variants = {
     },
   },
 };
-
+const currentYear = new Date().getFullYear();
 export default function ScheduleHeroSection() {
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-black pt-28 pb-20">
@@ -57,7 +57,7 @@ export default function ScheduleHeroSection() {
       </motion.div>
 
       {/* Elegant Linear Gradient Shadow */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-zinc-950/40 to-black" />
+      <div className="absolute inset-0 z-0 bg-linear-to-b from-black via-zinc-950/40 to-black" />
       <div className="absolute bottom-0 right-0 pointer-events-none h-[300px] w-[500px] bg-cyan-500/10 blur-[120px]" />
 
       <Container className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 w-full">
@@ -73,7 +73,7 @@ export default function ScheduleHeroSection() {
           </span>
 
           <h1 className="font-display text-6xl sm:text-7xl lg:text-8xl tracking-tighter leading-[0.85] uppercase text-white m-0">
-            2026
+            {currentYear}
             <br />
             <span className="text-kh-pink">SEASON</span>
             <br />
@@ -95,8 +95,8 @@ export default function ScheduleHeroSection() {
         >
           <div className="relative border border-white/10 bg-zinc-900/20 backdrop-blur-md p-6 w-full max-w-[380px] min-h-[440px] flex flex-col justify-between overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] group rounded-sm">
             {/* Tech Design Lines */}
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-kh-pink/10 to-transparent" />
-            <div className="absolute -left-10 top-1/2 -translate-y-1/2 text-white/[0.02] font-display text-9xl font-black tracking-tighter select-none pointer-events-none transform -rotate-90">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-linear-to-bl from-kh-pink/10 to-transparent" />
+            <div className="absolute -left-10 top-1/2 -translate-y-1/2 text-white/2 font-display text-9xl font-black tracking-tighter select-none pointer-events-none transform -rotate-90">
               NEXT
             </div>
 

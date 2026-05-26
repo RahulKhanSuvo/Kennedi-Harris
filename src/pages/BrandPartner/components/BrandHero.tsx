@@ -58,14 +58,14 @@ export default function BrandPartnerHero() {
           className="w-full h-full object-cover object-center"
         />
       </div>
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/60 via-black/80 to-[#050607]"></div>
+      <div className="absolute inset-0 z-0 bg-linear-to-b from-black/60 via-black/80 to-[#050607]"></div>
 
       {/* Structural Minimal Grid Accents */}
-      <div className="absolute inset-y-0 left-1/4 w-[1px] bg-white/[0.03] hidden xl:block pointer-events-none" />
-      <div className="absolute inset-y-0 right-1/4 w-[1px] bg-white/[0.03] hidden xl:block pointer-events-none" />
+      <div className="absolute inset-y-0 left-1/4 w-px bg-white/3 hidden xl:block pointer-events-none" />
+      <div className="absolute inset-y-0 right-1/4 w-px bg-white/3 hidden xl:block pointer-events-none" />
 
       {/* Main Core Platform Interface */}
-      <Container className="relative z-10 flex flex-col justify-center flex-grow pt-16 pb-12 w-full">
+      <Container className="relative z-10 flex flex-col justify-center grow pt-16 pb-12 w-full">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -74,22 +74,13 @@ export default function BrandPartnerHero() {
         >
           {/* Left - Narrative Title Statement */}
           <div className="lg:col-span-7 flex flex-col items-start space-y-6">
-            <motion.div
-              variants={textRevealVariants}
-              className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-white/[0.03] border border-white/10 rounded-full font-condensed font-black tracking-widest text-kh-pink text-[11px] uppercase"
-            >
-              <span className="h-2 w-2 rounded-full bg-kh-pink shadow-[0_0_10px_#f1136a] animate-ping" />
-              Now accepting NIL Collaborations
-            </motion.div>
-
             <motion.h1
               variants={textRevealVariants}
               className="font-display text-5xl sm:text-7xl xl:text-[95px] leading-[0.85] text-white tracking-tight uppercase"
             >
-              Elevate Your Story With{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-kh-pink via-rose-400 to-white">
-                Kennedi Harris
-              </span>
+              Elevate Your Story With
+              <br />
+              <span className="text-kh-pink">Kennedi Harris</span>
             </motion.h1>
           </div>
 

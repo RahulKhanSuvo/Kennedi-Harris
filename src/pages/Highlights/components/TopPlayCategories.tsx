@@ -37,12 +37,12 @@ export default function TopPlayCategories() {
   const [activePanel, setActivePanel] = useState<string | null>("01");
 
   return (
-    <section className="relative bg-black py-24 lg:py-36 border-t border-white/5 overflow-hidden">
+    <section className="relative bg-black py-16 md:py-24 lg:py-36 border-t border-white/5 overflow-hidden">
       {/* Background Graphic Lines */}
       <div className="absolute top-0 right-1/4 w-[1px] h-full bg-white/[0.02] pointer-events-none" />
       <div className="absolute top-0 left-1/4 w-[1px] h-full bg-white/[0.02] pointer-events-none" />
 
-      <Container className="relative z-10 w-full flex flex-col gap-12">
+      <Container className="relative z-10 w-full flex flex-col gap-8 md:gap-12">
         {/* Section Header */}
         <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6 text-left">
           <div className="flex flex-col gap-2">
@@ -52,7 +52,7 @@ export default function TopPlayCategories() {
                 BROADCAST LOGS
               </span>
             </div>
-            <h3 className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none m-0">
+            <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none m-0">
               TOP <span className="text-kh-pink">PLAY CATEGORIES</span>
             </h3>
           </div>
@@ -63,7 +63,7 @@ export default function TopPlayCategories() {
         </div>
 
         {/* Dynamic Multi-Panel Accordion Track */}
-        <div className="flex flex-col lg:flex-row items-stretch w-full h-[700px] lg:h-[480px] bg-zinc-950 border border-white/10 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+        <div className="flex flex-col lg:flex-row items-stretch w-full min-h-[550px] lg:h-[480px] bg-zinc-950 border border-white/10 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-white/10">
           {TAPE_LOGS.map((tape) => {
             const isActive = activePanel === tape.id;
 
@@ -71,10 +71,11 @@ export default function TopPlayCategories() {
               <div
                 key={tape.id}
                 onMouseEnter={() => setActivePanel(tape.id)}
+                onClick={() => setActivePanel(tape.id)}
                 className={`relative cursor-pointer transition-all duration-700 ease-out flex flex-col justify-between p-6 sm:p-8 overflow-hidden group ${
                   isActive
-                    ? "lg:flex-[2.2] bg-zinc-900"
-                    : "lg:flex-[1] bg-black"
+                    ? "flex-[2.5] lg:flex-[2.2] bg-zinc-900 min-h-[220px] lg:min-h-0"
+                    : "flex-[1] bg-black min-h-[90px] lg:min-h-0"
                 }`}
               >
                 {/* Background Image Layer */}
@@ -105,7 +106,7 @@ export default function TopPlayCategories() {
 
                   {/* Performance Metric Box */}
                   <div
-                    className={`font-mono text-xs border transition-all duration-500 px-3 py-1 bg-black/60 font-bold tracking-wide ${
+                    className={`font-mono text-[10px] sm:text-xs border transition-all duration-500 px-2 sm:px-3 py-0.5 sm:py-1 bg-black/60 font-bold tracking-wide ${
                       isActive
                         ? "border-kh-pink text-kh-pink"
                         : "border-white/10 text-gray-400"
@@ -115,7 +116,7 @@ export default function TopPlayCategories() {
                   </div>
                 </div>
 
-                {/* Middle Action Ring Reveal (Only pops explicitly when layout shifts) */}
+                {/* Middle Action Ring Reveal (Desktop Only) */}
                 <div
                   className={`absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none transition-all duration-500 z-10 ${
                     isActive ? "opacity-100 scale-100" : "opacity-0 scale-75"
@@ -129,20 +130,20 @@ export default function TopPlayCategories() {
                 </div>
 
                 {/* Bottom Details Typography Block */}
-                <div className="relative z-10 text-left flex flex-col items-start w-full">
+                <div className="relative z-10 text-left flex flex-col items-start w-full mt-4 lg:mt-0">
                   {/* Count String */}
                   <span
                     className={`font-mono text-[9px] tracking-[0.25em] text-cyan-400 font-bold uppercase transition-all duration-500 ${
                       isActive
                         ? "opacity-100 translate-y-0"
-                        : "lg:opacity-0 lg:translate-y-4"
+                        : "opacity-0 lg:translate-y-4"
                     }`}
                   >
                     {tape.count} AVAILABLE
                   </span>
 
                   {/* Category Giant Title */}
-                  <h4 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-none uppercase mt-1 mb-3">
+                  <h4 className="font-display text-2xl sm:text-4xl lg:text-6xl font-black tracking-tighter text-white leading-none uppercase mt-1 mb-2 lg:mb-3">
                     {tape.title}
                   </h4>
 
@@ -150,8 +151,8 @@ export default function TopPlayCategories() {
                   <div
                     className={`w-full overflow-hidden transition-all duration-500 ease-out flex items-center justify-between gap-4 ${
                       isActive
-                        ? "max-h-16 opacity-100 translate-y-0"
-                        : "max-h-0 opacity-0 lg:translate-y-4"
+                        ? "max-h-20 opacity-100 translate-y-0 mt-1"
+                        : "max-h-0 opacity-0 translate-y-4"
                     }`}
                   >
                     <p className="text-gray-400 font-sans font-light text-xs sm:text-sm max-w-sm leading-relaxed">

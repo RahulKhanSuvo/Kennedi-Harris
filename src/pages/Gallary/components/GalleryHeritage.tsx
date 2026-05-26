@@ -2,7 +2,7 @@ import { Shield, Flame, HeartHandshake } from "lucide-react";
 import Container from "@/components/common/Container";
 
 // TODO: Import your early training or family legacy media asset here
-// import foundationImg from "../../../assets/heritage-foundation.png";
+import foundationImg from "@/assets/gallery/fatheranddaughter.jpg";
 
 export function GalleryHeritage() {
   return (
@@ -19,10 +19,14 @@ export function GalleryHeritage() {
 
           <div className="relative aspect-4/5 w-full max-w-[380px] mx-auto lg:max-w-none bg-[#121216] border border-white/10 p-3 rounded-2xl shadow-2xl">
             <div className="w-full h-full rounded-xl bg-[#17171d] overflow-hidden relative flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
-              {/* <img src={foundationImg} alt="Early Mentorship & Roots" className="w-full h-full object-cover filter contrast-[1.05] sepia-[0.15]" /> */}
-              [ FOUNDATION_ARCHIVE_IMAGE ]
+              <img
+                src={foundationImg}
+                alt="Early Mentorship & Roots"
+                className="w-full absolute aspect-4/5 h-full object-cover filter contrast-[1.05] sepia-[0.15]"
+              />
+              {/* [ FOUNDATION_ARCHIVE_IMAGE ] */}
               {/* High-Contrast Vintage Vignette Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0f] via-transparent to-black/30" />
+              <div className="absolute inset-0 bg-linear-to-t from-[#0c0c0f] via-transparent to-black/30" />
             </div>
 
             {/* Float Overlay Identity Ribbon */}

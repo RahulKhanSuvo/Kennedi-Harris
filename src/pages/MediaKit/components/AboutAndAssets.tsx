@@ -6,8 +6,6 @@ import {
   Download,
   ArrowRight,
   Activity,
-  ShieldCheck,
-  Cpu,
   Camera,
   Film,
   FileUser,
@@ -137,16 +135,7 @@ export default function AboutAndAssets() {
 
           {/* Header Right: Fills empty space with tech readouts */}
           <div className="lg:col-span-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 lg:pb-1">
-            <div className="flex items-center gap-6 text-left font-mono text-[10px] text-zinc-500">
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-cyan-500" />
-                <span>SSL_ENCRYPTED</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Cpu className="w-3.5 h-3.5 text-zinc-600" />
-                <span>NODE_v1.0.2</span>
-              </div>
-            </div>
+            <div></div>
 
             <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
               <Link
