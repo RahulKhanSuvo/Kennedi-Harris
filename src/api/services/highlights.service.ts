@@ -1,10 +1,11 @@
 import { api } from "../api-client";
-import type { HighlightData } from "../types";
+import type { HighlightData, ApiResponse } from "../types";
 
 export const highlightsService = {
-  getActiveHighlights: async (): Promise<HighlightData[]> => {
-    const response = await api.get<HighlightData[]>("/highlights/active");
-    return response.data;
+  getActiveHighlights: async (): Promise<HighlightData | null> => {
+    const response =
+      await api.get<ApiResponse<HighlightData>>("/highlights/active");
+    return response.data.data || null;
   },
 
   getAllHighlights: async (): Promise<HighlightData[]> => {
