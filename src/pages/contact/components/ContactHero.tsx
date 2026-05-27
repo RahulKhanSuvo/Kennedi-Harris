@@ -23,7 +23,7 @@ export function ContactHero() {
           </div>
 
           {/* Giant Typographic Statement */}
-          <h1 className="font-display text-5xl sm:text-7xl xl:text-8xl font-black leading-[0.85] tracking-tight text-white uppercase mb-8">
+          <h1 className="font-display text-5xl sm:text-7xl font-semibold leading-[0.85] tracking-tight text-white uppercase mb-8">
             LET'S CONNECT.
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-r from-kh-pink via-[#d946ef] to-white">

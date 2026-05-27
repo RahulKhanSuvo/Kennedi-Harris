@@ -153,7 +153,7 @@ export default function MediaBroadcastCenter() {
         </motion.div>
 
         {/* Dynamic Multi-Scroll Layout */}
-        <div className="flex flex-col lg:flex-row gap-12 items-start relative w-full">
+        <div className="lg:flex flex-col lg:flex-row gap-12 items-start relative w-full hidden ">
           {/* LEFT COMPONENT: Sticky Cinema Viewport Matrix */}
           <div className="w-full lg:w-[58%] lg:sticky lg:top-28 z-30 transition-all duration-300">
             <div className="flex flex-col justify-between group relative border border-white/10 bg-zinc-950 rounded overflow-hidden shadow-2xl">
@@ -304,6 +304,7 @@ export default function MediaBroadcastCenter() {
             })}
           </div>
         </div>
+        {/* moble layout */}
       </Container>
     </section>
   );

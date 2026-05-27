@@ -8,6 +8,8 @@ import HighlightsSection from "./components/HighlightsSection";
 
 export default function Highlights() {
   return (
+    // seo
+
     <main className="min-h-screen text-foreground flex flex-col w-full">
       <HeroSection />
       {/* <NavigationTabs /> */}
