@@ -30,7 +30,7 @@ export default function MediaClusterGrid({ videos }: MediaClusterGridProps) {
             className="bg-[#0a0d10] border border-white/5 rounded-2xl p-5 relative overflow-hidden group shadow-xl hover:border-white/10 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between"
           >
             {/* Visual shine overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/[0.01] to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-linear-to-t from-transparent via-white/1 to-transparent pointer-events-none" />
 
             <div>
               {/* Header: Name and Type Tag */}
@@ -51,7 +51,7 @@ export default function MediaClusterGrid({ videos }: MediaClusterGridProps) {
                   className="w-full h-full object-cover relative z-10 cursor-pointer"
                   preload="metadata"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30 pointer-events-none z-0" />
+                <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/30 pointer-events-none z-0" />
               </div>
             </div>
 

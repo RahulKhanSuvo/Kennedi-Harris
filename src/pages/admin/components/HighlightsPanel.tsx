@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { highlightsService } from "@/api/services";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router";
@@ -13,6 +14,24 @@ import { toast } from "sonner";
 
 export default function HighlightsPanel() {
   const queryClient = useQueryClient();
+
+  // ─── Global One-Video-At-A-Time Manager ───────────────────────────────────
+  // Listens for any `play` event bubbling up from ANY <video> in this panel.
+  // When fired, it pauses every other video element so only one plays at once.
+  useEffect(() => {
+    const handlePlay = (e: Event) => {
+      const target = e.target as HTMLVideoElement;
+      const allVideos = document.querySelectorAll<HTMLVideoElement>("video");
+      allVideos.forEach((vid) => {
+        if (vid !== target && !vid.paused) {
+          vid.pause();
+        }
+      });
+    };
+
+    document.addEventListener("play", handlePlay, true); // capture phase
+    return () => document.removeEventListener("play", handlePlay, true);
+  }, []);
 
   // 1. Fetch Active Highlights configuration
   const {
