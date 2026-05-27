@@ -1,12 +1,13 @@
-"use client";
-
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 import highlightBg from "@/assets/backgroud/c69918f4f554463198439ed55b120532.avif";
-import videoClip from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
 
-export default function HighlightsHeroSection() {
+export default function HighlightsHeroSection({
+  mainUrl,
+}: {
+  mainUrl: string;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -181,7 +182,7 @@ export default function HighlightsHeroSection() {
           {/* Active Live Native Video Element Tag */}
           <video
             ref={videoRef}
-            src={videoClip}
+            src={mainUrl}
             preload="metadata"
             onLoadedMetadata={handleLoadedMetadata}
             onClick={handleTogglePlay}

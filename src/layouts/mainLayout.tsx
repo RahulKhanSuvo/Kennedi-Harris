@@ -2,7 +2,7 @@ import { Outlet, useLocation, useNavigationType } from "react-router";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import { useQuery } from "@tanstack/react-query";
-import { homeService } from "@/api/services";
+import { highlightsService, homeService } from "@/api/services";
 import Preloader from "@/components/common/Preloader";
 import { useEffect, useRef } from "react";
 import type Lenis from "@studio-freight/lenis";
@@ -86,8 +86,13 @@ export default function MainLayout() {
     queryFn: homeService.getActiveHome,
     staleTime: Infinity,
   });
+  const { isLoading: isHighlightsLoading } = useQuery({
+    queryKey: ["active-media"],
+    queryFn: highlightsService.getActiveHighlights,
+    staleTime: Infinity,
+  });
 
-  if (isLoading) return <Preloader />;
+  if (isLoading || isHighlightsLoading) return <Preloader />;
 
   return (
     <>
