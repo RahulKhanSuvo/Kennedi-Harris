@@ -14,12 +14,12 @@ export default function Home() {
     queryFn: homeService.getActiveHome,
     staleTime: Infinity,
   });
-  const { frist_img } = data || {};
+  const { frist_img, second_img } = data || {};
   return (
     <div className="flex flex-col w-full bg-kh-dark min-h-screen">
       <HeroSection heroImage={frist_img} />
       <BottomInfoBar />
-      <AboutSection />
+      <AboutSection second_img={second_img} />
       <StatsSection stats={data} isLoading={isLoading} />
       <HighlightAndSchedule />
       <GallerySection />

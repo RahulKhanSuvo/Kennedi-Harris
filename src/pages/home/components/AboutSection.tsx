@@ -2,9 +2,10 @@
 
 import { motion } from "motion/react";
 import { Star, User, GraduationCap, Users, ArrowRight } from "lucide-react";
-import aboutImg from "@/assets/me-removebg-preview.png";
+// import aboutImg from "@/assets/me-removebg-preview.png";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/common/Container";
+import { Link } from "react-router";
 
 const features = [
   {
@@ -69,18 +70,18 @@ const traitItemVariants = {
   },
 } as const;
 
-export default function AboutSection() {
+export default function AboutSection({ second_img }: { second_img: string }) {
   return (
     <section className="bg-kh-dark relative overflow-hidden">
       <Container>
-        <div className="flex flex-col lg:flex-row items-stretch justify-center">
+        <div className="flex flex-col lg:flex-row items-stretch justify-center gap-5">
           {/* Left - Image Column */}
           <motion.div
             variants={imageContainerVariants}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.25 }}
-            className="w-full lg:flex-1 relative flex justify-center lg:justify-end items-center will-change-transform"
+            className="w-full lg:flex-1 relative flex justify-center lg:justify-end items-center will-change-transform "
           >
             <div className="dot-grid absolute w-32 h-[60%] -left-10 top-[10%] opacity-30"></div>
             <div className="absolute left-0 bottom-0 w-2 h-full transform -skew-x-24 -translate-x-4 hidden lg:block bg-[linear-gradient(to_top,#0046c0_0%,#0046c0_50%,#f1136a_50%,#f1136a_100%)]" />
@@ -88,7 +89,7 @@ export default function AboutSection() {
 
             <div className="relative z-10 w-full max-w-[380px] aspect-3/4 rounded overflow-hidden bg-linear-to-b  shadow-2xl">
               <img
-                src={aboutImg}
+                src={second_img}
                 alt="About Kennedi"
                 className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)]"
                 onError={(e) => {
@@ -114,7 +115,7 @@ export default function AboutSection() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.25 }}
-            className="w-full lg:flex-1 flex flex-col justify-center gap-6 will-change-transform text-center lg:text-left items-center lg:items-start"
+            className="w-full lg:flex-1 flex flex-col justify-center gap-2 will-change-transform text-center lg:text-left items-center lg:items-start"
           >
             <div className="font-condensed font-black tracking-[0.2em] text-kh-pink text-xs sm:text-sm uppercase">
               ABOUT KENNEDI
@@ -143,9 +144,11 @@ export default function AboutSection() {
             </div>
 
             <div className="pt-2 border-t border-white/5 mt-2 w-full flex justify-center lg:justify-start">
-              <Button variant="khOutlineLight" className="group">
-                LEARN MORE ABOUT KENNEDI
-                <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform stroke-[2.5]" />
+              <Button variant="khOutlineLight" className="group" asChild>
+                <Link to="/about">
+                  LEARN MORE ABOUT KENNEDI
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform stroke-[2.5]" />
+                </Link>
               </Button>
             </div>
           </motion.div>
@@ -169,7 +172,10 @@ export default function AboutSection() {
                 >
                   {/* Icon Circle Shield */}
                   <div className="rounded-full border-2 border-kh-pink p-3.5 text-kh-pink group-hover:bg-kh-pink group-hover:text-white group-hover:shadow-[0_0_15px_rgba(234,76,137,0.4)] transition-all duration-300 shrink-0 skew-x-[4deg]">
-                    <Icon strokeWidth={2.5} className="w-5 h-5" />
+                    <Icon
+                      strokeWidth={2.5}
+                      className="w-5 h-5 group-hover:text-white"
+                    />
                   </div>
 
                   {/* Text Descriptors */}
