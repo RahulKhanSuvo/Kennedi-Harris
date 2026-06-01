@@ -158,7 +158,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 style={{ transitionDelay: isOpen ? `${idx * 50}ms` : "0ms" }}
                 className={({ isActive }) =>
-                  `font-condensed font-black tracking-[0.2em] text-2xl transition-all duration-300 py-2 block uppercase transform ${
+                  `font-condensed font-semibold tracking-[0.2em] text-xl transition-all duration-300 py-2 block uppercase transform ${
                     isOpen
                       ? "translate-x-0 opacity-100"
                       : "-translate-x-4 opacity-0"
