@@ -1,52 +1,25 @@
 "use client";
 
-import { motion, type Variants } from "motion/react";
+import { useRef, useEffect } from "react";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  useInView,
+  type Variants,
+} from "motion/react";
 import Container from "@/components/common/Container";
 import { Star, LineChart, LayoutGrid, Trophy } from "lucide-react";
 import { FaBasketballBall } from "react-icons/fa";
+import { type HomeData } from "@/api/services";
 
-const STATS = [
-  {
-    id: 1,
-    value: "20+",
-    label: "PPG",
-    sublabel: "Points Per Game",
-    icon: Star,
-    highlight: false,
-  },
-  {
-    id: 2,
-    value: "16+",
-    label: "RPG",
-    sublabel: "Rebounds Per Game",
-    icon: FaBasketballBall,
-    highlight: false,
-  },
-  {
-    id: 3,
-    value: "3+",
-    label: "BPG",
-    sublabel: "Blocks Per Game",
-    icon: LineChart,
-    highlight: false,
-  },
-  {
-    id: 4,
-    value: "24+",
-    label: "DOUBLE-DOUBLES",
-    sublabel: "This Season",
-    icon: LayoutGrid,
-    highlight: true,
-  },
-  {
-    id: 5,
-    value: "31",
-    label: "GAME HIGH REBOUNDS",
-    sublabel: "Season Record",
-    icon: Trophy,
-    highlight: true,
-  },
-];
+interface SeasonStatsProps {
+  stats: HomeData | undefined;
+  isLoading: boolean;
+}
+
+const kineticSpring = [0.16, 1, 0.3, 1] as const;
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -55,7 +28,7 @@ const fadeInUp: Variants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.16, 1, 0.3, 1],
+      ease: kineticSpring,
     },
   },
 };
@@ -84,9 +57,112 @@ const sportsCardVariants: Variants = {
   },
 };
 
-export function SeasonStats() {
+/**
+ * ⚡ Direct DOM-mutation DigitCounter
+ * Safely handles strings or integers from your live database.
+ */
+function DigitCounter({ value, trigger }: { value: string; trigger: boolean }) {
+  const nodeRef = useRef<HTMLSpanElement>(null);
+
+  // Extract number and trailing symbols safely (e.g. "16+" -> 16 and "+")
+  const numericTarget = parseFloat(value) || 0;
+  const suffix = value.replace(/[0-9.]/g, "");
+
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.floor(latest));
+
+  useEffect(() => {
+    if (!trigger) return;
+
+    const controls = animate(count, numericTarget, {
+      duration: 1.5,
+      ease: "easeOut",
+    });
+
+    return () => controls.stop();
+  }, [numericTarget, count, trigger]);
+
+  useEffect(() => {
+    return rounded.on("change", (latest) => {
+      if (nodeRef.current) {
+        nodeRef.current.textContent = `${latest}${suffix}`;
+      }
+    });
+  }, [rounded, suffix]);
+
   return (
-    <section className="py-10 relative overflow-hidden bg-black/40 border-t border-white/5">
+    <span ref={nodeRef} className="will-change-transform">
+      0{suffix}
+    </span>
+  );
+}
+
+export function SeasonStats({ stats, isLoading }: SeasonStatsProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Triggers precisely when 30% of the statistical frame layer is captured by viewport
+  const isSectionInView = useInView(sectionRef, {
+    once: true,
+    amount: 0.3,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-24 text-zinc-500 font-mono text-sm tracking-widest">
+        LOADING_STAT_MATRIX...
+      </div>
+    );
+  }
+
+  // Map dynamic live stats directly into your custom design matrix structure
+  const dynamicStatsList = [
+    {
+      id: 1,
+      value: stats?.PPG || "0",
+      label: "PPG",
+      sublabel: "Points Per Game",
+      icon: Star,
+      highlight: false,
+    },
+    {
+      id: 2,
+      value: stats?.RPG || "0",
+      label: "RPG",
+      sublabel: "Rebounds Per Game",
+      icon: FaBasketballBall,
+      highlight: false,
+    },
+    {
+      id: 3,
+      value: stats?.BPG || "0",
+      label: "BPG",
+      sublabel: "Blocks Per Game",
+      icon: LineChart,
+      highlight: false,
+    },
+    {
+      id: 4,
+      value: stats?.DOUBLE_DOUBLES || "0",
+      label: "DOUBLE-DOUBLES",
+      sublabel: "This Season",
+      icon: LayoutGrid,
+      highlight: true,
+    },
+    {
+      id: 5,
+      value: stats?.REBOUNDS || "0", // Fallback parameter matching your API structure
+      label: "GAME HIGH REBOUNDS",
+      sublabel: "Season Record",
+      icon: Trophy,
+      highlight: true,
+    },
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      className="py-10 relative overflow-hidden bg-black/40 border-t border-white/5"
+    >
       {/* Decorative Sport Tech Line Backdrops */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px max-w-7xl bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
@@ -110,11 +186,10 @@ export function SeasonStats() {
         <motion.div
           variants={gridContainerVariants}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
+          whileInView={isSectionInView ? "show" : "hidden"}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-8"
         >
-          {STATS.map((stat) => {
+          {dynamicStatsList.map((stat) => {
             const Icon = stat.icon;
             return (
               <motion.div
@@ -143,16 +218,18 @@ export function SeasonStats() {
                       : "border-white/5 bg-white/[0.02] text-zinc-500 group-hover:text-white"
                   }`}
                 >
-                  {/* Desymmetric skew fix for the internal graphic token */}
                   <Icon className="w-4 h-4 transform skew-x-3" />
                 </div>
 
-                {/* Content Layer (Kept stable, unskewed for pristine typography) */}
+                {/* Content Layer */}
                 <div className="relative z-10 w-full flex flex-col justify-between h-full space-y-6">
-                  {/* Scoreboard Metric Number Display */}
+                  {/* Scoreboard Metric Number Display with Live Dynamic Payload Counters */}
                   <div className="mt-2">
                     <span className="font-display text-5xl md:text-6xl text-white font-black leading-none tracking-tighter block drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-                      {stat.value}
+                      <DigitCounter
+                        value={stat.value}
+                        trigger={isSectionInView}
+                      />
                     </span>
                   </div>
 

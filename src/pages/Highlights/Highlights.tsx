@@ -6,10 +6,15 @@ import HeroSection from "./components/HeroSection";
 import TestimonialSlider from "./components/TestimonialSlider";
 import HighlightsSection from "./components/HighlightsSection";
 import { useQuery } from "@tanstack/react-query";
-import { highlightsService } from "@/api/services";
+import { highlightsService, homeService } from "@/api/services";
 import Preloader from "@/components/common/Preloader";
 
 export default function Highlights() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["home-active"],
+    queryFn: homeService.getActiveHome,
+    staleTime: Infinity,
+  });
   const { data: activeHighlights, isLoading: isActiveHighlightsLoading } =
     useQuery({
       queryKey: ["active-media"],
@@ -17,7 +22,7 @@ export default function Highlights() {
       staleTime: Infinity,
     });
   const mainUrl = activeHighlights?.MainVideo_url;
-  if (isActiveHighlightsLoading) return <Preloader />;
+  if (isActiveHighlightsLoading || isLoading) return <Preloader />;
 
   return (
     // seo
@@ -28,7 +33,7 @@ export default function Highlights() {
       {/* <FeaturedHighlightsSection></FeaturedHighlightsSection> */}
       <HighlightsSection />
 
-      <SeasonStats />
+      <SeasonStats stats={data} isLoading={isLoading} />
       <TopPlayCategories />
       {/* <SubscribeSection /> */}
       <TestimonialSlider />
