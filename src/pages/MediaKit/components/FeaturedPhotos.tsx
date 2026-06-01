@@ -1,3 +1,5 @@
+"use client";
+
 import { Link } from "react-router";
 import { ChevronRight, Maximize2, Camera } from "lucide-react";
 import img1 from "@/assets/gallery/drib2.avif";
@@ -7,43 +9,50 @@ import img4 from "@/assets/gallery/jumping4.avif";
 import Container from "@/components/common/Container";
 import MediaLightboxModal from "@/components/common/MediaLightboxModal";
 import { useState } from "react";
+
 interface PhotoItem {
   id: number;
   src: string;
   alt: string;
-  gridClass: string;
+  // Controlled desktop explicit tracks; mobile relies on clean native flow
+  desktopGridClass: string;
+  mobileAspectClass: string;
 }
+
 const photos: PhotoItem[] = [
   {
     id: 1,
     src: img1,
     alt: "On-court action",
-    // Monster Anchor Tile
-    gridClass:
-      "col-span-2 md:col-span-2 md:row-span-2 min-h-[320px] md:min-h-auto",
+    desktopGridClass: "md:col-span-2 md:row-span-2 md:h-[440px] lg:h-[500px]",
+    mobileAspectClass: "aspect-[4/3] sm:aspect-[16/10]",
   },
   {
     id: 2,
     src: img2,
     alt: "Player portrait",
-    // Tall asymmetric cut
-    gridClass: "col-span-1 md:row-span-2 min-h-[240px] md:min-h-auto",
+    desktopGridClass: "md:col-span-2 md:row-span-1 md:h-[212px] lg:h-[242px]",
+    mobileAspectClass: "aspect-[4/3] sm:aspect-[16/10]",
   },
   {
     id: 3,
     src: img3,
     alt: "Jersey detail",
-    gridClass: "col-span-1 md:row-span-1 aspect-square md:aspect-auto",
+    desktopGridClass: "md:col-span-1 md:row-span-1 md:h-[212px] lg:h-[242px]",
+    mobileAspectClass: "aspect-square",
   },
   {
     id: 4,
     src: img4,
     alt: "In-game defense",
-    gridClass: "col-span-1 md:row-span-1 aspect-square md:aspect-auto",
+    desktopGridClass: "md:col-span-1 md:row-span-1 md:h-[212px] lg:h-[242px]",
+    mobileAspectClass: "aspect-square",
   },
 ];
+
 export default function FeaturedPhotos() {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null);
+
   const handleNext = () => {
     if (!selectedPhoto) return;
     const currentIndex = photos.findIndex((p) => p.id === selectedPhoto.id);
@@ -57,8 +66,9 @@ export default function FeaturedPhotos() {
       photos[(currentIndex - 1 + photos.length) % photos.length],
     );
   };
+
   return (
-    <section className="py-24 bg-kh-dark border-t border-white/5 relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-kh-dark border-t border-white/5 relative overflow-hidden">
       {/* Heavy Cyber Atmosphere Watermarks */}
       <div className="absolute right-[-5%] top-1/4 font-display text-[15vw] text-white/1 select-none font-black uppercase tracking-tighter leading-none pointer-events-none transform -rotate-90 origin-right">
         RAW_CAPTURES
@@ -69,7 +79,7 @@ export default function FeaturedPhotos() {
 
       <Container>
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 border-b border-white/5 pb-8 relative">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 md:mb-16 border-b border-white/5 pb-8 relative">
           <div className="flex flex-col gap-2">
             <h2 className="font-display text-4xl md:text-5xl text-white uppercase tracking-tight font-black">
               FEATURED{" "}
@@ -90,14 +100,18 @@ export default function FeaturedPhotos() {
           </Link>
         </div>
 
-        {/* Funky High-Density Bento Grid System */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[160px] md:auto-rows-[180px] lg:auto-rows-[210px] xl:auto-rows-[240px]">
+        {/* 
+          Flex layout on mobile avoids rigid grid cropping bugs.
+          Transforms seamlessly into a premium bento matrix on desktop frames.
+        */}
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-4 md:auto-rows-auto">
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className={`relative rounded overflow-hidden group cursor-pointer border border-white/5 bg-neutral-900/40 transition-all duration-500 hover:border-kh-pink/40 shadow-2xl hover:shadow-kh-pink/5 ${photo.gridClass}`}
+              onClick={() => setSelectedPhoto(photo)}
+              className={`relative w-full rounded overflow-hidden group cursor-pointer border border-white/5 bg-neutral-900/40 transition-all duration-500 hover:border-kh-pink/40 shadow-2xl hover:shadow-kh-pink/5 ${photo.mobileAspectClass} ${photo.desktopGridClass}`}
             >
-              {/* Image Engine with specialized responsive object placement */}
+              {/* Image Engine */}
               <div className="w-full h-full overflow-hidden relative">
                 <img
                   src={photo.src}
@@ -107,30 +121,27 @@ export default function FeaturedPhotos() {
               </div>
 
               {/* Dynamic Industrial Tint Layer */}
-              <div className="absolute inset-0 bg-linear-to-t from-neutral-950 via-neutral-950/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-t from-neutral-950 via-neutral-950/20 to-transparent opacity-85 md:opacity-75 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none" />
 
               {/* Subtle Linear Neon Accent Mask */}
               <div className="absolute inset-0 bg-linear-to-tr from-kh-pink/10 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              {/* Technical Blueprint Elements - Static Layout Decors */}
-              <div className="absolute top-4 left-4 font-mono text-[9px] text-white/20 tracking-wider group-hover:text-kh-pink/60 transition-colors duration-300 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-md border border-white/5">
+              {/* Technical Blueprint Elements */}
+              <div className="absolute top-4 left-4 font-mono text-[9px] text-white/40 md:text-white/20 tracking-wider group-hover:text-kh-pink/60 transition-colors duration-300 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-md border border-white/5">
                 // 0{photo.id}
               </div>
 
-              {/* Advanced Cyber UI Hover Overlays */}
+              {/* Advanced Cyber UI Overlays */}
               <div className="absolute inset-0 p-5 flex flex-col justify-between z-10">
                 {/* Upper Section: Diagonal action triggers */}
-                <div className="flex justify-end transform -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out">
-                  <div
-                    onClick={() => setSelectedPhoto(photo)}
-                    className="w-9 h-9 rounded-xl bg-neutral-900/90 border border-white/15 backdrop-blur-md flex items-center justify-center text-white hover:bg-kh-pink hover:border-kh-pink transition-all duration-300 shadow-lg"
-                  >
+                <div className="flex justify-end md:transform md:-translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300 ease-out">
+                  <div className="w-9 h-9 rounded-xl bg-neutral-900/90 border border-white/15 backdrop-blur-md flex items-center justify-center text-white hover:bg-kh-pink hover:border-kh-pink transition-all duration-300 shadow-lg">
                     <Maximize2 className="w-4 h-4 stroke-[2.5]" />
                   </div>
                 </div>
 
                 {/* Lower Section: Data Block */}
-                <div className="transform translate-y-3 opacity-80 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="transition-all duration-300">
                   <div className="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1 rounded-lg mb-2 transform -skew-x-12 origin-left">
                     <Camera size={10} className="text-kh-pink skew-x-12" />
                     <span className="text-[9px] font-mono font-bold tracking-widest text-zinc-300 uppercase skew-x-12">
@@ -138,7 +149,7 @@ export default function FeaturedPhotos() {
                     </span>
                   </div>
 
-                  <p className="font-display font-bold text-sm md:text-base text-white uppercase tracking-wide drop-shadow-md">
+                  <p className="font-display font-bold text-base md:text-lg text-white uppercase tracking-wide drop-shadow-md">
                     {photo.alt}
                   </p>
                 </div>
@@ -151,6 +162,7 @@ export default function FeaturedPhotos() {
           ))}
         </div>
       </Container>
+
       <MediaLightboxModal
         isOpen={selectedPhoto !== null}
         onClose={() => setSelectedPhoto(null)}
