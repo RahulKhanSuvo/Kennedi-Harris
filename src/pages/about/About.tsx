@@ -7,7 +7,7 @@ import { AboutHero } from "./components/AboutHero";
 export default function About() {
   return (
     <main>
-      <title>About Kennedy Harris | K.H.</title>
+      <title>About | Kennedy Harris</title>
       <meta
         name="description"
         content="Learn more about Kennedy Harris, his journey, and his mission."
