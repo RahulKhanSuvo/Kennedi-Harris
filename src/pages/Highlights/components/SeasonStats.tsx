@@ -205,8 +205,8 @@ export function SeasonStats({ stats, isLoading }: SeasonStatsProps) {
                 <div
                   className={`absolute inset-0 transform -skew-x-3 transition-all duration-300 rounded-sm border ${
                     stat.highlight
-                      ? "bg-gradient-to-br from-kh-pink/[0.08] via-zinc-950 to-black border-kh-pink/30 shadow-[0_12px_35px_-12px_rgba(234,76,137,0.25)] group-hover:border-kh-pink/60"
-                      : "bg-gradient-to-br from-zinc-900/50 to-zinc-950 border-white/5 group-hover:border-white/20 group-hover:bg-zinc-900/80"
+                      ? "bg-linear-to-br from-kh-pink/8 via-zinc-950 to-black border-kh-pink/30 shadow-[0_12px_35px_-12px_rgba(234,76,137,0.25)] group-hover:border-kh-pink/60"
+                      : "bg-linear-to-br from-zinc-900/50 to-zinc-950 border-white/5 group-hover:border-white/20 group-hover:bg-zinc-900/80"
                   }`}
                 />
 
@@ -215,7 +215,7 @@ export function SeasonStats({ stats, isLoading }: SeasonStatsProps) {
                   className={`absolute top-0 right-0 w-9 h-9 flex items-center justify-center border-b border-l transition-colors duration-300 transform -skew-x-3 rounded-bl-sm ${
                     stat.highlight
                       ? "border-kh-pink/20 bg-kh-pink/10 text-kh-pink"
-                      : "border-white/5 bg-white/[0.02] text-zinc-500 group-hover:text-white"
+                      : "border-white/5 bg-white/2 text-zinc-500 group-hover:text-white"
                   }`}
                 >
                   <Icon className="w-4 h-4 transform skew-x-3" />
