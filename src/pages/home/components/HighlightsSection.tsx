@@ -249,7 +249,7 @@ export default function HighlightsSection() {
           whileTap={{ scale: 0.99 }}
         >
           <Button variant="khOutlineLight" asChild className="w-full">
-            <Link to="/kennedy">VIEW FULL HIGHLIGHTZ PROFILE</Link>
+            <Link to="/highlights">VIEW FULL HIGHLIGHTZ PROFILE</Link>
           </Button>
         </motion.div>
       </div>

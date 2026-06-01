@@ -86,9 +86,9 @@ const sportsCardVariants: Variants = {
 
 export function SeasonStats() {
   return (
-    <section className="py-20 relative overflow-hidden bg-black/40 border-t border-white/5">
+    <section className="py-10 relative overflow-hidden bg-black/40 border-t border-white/5">
       {/* Decorative Sport Tech Line Backdrops */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px max-w-7xl bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px max-w-7xl bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
       <Container>
         {/* Section Header */}
@@ -100,12 +100,6 @@ export function SeasonStats() {
           className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6 text-left"
         >
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-kh-pink rounded-none transform rotate-45 animate-pulse" />
-              <span className="font-mono text-[10px] tracking-[0.35em] text-zinc-500 uppercase font-bold">
-                PERFORMANCE INDEX // LEVEL 01
-              </span>
-            </div>
             <h2 className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none m-0">
               SEASON LEADERSHIP <span className="text-kh-pink">METRICS</span>
             </h2>

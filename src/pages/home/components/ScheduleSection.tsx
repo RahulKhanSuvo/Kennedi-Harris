@@ -63,7 +63,7 @@ const scheduleData = [
 
 export default function ScheduleSection() {
   return (
-    <div className="w-full max-w-2xl bg-neutral-950/20 p-6 lg:p-8 rounded border-l border-white/5 backdrop-blur-xs">
+    <div className="w-full max-w-2xl mx-auto xl:mx-0 xl:max-w-none bg-neutral-950/20 p-6 lg:p-8 rounded border-l border-white/5 backdrop-blur-xs">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
           <h3 className="font-condensed font-semibold text-lg lg:text-xl tracking-widest text-white uppercase">
