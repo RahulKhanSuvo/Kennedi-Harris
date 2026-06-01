@@ -201,7 +201,7 @@ export function GalleryHero() {
               whileHover={{ rotate: 0, scale: 1.01 }}
               className="absolute inset-4 bg-[#16161c] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-10 flex items-end will-change-transform"
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent z-10" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-transparent z-10" />
 
               {/* Main Image Replacement Layer */}
               <div className="w-full h-full bg-[#1c1c24] flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
