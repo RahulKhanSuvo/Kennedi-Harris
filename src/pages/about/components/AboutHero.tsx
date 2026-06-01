@@ -5,6 +5,7 @@ import Container from "@/components/common/Container";
 import { Button } from "@/components/ui/button";
 import heroBgImg from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26ucl.avif";
 import heroPlayerImg from "@/assets/gallery/jump2.avif";
+import { Link } from "react-router";
 
 export function AboutHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -115,18 +116,18 @@ export function AboutHero() {
               className="flex flex-wrap items-center gap-5 pt-4"
             >
               <Button asChild variant="khPrimary">
-                <a href="#about" className="group">
+                <Link to="/schedule" className="group">
                   EXPLORE TIMELINE
                   <ArrowUpRight
                     size={18}
                     className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
                   />
-                </a>
+                </Link>
               </Button>
 
-              <Button asChild variant="khOutline">
-                <a href="#contact">PLAYER PROFILE</a>
-              </Button>
+              {/* <Button asChild variant="khOutline">
+                <Link to="/about">PLAYER PROFILE</Link>
+              </Button> */}
             </motion.div>
 
             {/* Quick Core Metric Matrix Widgets */}
@@ -230,7 +231,7 @@ export function AboutHero() {
                 <img
                   src={heroPlayerImg}
                   alt="Kennedi Harris Main Presentation Profile"
-                  className="w-full h-full object-contain object-bottom filter brightness-110 saturate-[0.9] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                  className="w-full h-full object-fill md:object-contain object-bottom filter brightness-110 saturate-[0.9] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                 />
               </div>
 
