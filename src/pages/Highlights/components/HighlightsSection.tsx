@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import { Play, Pause, RotateCcw, Film } from "lucide-react";
 import { motion, type Variants } from "motion/react";
@@ -68,23 +70,28 @@ export default function MediaBroadcastCenter() {
     BROADCAST_PLAYLIST[0],
   );
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [activeMobileId, setActiveMobileId] = useState<string | null>(null);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileVideoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>(
+    {},
+  );
 
-  // Hot-swap stream sources securely on state changes
+  // Desktop side-effect management
   useEffect(() => {
-    if (videoRef.current) {
+    if (window.innerWidth >= 1024 && videoRef.current) {
       videoRef.current.load();
       if (isPlaying) {
         videoRef.current.play().catch(() => setIsPlaying(false));
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTrack]);
+  }, [currentTrack, isPlaying]);
 
-  // Intersection Observer config for handling track auto-swaps via scroll heights
+  // Desktop Intersection Observer
   useEffect(() => {
+    if (window.innerWidth < 1024) return;
+
     const observerOptions = {
       root: null,
       rootMargin: "-25% 0px -45% 0px",
@@ -106,7 +113,6 @@ export default function MediaBroadcastCenter() {
       observerCallback,
       observerOptions,
     );
-
     itemsRef.current.forEach((item) => {
       if (item) observer.observe(item);
     });
@@ -114,7 +120,7 @@ export default function MediaBroadcastCenter() {
     return () => observer.disconnect();
   }, []);
 
-  const handlePlayToggle = () => {
+  const handleDesktopPlayToggle = () => {
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
@@ -127,38 +133,55 @@ export default function MediaBroadcastCenter() {
     }
   };
 
-  return (
-    <section className="py-24 lg:py-32 bg-black relative border-t border-white/5">
-      <div className="absolute left-[-10%] top-1/4 w-[600px] h-[600px] bg-cyan-500/5 blur-[180px] rounded-full pointer-events-none" />
-      <div className="absolute right-[-10%] bottom-1/4 w-[600px] h-[600px] bg-kh-pink/5 blur-[180px] rounded-full pointer-events-none" />
+  const handleMobilePlayToggle = (id: string) => {
+    const targetVideo = mobileVideoRefs.current[id];
+    if (!targetVideo) return;
 
-      <Container className="w-full flex flex-col gap-12">
+    if (activeMobileId === id) {
+      // Pause current running stream
+      targetVideo.pause();
+      setActiveMobileId(null);
+    } else {
+      // Pause previous playing asset if existing
+      if (activeMobileId && mobileVideoRefs.current[activeMobileId]) {
+        mobileVideoRefs.current[activeMobileId]?.pause();
+      }
+      // Play target stream asset
+      targetVideo
+        .play()
+        .then(() => setActiveMobileId(id))
+        .catch(() => setActiveMobileId(null));
+    }
+  };
+
+  return (
+    <section className="py-16 md:py-24 lg:py-32 bg-black relative border-t border-white/5">
+      <div className="absolute left-[-10%] top-1/4 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-cyan-500/5 blur-[120px] sm:blur-[180px] rounded-full pointer-events-none" />
+      <div className="absolute right-[-10%] bottom-1/4 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-kh-pink/5 blur-[120px] sm:blur-[180px] rounded-full pointer-events-none" />
+
+      <Container className="w-full flex flex-col gap-8 md:gap-12">
         {/* Header Section */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6"
+          className="w-full flex flex-row items-end justify-between border-b border-white/10 pb-6"
         >
-          {/* <div className="flex items-center gap-3">
-            <div className="h-2 w-2 bg-kh-pink rotate-45 animate-pulse" />
-            <h3 className="font-mono text-xs tracking-[0.4em] text-zinc-500 uppercase font-black">
-              BROADCAST CONFIG // SCROLL DECK
-            </h3>
-          </div> */}
-          <span className="font-display text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none">
-            FILM ROOM <span className="text-kh-pink ">SYNC DECK</span>
+          <span className="font-display text-2xl sm:text-4xl lg:text-5xl text-white tracking-tighter uppercase leading-none">
+            FILM ROOM <span className="text-kh-pink">SYNC DECK</span>
           </span>
         </motion.div>
 
-        {/* Dynamic Multi-Scroll Layout */}
-        <div className="lg:flex flex-col lg:flex-row gap-12 items-start relative w-full hidden ">
+        {/* ========================================== */}
+        {/* 💻 DESKTOP LAYOUT (Unchanged Structure) */}
+        {/* ========================================== */}
+        <div className="hidden lg:flex flex-row gap-12 items-start relative w-full">
           {/* LEFT COMPONENT: Sticky Cinema Viewport Matrix */}
           <div className="w-full lg:w-[58%] lg:sticky lg:top-28 z-30 transition-all duration-300">
             <div className="flex flex-col justify-between group relative border border-white/10 bg-zinc-950 rounded overflow-hidden shadow-2xl">
               <div
-                onClick={handlePlayToggle}
+                onClick={handleDesktopPlayToggle}
                 className="relative aspect-video w-full overflow-hidden bg-black flex items-center justify-center cursor-pointer"
               >
                 <video
@@ -186,7 +209,7 @@ export default function MediaBroadcastCenter() {
                     <button
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                         e.stopPropagation();
-                        handlePlayToggle();
+                        handleDesktopPlayToggle();
                       }}
                       className="text-white hover:text-kh-pink transition-colors cursor-pointer"
                     >
@@ -222,7 +245,7 @@ export default function MediaBroadcastCenter() {
                   onClick={() => {
                     if (videoRef.current) {
                       videoRef.current.currentTime = 0;
-                      if (!isPlaying) handlePlayToggle();
+                      if (!isPlaying) handleDesktopPlayToggle();
                     }
                   }}
                   className="p-3 rounded-xl bg-zinc-900 border border-white/5 hover:border-kh-pink/30 text-zinc-400 hover:text-kh-pink transition-all duration-300 cursor-pointer"
@@ -235,10 +258,6 @@ export default function MediaBroadcastCenter() {
 
           {/* RIGHT COMPONENT: Scroll-Triggered Archive Module Timeline */}
           <div className="w-full lg:w-[42%] flex flex-col gap-8 pb-32">
-            {/* <div className="font-mono text-[10px] text-zinc-500 font-bold tracking-[0.2em] uppercase sticky top-28 bg-black py-2 z-10 border-b border-white/5 mb-2 hidden lg:block">
-              // SCROLL VERTICALLY TO TRANSITION SOURCES
-            </div> */}
-
             {BROADCAST_PLAYLIST.map((item, index) => {
               const isSelected = currentTrack.id === item.id;
               return (
@@ -262,11 +281,7 @@ export default function MediaBroadcastCenter() {
                       {item.id.toUpperCase()}
                     </span>
                     <div
-                      className={`p-2 rounded-lg border transition-colors ${
-                        isSelected
-                          ? "border-kh-pink/20 bg-kh-pink/5 text-kh-pink"
-                          : "border-white/5 bg-zinc-900 text-zinc-500"
-                      }`}
+                      className={`p-2 rounded-lg border transition-colors ${isSelected ? "border-kh-pink/20 bg-kh-pink/5 text-kh-pink" : "border-white/5 bg-zinc-900 text-zinc-500"}`}
                     >
                       <Film className="w-4 h-4" />
                     </div>
@@ -274,9 +289,7 @@ export default function MediaBroadcastCenter() {
 
                   <div className="flex flex-col gap-1.5 mt-2">
                     <h4
-                      className={`font-display text-2xl uppercase tracking-tight transition-colors duration-300 ${
-                        isSelected ? "text-white" : "text-zinc-400"
-                      }`}
+                      className={`font-display text-2xl uppercase tracking-tight transition-colors duration-300 ${isSelected ? "text-white" : "text-zinc-400"}`}
                     >
                       {item.title}
                     </h4>
@@ -290,11 +303,7 @@ export default function MediaBroadcastCenter() {
                       DURATION: {item.duration}
                     </span>
                     <span
-                      className={`font-mono text-[10px] px-2 py-1 rounded-sm ${
-                        isSelected
-                          ? "bg-cyan-500/10 text-cyan-400"
-                          : "bg-zinc-900 text-zinc-500"
-                      }`}
+                      className={`font-mono text-[10px] px-2 py-1 rounded-sm ${isSelected ? "bg-cyan-500/10 text-cyan-400" : "bg-zinc-900 text-zinc-500"}`}
                     >
                       {item.tag}
                     </span>
@@ -304,7 +313,93 @@ export default function MediaBroadcastCenter() {
             })}
           </div>
         </div>
-        {/* moble layout */}
+
+        {/* ========================================== */}
+        {/* 📱 MOBILE LAYOUT (Social-Style Card Stream) */}
+        {/* ========================================== */}
+        <div className="flex flex-col gap-8 lg:hidden w-full">
+          {BROADCAST_PLAYLIST.map((item, index) => {
+            const isSelfPlaying = activeMobileId === item.id;
+            return (
+              <div
+                key={`mobile-${item.id}`}
+                className="flex flex-col bg-zinc-950 border border-white/5 rounded-2xl overflow-hidden shadow-xl"
+              >
+                {/* Individual Viewport Player */}
+                <div
+                  onClick={() => handleMobilePlayToggle(item.id)}
+                  className="relative aspect-video w-full bg-zinc-900 flex items-center justify-center cursor-pointer"
+                >
+                  <video
+                    ref={(el) => {
+                      mobileVideoRefs.current[item.id] = el;
+                    }}
+                    className="w-full h-full object-cover"
+                    preload="metadata"
+                    playsInline
+                    poster={mainHighlightImg}
+                  >
+                    <source src={item.videoUrl} type="video/mp4" />
+                  </video>
+
+                  <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+
+                  {/* Absolute Audio-Video Play Overlay */}
+                  {!isSelfPlaying && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="w-14 h-14 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+                        <Play
+                          fill="white"
+                          className="w-5 h-5 ml-0.5 text-white"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Duration Pill Tag */}
+                  <span className="absolute bottom-3 right-3 font-mono text-[10px] bg-black/80 text-white px-2 py-0.5 rounded border border-white/10">
+                    {item.duration}
+                  </span>
+
+                  {/* Operational Telemetry Badge */}
+                  <span className="absolute top-3 left-3 font-mono text-[8px] text-zinc-400 tracking-wider bg-black/60 border border-white/5 px-2 py-1 rounded">
+                    CH_{String(index + 1).padStart(2, "0")} // FILM
+                  </span>
+                </div>
+
+                {/* Lower Card Core Info Strip */}
+                <div className="p-5 flex flex-col gap-3">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <span className="font-mono text-[9px] tracking-widest text-cyan-400 font-bold bg-cyan-400/5 border border-cyan-400/20 px-2 py-0.5 uppercase rounded">
+                        {item.tag}
+                      </span>
+                      <h4 className="font-display text-xl tracking-tight text-white uppercase mt-2">
+                        {item.title}
+                      </h4>
+                      <p className="text-zinc-500 font-sans text-xs mt-0.5">
+                        {item.subtitle}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        const targetVid = mobileVideoRefs.current[item.id];
+                        if (targetVid) {
+                          targetVid.currentTime = 0;
+                          if (!isSelfPlaying) handleMobilePlayToggle(item.id);
+                        }
+                      }}
+                      className="p-2.5 rounded-xl bg-zinc-900 border border-white/5 text-zinc-400 active:text-kh-pink"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </Container>
     </section>
   );
