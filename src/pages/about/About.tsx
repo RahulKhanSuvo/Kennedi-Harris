@@ -16,7 +16,7 @@ export default function About() {
         name="keywords"
         content="Kennedy Harris, About, Journey, Mission, Basketball"
       />
-      <meta property="og:title" content="About Kennedy Harris" />
+      <meta property="og:title" content="About Kennedy Harris | K.H." />
       <meta
         property="og:description"
         content="Learn more about Kennedy Harris, his journey, and his mission."
