@@ -6,7 +6,7 @@ import { AboutHero } from "./components/AboutHero";
 
 export default function About() {
   return (
-    <main className="">
+    <main>
       <AboutHero />
       <Timeline />
       <BeyondTheGame />
