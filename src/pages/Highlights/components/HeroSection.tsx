@@ -6,7 +6,7 @@ import highlightBg from "@/assets/backgroud/c69918f4f554463198439ed55b120532.avi
 export default function HighlightsHeroSection({
   mainUrl,
 }: {
-  mainUrl: string;
+  mainUrl?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);

@@ -70,7 +70,7 @@ const traitItemVariants = {
   },
 } as const;
 
-export default function AboutSection({ second_img }: { second_img: string }) {
+export default function AboutSection({ second_img }: { second_img?: string }) {
   return (
     <section className="bg-kh-dark relative overflow-hidden">
       <Container>
