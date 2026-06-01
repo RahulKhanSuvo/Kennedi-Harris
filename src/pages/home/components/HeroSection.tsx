@@ -51,7 +51,7 @@ export default function HeroSection({
       </motion.div>
 
       {/* Heavy Giant Canvas Jersey Background Number */}
-      <div className="absolute top-20 right-0 lg:right-10 pointer-events-none select-none z-0 overflow-hidden">
+      <div className="absolute top-20 hidden md:block right-0 lg:right-10 pointer-events-none select-none z-0 overflow-hidden">
         <motion.span
           initial={{ opacity: 0, y: -100, scale: 0.9 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}

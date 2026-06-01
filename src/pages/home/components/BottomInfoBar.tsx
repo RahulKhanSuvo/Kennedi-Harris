@@ -77,9 +77,9 @@ export default function BottomInfoBar() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className={`flex items-center gap-3 stat-bar-item md:w-1/5 truncate ${metric.customClass}`}
+              className={`flex items-center gap-3 md:w-1/5 truncate ${metric.customClass}`}
             >
-              <IconComponent className="text-kh-pink shrink-0" size={26} />
+              <IconComponent className="text-kh-pink shrink-0 text-xl md:text-2xl" />
               <span className="truncate">{metric.label}</span>
             </motion.div>
           );

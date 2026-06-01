@@ -3,6 +3,7 @@
 import { motion, type Variants } from "motion/react";
 import gal1 from "@/assets/gallery/drib2.avif";
 import gal2 from "@/assets/gallery/dribliing.avif";
+import { Link } from "react-router";
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
 
@@ -70,12 +71,12 @@ export default function GallerySection() {
                 </h3>
                 <div className="h-px w-8 bg-kh-pink"></div>
               </div>
-              <a
-                href="#"
+              <Link
+                to="/gallery"
                 className="font-condensed font-bold text-xs tracking-widest text-kh-blue hover:text-white transition-colors uppercase border-b border-kh-blue/30 pb-0.5"
               >
                 VIEW GALLERY
-              </a>
+              </Link>
             </div>
 
             {/* Configured to trigger animation engine exactly at 30% section view threshold */}
