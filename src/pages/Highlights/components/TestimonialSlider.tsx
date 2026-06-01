@@ -41,7 +41,8 @@ export default function TestimonialSlider(): React.JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="mx-auto my-16 max-w-7xl rounded-sm bg-[#0a0a0c] border border-white/5 p-8 md:p-16 font-sans relative overflow-hidden group">
+    // FIX 1: Added 'w-full' to the container wrapper to force rigid width constraints
+    <div className="mx-auto my-16 w-full max-w-7xl rounded-sm bg-[#0a0a0c] border border-white/5 p-6 md:p-16 font-sans relative overflow-hidden group">
       {/* Decorative Brand Accent Grid Layer */}
       <div className="absolute right-0 top-0 w-32 h-32 bg-[#ff0055]/2 blur-2xl pointer-events-none rounded-full" />
 
@@ -49,6 +50,7 @@ export default function TestimonialSlider(): React.JSX.Element {
       <Quote className="absolute right-10 bottom-4 w-36 h-36 text-white/1 pointer-events-none select-none" />
 
       {/* Slider Track */}
+      {/* FIX 2: Added 'min-w-0' to the Swiper instance. This forces Swiper to shrink to mobile viewports instead of overflowing */}
       <Swiper
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
@@ -63,15 +65,17 @@ export default function TestimonialSlider(): React.JSX.Element {
           pauseOnMouseEnter: true,
         }}
         loop={true}
-        className="w-full"
+        className="w-full min-w-0"
       >
         {dummyTestimonials.map((item) => (
           <SwiperSlide key={item.id}>
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-center min-h-[140px] text-left">
+            {/* FIX 3: Changed grid track settings by explicitly setting 'min-w-0' to break the default CSS grid track calculation */}
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-center min-h-[140px] text-left min-w-0">
               {/* Left Side: Dynamic Paragraph Display */}
-              <div className="lg:col-span-8 flex items-start gap-4 md:gap-6 md:pr-8">
-                <Quote className="w-10 h-10 text-[#ff0055] shrink-0 mt-1 transform rotate-180 opacity-90" />
-                <p className="m-0 text-lg md:text-xl font-medium tracking-tight leading-relaxed text-[#e0e0e0] font-sans">
+              {/* FIX 4: Added 'min-w-0' and 'break-words' to ensure text wraps instead of pushing out layout bounds */}
+              <div className="lg:col-span-8 flex items-start gap-3 md:gap-6 md:pr-8 min-w-0">
+                <Quote className="w-8 h-8 md:w-10 md:h-10 text-[#ff0055] shrink-0 mt-1 transform rotate-180 opacity-90" />
+                <p className="m-0 text-base md:text-xl font-medium tracking-tight leading-relaxed text-[#e0e0e0] font-sans wrap-break-word">
                   {item.quote}
                 </p>
               </div>
