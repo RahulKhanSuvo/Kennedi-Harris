@@ -1,6 +1,49 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router";
 import { FaInstagram, FaTiktok, FaTwitter, FaYoutube } from "react-icons/fa";
+import { ArrowRight } from "lucide-react";
+import { motion, AnimatePresence, type Variants } from "motion/react";
+
+// Backdrop dark overlay fade configurations
+const backdropVariants: Variants = {
+  closed: { opacity: 0 },
+  opened: { opacity: 1, transition: { duration: 0.3 } },
+};
+
+// Right-hand sliding structural blade configuration
+const drawerVariants: Variants = {
+  closed: {
+    x: "100%",
+    transition: {
+      type: "spring",
+      stiffness: 380,
+      damping: 38,
+      staggerChildren: 0.03,
+      staggerDirection: -1,
+      when: "afterChildren",
+    },
+  },
+  opened: {
+    x: 0,
+    transition: {
+      type: "spring",
+      stiffness: 280,
+      damping: 26,
+      delayChildren: 0.05,
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+// Interactive item row pop configurations
+const linkItemVariants: Variants = {
+  closed: { opacity: 0, x: 20 },
+  opened: {
+    opacity: 1,
+    x: 0,
+    transition: { type: "spring", stiffness: 300, damping: 22 },
+  },
+};
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +59,6 @@ export default function Navbar() {
     { name: "CONTACT", path: "contact" },
   ];
 
-  // Prevent background scrolling when mobile menu is active
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -30,14 +72,15 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-white/5 bg-black/40">
-        <div className="max-w-[1905px] mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
-          {/* Logo Section */}
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-white/5 bg-black/50">
+        <div className="max-w-[1905px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between h-20 relative z-50">
+          {/* Logo Brand Section */}
           <Link
             to="/"
-            className="flex items-center gap-3.5 group relative z-50"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 group relative z-50"
           >
-            <div className="flex text-4xl font-display font-black tracking-tighter leading-none select-none transition-transform duration-300 group-hover:scale-105">
+            <div className="flex text-3xl sm:text-4xl font-display font-black tracking-tighter leading-none select-none transition-transform duration-300 group-hover:scale-105">
               <span className="text-kh-blue drop-shadow-[0_0_15px_rgba(var(--kh-blue-rgb),0.5)]">
                 K
               </span>
@@ -46,23 +89,23 @@ export default function Navbar() {
               </span>
             </div>
             <div className="flex flex-col justify-center">
-              <span className="font-display text-xl leading-none tracking-widest text-white font-bold transition-colors group-hover:text-kh-pink duration-300">
+              <span className="font-display text-base sm:text-lg lg:text-xl leading-none tracking-widest text-white font-bold transition-colors group-hover:text-kh-pink duration-300">
                 KENNEDI HARRIS
               </span>
-              <span className="font-sans text-[9px] tracking-[0.3em] text-kh-pink/90 leading-none mt-1.5 font-black uppercase">
-                HOOPS
+              <span className="font-mono text-[8px] tracking-[0.3em] text-kh-pink/90 leading-none mt-1 font-black uppercase">
+                // HOOPS
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* DESKTOP NAVIGATION SCHEME */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.path}
                 className={({ isActive }) =>
-                  `font-condensed font-bold tracking-[0.15em] text-[15px] transition-all duration-300 relative py-2 uppercase select-none ${
+                  `font-condensed font-bold tracking-[0.15em] text-[14px] xl:text-[15px] transition-all duration-300 relative py-2 uppercase select-none ${
                     isActive
                       ? "text-kh-pink drop-shadow-[0_0_8px_rgba(var(--kh-pink-rgb),0.4)]"
                       : "text-white/80 hover:text-white"
@@ -72,10 +115,11 @@ export default function Navbar() {
                 {({ isActive }) => (
                   <>
                     <span className="relative z-10">{link.name}</span>
-                    {/* Sliding Underline Effect */}
                     <span
-                      className={`absolute bottom-0 left-0 right-0 h-[2.5px] bg-kh-pink transition-all duration-300 origin-left ${
-                        isActive ? "scale-x-100" : "scale-x-0 hover:scale-x-50"
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-kh-pink transition-all duration-300 origin-left ${
+                        isActive
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
                       }`}
                     />
                   </>
@@ -84,26 +128,26 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Desktop Social Icons */}
-          <div className="hidden lg:flex items-center gap-5 text-white/70">
+          {/* DESKTOP SOCIAL INTERFACES */}
+          <div className="hidden lg:flex items-center gap-5 text-white/60">
             {[
               {
-                icon: <FaInstagram size={19} />,
+                icon: <FaInstagram size={18} />,
                 url: "https://instagram.com/kennediharrishoops",
                 label: "Instagram",
               },
               {
-                icon: <FaTiktok size={18} />,
+                icon: <FaTiktok size={16} />,
                 url: "https://tiktok.com/@KennediHarrisHoops",
                 label: "TikTok",
               },
               {
-                icon: <FaTwitter size={19} />,
+                icon: <FaTwitter size={18} />,
                 url: "https://x.com/kennedihoops",
                 label: "X",
               },
               {
-                icon: <FaYoutube size={20} />,
+                icon: <FaYoutube size={19} />,
                 url: "https://youtube.com/@KennediHarrisHoops",
                 label: "YouTube",
               },
@@ -113,7 +157,7 @@ export default function Navbar() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-kh-pink hover:scale-110 transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(var(--kh-pink-rgb),0.5)]"
+                className="hover:text-kh-pink transition-colors duration-200"
                 aria-label={social.label}
               >
                 {social.icon}
@@ -121,109 +165,137 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Minimalist Mobile Hamburger Toggle */}
+          {/* HIGH-TECH MINIMALIST CONTROLS METRIC */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex lg:hidden flex-col items-center justify-center w-10 h-10 gap-1.5 z-50 relative focus:outline-none rounded-full hover:bg-white/5 transition-colors"
-            aria-label="Toggle Menu"
+            className="flex lg:hidden flex-col items-center justify-center w-11 h-11 z-50 relative focus:outline-none rounded-lg bg-zinc-900/40 border border-white/5 active:scale-95 transition-transform"
+            aria-label="Toggle Mobile Panel"
           >
-            <span
-              className={`w-6 h-[2px] bg-white rounded-full transition-all duration-300 ease-out ${isOpen ? "rotate-45 translate-y-[8px]" : ""}`}
-            />
-            <span
-              className={`w-6 h-[2px] bg-white rounded-full transition-all duration-300 ease-out ${isOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`w-6 h-[2px] bg-white rounded-full transition-all duration-300 ease-out ${isOpen ? "-rotate-45 -translate-y-[8px]" : ""}`}
-            />
+            <div className="w-5 h-3 flex flex-col justify-between items-end">
+              <span
+                className={`h-[2px] bg-white rounded-full transition-all duration-300 ${isOpen ? "w-5 rotate-45 translate-y-[5px]" : "w-5"}`}
+              />
+              <span
+                className={`h-[2px] bg-white rounded-full transition-all duration-200 ${isOpen ? "w-0 opacity-0" : "w-3"}`}
+              />
+              <span
+                className={`h-[2px] bg-white rounded-full transition-all duration-300 ${isOpen ? "w-5 -rotate-45 translate-y-[-5px]" : "w-4"}`}
+              />
+            </div>
           </button>
         </div>
       </nav>
 
-      {/* Premium Full-Screen Mobile Drawer overlay */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl transition-all duration-500 ease-in-out lg:hidden ${
-          isOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div className="h-full flex flex-col justify-between px-8 pt-32 pb-12 overflow-y-auto">
-          {/* Mobile Links - Added inline onClick to dismiss menu */}
-          <div className="flex flex-col gap-4">
-            {navLinks.map((link, idx) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                style={{ transitionDelay: isOpen ? `${idx * 50}ms` : "0ms" }}
-                className={({ isActive }) =>
-                  `font-condensed font-semibold tracking-[0.2em] text-xl transition-all duration-300 py-2 block uppercase transform ${
-                    isOpen
-                      ? "translate-x-0 opacity-100"
-                      : "-translate-x-4 opacity-0"
-                  } ${
-                    isActive
-                      ? "text-kh-pink pl-2 border-l-2 border-kh-pink"
-                      : "text-white/60 hover:text-white"
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
-          </div>
+      {/* ASYMMETRIC MOBILE SLIDING SYSTEM BLADE */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Ambient Background Shield Cover */}
+            <motion.div
+              variants={backdropVariants}
+              initial="closed"
+              animate="opened"
+              exit="closed"
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
+            />
 
-          {/* Mobile Social Area Footer */}
-          <div
-            className={`flex flex-col gap-6 items-center border-t border-white/10 pt-8 transition-all duration-500 delay-300 transform ${
-              isOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            <div className="flex items-center gap-8 text-white/60">
-              <a
-                href="https://instagram.com/kennediharrishoops"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-kh-pink hover:scale-110 transition-all"
-                aria-label="Instagram"
+            {/* Side Drawer Panel Node Box */}
+            <motion.div
+              variants={drawerVariants}
+              initial="closed"
+              animate="opened"
+              exit="closed"
+              className="fixed top-0 right-0 bottom-0 w-[78vw] max-w-[340px] z-40 bg-zinc-950/95 border-l border-white/10 backdrop-blur-2xl lg:hidden flex flex-col justify-between p-6 pt-28 shadow-2xl"
+            >
+              {/* Tech Vertical Strip Accent Lines */}
+              <div className="absolute left-3 top-28 bottom-28 w-px bg-linear-to-b from-transparent via-white/10 to-transparent flex items-center justify-center">
+                <span className="font-mono text-[7px] text-zinc-600 tracking-[0.4em] uppercase rotate-90 origin-center whitespace-nowrap">
+                  ROUTING_MATRIX_ACTIVE
+                </span>
+              </div>
+
+              {/* Vertical link sequence layout */}
+              <div className="flex flex-col gap-2 pl-4 relative z-10 w-full">
+                {navLinks.map((link) => (
+                  <motion.div key={link.name} variants={linkItemVariants}>
+                    <NavLink
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className={({ isActive }) =>
+                        `group flex items-center justify-between font-condensed font-black tracking-wider text-base py-3 px-3 rounded-lg transition-all border ${
+                          isActive
+                            ? "text-kh-pink border-kh-pink/20 bg-kh-pink/3 shadow-md shadow-kh-pink/1"
+                            : "text-zinc-400 border-transparent hover:text-white hover:bg-white/2"
+                        }`
+                      }
+                    >
+                      {({ isActive }) => (
+                        <>
+                          <span>{link.name}</span>
+                          <ArrowRight
+                            className={`w-3.5 h-3.5 transition-transform duration-300 ${
+                              isActive
+                                ? "text-kh-pink opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-2 group-hover:opacity-40 group-hover:translate-x-0"
+                            }`}
+                          />
+                        </>
+                      )}
+                    </NavLink>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Embedded Mini Drawer Footer Deck */}
+              <motion.div
+                variants={linkItemVariants}
+                className="flex flex-col gap-4 border-t border-white/5 pt-5 pl-4 w-full"
               >
-                <FaInstagram size={24} />
-              </a>
-              <a
-                href="https://tiktok.com/@KennediHarrisHoops"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-kh-pink hover:scale-110 transition-all"
-                aria-label="TikTok"
-              >
-                <FaTiktok size={22} />
-              </a>
-              <a
-                href="https://x.com/kennedihoops"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-kh-pink hover:scale-110 transition-all"
-                aria-label="X"
-              >
-                <FaTwitter size={24} />
-              </a>
-              <a
-                href="https://youtube.com/@KennediHarrisHoops"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-kh-pink hover:scale-110 transition-all"
-                aria-label="YouTube"
-              >
-                <FaYoutube size={26} />
-              </a>
-            </div>
-            <p className="text-[10px] font-sans tracking-[0.3em] text-white/30 uppercase">
-              © {new Date().getFullYear()} Kennedi Harris
-            </p>
-          </div>
-        </div>
-      </div>
+                <div className="flex items-center gap-5 text-zinc-500">
+                  <a
+                    href="https://instagram.com/kennediharrishoops"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-kh-pink transition-colors"
+                  >
+                    <FaInstagram size={17} />
+                  </a>
+                  <a
+                    href="https://tiktok.com/@KennediHarrisHoops"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-kh-pink transition-colors"
+                  >
+                    <FaTiktok size={15} />
+                  </a>
+                  <a
+                    href="https://x.com/kennedihoops"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-kh-pink transition-colors"
+                  >
+                    <FaTwitter size={17} />
+                  </a>
+                  <a
+                    href="https://youtube.com/@KennediHarrisHoops"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-kh-pink transition-colors"
+                  >
+                    <FaYoutube size={18} />
+                  </a>
+                </div>
+
+                <div className="flex items-center justify-between font-mono text-[8px] text-zinc-600 tracking-widest">
+                  <span>MNU // ED.01</span>
+                  <span>©2026</span>
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }
