@@ -1,5 +1,8 @@
+"use client";
+
 import { useState } from "react";
 import { ImageIcon, Film, Trophy, Flame } from "lucide-react";
+import { motion, AnimatePresence, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 import image1 from "@/assets/gallery/drib2.avif";
 import image2 from "@/assets/gallery/dribliing.avif";
@@ -15,13 +18,12 @@ import image11 from "@/assets/gallery/looking.avif";
 import image12 from "@/assets/gallery/jump1.avif";
 import MediaLightboxModal from "@/components/common/MediaLightboxModal";
 
-// Types for our gallery items
 interface GalleryItem {
   id: number;
   title: string;
   category: "all" | "photoshoot" | "highlights" | "training";
   tag: string;
-  aspectRatio: string; // Tailored for editorial masonry rhythm
+  aspectRatio: string;
   imagePlaceholder: string;
   src: string;
 }
@@ -144,15 +146,36 @@ const GALLERY_DATA: GalleryItem[] = [
   },
 ];
 
+const kineticSpring = [0.16, 1, 0.3, 1] as const;
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.95, y: 30 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: kineticSpring,
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    y: 15,
+    transition: { duration: 0.25, ease: "easeIn" },
+  },
+};
+
 export function GalleryGrid() {
   const [activeCategory, setActiveCategory] =
     useState<GalleryItem["category"]>("all");
+  const [selectedPhoto, setSelectedPhoto] = useState<GalleryItem | null>(null);
 
-  // Filtering the dataset reactively based on UI state selection
   const filteredItems = GALLERY_DATA.filter(
     (item) => activeCategory === "all" || item.category === activeCategory,
   );
-  const [selectedPhoto, setSelectedPhoto] = useState<GalleryItem | null>(null);
+
   const handleNext = () => {
     if (!selectedPhoto) return;
     const currentIndex = GALLERY_DATA.findIndex(
@@ -172,6 +195,7 @@ export function GalleryGrid() {
       ],
     );
   };
+
   return (
     <section id="gallery-grid" className="py-20 bg-[#09090b] relative">
       <Container>
@@ -201,68 +225,75 @@ export function GalleryGrid() {
           })}
         </div>
 
-        {/* GALLERY GRID — Dynamic Grid Layout */}
+        {/* GALLERY GRID — Standard multi-column shell */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 [column-fill:balance]">
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => setSelectedPhoto(item)}
-              className={`relative break-inside-avoid w-full ${item.aspectRatio} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-all duration-500 hover:border-white/20 cursor-pointer`}
-            >
-              {/* Image Canvas Container */}
-              <div className="w-full h-full bg-[#16161c] relative overflow-hidden transition-transform duration-700 group-hover:scale-105">
-                {/* Fallback Text Asset: Sits behind image, visible only if image fails to resolve */}
-                <div className="absolute inset-0 flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase pointer-events-none px-4 text-center">
-                  {item.imagePlaceholder}
-                </div>
-
-                {/* Media Image Layer */}
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="absolute inset-0 w-full h-full object-cover z-0"
-                />
-              </div>
-
-              {/* Premium Dark Gradient & Interactive Text Overlay */}
-              <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300 z-10" />
-
-              {/* Hover Interactive Content Layout */}
-              <div className="absolute inset-0 p-6 flex flex-col justify-between z-20">
-                {/* Top Row: Meta Badge Tag */}
-                <div className="transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75">
-                  <span className="bg-white/10 backdrop-blur-md border border-white/10 text-white font-condensed text-[10px] tracking-widest uppercase px-2.5 py-1 rounded-md">
-                    {item.tag}
-                  </span>
-                </div>
-
-                {/* Bottom Row: Title and View Icon */}
-                <div className="flex items-end justify-between gap-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <div className="max-w-[80%]">
-                    <p className="font-condensed font-bold text-lg sm:text-xl text-white uppercase tracking-wide leading-tight line-clamp-2">
-                      {item.title}
-                    </p>
+          <AnimatePresence mode="popLayout">
+            {filteredItems.map((item) => (
+              <motion.div
+                key={item.id}
+                layout="position"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                // ⚡ EACH CARD TRACKS ITS OWN VIEWPORT INTERSECTION
+                viewport={{ once: true, amount: 0.3 }}
+                onClick={() => setSelectedPhoto(item)}
+                className={`relative break-inside-avoid w-full ${item.aspectRatio} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-colors duration-500 hover:border-white/20 cursor-pointer will-change-transform`}
+              >
+                {/* Image Canvas Container */}
+                <div className="w-full h-full bg-[#16161c] relative overflow-hidden transition-transform duration-700 group-hover:scale-105">
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase pointer-events-none px-4 text-center">
+                    {item.imagePlaceholder}
                   </div>
 
-                  {/* Glassmorphic View Trigger button circle */}
-                  {/* <div className="h-9 w-9 rounded-full bg-white text-black flex items-center justify-center shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-100">
-                    <Eye size={16} />
-                  </div> */}
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover z-0"
+                  />
                 </div>
-              </div>
-            </div>
-          ))}
+
+                {/* Dark Gradient Overlay */}
+                <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300 z-10" />
+
+                {/* Hover Interactive Text Content */}
+                <div className="absolute inset-0 p-6 flex flex-col justify-between z-20">
+                  {/* Top Row: Meta Badge Tag */}
+                  <div className="transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75">
+                    <span className="bg-white/10 backdrop-blur-md border border-white/10 text-white font-condensed text-[10px] tracking-widest uppercase px-2.5 py-1 rounded-md">
+                      {item.tag}
+                    </span>
+                  </div>
+
+                  {/* Bottom Row: Title */}
+                  <div className="flex items-end justify-between gap-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <div className="max-w-[80%]">
+                      <p className="font-condensed font-bold text-lg sm:text-xl text-white uppercase tracking-wide leading-tight line-clamp-2">
+                        {item.title}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
         {/* Empty State Feedback when no filters match */}
         {filteredItems.length === 0 && (
-          <div className="text-center py-20 border border-dashed border-white/10 rounded-xl bg-[#111115]">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-20 border border-dashed border-white/10 rounded-xl bg-[#111115]"
+          >
             <p className="font-condensed font-bold text-gray-500 tracking-wider uppercase text-sm">
               No media found in this collection category.
             </p>
-          </div>
+          </motion.div>
         )}
       </Container>
+
       <MediaLightboxModal
         isOpen={selectedPhoto !== null}
         onClose={() => setSelectedPhoto(null)}
