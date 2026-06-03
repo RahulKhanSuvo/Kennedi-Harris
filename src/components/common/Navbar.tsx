@@ -209,11 +209,11 @@ export default function Navbar() {
               className="fixed top-0 right-0 bottom-0 w-[78vw] max-w-[340px] z-40 bg-zinc-950/95 border-l border-white/10 backdrop-blur-2xl lg:hidden flex flex-col justify-between p-6 pt-28 shadow-2xl"
             >
               {/* Tech Vertical Strip Accent Lines */}
-              <div className="absolute left-3 top-28 bottom-28 w-px bg-linear-to-b from-transparent via-white/10 to-transparent flex items-center justify-center">
+              {/* <div className="absolute left-3 top-28 bottom-28 w-px bg-linear-to-b from-transparent via-white/10 to-transparent flex items-center justify-center">
                 <span className="font-mono text-[7px] text-zinc-600 tracking-[0.4em] uppercase rotate-90 origin-center whitespace-nowrap">
                   ROUTING_MATRIX_ACTIVE
                 </span>
-              </div>
+              </div> */}
 
               {/* Vertical link sequence layout */}
               <div className="flex flex-col gap-2 pl-4 relative z-10 w-full">

@@ -1,12 +1,10 @@
-"use client";
-
 import { useRef } from "react";
 import { Grid, Layers, ArrowDown } from "lucide-react";
 import { motion, useInView, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 
 import galleryHeroMain from "@/assets/gallery/dribling3.avif";
-import galleryHeroSub from "@/assets/gallery/working.avif";
+import galleryHeroSub from "@/assets/gallery/dribliing.avif";
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
 
