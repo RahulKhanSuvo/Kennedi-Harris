@@ -140,3 +140,13 @@ export interface FooterData {
   createdAt?: string;
   updatedAt?: string;
 }
+export interface GameScheduleData {
+  _id: string;
+  date: string;
+  matchName: string;
+  // opponent: string;
+  address: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
