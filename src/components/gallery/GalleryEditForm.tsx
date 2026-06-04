@@ -275,13 +275,13 @@ export function GalleryEditForm({
             disabled={isPending}
           >
             <Plus size={12} />
-            Add Photo Row
+            Add Photo
           </Button>
         </CardHeader>
 
         <CardContent className="p-0 space-y-4 max-h-[500px] overflow-y-auto pr-1 scrollbar-none">
           {fields.length === 0 ? (
-            <div className="text-center py-20 border border-dashed border-white/5 rounded-2xl bg-neutral-950/20 p-6 flex flex-col items-center justify-center">
+            <div className="text-center py-20 border border-dashed border-white/5 rounded bg-neutral-950/20 p-6 flex flex-col items-center justify-center">
               <FileImage size={28} className="text-zinc-800 mb-2" />
               <p className="font-condensed font-bold text-zinc-500 tracking-wider uppercase text-[10px]">
                 No photos added to the upload queue.
@@ -289,6 +289,7 @@ export function GalleryEditForm({
               <p className="font-mono text-[9px] text-zinc-600 uppercase tracking-widest mt-1.5">
                 Click 'Add Photo Row' above to queue library uploads.
               </p>
+              {/* add  add photo btn */}
             </div>
           ) : (
             <div className="space-y-3">
