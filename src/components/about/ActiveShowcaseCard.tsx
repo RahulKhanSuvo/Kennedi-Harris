@@ -26,7 +26,7 @@ export function ActiveShowcaseCard({
   onEditClick,
 }: ActiveShowcaseCardProps) {
   return (
-    <Card className="bg-[#0c0c14] border-white/5 shadow-2xl p-6 rounded relative overflow-hidden group/card w-full">
+    <Card className="bg-kh-dark-2 border-white/5 shadow-2xl p-6 rounded relative overflow-hidden group/card w-full">
       <div className="absolute top-0 right-0 w-32 h-32 bg-kh-pink/5 rounded-full blur-3xl pointer-events-none" />
 
       <CardHeader className="p-0 mb-6 flex flex-row items-center justify-between">
@@ -73,7 +73,7 @@ export function ActiveShowcaseCard({
                     alt={img.label}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover/item:scale-105 group-hover/item:brightness-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-80" />
                 </>
               ) : (
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-700 gap-1.5">
@@ -94,7 +94,7 @@ export function ActiveShowcaseCard({
 
         {/* Premium Tech Stats Display Block */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-5 border-t border-white/5">
-          <div className="p-4 bg-neutral-900/20 border border-white/[0.03] rounded-xl flex items-center justify-between group/stat transition-colors hover:bg-neutral-900/40">
+          <div className="p-4 bg-neutral-900/20 border border-white/3 rounded-xl flex items-center justify-between group/stat transition-colors hover:bg-neutral-900/40">
             <span className="font-condensed text-xs uppercase tracking-widest text-zinc-400 font-bold">
               Major Rewards
             </span>
@@ -103,7 +103,7 @@ export function ActiveShowcaseCard({
             </span>
           </div>
 
-          <div className="p-4 bg-neutral-900/20 border border-white/[0.03] rounded-xl flex items-center justify-between group/stat transition-colors hover:bg-neutral-900/40">
+          <div className="p-4 bg-neutral-900/20 border border-white/3 rounded-xl flex items-center justify-between group/stat transition-colors hover:bg-neutral-900/40">
             <span className="font-condensed text-xs uppercase tracking-widest text-zinc-400 font-bold">
               Games Played
             </span>

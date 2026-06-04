@@ -102,7 +102,7 @@ export default function AboutForm({
   };
 
   return (
-    <Card className="bg-[#0c0c14] border-white/5 shadow-2xl rounded overflow-hidden">
+    <Card className="bg-kh-dark-2 border-white/5 shadow-2xl rounded overflow-hidden">
       {/* Header Banner */}
       <CardHeader className="p-6 md:p-8 bg-neutral-950/40 border-b border-white/5">
         <div className="flex items-center gap-3">
