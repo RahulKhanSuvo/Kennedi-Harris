@@ -26,7 +26,7 @@ export function ActiveShowcaseCard({
   onEditClick,
 }: ActiveShowcaseCardProps) {
   return (
-    <Card className="bg-[#0c0c14] border-white/5 shadow-2xl p-6 rounded-2xl relative overflow-hidden group/card w-full">
+    <Card className="bg-[#0c0c14] border-white/5 shadow-2xl p-6 rounded relative overflow-hidden group/card w-full">
       <div className="absolute top-0 right-0 w-32 h-32 bg-kh-pink/5 rounded-full blur-3xl pointer-events-none" />
 
       <CardHeader className="p-0 mb-6 flex flex-row items-center justify-between">
