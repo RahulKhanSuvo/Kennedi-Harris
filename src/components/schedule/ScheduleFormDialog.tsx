@@ -34,11 +34,6 @@ interface ScheduleFormDialogProps {
 /**
  * Converts an ISO date string to the local datetime-local input format
  */
-function toDatetimeLocalValue(isoStr: string): string {
-  const date = new Date(isoStr);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-}
 
 export function ScheduleFormDialog({
   open,
@@ -58,7 +53,7 @@ export function ScheduleFormDialog({
     resolver: zodResolver(scheduleFormSchema),
     values: editingSchedule
       ? {
-          date: toDatetimeLocalValue(editingSchedule.date),
+          date: editingSchedule.date,
           matchName: editingSchedule.matchName,
           address: editingSchedule.address,
         }
@@ -80,7 +75,7 @@ export function ScheduleFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-lg bg-[#0c0c14] border-white/5 text-white rounded-2xl">
+      <DialogContent className="max-w-lg bg-kh-dark-2 border-white/5 text-white rounded">
         <DialogHeader>
           <DialogTitle className="font-display text-2xl uppercase tracking-wide text-white">
             {isEdit ? "Update Game" : "Schedule New Game"}
@@ -100,8 +95,9 @@ export function ScheduleFormDialog({
             <Label htmlFor="schedule-date">Game Date & Time</Label>
             <Input
               id="schedule-date"
-              type="datetime-local"
+              type="text"
               {...register("date")}
+              placeholder="Month Day - Time"
               disabled={isPending}
               className="bg-neutral-900 border-white/10"
             />

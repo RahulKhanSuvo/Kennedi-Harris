@@ -46,7 +46,7 @@ export function SchedulePage() {
 
   const handleFormSubmit = (values: ScheduleFormValues, isEdit: boolean) => {
     const formData = new FormData();
-    formData.append("date", new Date(values.date).toISOString());
+    formData.append("date", values.date);
     formData.append("matchName", values.matchName);
     formData.append("address", values.address);
 

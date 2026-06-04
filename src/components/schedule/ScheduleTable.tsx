@@ -17,32 +17,13 @@ interface ScheduleTableProps {
   onDelete: (id: string) => void;
 }
 
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
-function formatTime(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
-}
-
 export function ScheduleTable({
   schedules,
   onEdit,
   onDelete,
 }: ScheduleTableProps) {
   return (
-    <Card className="bg-[#0c0c14] border-white/5 overflow-hidden rounded-2xl shadow-xl">
+    <Card className="bg-kh-dark-2 border-white/5 overflow-hidden rounded-2xl shadow-xl">
       <Table>
         <TableHeader>
           <TableRow>
@@ -63,10 +44,10 @@ export function ScheduleTable({
                   </div>
                   <div>
                     <p className="font-bold text-white text-sm">
-                      {formatDate(schedule.date)}
+                      {schedule.date}
                     </p>
                     <p className="text-[10px] text-zinc-500 font-condensed uppercase tracking-wider">
-                      {formatTime(schedule.date)}
+                      {schedule.date}
                     </p>
                   </div>
                 </div>

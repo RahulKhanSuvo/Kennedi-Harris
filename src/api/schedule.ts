@@ -4,9 +4,10 @@ import type { ApiResponse, GameScheduleData } from "@/types";
 export const scheduleApi = {
   getActiveSchedule: async (): Promise<ApiResponse<GameScheduleData[]>> => {
     try {
-      const response = await axiosInstance.get<ApiResponse<GameScheduleData[]>>(
-        "/schedule/get/active",
-      );
+      const response =
+        await axiosInstance.get<ApiResponse<GameScheduleData[]>>(
+          "/schedule/getAll",
+        );
       return response.data;
     } catch {
       return {
@@ -22,9 +23,6 @@ export const scheduleApi = {
     const response = await axiosInstance.post<ApiResponse<GameScheduleData>>(
       "/schedule/create",
       formData,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      },
     );
     return response.data;
   },
@@ -36,9 +34,6 @@ export const scheduleApi = {
     const response = await axiosInstance.patch<ApiResponse<GameScheduleData>>(
       `/schedule/update/${id}`,
       formData,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      },
     );
     return response.data;
   },
