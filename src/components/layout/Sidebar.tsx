@@ -10,11 +10,13 @@ import {
   ChevronRight,
   Menu,
   X,
+  Calendar,
 } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Home Page", to: "/dashboard/home", icon: Home },
   { label: "Highlights", to: "/dashboard/highlights", icon: Video },
+  { label: "Schedule", to: "/dashboard/schedule", icon: Calendar },
   { label: "About", to: "/dashboard/about", icon: User },
   { label: "Gallery", to: "/dashboard/gallery", icon: ImageIcon },
   { label: "Contact", to: "/dashboard/contact", icon: Phone },

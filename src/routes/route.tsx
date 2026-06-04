@@ -21,6 +21,7 @@ import FooterPage from "@/pages/FooterPage";
 
 import { createBrowserRouter, Navigate } from "react-router";
 import MainLayout from "@/layouts/mainLayout";
+import { SchedulePage } from "@/pages/SchedulePage";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <ContactDashboardPage />,
+      },
+      {
+        path: "schedule",
+        element: <SchedulePage />,
       },
       {
         path: "footer",
