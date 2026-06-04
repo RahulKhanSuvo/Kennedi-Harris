@@ -276,7 +276,7 @@ export default function GalleryPage() {
 
       {/* Main Content Area */}
       {isLoading ? (
-        <div className="w-full h-[500px] bg-[#0c0c14] border border-white/5 animate-pulse rounded-2xl" />
+        <div className="w-full h-[500px] bg-kh-dark-2 border border-white/5 animate-pulse rounded-2xl" />
       ) : isError ? (
         <div className="p-10 text-center bg-red-950/10 border border-red-500/10 rounded-2xl max-w-md mx-auto">
           <p className="text-red-400 font-condensed font-bold uppercase tracking-wider text-sm">

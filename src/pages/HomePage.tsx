@@ -169,7 +169,7 @@ export default function HomePage() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <DialogContent className="bg-[#0c0c14] border-white/5 text-white rounded-xl max-w-sm">
+        <DialogContent className="bg-kh-dark-2 border-white/5 text-white rounded-xl max-w-sm">
           <DialogHeader>
             <DialogTitle className="font-display text-xl uppercase tracking-wider">
               Confirm Delete
