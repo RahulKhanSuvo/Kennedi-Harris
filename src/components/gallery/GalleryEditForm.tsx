@@ -269,7 +269,7 @@ export function GalleryEditForm({
           <Button
             type="button"
             onClick={() =>
-              append({ name: "", type: "action", photo: undefined as any })
+              append({ name: "", type: "photoshoot", photo: undefined as any })
             }
             className="bg-neutral-900 border border-white/10 hover:bg-neutral-800 text-zinc-300 font-condensed font-bold uppercase tracking-wider text-[10px] px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer"
             disabled={isPending}
@@ -290,6 +290,21 @@ export function GalleryEditForm({
                 Click 'Add Photo Row' above to queue library uploads.
               </p>
               {/* add  add photo btn */}
+              <Button
+                type="button"
+                onClick={() =>
+                  append({
+                    name: "",
+                    type: "photoshoot",
+                    photo: undefined as any,
+                  })
+                }
+                className="bg-pink-600 border mt-10 border-white/10 hover:bg-pink-500 text-white font-condensed font-bold uppercase tracking-wider text-[10px] px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer"
+                disabled={isPending}
+              >
+                <Plus size={12} />
+                Add Photo
+              </Button>
             </div>
           ) : (
             <div className="space-y-3">
@@ -347,10 +362,13 @@ export function GalleryEditForm({
                         <SelectValue placeholder="Type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="action">Action Shot</SelectItem>
-                        <SelectItem value="lifestyle">Lifestyle</SelectItem>
-                        <SelectItem value="portrait">Portrait</SelectItem>
-                        <SelectItem value="mentorship">Mentorship</SelectItem>
+                        <SelectItem value="photoshoot">Photo Shoot</SelectItem>
+                        <SelectItem value="training">
+                          Training Sessions
+                        </SelectItem>
+                        <SelectItem value="gamehighlights">
+                          Game Highlights
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
