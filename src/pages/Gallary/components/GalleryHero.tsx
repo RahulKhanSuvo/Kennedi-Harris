@@ -66,7 +66,13 @@ const floatingMiniFrameVariants: Variants = {
   },
 };
 
-export function GalleryHero() {
+export function GalleryHero({
+  bannerFristImg,
+  bannerSecondImg,
+}: {
+  bannerFristImg: string;
+  bannerSecondImg: string;
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // Triggers once 15% of the hero layout is present in the viewport frame
@@ -204,7 +210,7 @@ export function GalleryHero() {
               {/* Main Image Replacement Layer */}
               <div className="w-full h-full bg-[#1c1c24] flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
                 <img
-                  src={galleryHeroMain}
+                  src={bannerFristImg || galleryHeroMain}
                   alt="On Court Action"
                   className="w-full h-full object-cover"
                 />
@@ -229,7 +235,7 @@ export function GalleryHero() {
             >
               <div className="w-full h-full bg-[#22222a] flex items-center justify-center text-gray-600 font-condensed text-[9px] tracking-wider uppercase text-center">
                 <img
-                  src={galleryHeroSub}
+                  src={bannerSecondImg || galleryHeroSub}
                   alt="Training Session"
                   className="w-full h-full object-cover"
                 />

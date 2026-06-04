@@ -2,9 +2,16 @@ import { GalleryHero } from "./components/GalleryHero";
 import { InstagramSection } from "./components/InstagramSection";
 import { GalleryGrid } from "./components/GalleryGrid";
 import { GalleryHeritage } from "./components/GalleryHeritage";
+import { useActiveGallery } from "@/hooks/useGallery";
+import Preloader from "@/components/common/Preloader";
 
 export default function GallaryPage() {
+  const { data, isLoading } = useActiveGallery();
+  console.log(data);
   // Scroll to top on mount
+  if (isLoading) {
+    return <Preloader />;
+  }
 
   return (
     <main className="bg-kh-dark min-h-screen text-foreground flex flex-col w-full overflow-hidden">
@@ -40,7 +47,10 @@ export default function GallaryPage() {
       <meta name="twitter:image" content="URL_TO_HIGHLIGHTS_THUMBNAIL" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content="https://YOUR_DOMAIN.com/highlights" />
-      <GalleryHero />
+      <GalleryHero
+        bannerFristImg={data?.bannerFristImg}
+        bannerSecondImg={data?.bannerSecondImg}
+      />
       <GalleryGrid />
       <GalleryHeritage />
       <InstagramSection />
