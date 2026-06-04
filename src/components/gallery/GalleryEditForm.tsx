@@ -222,7 +222,7 @@ export function GalleryEditForm({
                   disabled={isPending}
                 />
                 {bannerPreviews[field.key] ? (
-                  <div className="relative w-full h-[120px] rounded-lg overflow-hidden border border-white/5">
+                  <div className="relative w-full h-[200px] rounded-lg overflow-hidden border border-white/5">
                     <img
                       src={bannerPreviews[field.key]}
                       alt={field.label}

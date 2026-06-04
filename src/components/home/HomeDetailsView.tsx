@@ -1,6 +1,6 @@
 "use client";
 
-import { Trophy, Edit2, Trash2, FileImage, BarChart3 } from "lucide-react";
+import { Trophy, Edit2, FileImage, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -22,7 +22,7 @@ interface HomeDetailsViewProps {
 export default function HomeDetailsView({
   activeRecord,
   onEditClick,
-  onDeleteClick,
+  // onDeleteClick,
 }: HomeDetailsViewProps) {
   const statMetrics = [
     {
@@ -67,7 +67,7 @@ export default function HomeDetailsView({
           </div>
           <div>
             <h2 className="font-display text-xl uppercase tracking-wider text-white">
-              Profile Showcase Node
+              Profile Showcase
             </h2>
             <p className="font-condensed text-[10px] uppercase tracking-widest text-zinc-500">
               Active system parameters and deployed media modules
@@ -83,14 +83,14 @@ export default function HomeDetailsView({
             <Edit2 size={12} />
             Edit Profile
           </Button>
-          <Button
+          {/* <Button
             variant="destructive"
             onClick={onDeleteClick}
             className="bg-red-500/10 hover:bg-red-500/20 text-red-400 font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 h-9 rounded-xl flex items-center justify-center gap-2 border border-red-500/20 cursor-pointer"
           >
             <Trash2 size={12} />
             Delete
-          </Button>
+          </Button> */}
         </div>
       </div>
 
