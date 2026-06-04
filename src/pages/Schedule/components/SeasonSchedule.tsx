@@ -1,121 +1,14 @@
-import { useState } from "react";
 import { MapPin, Calendar, Clock } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
-
-const SCHEDULE_DATA = [
-  {
-    id: 1,
-    month: "MAY",
-    days: "24-26",
-    event: "AAU TOURNAMENT",
-    opponent: "TEAM ELITE",
-    location: "ATLANTA, GA",
-    time: "TBD",
-    type: "TOURNAMENT",
-  },
-  {
-    id: 2,
-    month: "JUN",
-    days: "6",
-    event: "SCHOOL GAME",
-    opponent: "WESTFIELD HS",
-    location: "WESTFIELD, GA",
-    time: "6:00 PM",
-    type: "HOME",
-  },
-  {
-    id: 3,
-    month: "JUN",
-    days: "13-15",
-    event: "AAU TOURNAMENT",
-    opponent: "GEORGIA STARS",
-    location: "SUWANEE, GA",
-    time: "TBD",
-    type: "TOURNAMENT",
-  },
-  {
-    id: 4,
-    month: "JUN",
-    days: "20-22",
-    event: "SCHOOL GAME",
-    opponent: "NORTHVIEW HS",
-    location: "JOHNS CREEK, GA",
-    time: "6:30 PM",
-    type: "AWAY",
-  },
-  {
-    id: 5,
-    month: "JUN",
-    days: "27-29",
-    event: "AAU TOURNAMENT",
-    opponent: "TEAM TAKEOVER",
-    location: "ATLANTA, GA",
-    time: "TBD",
-    type: "TOURNAMENT",
-  },
-  {
-    id: 6,
-    month: "JUL",
-    days: "11",
-    event: "SCHOOL GAME",
-    opponent: "MILL CREEK HS",
-    location: "HOSCHTON, GA",
-    time: "6:00 PM",
-    type: "HOME",
-  },
-  {
-    id: 7,
-    month: "JUL",
-    days: "18-20",
-    event: "AAU TOURNAMENT",
-    opponent: "BRAD BEAL ELITE",
-    location: "ATLANTA, GA",
-    time: "TBD",
-    type: "TOURNAMENT",
-  },
-  {
-    id: 8,
-    month: "JUL",
-    days: "25",
-    event: "SCHOOL GAME",
-    opponent: "PEACHTREE RIDGE",
-    location: "SUWANEE, GA",
-    time: "6:30 PM",
-    type: "AWAY",
-  },
-  {
-    id: 9,
-    month: "AUG",
-    days: "1-3",
-    event: "AAU TOURNAMENT",
-    opponent: "EXODUS NYC",
-    location: "NORCROSS, GA",
-    time: "TBD",
-    type: "TOURNAMENT",
-  },
-  {
-    id: 10,
-    month: "AUG",
-    days: "8",
-    event: "SCHOOL GAME",
-    opponent: "ARCHER HS",
-    location: "DACULA, GA",
-    time: "6:00 PM",
-    type: "HOME",
-  },
-];
+import useSchedule from "@/hooks/useSchedule";
+import { ScheduleLoadingSkeleton } from "@/components/schedule";
 
 export function SeasonSchedule() {
-  const [filter, setFilter] = useState("ALL");
-
-  const filteredData = SCHEDULE_DATA.filter((item) => {
-    if (filter === "ALL") return true;
-    if (filter === "TOURNAMENTS") return item.type === "TOURNAMENT";
-    if (filter === "HOME") return item.type === "HOME";
-    if (filter === "AWAY") return item.type === "AWAY";
-    return true;
-  });
+  const { data, isLoading } = useSchedule();
+  if (isLoading) {
+    return <ScheduleLoadingSkeleton />;
+  }
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -157,25 +50,6 @@ export function SeasonSchedule() {
               FULL SEASON <span className="text-kh-pink">SCHEDULE</span>
             </h2>
           </div>
-
-          {/* Tab Filter HUD */}
-          <div className="flex flex-wrap items-center gap-2">
-            {["ALL", "TOURNAMENTS", "HOME", "AWAY"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setFilter(tab)}
-                className={`font-condensed font-bold tracking-widest text-xs py-2 px-4 transition-all duration-300 rounded-sm uppercase border
-                  ${
-                    filter === tab
-                      ? "bg-kh-pink text-white border-kh-pink shadow-[0_0_15px_rgba(234,76,137,0.3)]"
-                      : "text-gray-400 bg-transparent border-white/10 hover:border-white/30 hover:text-white"
-                  }
-                `}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Tactical Row List Container */}
@@ -187,42 +61,36 @@ export function SeasonSchedule() {
           className="flex flex-col gap-3 w-full"
         >
           <AnimatePresence mode="popLayout">
-            {filteredData.map((item) => (
+            {data.data.map((item, idx) => (
               <motion.div
                 layout
                 variants={itemVariants}
-                key={item.id}
-                className="group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center p-4 md:p-3 bg-white/[0.01] border border-white/[0.02] hover:bg-white/[0.03] hover:border-white/5 transition-all duration-200 rounded-lg text-left overflow-hidden"
+                key={item._id}
+                className="group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center p-4 md:p-3 bg-white/1 border border-white/2 hover:bg-white/3 hover:border-white/5 transition-all duration-200 rounded-lg text-left overflow-hidden"
               >
                 {/* Restored Original Solid Color Date Side-Block */}
                 <div
                   className={`col-span-1 md:col-span-2 flex md:flex-col items-center justify-between md:justify-center p-3 md:py-4 md:px-4 text-center transition-all duration-300 shrink-0 rounded-md
-                    ${item.type === "TOURNAMENT" ? "bg-kh-pink" : "bg-kh-blue"}
+                    ${idx % 2 === 0 ? "bg-kh-pink" : "bg-kh-blue"}
                     group-hover:brightness-110 group-hover:scale-105
                   `}
                 >
                   <span className="font-condensed font-bold text-xs tracking-wider text-white uppercase">
-                    {item.month}
-                  </span>
-                  <span className="font-display text-xl md:text-2xl font-black tracking-tight text-white leading-none md:mt-0.5">
-                    {item.days}
-                  </span>
-                  <span className="md:hidden font-condensed font-bold text-[10px] tracking-widest px-2 py-0.5 rounded-sm border border-white/20 bg-black/20 text-white">
-                    {item.type}
+                    {item.date}
                   </span>
                 </div>
 
                 {/* Event & Opponent Label Specs */}
                 <div className="col-span-1 md:col-span-4 flex flex-col gap-1 md:pl-2">
-                  <span className="font-condensed font-bold text-xs tracking-wider text-kh-pink uppercase">
+                  {/* <span className="font-condensed font-bold text-xs tracking-wider text-kh-pink uppercase">
                     {item.event}
-                  </span>
+                  </span> */}
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-xs font-bold text-white uppercase shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-105">
-                      {item.opponent.charAt(0)}
+                      {item.matchName.charAt(0)}
                     </div>
                     <span className="font-sans font-semibold text-sm text-white uppercase group-hover:text-kh-pink transition-colors">
-                      {item.opponent}
+                      {item.matchName}
                     </span>
                   </div>
                 </div>
@@ -231,11 +99,11 @@ export function SeasonSchedule() {
                 <div className="col-span-1 md:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-white/60 text-xs md:text-sm font-sans font-light tracking-wide uppercase">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-white/30 group-hover:text-kh-pink transition-colors" />
-                    <span className="truncate">{item.location}</span>
+                    <span className="truncate">{item.address}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-white/30 group-hover:text-cyan-400 transition-colors" />
-                    <span>{item.time}</span>
+                    <span>{item.date}</span>
                   </div>
                 </div>
 
@@ -243,14 +111,14 @@ export function SeasonSchedule() {
                 <div className="hidden md:flex col-span-1 md:col-span-2 justify-end pr-4">
                   <div
                     className={`px-3 py-1 font-condensed font-bold text-xs tracking-widest uppercase border w-full text-center transition-all duration-300 max-w-[120px] rounded-sm ${
-                      item.type === "TOURNAMENT"
+                      item.address === "Tournament"
                         ? "border-kh-pink text-kh-pink group-hover:bg-kh-pink group-hover:text-white"
-                        : item.type === "HOME"
+                        : item.address === "MVA High School"
                           ? "border-kh-blue-light text-kh-blue-light group-hover:bg-kh-blue-light group-hover:text-black"
                           : "border-gray-400 text-gray-400 group-hover:border-white group-hover:text-white"
                     }`}
                   >
-                    {item.type}
+                    {item.address}
                   </div>
                 </div>
               </motion.div>
