@@ -10,55 +10,9 @@ import tournamentImg from "@/assets/about/pic2.avif";
 import trainingImg from "@/assets/about/pic3.avif";
 import recognitionImg from "@/assets/about/pic4.avif";
 import meImg from "@/assets/modal/cd19294a-d030-4580-9dae-4de0473da04e.png";
+import type { AboutData } from "@/types";
 
-const TIMELINE_DATA = [
-  {
-    id: 1,
-    tag: "ORIGIN STORY",
-    title: "KENNEDI'S EARLY BEGINNINGS",
-    subtitle: "TRAINED BY A PRO // AGE 6",
-    description:
-      "Kennedi Harris was born with a love for sports. At the tender age of 6, she discovered her passion for basketball from her Dad, Ken, who used to teach her the game. Growing up in an environment built on discipline, she quickly developed her foundational skills and began dominating local leagues.",
-    stats: { value: "7", label: "Youth Leagues" },
-    icon: Target,
-    image: earlyLifeImg,
-  },
-  {
-    id: 2,
-    tag: "COMPETITIVE RISE",
-    title: "FIRST TOURNAMENT VICTORY",
-    subtitle: "THE BREAKOUT YEAR",
-    description:
-      "In her early years, Kennedi participated in various youth leagues, where she not only honed her skills but also learned the core components of elite teamwork. Her strategic gameplay, defensive length, and clutch scoring mechanics led her team to its first major championship series.",
-    stats: { value: "37", label: "Tournaments Played" },
-    icon: Trophy,
-    image: tournamentImg,
-  },
-  {
-    id: 3,
-    tag: "ELITE EVOLUTION",
-    title: "COMMITMENT TO TRAINING",
-    subtitle: "DAILY GRIND REQUISITES",
-    description:
-      "Kennedi’s dedication to high-performance development is evident in her daily training sessions. From morning ball-handling complexes to high-intensity vertical track routines, her commitment to elevating her skill ceiling serves as an inspiration to her peers.",
-    stats: { value: "100+", label: "Elite Peers Faced" },
-    icon: Flame,
-    image: trainingImg,
-  },
-  {
-    id: 4,
-    tag: "CURRENT RECOGNITION",
-    title: "ACCOLADES & MILESTONES",
-    subtitle: "NATIONAL HARDWARE PROFILE",
-    description:
-      "Throughout her rising youth basketball trajectory, Kennedi has picked up numerous personal accolades, MVP honors, and defensive player recognition awards. This structural framework keeps her focused on long-term execution and high-profile team legacy.",
-    stats: { value: "9", label: "Major Awards" },
-    icon: Award,
-    image: recognitionImg,
-  },
-];
-
-export function Timeline() {
+export function Timeline({ data }: { data: AboutData | null }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineGridRef = useRef<HTMLDivElement>(null);
 
@@ -66,6 +20,52 @@ export function Timeline() {
     target: timelineGridRef,
     offset: ["start 30%", "end center"],
   });
+  const TIMELINE_DATA = [
+    {
+      id: 1,
+      tag: "ORIGIN STORY",
+      title: "KENNEDI'S EARLY BEGINNINGS",
+      subtitle: "TRAINED BY A PRO // AGE 6",
+      description:
+        "Kennedi Harris was born with a love for sports. At the tender age of 6, she discovered her passion for basketball from her Dad, Ken, who used to teach her the game. Growing up in an environment built on discipline, she quickly developed her foundational skills and began dominating local leagues.",
+      stats: { value: "7", label: "Youth Leagues" },
+      icon: Target,
+      image: data?.earlyBeginningImgUrl || earlyLifeImg,
+    },
+    {
+      id: 2,
+      tag: "COMPETITIVE RISE",
+      title: "FIRST TOURNAMENT VICTORY",
+      subtitle: "THE BREAKOUT YEAR",
+      description:
+        "In her early years, Kennedi participated in various youth leagues, where she not only honed her skills but also learned the core components of elite teamwork. Her strategic gameplay, defensive length, and clutch scoring mechanics led her team to its first major championship series.",
+      stats: { value: "37", label: "Tournaments Played" },
+      icon: Trophy,
+      image: data?.fristVictoryImgUrl || tournamentImg,
+    },
+    {
+      id: 3,
+      tag: "ELITE EVOLUTION",
+      title: "COMMITMENT TO TRAINING",
+      subtitle: "DAILY GRIND REQUISITES",
+      description:
+        "Kennedi’s dedication to high-performance development is evident in her daily training sessions. From morning ball-handling complexes to high-intensity vertical track routines, her commitment to elevating her skill ceiling serves as an inspiration to her peers.",
+      stats: { value: "100+", label: "Elite Peers Faced" },
+      icon: Flame,
+      image: data?.tranningImgUrl || trainingImg,
+    },
+    {
+      id: 4,
+      tag: "CURRENT RECOGNITION",
+      title: "ACCOLADES & MILESTONES",
+      subtitle: "NATIONAL HARDWARE PROFILE",
+      description:
+        "Throughout her rising youth basketball trajectory, Kennedi has picked up numerous personal accolades, MVP honors, and defensive player recognition awards. This structural framework keeps her focused on long-term execution and high-profile team legacy.",
+      stats: { value: "9", label: "Major Awards" },
+      icon: Award,
+      image: data?.accoladesMilestonesImgUrl || recognitionImg,
+    },
+  ];
 
   return (
     <section
@@ -158,12 +158,7 @@ export function Timeline() {
   );
 }
 
-interface TimelineBlockProps {
-  item: (typeof TIMELINE_DATA)[0];
-  isEven: boolean;
-}
-
-function TimelineBlock({ item, isEven }: TimelineBlockProps) {
+function TimelineBlock({ item, isEven }) {
   const Icon = item.icon;
 
   const containerVariants: Variants = {

@@ -7,7 +7,7 @@ import heroBgImg from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26uc
 import heroPlayerImg from "@/assets/gallery/jump2.avif";
 import { Link } from "react-router";
 
-export function AboutHero() {
+export function AboutHero({ dHeroImage }: { dHeroImage: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Background Parallax Scroll Engine
@@ -229,7 +229,7 @@ export function AboutHero() {
               {/* PRIMARY PROSPECT PORTRAIT ANCHOR */}
               <div className="absolute inset-0 flex justify-center">
                 <img
-                  src={heroPlayerImg}
+                  src={dHeroImage || heroPlayerImg}
                   alt="Kennedi Harris Main Presentation Profile"
                   className="w-full h-full object-fill md:object-contain object-bottom filter brightness-110 saturate-[0.9] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                 />
