@@ -131,7 +131,7 @@ export function Timeline({ data }: { data: AboutData | null }) {
             <div className="lg:col-span-4 flex justify-center">
               <div className="relative w-64 xl:w-80 aspect-square rounded-full bg-linear-to-t from-kh-pink/20 to-transparent border border-white/10 overflow-hidden group">
                 <img
-                  src={meImg}
+                  src={data?.playerReflectionImgUrl || meImg}
                   alt="Kennedi Harris Court Profile"
                   className="w-full h-[115%] object-contain object-bottom filter brightness-110 group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
