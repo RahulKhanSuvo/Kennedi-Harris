@@ -104,14 +104,14 @@ export default function AboutForm({
   return (
     <Card className="bg-kh-dark-2 border-white/5 shadow-2xl rounded overflow-hidden">
       {/* Header Banner */}
-      <CardHeader className="p-6 md:p-8 bg-neutral-950/40 border-b border-white/5">
+      <CardHeader className="p-6 bg-neutral-950/40 border-b border-white/5">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-kh-pink/10 rounded-xl border border-kh-pink/20 text-kh-pink">
             <Sliders size={20} />
           </div>
           <div>
             <CardTitle className="font-display text-2xl uppercase tracking-wider text-white">
-              {isEdit ? "Update Biography Node" : "Deploy Biography Component"}
+              {isEdit ? "Update Biography" : "Deploy Biography Component"}
             </CardTitle>
             <CardDescription className="font-condensed text-[10px] uppercase tracking-widest text-zinc-500 mt-0.5">
               Refine historical markers and synchronize profile timeline assets

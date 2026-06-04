@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "../ui/button";
 
 interface ImageField {
   key: string;
@@ -32,7 +33,7 @@ export function ActiveShowcaseCard({
       <CardHeader className="p-0 mb-6 flex flex-row items-center justify-between">
         <div>
           <CardTitle className="font-display text-2xl uppercase tracking-wider text-white">
-            Active Showcase Grid
+            Active Showcase
           </CardTitle>
           <CardDescription className="font-condensed text-[10px] uppercase tracking-widest text-zinc-500 mt-0.5">
             Live timeline presentation assets
@@ -40,22 +41,18 @@ export function ActiveShowcaseCard({
         </div>
 
         {/* Blinking Live Matrix Interactive Edit Action */}
-        <button
+        <Button
           onClick={onEditClick}
           className="group/btn flex items-center gap-1.5 bg-kh-pink/10 hover:bg-kh-pink/20 border border-kh-pink/20 rounded-md px-2.5 py-1 transition-all cursor-pointer"
         >
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-kh-pink opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-kh-pink"></span>
-          </span>
-          <span className="font-condensed text-kh-pink uppercase tracking-widest text-[9px] font-black group-hover/btn:text-white transition-colors">
-            LIVE MATRIX // EDIT
+          <span className="font-condensed text-kh-pink text-base group-hover:text-white transition-colors">
+            Edit Profile
           </span>
           <Edit2
             size={9}
             className="text-kh-pink/70 group-hover/btn:text-white transition-colors ml-0.5"
           />
-        </button>
+        </Button>
       </CardHeader>
 
       <div className="space-y-6">

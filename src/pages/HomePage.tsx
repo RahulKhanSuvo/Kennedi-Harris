@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { toast } from "sonner";
-import { Sparkles, PlusCircle, Activity, ArrowLeft } from "lucide-react";
+import { PlusCircle, Activity, ArrowLeft, Home } from "lucide-react";
 import {
   useHome,
   useCreateHome,
@@ -85,7 +85,7 @@ export default function HomePage() {
       <div className="flex items-center justify-between pb-4 border-b border-white/5">
         <div>
           <h2 className="font-display text-4xl uppercase tracking-tight text-white flex items-center gap-2">
-            <Sparkles className="text-kh-pink" />
+            <Home className="text-kh-pink" />
             Home Section
           </h2>
           <p className="font-condensed text-xs tracking-wider text-zinc-500 uppercase mt-1">
