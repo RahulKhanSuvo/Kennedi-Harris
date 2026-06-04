@@ -52,7 +52,7 @@ export default function GallaryPage() {
         bannerSecondImg={data?.bannerSecondImg}
       />
       <GalleryGrid data={data?.photos} />
-      <GalleryHeritage />
+      <GalleryHeritage mentorshipImgUrl={data?.mentorshipImgUrl} />
       <InstagramSection />
     </main>
   );

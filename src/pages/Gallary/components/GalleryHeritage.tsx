@@ -1,10 +1,13 @@
 import { Shield, Flame, HeartHandshake } from "lucide-react";
 import Container from "@/components/common/Container";
 
-// TODO: Import your early training or family legacy media asset here
 import foundationImg from "@/assets/gallery/fatheranddaughter.jpg";
 
-export function GalleryHeritage() {
+export function GalleryHeritage({
+  mentorshipImgUrl,
+}: {
+  mentorshipImgUrl?: string;
+}) {
   return (
     <section className="py-24 relative bg-[#0c0c0f] border-t border-white/5 overflow-hidden">
       {/* Structural Backdrop Elements */}
@@ -20,7 +23,7 @@ export function GalleryHeritage() {
           <div className="relative aspect-4/5 w-full max-w-[380px] mx-auto lg:max-w-none bg-[#121216] border border-white/10 p-3 rounded-2xl shadow-2xl">
             <div className="w-full h-full rounded-xl bg-[#17171d] overflow-hidden relative flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
               <img
-                src={foundationImg}
+                src={mentorshipImgUrl || foundationImg}
                 alt="Early Mentorship & Roots"
                 className="w-full absolute aspect-4/5 h-full object-cover filter contrast-[1.05] sepia-[0.15]"
               />
