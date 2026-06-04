@@ -237,7 +237,7 @@ export default function GalleryPage() {
   const isPending = createMutation.isPending || updateMutation.isPending;
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto p-1 sm:p-0">
+    <div className="space-y-8 p-1 sm:p-0">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/5">
         <div>

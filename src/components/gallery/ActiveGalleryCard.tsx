@@ -51,7 +51,7 @@ export function ActiveGalleryCard({
   onAddPhotosClick,
   onCancelBanners,
   onCancelPhotos,
-  onDeleteGalleryClick,
+  // onDeleteGalleryClick,
   onEditPhotoClick,
   onDeletePhotoClick,
   isPending,
@@ -83,29 +83,21 @@ export function ActiveGalleryCard({
               </CardDescription>
             </div>
             <div className="flex items-center gap-2">
-              <button
-                onClick={onEditBannersClick}
-                className="group/btn flex items-center gap-1.5 bg-kh-pink/10 hover:bg-kh-pink/20 border border-kh-pink/20 rounded-md px-3 py-1.5 transition-all cursor-pointer"
-              >
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-kh-pink opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-kh-pink"></span>
-                </span>
-                <span className="font-condensed text-kh-pink uppercase tracking-widest text-[9px] font-black group-hover/btn:text-white transition-colors">
-                  BANNERS // EDIT
-                </span>
-                <Edit2
-                  size={9}
-                  className="text-kh-pink/70 group-hover/btn:text-white transition-colors ml-0.5"
-                />
-              </button>
+              {/* use primary button */}
               <Button
+                onClick={onEditBannersClick}
+                className="bg-kh-pink hover:bg-kh-pink/90 text-white font-condensed font-bold uppercase tracking-wider text-[10px] px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer"
+              >
+                <Edit2 size={12} />
+                Edit Banners
+              </Button>
+              {/* <Button
                 onClick={onDeleteGalleryClick}
                 className="bg-red-950/20 hover:bg-red-900/30 text-red-400 border border-red-500/10 font-condensed uppercase tracking-widest text-[10px] px-3 py-1.5 h-auto rounded-lg flex items-center gap-1.5 cursor-pointer"
               >
                 <Trash2 size={11} />
                 Delete Node
-              </Button>
+              </Button> */}
             </div>
           </CardHeader>
 

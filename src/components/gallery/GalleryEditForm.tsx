@@ -255,7 +255,7 @@ export function GalleryEditForm({
   );
 
   const photosContent = (
-    <Card className="bg-[#0c0c14] border-white/5 p-6 rounded-2xl flex flex-col justify-between min-h-[480px]">
+    <Card className="bg-kh-dark-2 border-white/5 p-6 rounded flex flex-col justify-between min-h-[480px]">
       <div>
         <CardHeader className="p-0 mb-6 flex flex-row items-center justify-between">
           <div>
