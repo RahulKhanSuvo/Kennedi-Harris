@@ -23,7 +23,7 @@ export function ScheduleTable({
   onDelete,
 }: ScheduleTableProps) {
   return (
-    <Card className="bg-kh-dark-2 border-white/5 overflow-hidden rounded-2xl shadow-xl">
+    <Card className="bg-kh-dark-2 border-white/5 overflow-hidden rounded shadow-xl">
       <Table>
         <TableHeader>
           <TableRow>
