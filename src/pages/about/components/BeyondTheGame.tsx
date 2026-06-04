@@ -8,13 +8,14 @@ import gal3 from "@/assets/gallery/dribling3.avif";
 import gal4 from "@/assets/gallery/jump2.avif";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import { type GalleryData } from "@/types";
 
-export function BeyondTheGame() {
+export function BeyondTheGame({ data }: { data?: GalleryData }) {
   // Configured mixed-media layout slots spanning across multiple grid pathways
   const bentoItems = [
     {
       type: "image",
-      src: gal1,
+      src: data?.photos?.[2]?.url || gal1,
       span: "col-span-2 row-span-2 md:col-span-2 md:row-span-2",
       alt: "On-court transition drive breakdown",
     },
@@ -28,7 +29,7 @@ export function BeyondTheGame() {
     },
     {
       type: "image",
-      src: gal2,
+      src: data?.photos?.[1]?.url || gal2,
       span: "col-span-1 row-span-1 md:col-span-1 md:row-span-1",
       alt: "Pre-game visual focus prep",
     },
@@ -41,13 +42,13 @@ export function BeyondTheGame() {
     },
     {
       type: "image",
-      src: gal3,
+      src: data?.photos?.[1]?.url || gal3,
       span: "col-span-1 row-span-1 md:col-span-1 md:row-span-1",
       alt: "Strength and athletic performance loading",
     },
     {
       type: "image",
-      src: gal4,
+      src: data?.photos?.[3]?.url || gal4,
       span: "col-span-1 row-span-1 md:col-span-1 md:row-span-1",
       alt: "AAU match runtime film tracking",
     },
