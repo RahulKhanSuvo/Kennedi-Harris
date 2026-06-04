@@ -51,7 +51,7 @@ export default function GallaryPage() {
         bannerFristImg={data?.bannerFristImg}
         bannerSecondImg={data?.bannerSecondImg}
       />
-      <GalleryGrid />
+      <GalleryGrid data={data?.photos} />
       <GalleryHeritage />
       <InstagramSection />
     </main>

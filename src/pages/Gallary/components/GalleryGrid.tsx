@@ -4,29 +4,8 @@ import { useState } from "react";
 import { ImageIcon, Film, Trophy, Flame } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
-import image1 from "@/assets/gallery/drib2.avif";
-import image2 from "@/assets/gallery/dribliing.avif";
-import image3 from "@/assets/gallery/dribling3.avif";
-import image4 from "@/assets/gallery/working.avif";
-import image5 from "@/assets/gallery/jump2.avif";
-import image6 from "@/assets/gallery/jumping3.avif";
-import image7 from "@/assets/gallery/jumping4.avif";
-import image8 from "@/assets/gallery/jumping5.avif";
-import image9 from "@/assets/gallery/wantit.avif";
-import image10 from "@/assets/gallery/looking2.avif";
-import image11 from "@/assets/gallery/looking.avif";
-import image12 from "@/assets/gallery/jump1.avif";
 import MediaLightboxModal from "@/components/common/MediaLightboxModal";
-
-interface GalleryItem {
-  id: number;
-  title: string;
-  category: "all" | "photoshoot" | "highlights" | "training";
-  tag: string;
-  aspectRatio: string;
-  imagePlaceholder: string;
-  src: string;
-}
+import type { GalleryPhoto } from "@/types";
 
 const CATEGORIES = [
   { id: "all", label: "ALL MEDIA", icon: ImageIcon },
@@ -34,117 +13,6 @@ const CATEGORIES = [
   { id: "highlights", label: "GAME HIGHLIGHTS", icon: Trophy },
   { id: "training", label: "TRAINING SESSIONS", icon: Film },
 ] as const;
-
-const GALLERY_DATA: GalleryItem[] = [
-  {
-    id: 1,
-    title: "Official Season Media Day",
-    category: "photoshoot",
-    tag: "Studio",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    src: image1,
-  },
-  {
-    id: 2,
-    title: "Clutch Three-Pointer vs. Rival Team",
-    category: "highlights",
-    tag: "In-Game",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    src: image2,
-  },
-  {
-    id: 3,
-    title: "Late Night Ball Handling Drill",
-    category: "training",
-    tag: "The Grind",
-    aspectRatio: "aspect-square",
-    imagePlaceholder: "[ DRILL_SESSION_SQUARE ]",
-    src: image3,
-  },
-  {
-    id: 4,
-    title: "Fast Break Finish & Transition",
-    category: "highlights",
-    tag: "In-Game",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ FAST_BREAK_PORTRAIT ]",
-    src: image4,
-  },
-  {
-    id: 5,
-    title: "Aggressive Defensive Stance Showcase",
-    category: "photoshoot",
-    tag: "Studio",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    src: image5,
-  },
-  {
-    id: 6,
-    title: "Weighted Vest Explosion Vertical Jumps",
-    category: "training",
-    tag: "Conditioning",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ VERT_TRAINING_WIDE ]",
-    src: image6,
-  },
-  {
-    id: 7,
-    title: "Official Season Media Day",
-    category: "photoshoot",
-    tag: "Studio",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    src: image7,
-  },
-  {
-    id: 8,
-    title: "Clutch Three-Pointer vs. Rival Team",
-    category: "highlights",
-    tag: "In-Game",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    src: image8,
-  },
-  {
-    id: 9,
-    title: "Late Night Ball Handling Drill",
-    category: "training",
-    tag: "The Grind",
-    aspectRatio: "aspect-square",
-    imagePlaceholder: "[ DRILL_SESSION_SQUARE ]",
-    src: image9,
-  },
-  {
-    id: 10,
-    title: "Fast Break Finish & Transition",
-    category: "highlights",
-    tag: "In-Game",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ FAST_BREAK_PORTRAIT ]",
-    src: image10,
-  },
-  {
-    id: 11,
-    title: "Aggressive Defensive Stance Showcase",
-    category: "photoshoot",
-    tag: "Studio",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ DEFENSE_STUDIO_SQUARE ]",
-    src: image11,
-  },
-  {
-    id: 12,
-    title: "Weighted Vest Explosion Vertical Jumps",
-    category: "training",
-    tag: "Conditioning",
-    aspectRatio: "aspect-[4/5]",
-    imagePlaceholder: "[ VERT_TRAINING_WIDE ]",
-    src: image12,
-  },
-];
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
 
@@ -167,31 +35,31 @@ const cardVariants: Variants = {
   },
 };
 
-export function GalleryGrid() {
+export function GalleryGrid({ data }: { data: GalleryPhoto[] }) {
   const [activeCategory, setActiveCategory] =
-    useState<GalleryItem["category"]>("all");
-  const [selectedPhoto, setSelectedPhoto] = useState<GalleryItem | null>(null);
+    useState<GalleryPhoto["type"]>("all");
+  const [selectedPhoto, setSelectedPhoto] = useState<GalleryPhoto | null>(null);
 
-  const filteredItems = GALLERY_DATA.filter(
-    (item) => activeCategory === "all" || item.category === activeCategory,
+  const filteredItems = data.filter(
+    (item) => activeCategory === "all" || item.type === activeCategory,
   );
 
   const handleNext = () => {
     if (!selectedPhoto) return;
-    const currentIndex = GALLERY_DATA.findIndex(
-      (p) => p.id === selectedPhoto.id,
+    const currentIndex = filteredItems.findIndex(
+      (p) => p._id === selectedPhoto._id,
     );
-    setSelectedPhoto(GALLERY_DATA[(currentIndex + 1) % GALLERY_DATA.length]);
+    setSelectedPhoto(filteredItems[(currentIndex + 1) % filteredItems.length]);
   };
 
   const handlePrev = () => {
     if (!selectedPhoto) return;
-    const currentIndex = GALLERY_DATA.findIndex(
-      (p) => p.id === selectedPhoto.id,
+    const currentIndex = filteredItems.findIndex(
+      (p) => p._id === selectedPhoto._id,
     );
     setSelectedPhoto(
-      GALLERY_DATA[
-        (currentIndex - 1 + GALLERY_DATA.length) % GALLERY_DATA.length
+      filteredItems[
+        (currentIndex - 1 + filteredItems.length) % filteredItems.length
       ],
     );
   };
@@ -228,9 +96,9 @@ export function GalleryGrid() {
         {/* GALLERY GRID — Standard multi-column shell */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 [column-fill:balance]">
           <AnimatePresence mode="popLayout">
-            {filteredItems.map((item) => (
+            {filteredItems.map((item, idx) => (
               <motion.div
-                key={item.id}
+                key={item._id}
                 layout="position"
                 variants={cardVariants}
                 initial="hidden"
@@ -239,17 +107,17 @@ export function GalleryGrid() {
                 // ⚡ EACH CARD TRACKS ITS OWN VIEWPORT INTERSECTION
                 viewport={{ once: true, amount: 0.3 }}
                 onClick={() => setSelectedPhoto(item)}
-                className={`relative break-inside-avoid w-full ${item.aspectRatio} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-colors duration-500 hover:border-white/20 cursor-pointer will-change-transform`}
+                className={`relative break-inside-avoid w-full ${idx % 3 === 0 ? "aspect-4/5" : "aspect-square"} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-colors duration-500 hover:border-white/20 cursor-pointer will-change-transform`}
               >
                 {/* Image Canvas Container */}
                 <div className="w-full h-full bg-[#16161c] relative overflow-hidden transition-transform duration-700 group-hover:scale-105">
                   <div className="absolute inset-0 flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase pointer-events-none px-4 text-center">
-                    {item.imagePlaceholder}
+                    {item.name}
                   </div>
 
                   <img
-                    src={item.src}
-                    alt={item.title}
+                    src={item.url}
+                    alt={item.name}
                     className="absolute inset-0 w-full h-full object-cover z-0"
                   />
                 </div>
@@ -262,7 +130,7 @@ export function GalleryGrid() {
                   {/* Top Row: Meta Badge Tag */}
                   <div className="transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75">
                     <span className="bg-white/10 backdrop-blur-md border border-white/10 text-white font-condensed text-[10px] tracking-widest uppercase px-2.5 py-1 rounded-md">
-                      {item.tag}
+                      {item.type}
                     </span>
                   </div>
 
@@ -270,7 +138,7 @@ export function GalleryGrid() {
                   <div className="flex items-end justify-between gap-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <div className="max-w-[80%]">
                       <p className="font-condensed font-bold text-lg sm:text-xl text-white uppercase tracking-wide leading-tight line-clamp-2">
-                        {item.title}
+                        {item.name}
                       </p>
                     </div>
                   </div>
@@ -300,9 +168,9 @@ export function GalleryGrid() {
         activeItem={
           selectedPhoto
             ? {
-                id: selectedPhoto.id,
-                src: selectedPhoto.src,
-                alt: selectedPhoto.title,
+                id: selectedPhoto._id,
+                src: selectedPhoto.url,
+                alt: selectedPhoto.name,
               }
             : null
         }

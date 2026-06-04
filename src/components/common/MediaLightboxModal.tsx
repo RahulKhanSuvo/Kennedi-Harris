@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { X, ArrowLeft, ArrowRight, Camera } from "lucide-react";
 
 interface LightboxItem {
-  id: number;
+  id: string;
   src: string;
   alt: string;
 }

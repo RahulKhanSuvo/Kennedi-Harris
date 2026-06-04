@@ -89,7 +89,7 @@ export interface GalleryPhoto {
   _id: string;
   name: string;
   type: string;
-  photo: string;
+  url: string;
 }
 
 export interface GalleryData {
