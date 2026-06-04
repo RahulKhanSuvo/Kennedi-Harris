@@ -11,10 +11,11 @@ import {
   Newspaper,
   ArrowRight,
 } from "lucide-react";
+import type { GetInTouchDetails } from "@/types";
 
 type FormField = "name" | "email" | "subject" | "message" | null;
 
-export function ContactFormSection() {
+export function ContactFormSection({ data }: { data: GetInTouchDetails }) {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -31,18 +32,18 @@ export function ContactFormSection() {
         <Mail className="w-5 h-5 text-kh-pink group-hover:scale-110 transition-transform duration-300" />
       ),
       title: "EMAIL",
-      lines: ["info@kennediharrishoops.com"],
+      lines: [data?.bookingEmail],
       isLink: true,
-      href: "mailto:info@kennediharrishoops.com",
+      href: `mailto:${data?.bookingEmail}`,
     },
     {
       icon: (
         <Phone className="w-5 h-5 text-kh-pink group-hover:scale-110 transition-transform duration-300" />
       ),
       title: "PHONE",
-      lines: ["(904) 238-4734"],
+      lines: [data?.phone],
       isLink: true,
-      href: "tel:9042384734",
+      href: `tel:${data?.phone}`,
     },
     {
       icon: (
@@ -84,7 +85,7 @@ export function ContactFormSection() {
       <div className="absolute bottom-1/4 right-[-10%] w-[400px] h-[400px] bg-kh-pink/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Subtle modern vector grid lines layout overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-size-[4rem_4rem] pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -185,7 +186,7 @@ export function ContactFormSection() {
               {/* Premium Interactive Action Button */}
               <button
                 type="submit"
-                className="w-full relative overflow-hidden bg-gradient-to-r from-kh-pink to-[#ff4b82] text-white font-condensed font-black tracking-[0.2em] text-sm uppercase py-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-[0_0_25px_rgba(255,43,114,0.4)] group/btn"
+                className="w-full relative overflow-hidden bg-linear-to-r from-kh-pink to-[#ff4b82] text-white font-condensed font-black tracking-[0.2em] text-sm uppercase py-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-[0_0_25px_rgba(255,43,114,0.4)] group/btn"
               >
                 {/* Subtle sheen layer hover effect background */}
                 <div className="absolute inset-0 w-1/2 h-full bg-white/10 skew-x-[-25deg] translate-x-[-150%] group-hover/btn:animate-[shine_0.8s_ease-in-out]" />
@@ -213,7 +214,7 @@ export function ContactFormSection() {
               {contactInfo.map((info, idx) => (
                 <div
                   key={idx}
-                  className="group flex items-start gap-4 p-4 rounded-xl bg-white/[0.01] hover:bg-white/[0.03] border border-white/[0.03] hover:border-white/10 transition-all duration-300"
+                  className="group flex items-start gap-4 p-4 rounded-xl bg-white/1 hover:bg-white/3 border border-white/3 hover:border-white/10 transition-all duration-300"
                 >
                   {/* High-Contrast Dynamic Icon Frame Container */}
                   <div className="w-11 h-11 rounded-lg border border-kh-pink/20 group-hover:border-kh-pink/40 flex items-center justify-center bg-kh-pink/5 group-hover:bg-kh-pink/10 shrink-0 transition-all duration-300 shadow-sm">

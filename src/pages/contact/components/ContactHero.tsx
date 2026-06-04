@@ -1,8 +1,13 @@
 import { Mail, Phone, MapPin, ArrowDown, Send } from "lucide-react";
 import Container from "@/components/common/Container";
 import { motion, type Variants } from "motion/react";
+import type { ContactDetails } from "@/types";
 
-export function ContactHero() {
+export function ContactHero({
+  contactDetails,
+}: {
+  contactDetails: ContactDetails;
+}) {
   // Animation configuration constants
   const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -125,10 +130,10 @@ export function ContactHero() {
                     Email Me Directly
                   </div>
                   <a
-                    href="mailto:contact@kennediharris.com"
+                    href={`${contactDetails.email}`}
                     className="text-sm font-sans font-medium text-gray-200 hover:text-kh-pink transition-colors"
                   >
-                    contact@kennediharris.com
+                    {contactDetails.email}
                   </a>
                 </div>
               </div>
@@ -142,10 +147,10 @@ export function ContactHero() {
                     Management / Inquiries
                   </div>
                   <a
-                    href="tel:+1234567890"
+                    href={`tel:${contactDetails.phone}`}
                     className="text-sm font-sans font-medium text-gray-200 hover:text-cyan-400 transition-colors"
                   >
-                    (555) 234-5678
+                    {contactDetails.phone}
                   </a>
                 </div>
               </div>
@@ -159,7 +164,7 @@ export function ContactHero() {
                     Based Out Of
                   </div>
                   <div className="text-sm font-sans font-medium text-gray-300">
-                    United States
+                    {contactDetails.location || "United States"}
                   </div>
                 </div>
               </div>

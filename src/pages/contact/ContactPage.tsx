@@ -2,8 +2,12 @@ import { ContactHero } from "./components/ContactHero";
 import { ContactFormSection } from "./components/ContactFormSection";
 import { MapSection } from "./components/MapSection";
 import { WorkTogether } from "./components/WorkTogether";
+import { useContact } from "@/hooks/useContact";
+import Preloader from "@/components/common/Preloader";
 
 export default function ContactPage() {
+  const { data, isLoading } = useContact();
+  if (isLoading) return <Preloader />;
   return (
     <div className="bg-kh-dark min-h-screen">
       <title>Contact | Kennedy Harris</title>
@@ -30,8 +34,8 @@ export default function ContactPage() {
       />
       <meta name="twitter:image" content="URL_TO_CONTACT_IMAGE" />
       <meta name="twitter:card" content="summary_large_image" />
-      <ContactHero />
-      <ContactFormSection />
+      <ContactHero contactDetails={data?.directReachout} />
+      <ContactFormSection data={data?.getInTouch} />
       <MapSection />
       <WorkTogether />
     </div>
