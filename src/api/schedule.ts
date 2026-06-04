@@ -39,8 +39,9 @@ export const scheduleApi = {
   },
 
   deleteSchedule: async (id: string): Promise<{ message: string }> => {
-    const response = await axiosInstance.delete<{ message: string }>(`
-    /schedule/delete/${id}`);
+    const response = await axiosInstance.delete<{ message: string }>(
+      `/schedule/delete/${id}`,
+    );
     return response.data;
   },
 };
