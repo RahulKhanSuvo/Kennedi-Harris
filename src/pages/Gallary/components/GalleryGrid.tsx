@@ -107,7 +107,7 @@ export function GalleryGrid({ data }: { data: GalleryPhoto[] }) {
                 // ⚡ EACH CARD TRACKS ITS OWN VIEWPORT INTERSECTION
                 viewport={{ once: true, amount: 0.3 }}
                 onClick={() => setSelectedPhoto(item)}
-                className={`relative break-inside-avoid w-full ${idx % 3 === 0 ? "aspect-4/5" : "aspect-square"} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-colors duration-500 hover:border-white/20 cursor-pointer will-change-transform`}
+                className={`relative break-inside-avoid w-full ${idx % 2 !== 0 ? "aspect-4/5" : "aspect-1 1/16"} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-colors duration-500 hover:border-white/20 cursor-pointer will-change-transform`}
               >
                 {/* Image Canvas Container */}
                 <div className="w-full h-full bg-[#16161c] relative overflow-hidden transition-transform duration-700 group-hover:scale-105">
