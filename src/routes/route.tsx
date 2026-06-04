@@ -6,15 +6,21 @@ import Highlights from "@/pages/Highlights/Highlights";
 import Home from "@/pages/home/Home";
 import MediaKit from "@/pages/MediaKit/MediaKit";
 import Schedule from "@/pages/Schedule/Schedule";
-import Login from "@/pages/login/Login";
-import Dashboard from "@/pages/admin/Dashboard";
-import AdminProtectedRoute from "@/components/common/AdminProtectedRoute";
-import { createBrowserRouter, Navigate, Outlet } from "react-router";
-import MainLayout from "@/layouts/mainLayout";
-import DashboardLayout from "@/layouts/DashboardLayout";
-import HighlightsPanel from "@/pages/admin/components/HighlightsPanel";
-import CreateHightlight from "@/pages/admin/components/CreateHightlight";
 import NotFound from "@/pages/NotFound/NotFound";
+
+// Admin Dashboard Components
+import LoginPage from "@/pages/LoginPage";
+import DashboardLayout from "@/components/layout/DashboardLayout";
+import ProtectedRoute from "@/components/layout/ProtectedRoute";
+import HomePage from "@/pages/HomePage";
+import HighlightsPage from "@/pages/HighlightsPage";
+import AboutPage from "@/pages/AboutPage";
+import GalleryPage from "@/pages/GalleryPage";
+import ContactDashboardPage from "@/pages/ContactPage";
+import FooterPage from "@/pages/FooterPage";
+
+import { createBrowserRouter, Navigate } from "react-router";
+import MainLayout from "@/layouts/mainLayout";
 
 const router = createBrowserRouter([
   {
@@ -57,43 +63,59 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <LoginPage />,
   },
   {
-    path: "/admin",
+    path: "/dashboard",
     element: (
-      <AdminProtectedRoute>
+      <ProtectedRoute>
         <DashboardLayout />
-      </AdminProtectedRoute>
+      </ProtectedRoute>
     ),
     children: [
       {
         index: true,
-        element: <Navigate to="/admin/dashboard" replace />,
+        element: <Navigate to="/dashboard/home" replace />,
       },
       {
-        path: "dashboard",
-        element: <Dashboard />,
+        path: "home",
+        element: <HomePage />,
       },
       {
         path: "highlights",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <HighlightsPanel />,
-          },
-          {
-            path: "create",
-            element: <CreateHightlight />,
-          },
-        ],
+        element: <HighlightsPage />,
+      },
+      {
+        path: "about",
+        element: <AboutPage />,
+      },
+      {
+        path: "gallery",
+        element: <GalleryPage />,
+      },
+      {
+        path: "contact",
+        element: <ContactDashboardPage />,
+      },
+      {
+        path: "footer",
+        element: <FooterPage />,
       },
     ],
+  },
+  // Redirect old /admin route to the new /dashboard route
+  {
+    path: "/admin",
+    element: <Navigate to="/dashboard" replace />,
+  },
+  {
+    path: "/admin/*",
+    element: <Navigate to="/dashboard" replace />,
   },
   {
     path: "*",
     element: <NotFound />,
   },
 ]);
+
 export default router;

@@ -7,7 +7,7 @@ import {
   type Variants,
 } from "motion/react";
 import statsImg from "@/assets/modal/f84dc78b-5abc-44a4-a0cb-07c9baf66f16-scaled.png";
-import { type HomeData } from "@/api/services";
+import type { HomeNumbers } from "@/types";
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
 
@@ -76,7 +76,7 @@ export default function StatsSection({
   stats,
   isLoading,
 }: {
-  stats: HomeData | undefined;
+  stats: HomeNumbers | undefined;
   isLoading: boolean;
 }) {
   if (isLoading) {

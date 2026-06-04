@@ -1,0 +1,59 @@
+"use client";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+
+interface PhotoDeleteModalProps {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
+  isPending: boolean;
+}
+
+export function PhotoDeleteModal({
+  isOpen,
+  onOpenChange,
+  onConfirm,
+  isPending,
+}: PhotoDeleteModalProps) {
+  return (
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+      <DialogContent className="bg-[#0c0c14] border-white/5 text-white rounded-2xl max-w-sm p-6 shadow-2xl">
+        <DialogHeader>
+          <DialogTitle className="font-display text-xl uppercase tracking-wider text-red-500 font-black">
+            Confirm Photo Delete
+          </DialogTitle>
+          <DialogDescription className="font-condensed text-xs uppercase tracking-wide text-zinc-400 mt-2 leading-relaxed">
+            Are you sure you want to delete this photo from this gallery folder?
+            This action cannot be undone.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="mt-6 flex flex-row justify-end gap-2.5">
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            disabled={isPending}
+            className="rounded-xl border-white/5 bg-transparent text-zinc-400 hover:bg-white/5 hover:text-white font-condensed uppercase tracking-wider text-xs px-4"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={onConfirm}
+            disabled={isPending}
+            className="bg-red-500/10 border border-red-500/20 hover:bg-red-500 hover:text-white text-red-400 font-condensed font-bold uppercase tracking-wider text-xs py-2 px-4 rounded-xl transition-all shadow-[0_4px_12px_rgba(239,68,68,0.1)] cursor-pointer"
+          >
+            {isPending ? "Deleting..." : "Delete Photo"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
