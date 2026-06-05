@@ -136,7 +136,6 @@ export interface SocialLink {
 export interface FooterData {
   _id: string;
   officialInquiries: ContactDetails;
-  socialLinks: SocialLink[];
   copyrightText: string;
   isActive: boolean;
   createdAt?: string;

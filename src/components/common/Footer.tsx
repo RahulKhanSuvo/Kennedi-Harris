@@ -1,18 +1,19 @@
+"use client";
+
 import { Mail, Phone, MapPin } from "lucide-react";
 import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { motion, type Variants } from "motion/react";
 import Container from "./Container";
 import { NavLink } from "react-router";
+import { useFooter } from "@/hooks/useFooter";
 
 const fluidSpring = [0.16, 1, 0.3, 1] as const;
 
-// Scroll trigger configuration matrix
 const scrollViewport = {
   once: true,
   amount: 0.15,
 } as const;
 
-// Staggered layout orchestration engine
 const footerContainerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -31,6 +32,7 @@ const footerColumnVariants: Variants = {
 };
 
 export default function Footer() {
+  const { data, isLoading } = useFooter();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -55,7 +57,6 @@ export default function Footer() {
             className="flex flex-col space-y-6"
           >
             <div className="flex items-center gap-8">
-              {/* Aggressive Monogram Badge */}
               <div className="flex font-display text-8xl font-black italic tracking-tighter leading-none select-none">
                 <span className="text-white">K</span>
                 <span className="text-kh-pink -ml-1.5 transform translate-y-1">
@@ -160,33 +161,53 @@ export default function Footer() {
               OFFICIAL INQUIRIES
             </h4>
             <ul className="space-y-4 text-xs sm:text-sm text-zinc-300 font-medium">
+              {/* Mail Node */}
               <li className="flex items-center gap-3 group">
                 <div className="w-8 h-8 rounded bg-neutral-900/30 border border-white/5 flex items-center justify-center text-zinc-500 group-hover:text-kh-pink group-hover:border-kh-pink/30 transition-colors">
                   <Mail size={14} />
                 </div>
-                <a
-                  href="mailto:info@kennediharrishoops.com"
-                  className="hover:text-white transition-colors truncate block max-w-[200px] lg:max-w-none"
-                >
-                  info@kennediharrishoops.com
-                </a>
+                {isLoading ? (
+                  <div className="h-3 w-36 bg-zinc-800 rounded animate-pulse" />
+                ) : (
+                  <a
+                    href={`mailto:${data?.officialInquiries?.email}`}
+                    className="hover:text-white transition-colors truncate block max-w-[200px] lg:max-w-none"
+                  >
+                    {data?.officialInquiries?.email ||
+                      "info@kennediharrishoops.com"}
+                  </a>
+                )}
               </li>
+
+              {/* Phone Node */}
               <li className="flex items-center gap-3 group">
                 <div className="w-8 h-8 rounded bg-neutral-900/30 border border-white/5 flex items-center justify-center text-zinc-500 group-hover:text-kh-pink group-hover:border-kh-pink/30 transition-colors">
                   <Phone size={14} />
                 </div>
-                <a
-                  href="tel:4041234567"
-                  className="hover:text-white transition-colors"
-                >
-                  (404) 123-4567
-                </a>
+                {isLoading ? (
+                  <div className="h-3 w-24 bg-zinc-800 rounded animate-pulse" />
+                ) : (
+                  <a
+                    href={`tel:${data?.officialInquiries?.phone}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    {data?.officialInquiries?.phone || "4041234567"}
+                  </a>
+                )}
               </li>
+
+              {/* Location Node */}
               <li className="flex items-center gap-3 group">
                 <div className="w-8 h-8 rounded bg-neutral-900/30 border border-white/5 flex items-center justify-center text-zinc-500">
                   <MapPin size={14} />
                 </div>
-                <span className="text-zinc-400">Atlanta, Georgia</span>
+                {isLoading ? (
+                  <div className="h-3 w-28 bg-zinc-800 rounded animate-pulse" />
+                ) : (
+                  <span className="text-zinc-400">
+                    {data?.officialInquiries?.location || "Atlanta, Georgia"}
+                  </span>
+                )}
               </li>
             </ul>
           </motion.div>
@@ -200,21 +221,15 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.3, ease: fluidSpring }}
           className="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] font-mono tracking-wider text-zinc-600 gap-4"
         >
-          <div className="uppercase">
-            © {currentYear} Kennedi Harris Hoops. Designed for elite
-            performance.
-          </div>
-          <div className="flex gap-6 uppercase">
-            <a
-              href="#privacy"
-              className="hover:text-zinc-300 transition-colors"
-            >
-              Privacy Strategy
-            </a>
-            <a href="#terms" className="hover:text-zinc-300 transition-colors">
-              Terms of Use
-            </a>
-          </div>
+          {isLoading ? (
+            <div className="h-2.5 w-64 bg-zinc-900 rounded animate-pulse" />
+          ) : (
+            <div className="uppercase">
+              {data?.copyrightText ||
+                `© ${currentYear} Kennedi Harris Hoops. Designed for elite performance.`}
+            </div>
+          )}
+          <div className="flex gap-6 uppercase"></div>
         </motion.div>
       </Container>
     </footer>

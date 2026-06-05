@@ -1,7 +1,7 @@
 "use client";
 
 import { Play, Pause } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 
 import { Button } from "@/components/ui/button";
@@ -22,14 +22,50 @@ const itemVariants: Variants = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
+function HighlightsSkeleton() {
+  return (
+    <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch animate-pulse">
+      <div className="w-full lg:w-2/3 flex flex-col gap-4">
+        <div className="h-4 w-44 bg-zinc-800 rounded-sm" />
+        <div className="relative w-full aspect-video bg-neutral-900 border border-white/5 rounded-xl overflow-hidden flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center">
+            <div className="w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-10 border-l-zinc-700 ml-1" />
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full lg:w-1/3 flex flex-col justify-between gap-4 lg:pt-9">
+        <div className="flex flex-col gap-3">
+          {Array.from({ length: 3 }).map((_, idx) => (
+            <div
+              key={`vid-skel-${idx}`}
+              className="flex gap-4 p-2 border border-transparent rounded-lg"
+            >
+              <div className="w-28 sm:w-32 aspect-video bg-neutral-900 border border-white/5 rounded-md shrink-0 flex items-center justify-center">
+                <div className="w-6 h-6 rounded-full bg-zinc-800" />
+              </div>
+              <div className="flex flex-col justify-center gap-2 flex-1">
+                <div className="h-3 w-full bg-zinc-800 rounded-xs" />
+                <div className="h-3 w-2/3 bg-zinc-800 rounded-xs" />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="h-10 w-full bg-neutral-900 border border-white/5 rounded-md" />
+      </div>
+    </div>
+  );
+}
+
 export default function HighlightsSection({
   highlights,
+  isLoading,
 }: {
   highlights: HighlightData | null;
+  isLoading?: boolean;
 }) {
   const videosList = highlights?.videos?.slice(0, 3) || [];
 
-  // 💡 Compute the active source fallback directly to avoid mounting cascades
   const [selectedVideo, setSelectedVideo] = useState<string>("");
   const currentVideo = selectedVideo || videosList[0]?.video_url || "";
 
@@ -54,12 +90,11 @@ export default function HighlightsSection({
     }
   };
 
-  // Play immediately whenever the active source changes via sidebar selection
-  useEffect(() => {
-    if (currentVideo && videoRef.current) {
-      syncPlaybackState(true);
-    }
-  }, [currentVideo]);
+  // 💡 REMOVED: The global useEffect that forced autoplay on layout mounts has been deleted.
+
+  if (isLoading || !highlights || videosList.length === 0) {
+    return <HighlightsSkeleton />;
+  }
 
   const handlePlayPause = () => {
     if (!videoRef.current) return;
@@ -72,7 +107,15 @@ export default function HighlightsSection({
       handlePlayPause();
       return;
     }
+
+    // 💡 1. Update the state track target
     setSelectedVideo(videoSrc);
+
+    // 💡 2. Explicitly play immediately because this was triggered by a real user interaction click event
+    if (videoRef.current) {
+      videoRef.current.src = videoSrc;
+      syncPlaybackState(true);
+    }
   };
 
   const handleSidebarHover = (index: number, isHovering: boolean) => {

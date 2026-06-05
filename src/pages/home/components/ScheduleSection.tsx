@@ -97,7 +97,7 @@ export default function ScheduleSection() {
             <motion.div
               key={i}
               variants={itemVariants}
-              className="flex items-center justify-between group hover:bg-white/[0.02] transition-colors duration-200"
+              className="flex items-center justify-between group hover:bg-white/2 transition-colors duration-200"
             >
               <div
                 className={`w-20 h-16 ${
