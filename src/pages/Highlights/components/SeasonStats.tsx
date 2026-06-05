@@ -16,6 +16,7 @@ import type { HomeNumbers } from "@/types";
 
 interface SeasonStatsProps {
   stats: HomeNumbers | undefined;
+  isLoading: boolean;
 }
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
@@ -96,7 +97,7 @@ function DigitCounter({ value, trigger }: { value: string; trigger: boolean }) {
   );
 }
 
-export function SeasonStats({ stats }: SeasonStatsProps) {
+export function SeasonStats({ stats, isLoading }: SeasonStatsProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // Triggers precisely when 30% of the statistical frame layer is captured by viewport
@@ -180,77 +181,88 @@ export function SeasonStats({ stats }: SeasonStatsProps) {
           whileInView={isSectionInView ? "show" : "hidden"}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-8"
         >
-          {dynamicStatsList.map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={stat.id}
-                variants={sportsCardVariants}
-                whileHover={{
-                  y: -6,
-                  transition: { duration: 0.2, ease: "easeOut" },
-                }}
-                className="group relative p-6 flex flex-col justify-between items-start text-left min-h-[220px] select-none transition-all duration-300"
-              >
-                {/* Visual Fix: The Skewed Background Shell Plate */}
+          {isLoading
+            ? Array.from({ length: 5 }).map((_, index) => (
                 <div
-                  className={`absolute inset-0 transform -skew-x-3 transition-all duration-300 rounded-sm border ${
-                    stat.highlight
-                      ? "bg-linear-to-br from-kh-pink/8 via-zinc-950 to-black border-kh-pink/30 shadow-[0_12px_35px_-12px_rgba(234,76,137,0.25)] group-hover:border-kh-pink/60"
-                      : "bg-linear-to-br from-zinc-900/50 to-zinc-950 border-white/5 group-hover:border-white/20 group-hover:bg-zinc-900/80"
-                  }`}
-                />
-
-                {/* Asymmetric Tech Corner Icon Plate */}
-                <div
-                  className={`absolute top-0 right-0 w-9 h-9 flex items-center justify-center border-b border-l transition-colors duration-300 transform -skew-x-3 rounded-bl-sm ${
-                    stat.highlight
-                      ? "border-kh-pink/20 bg-kh-pink/10 text-kh-pink"
-                      : "border-white/5 bg-white/2 text-zinc-500 group-hover:text-white"
-                  }`}
+                  key={`skeleton-${index}`}
+                  className="relative p-6 flex flex-col justify-between items-start min-h-[220px] w-full"
                 >
-                  <Icon className="w-4 h-4 transform skew-x-3" />
+                  {/* Matching skewed background skeleton container */}
+                  <div className="absolute inset-0 transform -skew-x-3 bg-zinc-900/40 border border-white/5 rounded-sm animate-pulse" />
+                  <div className="relative z-10 w-full h-full flex flex-col justify-between" />
                 </div>
-
-                {/* Content Layer */}
-                <div className="relative z-10 w-full flex flex-col justify-between h-full space-y-6">
-                  {/* Scoreboard Metric Number Display with Live Dynamic Payload Counters */}
-                  <div className="mt-2">
-                    <span className="font-display text-5xl md:text-6xl text-white font-black leading-none tracking-tighter block drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-                      <DigitCounter
-                        value={stat.value}
-                        trigger={isSectionInView}
-                      />
-                    </span>
-                  </div>
-
-                  {/* Info Labels Bracket */}
-                  <div className="w-full border-t border-white/5 pt-3">
-                    <span
-                      className={`font-condensed font-black text-lg tracking-wide uppercase block leading-tight transition-colors duration-300 ${
+              ))
+            : dynamicStatsList.map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <motion.div
+                    key={stat.id}
+                    variants={sportsCardVariants}
+                    whileHover={{
+                      y: -6,
+                      transition: { duration: 0.2, ease: "easeOut" },
+                    }}
+                    className="group relative p-6 flex flex-col justify-between items-start text-left min-h-[220px] select-none transition-all duration-300"
+                  >
+                    {/* Visual Fix: The Skewed Background Shell Plate */}
+                    <div
+                      className={`absolute inset-0 transform -skew-x-3 transition-all duration-300 rounded-sm border ${
                         stat.highlight
-                          ? "text-kh-pink drop-shadow-[0_0_12px_rgba(234,76,137,0.2)]"
-                          : "text-zinc-200 group-hover:text-white"
+                          ? "bg-linear-to-br from-kh-pink/8 via-zinc-950 to-black border-kh-pink/30 shadow-[0_12px_35px_-12px_rgba(234,76,137,0.25)] group-hover:border-kh-pink/60"
+                          : "bg-linear-to-br from-zinc-900/50 to-zinc-950 border-white/5 group-hover:border-white/20 group-hover:bg-zinc-900/80"
+                      }`}
+                    />
+
+                    {/* Asymmetric Tech Corner Icon Plate */}
+                    <div
+                      className={`absolute top-0 right-0 w-9 h-9 flex items-center justify-center border-b border-l transition-colors duration-300 transform -skew-x-3 rounded-bl-sm ${
+                        stat.highlight
+                          ? "border-kh-pink/20 bg-kh-pink/10 text-kh-pink"
+                          : "border-white/5 bg-white/2 text-zinc-500 group-hover:text-white"
                       }`}
                     >
-                      {stat.label}
-                    </span>
+                      <Icon className="w-4 h-4 transform skew-x-3" />
+                    </div>
 
-                    <span className="text-zinc-400 text-[11px] font-mono tracking-wider uppercase block mt-1.5">
-                      {stat.sublabel}
-                    </span>
-                  </div>
-                </div>
+                    {/* Content Layer */}
+                    <div className="relative z-10 w-full flex flex-col justify-between h-full space-y-6">
+                      {/* Scoreboard Metric Number Display with Live Dynamic Payload Counters */}
+                      <div className="mt-2">
+                        <span className="font-display text-5xl md:text-6xl text-white font-black leading-none tracking-tighter block drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+                          <DigitCounter
+                            value={stat.value}
+                            trigger={isSectionInView}
+                          />
+                        </span>
+                      </div>
 
-                {/* Speed-Glow Underline Accent */}
-                <div
-                  className={`absolute bottom-0 left-0 h-[2.5px] w-0 group-hover:w-full transition-all duration-300 transform -skew-x-3 rounded-b-sm ${
-                    stat.highlight ? "bg-kh-pink" : "bg-cyan-400"
-                  }`}
-                />
-              </motion.div>
-            );
-          })}
+                      {/* Info Labels Bracket */}
+                      <div className="w-full border-t border-white/5 pt-3">
+                        <span
+                          className={`font-condensed font-black text-lg tracking-wide uppercase block leading-tight transition-colors duration-300 ${
+                            stat.highlight
+                              ? "text-kh-pink drop-shadow-[0_0_12px_rgba(234,76,137,0.2)]"
+                              : "text-zinc-200 group-hover:text-white"
+                          }`}
+                        >
+                          {stat.label}
+                        </span>
+
+                        <span className="text-zinc-400 text-[11px] font-mono tracking-wider uppercase block mt-1.5">
+                          {stat.sublabel}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Speed-Glow Underline Accent */}
+                    <div
+                      className={`absolute bottom-0 left-0 h-[2.5px] w-0 group-hover:w-full transition-all duration-300 transform -skew-x-3 rounded-b-sm ${
+                        stat.highlight ? "bg-kh-pink" : "bg-cyan-400"
+                      }`}
+                    />
+                  </motion.div>
+                );
+              })}
         </motion.div>
       </Container>
     </section>

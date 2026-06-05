@@ -5,7 +5,6 @@ import TopPlayCategories from "./components/TopPlayCategories";
 import HeroSection from "./components/HeroSection";
 import TestimonialSlider from "./components/TestimonialSlider";
 import HighlightsSection from "./components/HighlightsSection";
-import Preloader from "@/components/common/Preloader";
 import { useActiveHighlight } from "@/hooks/useHighlights";
 import { useHome } from "@/hooks/useHome";
 
@@ -14,7 +13,6 @@ export default function Highlights() {
     useActiveHighlight();
   const { data: homeData, isLoading: homeLoading } = useHome();
   const mainUrl = activeHighlights?.MainVideo_url;
-  if (highlightLoading || homeLoading) return <Preloader />;
 
   return (
     <main className="min-h-screen text-foreground flex flex-col w-full">
@@ -57,10 +55,16 @@ export default function Highlights() {
       <HeroSection mainUrl={mainUrl} />
       {/* <NavigationTabs /> */}
       {/* <FeaturedHighlightsSection></FeaturedHighlightsSection> */}
-      <HighlightsSection highlights={activeHighlights} />
+      <HighlightsSection
+        highlights={activeHighlights}
+        isLoading={highlightLoading}
+      />
 
-      <SeasonStats stats={homeData?.NUMBERS} />
-      <TopPlayCategories FeedVideoData={activeHighlights?.feedVideos || []} />
+      <SeasonStats stats={homeData?.NUMBERS} isLoading={homeLoading} />
+      <TopPlayCategories
+        FeedVideoData={activeHighlights?.feedVideos || []}
+        isLoading={highlightLoading}
+      />
       {/* <SubscribeSection /> */}
       <TestimonialSlider />
     </main>

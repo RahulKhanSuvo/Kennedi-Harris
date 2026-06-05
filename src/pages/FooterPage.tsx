@@ -12,7 +12,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  Globe,
   Plus,
   Trash2,
   Loader2,
@@ -101,10 +100,6 @@ export default function FooterPage() {
           phone: activeFooter.officialInquiries?.phone || "",
           location: activeFooter.officialInquiries?.location || "",
         },
-        socialLinks: (activeFooter.socialLinks || []).map((l: any) => ({
-          platform: l.platform || "instagram",
-          url: l.url || "",
-        })),
         copyrightText: activeFooter.copyrightText || "",
       });
     } else {
@@ -489,53 +484,6 @@ export default function FooterPage() {
                   {activeFooter!.copyrightText}
                 </p>
               </CardContent>
-            </Card>
-          </div>
-
-          {/* Social Links Cards */}
-          <div className="lg:col-span-6">
-            <Card className="bg-[#0c0c14] border-white/5 shadow-xl p-6 rounded-2xl h-full flex flex-col justify-between">
-              <div>
-                <CardHeader className="p-0 mb-6">
-                  <CardTitle className="font-display text-2xl uppercase tracking-wider text-white">
-                    Social Networks
-                  </CardTitle>
-                  <CardDescription className="font-condensed text-[10px] uppercase tracking-widest text-zinc-500">
-                    Active links mapped to header and footer icons
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-0 space-y-4">
-                  {(activeFooter!.socialLinks || []).length === 0 ? (
-                    <div className="p-6 text-center text-zinc-500 font-condensed uppercase tracking-wider">
-                      No social links configured.
-                    </div>
-                  ) : (
-                    (activeFooter!.socialLinks || []).map(
-                      (link: any, idx: number) => (
-                        <div
-                          key={idx}
-                          className="flex items-center justify-between p-3 rounded-lg bg-neutral-900/30 border border-white/[0.02]"
-                        >
-                          <div className="flex items-center gap-3">
-                            <Globe size={16} className="text-kh-pink" />
-                            <span className="font-condensed text-sm font-bold uppercase tracking-wider text-zinc-300">
-                              {link.platform}
-                            </span>
-                          </div>
-                          <a
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-mono text-xs text-sky-400 hover:underline max-w-[240px] truncate"
-                          >
-                            {link.url}
-                          </a>
-                        </div>
-                      ),
-                    )
-                  )}
-                </CardContent>
-              </div>
             </Card>
           </div>
         </div>
