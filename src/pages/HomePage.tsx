@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { toast } from "sonner";
-import { PlusCircle, Activity, ArrowLeft, Home } from "lucide-react";
+import { PlusCircle, Activity, ArrowLeft, Home, Image } from "lucide-react";
 import {
   useHome,
   useCreateHome,
@@ -9,7 +9,6 @@ import {
   useDeleteHome,
 } from "@/hooks/useHome";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -82,24 +81,24 @@ export default function HomePage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-white/5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/5">
         <div>
           <h2 className="font-display text-4xl uppercase tracking-tight text-white flex items-center gap-2">
-            <Home className="text-kh-pink" />
+            <Home className="text-kh-pink" size={32} />
             Home Section
           </h2>
-          <p className="font-condensed text-xs tracking-wider text-zinc-500 uppercase mt-1">
+          <p className="font-condensed text-xs tracking-wider text-zinc-500 uppercase mt-0.5">
             Manage the hero banner images and key season stats
           </p>
         </div>
 
         {!isLoading && (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 font-mono">
             {isEditing && activeRecord && (
               <Button
                 onClick={() => setIsEditing(false)}
                 variant="outline"
-                className="rounded-xl border-white/10 text-zinc-400 hover:bg-white/5 hover:text-white cursor-pointer font-condensed uppercase text-xs tracking-wider px-4 py-2 flex items-center gap-2"
+                className="w-full sm:w-auto rounded-xl border-white/10 text-zinc-400 hover:bg-white/5 hover:text-white cursor-pointer font-condensed uppercase text-xs tracking-wider px-4 py-2 flex items-center justify-center gap-2"
               >
                 <ArrowLeft size={12} />
                 Back to View
@@ -108,7 +107,7 @@ export default function HomePage() {
             {!activeRecord && !isEditing && (
               <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-kh-pink hover:bg-kh-pink-bright text-white font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl flex items-center gap-2 border-none cursor-pointer"
+                className="w-full sm:w-auto bg-kh-pink hover:bg-kh-pink-bright text-white font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl flex items-center justify-center gap-2 border-none cursor-pointer"
               >
                 <PlusCircle size={14} />
                 Create Record
@@ -120,13 +119,71 @@ export default function HomePage() {
 
       {/* Main Content */}
       {isLoading ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {[1, 2].map((i) => (
-            <Card
-              key={i}
-              className="bg-kh-dark-2 border-white/5 animate-pulse h-64"
-            />
-          ))}
+        /* Immersive Split-Pane Home Dashboard Skeleton (Full Height) */
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch min-h-[580px] w-full animate-pulse">
+          {/* Left Column: Details & Stats Config Matrix Block (5 Columns) */}
+          <div className="col-span-12 lg:col-span-5 bg-zinc-950/20 border border-white/5 rounded-2xl p-6 xl:p-8 flex flex-col justify-between space-y-8">
+            <div className="space-y-6">
+              {/* Profile/Identity Record Header */}
+              <div className="flex items-center gap-3 pb-6 border-b border-white/5">
+                <div className="w-12 h-12 bg-zinc-900 rounded-xl shrink-0" />
+                <div className="space-y-2 flex-1">
+                  <div className="h-4 bg-zinc-900 rounded w-2/3" />
+                  <div className="h-2.5 bg-zinc-900 rounded w-1/3" />
+                </div>
+              </div>
+
+              {/* Data Rows Placeholder Stack */}
+              <div className="space-y-4">
+                {[1, 2, 3].map((row) => (
+                  <div
+                    key={row}
+                    className="p-4 bg-zinc-900/30 rounded-xl border border-white/5 space-y-2"
+                  >
+                    <div className="h-2 bg-zinc-900 rounded w-1/4" />
+                    <div className="h-3.5 bg-zinc-900 rounded w-3/4" />
+                  </div>
+                ))}
+              </div>
+
+              {/* Stats Counters Grid Block */}
+              <div className="grid grid-cols-3 gap-3 pt-2">
+                {[1, 2, 3].map((stat) => (
+                  <div
+                    key={stat}
+                    className="p-3 bg-zinc-900/20 rounded-xl border border-white/5 text-center space-y-2"
+                  >
+                    <div className="h-3.5 bg-zinc-900 rounded w-2/3 mx-auto" />
+                    <div className="h-2 bg-zinc-900/60 rounded w-1/2 mx-auto" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom action bar track */}
+            <div className="flex gap-3 pt-4 border-t border-white/5">
+              <div className="h-9 bg-zinc-900 rounded-xl w-24" />
+              <div className="h-9 bg-zinc-900 rounded-xl w-20" />
+            </div>
+          </div>
+
+          {/* Right Column: Hero Banner Aspect Preview Screen (7 Columns) */}
+          <div className="col-span-12 lg:col-span-7 bg-zinc-950/40 p-6 xl:p-8 rounded-2xl border border-white/5 flex flex-col justify-between space-y-6">
+            <div className="space-y-4 flex-1 flex flex-col">
+              <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                <div className="h-3 bg-zinc-900 rounded w-1/3" />
+                <div className="h-4 bg-zinc-900 rounded w-12" />
+              </div>
+
+              {/* Massive Aspect Ratio Banner Canvas Area */}
+              <div className="w-full flex-1 min-h-[280px] lg:min-h-0 rounded-xl bg-zinc-950 border border-white/5 flex flex-col items-center justify-center gap-2 p-6">
+                <Image size={32} className="text-zinc-900 animate-pulse" />
+                <div className="h-2 bg-zinc-900/40 rounded w-40 mt-1" />
+              </div>
+            </div>
+
+            <div className="h-3 bg-zinc-900/30 rounded w-1/4" />
+          </div>
         </div>
       ) : isError ? (
         <div className="p-8 text-center bg-red-950/20 border border-red-500/10 rounded-2xl">
