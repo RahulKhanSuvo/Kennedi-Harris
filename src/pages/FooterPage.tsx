@@ -250,7 +250,7 @@ export default function FooterPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Left side: Inquiries and Copyright */}
             <div className="lg:col-span-6 space-y-6">
-              <Card className="bg-[#0c0c14] border-white/5 p-6 rounded-2xl">
+              <Card className="bg-kh-dark-2 border-white/5 p-6 rounded-2xl">
                 <CardHeader className="p-0 mb-6">
                   <CardTitle className="font-display text-xl uppercase tracking-wider text-white">
                     Official Inquiries
@@ -305,7 +305,7 @@ export default function FooterPage() {
               </Card>
 
               {/* Copyright Text */}
-              <Card className="bg-[#0c0c14] border-white/5 p-6 rounded-2xl">
+              <Card className="bg-kh-dark-2 border-white/5 p-6 rounded-2xl">
                 <CardHeader className="p-0 mb-4">
                   <CardTitle className="font-display text-xl uppercase tracking-wider text-white">
                     Copyright Line
@@ -329,7 +329,7 @@ export default function FooterPage() {
             </div>
 
             {/* Right side: Social links array */}
-            <Card className="lg:col-span-6 bg-[#0c0c14] border-white/5 p-6 rounded-2xl flex flex-col justify-between">
+            <Card className="lg:col-span-6 bg-kh-dark-2 border-white/5 p-6 rounded-2xl flex flex-col justify-between">
               <div>
                 <CardHeader className="p-0 mb-6 flex flex-row items-center justify-between">
                   <CardTitle className="font-display text-xl uppercase tracking-wider text-white">
@@ -424,7 +424,7 @@ export default function FooterPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Inquiry + Copyright details */}
           <div className="lg:col-span-6 space-y-6">
-            <Card className="bg-[#0c0c14] border-white/5 shadow-xl p-6 rounded-2xl">
+            <Card className="bg-kh-dark-2 border-white/5 shadow-xl p-6 rounded-2xl">
               <CardHeader className="p-0 mb-6">
                 <CardTitle className="font-display text-2xl uppercase tracking-wider text-white">
                   Official Address & Contacts
@@ -434,7 +434,7 @@ export default function FooterPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-0 space-y-4">
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-900/30 border border-white/[0.02]">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-900/30 border border-white/2">
                   <Mail size={16} className="text-kh-pink" />
                   <div>
                     <p className="text-[10px] text-zinc-500 uppercase tracking-wider">
@@ -446,7 +446,7 @@ export default function FooterPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-900/30 border border-white/[0.02]">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-900/30 border border-white/2">
                   <Phone size={16} className="text-kh-pink" />
                   <div>
                     <p className="text-[10px] text-zinc-500 uppercase tracking-wider">
@@ -458,7 +458,7 @@ export default function FooterPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-900/30 border border-white/[0.02]">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-900/30 border border-white/2">
                   <MapPin size={16} className="text-kh-pink" />
                   <div>
                     <p className="text-[10px] text-zinc-500 uppercase tracking-wider">
@@ -473,14 +473,14 @@ export default function FooterPage() {
             </Card>
 
             {/* Copyright Text Preview */}
-            <Card className="bg-[#0c0c14] border-white/5 shadow-xl p-6 rounded-2xl">
+            <Card className="bg-kh-dark-2 border-white/5 shadow-xl p-6 rounded-2xl">
               <CardHeader className="p-0 mb-4">
                 <CardTitle className="font-display text-2xl uppercase tracking-wider text-white">
                   Copyright Text
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <p className="text-sm font-mono text-zinc-400 bg-neutral-900/30 border border-white/[0.02] p-4 rounded-xl">
+                <p className="text-sm font-mono text-zinc-400 bg-neutral-900/30 border border-white/2 p-4 rounded-xl">
                   {activeFooter!.copyrightText}
                 </p>
               </CardContent>
