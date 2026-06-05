@@ -29,7 +29,6 @@ export default function MediaBroadcastCenter({
   highlights: HighlightData | null;
   isLoading: boolean;
 }) {
-  // Store manually selected track overriding the default stream
   const [selectedTrack, setSelectedTrack] = useState<HighlightVideo | null>(
     null,
   );
@@ -42,9 +41,6 @@ export default function MediaBroadcastCenter({
   const [desktopTotalDuration, setDesktopTotalDuration] =
     useState<string>("0:00");
 
-  const [mobileProgress, setMobileProgress] = useState<{
-    [key: string]: number;
-  }>({});
   const [mobileCurrentTimes, setMobileCurrentTimes] = useState<{
     [key: string]: string;
   }>({});
@@ -63,14 +59,12 @@ export default function MediaBroadcastCenter({
     {},
   );
 
-  // 💡 Clean State Derivation: Always computes the correct current track during execution
   const currentTrack =
     selectedTrack ||
     (highlights?.videos && highlights.videos.length > 0
       ? highlights.videos[0]
       : null);
 
-  // Sync state if user exits fullscreen using native ESC key
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -80,7 +74,6 @@ export default function MediaBroadcastCenter({
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
-  // Sync the video stream playback play/pause state safely
   useEffect(() => {
     if (window.innerWidth >= 1024 && videoRef.current && currentTrack) {
       if (isPlaying) {
@@ -91,7 +84,6 @@ export default function MediaBroadcastCenter({
     }
   }, [currentTrack, isPlaying]);
 
-  // Desktop Intersection Observer
   useEffect(() => {
     if (window.innerWidth < 1024 || !highlights?.videos) return;
 
@@ -168,30 +160,18 @@ export default function MediaBroadcastCenter({
     const targetVid = mobileVideoRefs.current[id];
     if (targetVid && targetVid.duration) {
       const current = targetVid.currentTime;
-      const duration = targetVid.duration;
-
       setMobileCurrentTimes((prev) => ({ ...prev, [id]: formatTime(current) }));
-      setMobileProgress((prev) => ({
-        ...prev,
-        [id]: (current / duration) * 100,
-      }));
-    }
-  };
-
-  const handleMobileScrub = (
-    id: string,
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const targetVid = mobileVideoRefs.current[id];
-    if (targetVid && targetVid.duration) {
-      const newTime = (Number(e.target.value) / 100) * targetVid.duration;
-      targetVid.currentTime = newTime;
-      setMobileProgress((prev) => ({ ...prev, [id]: Number(e.target.value) }));
     }
   };
 
   const handleDesktopPlayToggle = () => {
     if (!videoRef.current) return;
+
+    if (activeMobileId && mobileVideoRefs.current[activeMobileId]) {
+      mobileVideoRefs.current[activeMobileId]?.pause();
+      setActiveMobileId(null);
+    }
+
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
@@ -218,6 +198,11 @@ export default function MediaBroadcastCenter({
     const targetVideo = mobileVideoRefs.current[id];
     if (!targetVideo) return;
 
+    if (isPlaying && videoRef.current) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+
     if (activeMobileId === id) {
       targetVideo.pause();
       setActiveMobileId(null);
@@ -229,18 +214,6 @@ export default function MediaBroadcastCenter({
         .play()
         .then(() => setActiveMobileId(id))
         .catch(() => setActiveMobileId(null));
-    }
-  };
-
-  const toggleMobileFullscreen = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    const targetContainer = mobileContainerRefs.current[id];
-    if (!targetContainer) return;
-
-    if (!document.fullscreenElement) {
-      targetContainer.requestFullscreen().catch(() => {});
-    } else {
-      document.exitFullscreen();
     }
   };
 
@@ -305,11 +278,11 @@ export default function MediaBroadcastCenter({
                   )}
 
                   {/* HUD Controls Overlay */}
-                  <div className="absolute bottom-0 inset-x-0 bg-linear-to-t from-black via-black/80 to-transparent p-4 flex flex-col gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                    <div
-                      className="w-full flex items-center group/timeline px-1"
-                      onClick={(e) => e.stopPropagation()}
-                    >
+                  <div
+                    className="absolute bottom-0 inset-x-0 bg-linear-to-t from-black via-black/80 to-transparent p-4 flex flex-col gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="w-full flex items-center group/timeline px-1">
                       <input
                         type="range"
                         min="0"
@@ -326,10 +299,7 @@ export default function MediaBroadcastCenter({
                     <div className="flex items-center justify-between w-full">
                       <div className="flex items-center gap-4">
                         <button
-                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                            e.stopPropagation();
-                            handleDesktopPlayToggle();
-                          }}
+                          onClick={handleDesktopPlayToggle}
                           className="text-white hover:text-kh-pink transition-colors cursor-pointer"
                         >
                           {isPlaying ? (
@@ -459,12 +429,12 @@ export default function MediaBroadcastCenter({
         {/* ========================================== */}
         {/* 📱 MOBILE LAYOUT */}
         {/* ========================================== */}
-        <div className="flex flex-col gap-8 lg:hidden w-full">
+        <div className="flex flex-col gap-6 lg:hidden w-full">
           {isLoading || !highlights?.videos
             ? Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={`mobile-skeleton-${index}`}
-                  className="flex flex-col bg-zinc-950 border border-white/5 rounded overflow-hidden shadow-xl w-full aspect-video"
+                  className="flex flex-col bg-zinc-950 border border-white/5 rounded-2xl overflow-hidden shadow-xl w-full aspect-video"
                 >
                   <div className="w-full h-full bg-white/5 animate-pulse" />
                 </div>
@@ -474,7 +444,6 @@ export default function MediaBroadcastCenter({
                 const currentMobileTime =
                   mobileCurrentTimes[item._id] || "0:00";
                 const totalMobileDuration = mobileDurations[item._id] || "0:00";
-                const currentMobilePercent = mobileProgress[item._id] || 0;
 
                 return (
                   <div
@@ -482,11 +451,11 @@ export default function MediaBroadcastCenter({
                     ref={(el) => {
                       mobileContainerRefs.current[item._id] = el;
                     }}
-                    className="flex flex-col bg-zinc-950 border border-white/5 rounded overflow-hidden shadow-xl w-full"
+                    className="flex flex-col bg-zinc-950 border border-white/5 rounded overflow-hidden shadow-xl w-full relative"
                   >
                     <div
                       onClick={() => handleMobilePlayToggle(item._id)}
-                      className="relative aspect-video w-full bg-zinc-900 flex items-center justify-center cursor-pointer"
+                      className="relative aspect-video w-full bg-zinc-900 flex items-center justify-center cursor-pointer overflow-hidden"
                     >
                       <video
                         ref={(el) => {
@@ -499,87 +468,73 @@ export default function MediaBroadcastCenter({
                         className="w-full h-full object-cover"
                         preload="auto"
                         playsInline
-                        muted
                       >
                         <source src={item.video_url} type="video/mp4" />
                       </video>
 
-                      <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+                      {/* Ambient Gradient Base Coating */}
+                      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-black/40 pointer-events-none" />
 
-                      {!isSelfPlaying && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <div className="w-14 h-14 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                            <Play
-                              fill="white"
-                              className="w-5 h-5 ml-0.5 text-white"
-                            />
-                          </div>
-                        </div>
-                      )}
-
+                      {/* 🎬 HUD PANEL OVERLAY (Slides out completely when playing) */}
                       <div
-                        className="absolute bottom-10 inset-x-0 px-3 z-30"
-                        onClick={(e) => e.stopPropagation()}
+                        className={`absolute inset-0 p-4 flex flex-col justify-between z-20 backdrop-blur-[2px] bg-black/20 transition-all duration-500 ease-[0.16,1,0.3,1] ${
+                          isSelfPlaying
+                            ? "opacity-0 scale-98 pointer-events-none"
+                            : "opacity-100 scale-100"
+                        }`}
                       >
-                        <input
-                          type="range"
-                          min="0"
-                          max="100"
-                          value={currentMobilePercent}
-                          onChange={(e) => handleMobileScrub(item._id, e)}
-                          className="w-full h-1 bg-white/25 accent-kh-pink rounded-lg appearance-none cursor-pointer outline-none"
-                          style={{
-                            background: `linear-gradient(to right, #ec4899 0%, #ec4899 ${currentMobilePercent}%, rgba(255,255,255,0.2) ${currentMobilePercent}%, rgba(255,255,255,0.2) 100%)`,
-                          }}
-                        />
-                      </div>
-
-                      <span className="absolute bottom-3 right-3 font-mono text-[10px] bg-black/80 text-white px-2 py-0.5 rounded border border-white/10 tracking-wide">
-                        {currentMobileTime} /{" "}
-                        {totalMobileDuration === "0:00"
-                          ? "..."
-                          : totalMobileDuration}
-                      </span>
-
-                      <button
-                        onClick={(e) => toggleMobileFullscreen(item._id, e)}
-                        className="absolute bottom-3 left-3 p-2 rounded bg-black/70 border border-white/10 text-white cursor-pointer z-20"
-                      >
-                        <Maximize className="w-3.5 h-3.5" />
-                      </button>
-
-                      <span className="absolute top-3 right-3 font-mono text-[8px] text-zinc-400 tracking-wider bg-black/60 border border-white/5 px-2 py-1 rounded">
-                        CH_{String(index + 1).padStart(2, "0")} // FILM
-                      </span>
-                    </div>
-
-                    <div className="p-5 flex flex-col gap-3">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <span className="font-mono text-[9px] tracking-widest text-cyan-400 font-bold bg-cyan-400/5 border border-cyan-400/20 px-2 py-0.5 uppercase rounded">
+                        {/* Upper Track Badge Meta */}
+                        <div className="flex justify-between items-center w-full">
+                          <span className="font-mono text-[9px] font-bold text-cyan-400 bg-cyan-400/10 border border-cyan-400/30 px-2 py-0.5 uppercase rounded">
                             {item.video_type}
                           </span>
-                          <h4 className="font-display text-xl tracking-tight text-white uppercase mt-2">
-                            {item.video_name}
-                          </h4>
-                          <p className="text-zinc-500 font-sans text-xs mt-0.5">
-                            {item.video_type}
-                          </p>
+                          <span className="font-mono text-[8px] text-zinc-400 tracking-wider bg-black/60 border border-white/5 px-2 py-1 rounded">
+                            CH_{String(index + 1).padStart(2, "0")} // FILM
+                          </span>
                         </div>
 
-                        <button
-                          onClick={() => {
-                            const targetVid = mobileVideoRefs.current[item._id];
-                            if (targetVid) {
-                              targetVid.currentTime = 0;
-                              if (!isSelfPlaying)
-                                handleMobilePlayToggle(item._id);
-                            }
-                          }}
-                          className="p-2.5 rounded-xl bg-zinc-900 border border-white/5 text-zinc-400 active:text-kh-pink"
+                        {/* Mid-Lower Title Layout Area */}
+                        <div className="mb-12">
+                          <h4 className="font-display text-lg sm:text-xl tracking-tight text-white uppercase drop-shadow-md">
+                            {item.video_name}
+                          </h4>
+                          <span className="font-condensed text-[10px] text-zinc-400 tracking-widest uppercase block mt-0.5">
+                            Broadcast Stream Module
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Central Play/Pause Indicator Icon */}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                        <div
+                          className={`w-14 h-14 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center shadow-lg transition-all duration-300 ${
+                            isSelfPlaying
+                              ? "opacity-0 scale-75"
+                              : "opacity-100 scale-100"
+                          }`}
                         >
-                          <RotateCcw className="w-4 h-4" />
-                        </button>
+                          <Play
+                            fill="white"
+                            className="w-5 h-5 ml-0.5 text-white"
+                          />
+                        </div>
+                      </div>
+
+                      {/* 🎚️ CONTROL BUTTONS BAR (Only visible when paused) */}
+                      <div
+                        className={`absolute bottom-4 inset-x-0 px-4 flex justify-between items-center z-30 transition-all duration-500 ease-[0.16,1,0.3,1] ${
+                          isSelfPlaying
+                            ? "opacity-0 translate-y-2 pointer-events-none"
+                            : "opacity-100 translate-y-0"
+                        }`}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <span className="font-mono text-[10px] bg-black/80 text-white px-2 py-1 rounded border border-white/10 tracking-wide">
+                          {currentMobileTime} /{" "}
+                          {totalMobileDuration === "0:00"
+                            ? "..."
+                            : totalMobileDuration}
+                        </span>
                       </div>
                     </div>
                   </div>
