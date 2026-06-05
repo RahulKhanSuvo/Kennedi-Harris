@@ -5,24 +5,15 @@ import TopPlayCategories from "./components/TopPlayCategories";
 import HeroSection from "./components/HeroSection";
 import TestimonialSlider from "./components/TestimonialSlider";
 import HighlightsSection from "./components/HighlightsSection";
-import { useQuery } from "@tanstack/react-query";
-import { highlightsService, homeService } from "@/api/services";
 import Preloader from "@/components/common/Preloader";
+import { useActiveHighlight } from "@/hooks/useHighlights";
+import { useHome } from "@/hooks/useHome";
 
 export default function Highlights() {
-  const { data, isLoading } = useQuery({
-    queryKey: ["home-active"],
-    queryFn: homeService.getActiveHome,
-    staleTime: Infinity,
-  });
-  const { data: activeHighlights, isLoading: isActiveHighlightsLoading } =
-    useQuery({
-      queryKey: ["active-media"],
-      queryFn: highlightsService.getActiveHighlights,
-      staleTime: Infinity,
-    });
+  const { data: activeHighlights } = useActiveHighlight();
+  const { data: homeData, isLoading: homeLoading } = useHome();
   const mainUrl = activeHighlights?.MainVideo_url;
-  if (isActiveHighlightsLoading || isLoading) return <Preloader />;
+  if (activeHighlights) return <Preloader />;
 
   return (
     <main className="min-h-screen text-foreground flex flex-col w-full">
@@ -67,7 +58,7 @@ export default function Highlights() {
       {/* <FeaturedHighlightsSection></FeaturedHighlightsSection> */}
       <HighlightsSection />
 
-      <SeasonStats stats={data} isLoading={isLoading} />
+      <SeasonStats stats={homeData?.NUMBERS} isLoading={homeLoading} />
       <TopPlayCategories />
       {/* <SubscribeSection /> */}
       <TestimonialSlider />

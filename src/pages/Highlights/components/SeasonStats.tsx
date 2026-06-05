@@ -12,10 +12,10 @@ import {
 import Container from "@/components/common/Container";
 import { Star, LineChart, LayoutGrid, Trophy } from "lucide-react";
 import { FaBasketballBall } from "react-icons/fa";
-import { type HomeData } from "@/api/services";
+import type { HomeNumbers } from "@/types";
 
 interface SeasonStatsProps {
-  stats: HomeData | undefined;
+  stats: HomeNumbers | undefined;
   isLoading: boolean;
 }
 
