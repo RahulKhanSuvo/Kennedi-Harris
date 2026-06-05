@@ -4,17 +4,12 @@ import AthleteBanner from "@/components/common/AthleteBanner";
 import { BeyondTheGame } from "./components/BeyondTheGame";
 import { AboutHero } from "./components/AboutHero";
 import { useActiveAbout } from "@/hooks/useAbout";
-import Preloader from "@/components/common/Preloader";
 import { useActiveGallery } from "@/hooks/useGallery";
 import type { GalleryData } from "@/types";
 
 export default function About() {
   const { data: aboutData, isLoading: aboutIsLoading } = useActiveAbout();
   const { data: galleryData, isLoading: galleryIsLoading } = useActiveGallery();
-
-  if (aboutIsLoading || galleryIsLoading) {
-    return <Preloader />;
-  }
   return (
     <main>
       <title>About | Kennedy Harris</title>
@@ -31,9 +26,15 @@ export default function About() {
         property="og:description"
         content="Learn more about Kennedy Harris, his journey, and his mission."
       />
-      <AboutHero dHeroImage={aboutData?.bannerImgUrl || ""} />
-      <Timeline data={aboutData || null} />
-      <BeyondTheGame data={galleryData as GalleryData | null} />
+      <AboutHero
+        dHeroImage={aboutData?.bannerImgUrl || ""}
+        isLoading={aboutIsLoading}
+      />
+      <Timeline data={aboutData || null} isLoading={aboutIsLoading} />
+      <BeyondTheGame
+        data={galleryData as GalleryData | null}
+        isLoading={galleryIsLoading}
+      />
       <AthleteBanner />
       <ContactForm />
     </main>

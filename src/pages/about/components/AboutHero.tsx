@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import { ArrowUpRight, Activity, ShieldCheck, Zap } from "lucide-react";
@@ -7,7 +9,13 @@ import heroBgImg from "@/assets/backgroud/Gemini_Generated_Image_6uclb26uclb26uc
 import heroPlayerImg from "@/assets/gallery/jump2.avif";
 import { Link } from "react-router";
 
-export function AboutHero({ dHeroImage }: { dHeroImage: string }) {
+export function AboutHero({
+  dHeroImage,
+  isLoading,
+}: {
+  dHeroImage: string;
+  isLoading: boolean;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Background Parallax Scroll Engine
@@ -19,8 +27,6 @@ export function AboutHero({ dHeroImage }: { dHeroImage: string }) {
   // Layer 1: Distant Sky Background
   const skyY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   const skyScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-
-  // Layer 2: Geometric Foreground / Court Line Overlays (Moves faster for 3D depth)
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -70,9 +76,10 @@ export function AboutHero({ dHeroImage }: { dHeroImage: string }) {
       />
 
       {/* 2. Blur Overlay (Sits right over base image before tints apply) */}
-      <div className="absolute inset-0 backdrop-blur-[5px] z-0 pointer-events-none"></div>
+      <div className="absolute inset-0 backdrop-blur-[5px] z-0 pointer-events-none" />
+
       {/* DARK TO WHITE OVERLAY */}
-      <div className="absolute inset-0 bg-linear-to-l from-transparent to-black pointer-events-none z-10"></div>
+      <div className="absolute inset-0 bg-linear-to-l from-transparent to-black pointer-events-none z-10" />
 
       {/* ================= FOREGROUND CONTENT SYSTEM ================= */}
       <Container className="relative z-30 w-full">
@@ -124,10 +131,6 @@ export function AboutHero({ dHeroImage }: { dHeroImage: string }) {
                   />
                 </Link>
               </Button>
-
-              {/* <Button asChild variant="khOutline">
-                <Link to="/about">PLAYER PROFILE</Link>
-              </Button> */}
             </motion.div>
 
             {/* Quick Core Metric Matrix Widgets */}
@@ -226,13 +229,17 @@ export function AboutHero({ dHeroImage }: { dHeroImage: string }) {
                 </div>
               </div>
 
-              {/* PRIMARY PROSPECT PORTRAIT ANCHOR */}
+              {/* PRIMARY PROSPECT PORTRAIT ANCHOR OR SKELETON LOAD */}
               <div className="absolute inset-0 flex justify-center">
-                <img
-                  src={dHeroImage || heroPlayerImg}
-                  alt="Kennedi Harris Main Presentation Profile"
-                  className="w-full h-full object-fill md:object-contain object-bottom filter brightness-110 saturate-[0.9] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-                />
+                {isLoading ? (
+                  <div className="w-full h-full bg-white/5 animate-pulse" />
+                ) : (
+                  <img
+                    src={dHeroImage || heroPlayerImg}
+                    alt="Kennedi Harris Main Presentation Profile"
+                    className="w-full h-full object-fill md:object-contain object-bottom filter brightness-110 saturate-[0.9] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                  />
+                )}
               </div>
 
               {/* Cyber Highlight Trim Borders */}

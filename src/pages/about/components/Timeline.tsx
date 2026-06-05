@@ -1,5 +1,3 @@
-"use client";
-
 import { useRef } from "react";
 import { motion, useScroll, type Variants } from "motion/react";
 import {
@@ -19,7 +17,6 @@ import recognitionImg from "@/assets/about/pic4.avif";
 import meImg from "@/assets/modal/cd19294a-d030-4580-9dae-4de0473da04e.png";
 import type { AboutData } from "@/types";
 
-// 💡 Define the structural interface for an item inside your timeline data array
 interface TimelineItem {
   id: number;
   tag: string;
@@ -34,13 +31,19 @@ interface TimelineItem {
   image: string;
 }
 
-// 💡 Define explicit types for the sub-component props
 interface TimelineBlockProps {
   item: TimelineItem;
   isEven: boolean;
+  isLoading: boolean;
 }
 
-export function Timeline({ data }: { data: AboutData | null }) {
+export function Timeline({
+  data,
+  isLoading,
+}: {
+  data: AboutData | null;
+  isLoading: boolean;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineGridRef = useRef<HTMLDivElement>(null);
 
@@ -49,7 +52,6 @@ export function Timeline({ data }: { data: AboutData | null }) {
     offset: ["start 30%", "end center"],
   });
 
-  // Explicitly typing the array configuration handles safe object construction
   const TIMELINE_DATA: TimelineItem[] = [
     {
       id: 1,
@@ -134,23 +136,33 @@ export function Timeline({ data }: { data: AboutData | null }) {
             {TIMELINE_DATA.map((item, index) => {
               const isEven = index % 2 === 0;
               return (
-                <TimelineBlock key={item.id} item={item} isEven={isEven} />
+                <TimelineBlock
+                  key={item.id}
+                  item={item}
+                  isEven={isEven}
+                  isLoading={isLoading}
+                />
               );
             })}
           </div>
         </div>
 
+        {/* BOTTOM REFLECTIONS BLOCK */}
         <div className="mt-56 bg-neutral-950/40 border border-white/5 rounded p-8 md:p-12  relative overflow-hidden max-w-7xl 2xl:max-w-[1400px] mx-auto backdrop-blur-xl shadow-3xl">
           <div className="absolute inset-0 bg-linear-to-r from-kh-pink/3 to-transparent pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 items-center">
             <div className="lg:col-span-4 flex justify-center">
               <div className="relative w-64 xl:w-80 aspect-square rounded-full bg-linear-to-t from-kh-pink/20 to-transparent border border-white/10 overflow-hidden group">
-                <img
-                  src={data?.playerReflectionImgUrl || meImg}
-                  alt="Kennedi Harris Court Profile"
-                  className="w-full h-[115%] object-contain object-bottom filter brightness-110 group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
+                {isLoading ? (
+                  <div className="w-full h-full bg-white/5 animate-pulse" />
+                ) : (
+                  <img
+                    src={data?.playerReflectionImgUrl || meImg}
+                    alt="Kennedi Harris Court Profile"
+                    className="w-full h-[115%] object-contain object-bottom filter brightness-110 group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                )}
               </div>
             </div>
 
@@ -174,8 +186,7 @@ export function Timeline({ data }: { data: AboutData | null }) {
   );
 }
 
-// 💡 Fixed lines by applying the interface 'TimelineBlockProps' explicitly here
-function TimelineBlock({ item, isEven }: TimelineBlockProps) {
+function TimelineBlock({ item, isEven, isLoading }: TimelineBlockProps) {
   const Icon = item.icon;
 
   const containerVariants: Variants = {
@@ -281,7 +292,7 @@ function TimelineBlock({ item, isEven }: TimelineBlockProps) {
               <Icon size={22} className="xl:w-6 xl:h-6" />
             </div>
             <div className="text-left">
-              <div className="font-display text-2xl xl:text-4xl font-black text-white leading-none tracking-tight">
+              <div className="font-display text-2xl xl:text-4xl font-black text-white stroke-zinc-900 leading-none tracking-tight">
                 {item.stats.value}
               </div>
               <div className="font-condensed text-[10px] xl:text-xs text-zinc-500 uppercase tracking-widest font-bold mt-1.5">
@@ -292,6 +303,7 @@ function TimelineBlock({ item, isEven }: TimelineBlockProps) {
         </div>
       </motion.div>
 
+      {/* GRAPHIC BLOCKS SECTION */}
       <motion.div
         variants={complexImageVariants}
         initial="hidden"
@@ -302,11 +314,15 @@ function TimelineBlock({ item, isEven }: TimelineBlockProps) {
         <div className="w-full aspect-16/10 xl:aspect-video bg-neutral-950/80 border border-white/5 rounded-2xl overflow-hidden relative group shadow-2xl backdrop-blur-xs">
           <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-transparent z-10 pointer-events-none" />
 
-          <img
-            src={item.image}
-            alt={item.title}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out grayscale-30 group-hover:grayscale-0 opacity-80 group-hover:opacity-100"
-          />
+          {isLoading ? (
+            <div className="absolute inset-0 bg-white/5 animate-pulse" />
+          ) : (
+            <img
+              src={item.image}
+              alt={item.title}
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out grayscale-30 group-hover:grayscale-0 opacity-80 group-hover:opacity-100"
+            />
+          )}
 
           <div className="absolute inset-0 flex flex-col justify-between p-8 xl:p-12 opacity-30 group-hover:opacity-50 transition-opacity duration-500 select-none z-20">
             <div className="flex justify-between items-start">

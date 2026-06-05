@@ -1,3 +1,5 @@
+"use client";
+
 import { MdOutlineInsertPhoto } from "react-icons/md";
 import { FiTrendingUp, FiActivity } from "react-icons/fi";
 import Container from "@/components/common/Container";
@@ -10,7 +12,13 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { type GalleryData } from "@/types";
 
-export function BeyondTheGame({ data }: { data?: GalleryData | null }) {
+export function BeyondTheGame({
+  data,
+  isLoading,
+}: {
+  data?: GalleryData | null;
+  isLoading: boolean;
+}) {
   // Configured mixed-media layout slots spanning across multiple grid pathways
   const bentoItems = [
     {
@@ -42,7 +50,7 @@ export function BeyondTheGame({ data }: { data?: GalleryData | null }) {
     },
     {
       type: "image",
-      src: data?.photos?.[1]?.url || gal3,
+      src: data?.photos?.[0]?.url || gal3,
       span: "col-span-1 row-span-1 md:col-span-1 md:row-span-1",
       alt: "Strength and athletic performance loading",
     },
@@ -91,16 +99,22 @@ export function BeyondTheGame({ data }: { data?: GalleryData | null }) {
             >
               {/* RENDERING BLOCKS DEPENDING ON ELEMENT TYPE MATRICES */}
 
-              {/* Archetype A: Media Image Frame */}
+              {/* Archetype A: Media Image Frame with Skeleton Integration */}
               {item.type === "image" && (
                 <>
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover/frame:scale-105 will-change-transform"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover/frame:opacity-40 transition-opacity duration-500 pointer-events-none" />
+                  {isLoading ? (
+                    <div className="absolute inset-0 bg-white/5 animate-pulse" />
+                  ) : (
+                    <>
+                      <img
+                        src={item.src}
+                        alt={item.alt}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover/frame:scale-105 will-change-transform"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover/frame:opacity-40 transition-opacity duration-500 pointer-events-none" />
+                    </>
+                  )}
                 </>
               )}
 
