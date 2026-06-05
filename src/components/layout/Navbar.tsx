@@ -14,7 +14,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 right-0 left-0 lg:left-[240px] h-[64px] z-30 bg-[#0c0c14] border-b border-white/5 px-6 flex items-center justify-between">
+    <header className="fixed top-0 right-0 left-0 lg:left-[240px] h-[64px] z-30 bg-kh-dark-2 border-b border-white/5 px-6 flex items-center justify-between">
       {/* Title */}
       <div>
         <h1 className="font-display text-2xl uppercase tracking-tight text-white hidden sm:block">
