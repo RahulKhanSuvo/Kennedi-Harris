@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { Play, Pause, RotateCcw, Film, Maximize, Minimize } from "lucide-react";
 import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
-
-import mainHighlightImg from "@/assets/gallery/looking2.avif";
 import type { HighlightData, HighlightVideo } from "@/types";
 
 const fadeInUp: Variants = {
@@ -72,7 +70,7 @@ export default function MediaBroadcastCenter({
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
-  // ⚡ FIX: Sync the video stream playback play/pause state safely without running state mutations inside the render loop
+  // Sync the video stream playback play/pause state safely
   useEffect(() => {
     if (window.innerWidth >= 1024 && videoRef.current) {
       if (isPlaying) {
@@ -98,7 +96,6 @@ export default function MediaBroadcastCenter({
         if (entry.isIntersecting) {
           const index = Number(entry.target.getAttribute("data-index"));
           if (!isNaN(index) && highlights.videos[index]) {
-            // Reset local variables during interaction transition instead of secondary side effects
             setDesktopCurrentTime("0:00");
             setDesktopProgress(0);
             setDesktopTotalDuration("0:00");
@@ -121,7 +118,7 @@ export default function MediaBroadcastCenter({
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [highlights.videos]);
 
   const handleDesktopMetadataLoaded = () => {
     if (videoRef.current) {
@@ -268,14 +265,15 @@ export default function MediaBroadcastCenter({
                 onClick={handleDesktopPlayToggle}
                 className="relative aspect-video w-full overflow-hidden bg-black flex items-center justify-center cursor-pointer"
               >
+                {/* 💡 REMOVED poster attribute and added preload="auto" to render the 1st frame */}
                 <video
                   ref={videoRef}
                   onLoadedMetadata={handleDesktopMetadataLoaded}
                   onTimeUpdate={handleDesktopTimeUpdate}
                   className="w-full h-full object-cover"
-                  preload="metadata"
+                  preload="auto"
+                  key={currentTrack.video_url}
                   playsInline
-                  poster={mainHighlightImg}
                 >
                   <source src={currentTrack.video_url} type="video/mp4" />
                 </video>
@@ -376,10 +374,10 @@ export default function MediaBroadcastCenter({
           {/* RIGHT COMPONENT */}
           <div className="w-full lg:w-[42%] flex flex-col gap-8 pb-32">
             {highlights.videos.map((item, index) => {
-              const isSelected = currentTrack.video_url === item.video_url;
+              const isSelected = currentTrack._id === item._id;
               return (
                 <div
-                  key={item.video_url}
+                  key={item._id}
                   data-index={index}
                   ref={(el) => {
                     itemsRef.current[index] = el;
@@ -395,7 +393,7 @@ export default function MediaBroadcastCenter({
                       className={`font-mono text-xs tracking-widest font-black ${isSelected ? "text-kh-pink" : "text-zinc-600"}`}
                     >
                       [{String(index + 1).padStart(2, "0")}] //{" "}
-                      {item.video_name.toUpperCase()}
+                      {item._id.toUpperCase()}
                     </span>
                     <div
                       className={`p-2 rounded-lg border transition-colors ${isSelected ? "border-kh-pink/20 bg-kh-pink/5 text-kh-pink" : "border-white/5 bg-zinc-900 text-zinc-500"}`}
@@ -417,7 +415,7 @@ export default function MediaBroadcastCenter({
 
                   <div className="flex items-center gap-3 mt-4 border-t border-white/5 pt-4">
                     <span className="font-mono text-[10px] text-zinc-400 bg-white/5 px-2 py-1 rounded-sm">
-                      TRACK ID: {item.video_url}
+                      TRACK ID: {item._id}
                     </span>
                     <span
                       className={`font-mono text-[10px] px-2 py-1 rounded-sm ${isSelected ? "bg-cyan-500/10 text-cyan-400" : "bg-zinc-900 text-zinc-500"}`}
@@ -453,6 +451,7 @@ export default function MediaBroadcastCenter({
                   onClick={() => handleMobilePlayToggle(item._id)}
                   className="relative aspect-video w-full bg-zinc-900 flex items-center justify-center cursor-pointer"
                 >
+                  {/* 💡 REMOVED poster attribute, set preload="auto" and added muted for mobile frame caching compatibility */}
                   <video
                     ref={(el) => {
                       mobileVideoRefs.current[item._id] = el;
@@ -462,9 +461,9 @@ export default function MediaBroadcastCenter({
                     }
                     onTimeUpdate={() => handleMobileTimeUpdate(item._id)}
                     className="w-full h-full object-cover"
-                    preload="metadata"
+                    preload="auto"
                     playsInline
-                    poster={mainHighlightImg}
+                    muted
                   >
                     <source src={item.video_url} type="video/mp4" />
                   </video>
@@ -527,6 +526,9 @@ export default function MediaBroadcastCenter({
                       <h4 className="font-display text-xl tracking-tight text-white uppercase mt-2">
                         {item.video_name}
                       </h4>
+                      <p className="text-zinc-500 font-sans text-xs mt-0.5">
+                        {item.video_type}
+                      </p>
                     </div>
 
                     <button
