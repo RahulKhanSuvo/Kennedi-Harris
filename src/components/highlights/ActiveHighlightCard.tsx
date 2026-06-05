@@ -70,7 +70,7 @@ export function ActiveHighlightCard({
       {/* 🖥️ ========================================================= */}
       {/* ── CINEMATIC PC DESKTOP WORKSPACE                             ── */}
       {/* 🖥️ ========================================================= */}
-      <div className="hidden lg:grid lg:grid-cols-12 gap-8 items-stretch min-h-[750px]">
+      <div className="hidden lg:grid lg:grid-cols-12 gap-8 items-stretch ">
         {/* LEFT COMPONENT COLUMN: COMPACT COMMAND HUB & TRACK CHANNELS (5 COLUMNS) */}
         <div className="lg:col-span-5 flex flex-col justify-between bg-zinc-950/40 border border-white/5 rounded-2xl p-6 xl:p-8">
           <div className="space-y-8">
@@ -100,7 +100,7 @@ export function ActiveHighlightCard({
             </div>
 
             {/* Main Interactive Index Channel Block */}
-            <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-6 overflow-y-auto pr-2 custom-scrollbar">
               {/* Showreel Button Row */}
               <div className="space-y-2">
                 <span className="font-mono text-[11px] text-zinc-500 tracking-wider block uppercase font-bold px-1">
