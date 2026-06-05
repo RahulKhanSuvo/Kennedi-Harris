@@ -56,7 +56,7 @@ export default function Highlights() {
       {/* <NavigationTabs /> */}
       {/* <FeaturedHighlightsSection></FeaturedHighlightsSection> */}
       <HighlightsSection
-        highlights={activeHighlights}
+        highlights={activeHighlights || null}
         isLoading={highlightLoading}
       />
 

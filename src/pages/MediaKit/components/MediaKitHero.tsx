@@ -1,6 +1,6 @@
 import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
-import mediaKitBg from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
+import mediaKitBg from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.avif";
 
 const backdropVariants: Variants = {
   hidden: { opacity: 0, scale: 1.3, rotate: 90 },
