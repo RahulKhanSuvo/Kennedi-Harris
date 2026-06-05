@@ -1,39 +1,13 @@
+"use client";
+
 import { Play, Pause } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
-import mainVideo from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
-import video1 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
-import video2 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.15.05-PM.mp4";
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import type { HighlightData } from "@/types";
 
-interface HighlightItem {
-  video: string;
-  alt: string;
-  title: string;
-  subtitle?: string;
-}
-
-const highlights: HighlightItem[] = [
-  {
-    video: video1,
-    alt: "Highlight 1",
-    title: "vs. Team Elite",
-    subtitle: "Atlanta, GA",
-  },
-  {
-    video: video2,
-    alt: "Highlight 2",
-    title: "AAU Championship Highlights",
-  },
-  {
-    video: video2,
-    alt: "Highlight 3",
-    title: "Shot Blocking Highlights",
-  },
-];
-
-// Motion animation presets
 const containerVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -48,34 +22,49 @@ const itemVariants: Variants = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
-export default function HighlightsSection() {
-  const [currentVideo, setCurrentVideo] = useState<string>(mainVideo);
+export default function HighlightsSection({
+  highlights,
+}: {
+  highlights: HighlightData | null;
+}) {
+  const videosList = highlights?.videos?.slice(0, 3) || [];
+
+  // 💡 Compute the active source fallback directly to avoid mounting cascades
+  const [selectedVideo, setSelectedVideo] = useState<string>("");
+  const currentVideo = selectedVideo || videosList[0]?.video_url || "";
+
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const sidebarVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  useEffect(() => {
-    if (videoRef.current && isPlaying) {
-      videoRef.current.muted = false;
-      videoRef.current.play().catch(() => setIsPlaying(false));
-    }
-  }, [currentVideo, isPlaying]);
-
-  const handlePlayPause = () => {
+  // Centralized play/pause helper synced securely with React's render cycles
+  const syncPlaybackState = (shouldPlay: boolean) => {
     if (!videoRef.current) return;
-    const video = videoRef.current;
 
-    if (video.paused) {
-      video.muted = false;
-      video
+    if (shouldPlay) {
+      videoRef.current.muted = false;
+      videoRef.current
         .play()
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
     } else {
-      video.pause();
+      videoRef.current.pause();
       setIsPlaying(false);
     }
+  };
+
+  // Play immediately whenever the active source changes via sidebar selection
+  useEffect(() => {
+    if (currentVideo && videoRef.current) {
+      syncPlaybackState(true);
+    }
+  }, [currentVideo]);
+
+  const handlePlayPause = () => {
+    if (!videoRef.current) return;
+    const isPaused = videoRef.current.paused;
+    syncPlaybackState(isPaused);
   };
 
   const handleSidebarClick = (videoSrc: string) => {
@@ -83,8 +72,7 @@ export default function HighlightsSection() {
       handlePlayPause();
       return;
     }
-    setIsPlaying(true);
-    setCurrentVideo(videoSrc);
+    setSelectedVideo(videoSrc);
   };
 
   const handleSidebarHover = (index: number, isHovering: boolean) => {
@@ -120,21 +108,22 @@ export default function HighlightsSection() {
           <video
             ref={videoRef}
             src={currentVideo}
+            key={currentVideo}
             className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity duration-300"
             loop
             playsInline
+            preload="auto"
           />
 
-          {/* Action Trigger Interface Overlay Layer with AnimatePresence */}
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+          {/* Overlay Container */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
             <motion.div
               animate={{
                 scale: isPlaying ? [1, 0.95, 1] : 1,
-                opacity: isPlaying ? 0.3 : 1,
               }}
-              whileHover={{ scale: 1.05, opacity: 1 }}
+              whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
-              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/80 flex items-center justify-center bg-black/20 md:opacity-0 group-hover:opacity-100 backdrop-blur-xs hover:bg-kh-pink/20 hover:border-kh-pink text-white hover:text-kh-pink transition-colors"
+              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/80 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-xs hover:bg-kh-pink/20 hover:border-kh-pink text-white hover:text-kh-pink transition-all duration-300 pointer-events-none group-hover:pointer-events-auto"
             >
               <AnimatePresence mode="wait">
                 {isPlaying ? (
@@ -168,14 +157,14 @@ export default function HighlightsSection() {
       {/* Playlist Strip Deck Controller */}
       <div className="w-full lg:w-1/3 flex flex-col justify-between gap-4 lg:pt-9">
         <div className="flex flex-col gap-3 max-h-[380px] overflow-y-auto pr-1 custom-scrollbar">
-          {highlights.map((item, index) => {
-            const isActive = currentVideo === item.video;
+          {videosList.map((item, index) => {
+            const isActive = currentVideo === item.video_url;
             return (
               <motion.div
                 layout
                 variants={itemVariants}
-                key={`${item.alt}-${index}`}
-                onClick={() => handleSidebarClick(item.video)}
+                key={`${item.video_type}-${index}`}
+                onClick={() => handleSidebarClick(item.video_url)}
                 onMouseEnter={() => handleSidebarHover(index, true)}
                 onMouseLeave={() => handleSidebarHover(index, false)}
                 whileHover={{ x: 4 }}
@@ -191,11 +180,12 @@ export default function HighlightsSection() {
                     ref={(el) => {
                       sidebarVideoRefs.current[index] = el;
                     }}
-                    src={item.video}
+                    src={item.video_url}
                     className="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition-opacity duration-300"
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/10">
                     <motion.div
@@ -229,20 +219,15 @@ export default function HighlightsSection() {
                         : "text-zinc-100 group-hover:text-kh-pink"
                     }`}
                   >
-                    {item.title}
+                    {item.video_name}
                   </p>
-                  {item.subtitle && (
-                    <span className="text-[11px] font-condensed tracking-wider text-zinc-400 font-medium uppercase mt-0.5">
-                      {item.subtitle}
-                    </span>
-                  )}
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Global Redirect Core Call-To-Action Link Button */}
+        {/* Global Redirect Link */}
         <motion.div
           variants={itemVariants}
           whileHover={{ scale: 1.01 }}

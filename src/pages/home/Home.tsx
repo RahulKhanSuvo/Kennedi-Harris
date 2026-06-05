@@ -6,9 +6,16 @@ import HighlightAndSchedule from "./components/HighlightAndSchedule";
 import StatsSection from "./components/StatsSection";
 import AboutSection from "./components/AboutSection";
 import { useHome } from "@/hooks/useHome";
+import { useActiveHighlight } from "@/hooks/useHighlights";
+import Preloader from "@/components/common/Preloader";
 
 export default function Home() {
   const { data, isLoading } = useHome();
+  const { data: highlights, isLoading: highlightsLoading } =
+    useActiveHighlight();
+  if (isLoading || highlightsLoading) {
+    return <Preloader />;
+  }
 
   const { frist_img, second_img } = data || {};
   return (
@@ -41,7 +48,7 @@ export default function Home() {
       <BottomInfoBar />
       <AboutSection second_img={second_img} />
       <StatsSection stats={data?.NUMBERS} isLoading={isLoading} />
-      <HighlightAndSchedule />
+      <HighlightAndSchedule highlights={highlights || null} />
       <GallerySection />
       <ContactForm />
     </div>
