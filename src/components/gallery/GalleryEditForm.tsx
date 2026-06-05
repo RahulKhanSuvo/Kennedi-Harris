@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useEffect, useReducer } from "react";
+import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import {
@@ -64,6 +65,49 @@ interface GalleryEditFormProps {
   mode?: "banners" | "photos" | "all";
 }
 
+// Local state management with reducer to batch updates
+interface LocalState {
+  banners: Record<string, File>;
+  bannerPreviews: Record<string, string>;
+  photoPreviews: Record<string, string>; // keyed by field.id for stability
+}
+
+type LocalAction =
+  | { type: "SET_BANNER_FILE"; key: string; file: File; preview: string }
+  | { type: "SET_PHOTO_PREVIEW"; id: string; preview: string }
+  | { type: "REMOVE_PHOTO_PREVIEW"; id: string }
+  | { type: "RESET_STATE"; payload: LocalState };
+
+const localReducer = (state: LocalState, action: LocalAction): LocalState => {
+  switch (action.type) {
+    case "SET_BANNER_FILE":
+      return {
+        ...state,
+        banners: { ...state.banners, [action.key]: action.file },
+        bannerPreviews: {
+          ...state.bannerPreviews,
+          [action.key]: action.preview,
+        },
+      };
+    case "SET_PHOTO_PREVIEW":
+      return {
+        ...state,
+        photoPreviews: { ...state.photoPreviews, [action.id]: action.preview },
+      };
+    case "REMOVE_PHOTO_PREVIEW": {
+      const { [action.id]: _, ...restPreviews } = state.photoPreviews;
+      return {
+        ...state,
+        photoPreviews: restPreviews,
+      };
+    }
+    case "RESET_STATE":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export function GalleryEditForm({
   selectedGallery,
   isPending,
@@ -71,20 +115,17 @@ export function GalleryEditForm({
   onSubmit,
   mode = "all",
 }: GalleryEditFormProps) {
-  const [banners, setBanners] = useState<Record<string, File>>({});
-  const [bannerPreviews, setBannerPreviews] = useState<Record<string, string>>(
-    {},
-  );
-  const [photoPreviews, setPhotoPreviews] = useState<Record<number, string>>(
-    {},
-  );
+  const [localState, dispatch] = useReducer(localReducer, {
+    banners: {},
+    bannerPreviews: {},
+    photoPreviews: {},
+  });
 
   const {
     register,
     handleSubmit,
     control,
     setValue,
-    watch,
     reset,
     formState: { errors },
   } = useForm<GalleryEditFormValues>({
@@ -97,9 +138,9 @@ export function GalleryEditForm({
     name: "photos",
   });
 
-  const watchedPhotos = watch("photos") || [];
+  const watchedPhotos = useWatch({ control, name: "photos" }) || [];
 
-  // Reset/Initialize states when component mounts or selectedGallery changes
+  // Reset entire form and local state when selectedGallery changes
   useEffect(() => {
     if (selectedGallery) {
       // Inline edit mode for existing gallery
@@ -109,18 +150,28 @@ export function GalleryEditForm({
           initialPreviews[b.key] = selectedGallery[b.key];
         }
       });
-      setBannerPreviews(initialPreviews);
-      setBanners({});
+      dispatch({
+        type: "RESET_STATE",
+        payload: {
+          banners: {},
+          bannerPreviews: initialPreviews,
+          photoPreviews: {},
+        },
+      });
       reset({ photos: [] });
-      setPhotoPreviews({});
     } else {
       // Creation/initialization mode
-      setBannerPreviews({});
-      setBanners({});
+      dispatch({
+        type: "RESET_STATE",
+        payload: {
+          banners: {},
+          bannerPreviews: {},
+          photoPreviews: {},
+        },
+      });
       reset({
         photos: [{ name: "", type: "action", photo: undefined as any }],
       });
-      setPhotoPreviews({});
     }
   }, [selectedGallery, reset]);
 
@@ -130,32 +181,39 @@ export function GalleryEditForm({
   ) => {
     const file = e.target.files?.[0] || null;
     if (file) {
-      setBanners((prev) => ({ ...prev, [key]: file }));
-      setBannerPreviews((prev) => ({
-        ...prev,
-        [key]: URL.createObjectURL(file),
-      }));
+      const preview = URL.createObjectURL(file);
+      dispatch({ type: "SET_BANNER_FILE", key, file, preview });
     }
   };
 
   const handlePhotoRowFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
+    fieldId: string,
     index: number,
   ) => {
     const file = e.target.files?.[0] || null;
     if (file) {
       setValue(`photos.${index}.photo`, file, { shouldValidate: true });
-      setPhotoPreviews((prev) => ({
-        ...prev,
-        [index]: URL.createObjectURL(file),
-      }));
+      const preview = URL.createObjectURL(file);
+      dispatch({ type: "SET_PHOTO_PREVIEW", id: fieldId, preview });
     }
+  };
+
+  const handleRemovePhotoRow = (fieldId: string, index: number) => {
+    // Clean up preview URL if exists
+    if (localState.photoPreviews[fieldId]) {
+      URL.revokeObjectURL(localState.photoPreviews[fieldId]);
+    }
+    dispatch({ type: "REMOVE_PHOTO_PREVIEW", id: fieldId });
+    remove(index);
   };
 
   const handleFormSubmit = (values: GalleryEditFormValues) => {
     // If initializing, ensure all three banners are provided
     if (!selectedGallery) {
-      const missingBanners = bannerFields.filter((b) => !banners[b.key]);
+      const missingBanners = bannerFields.filter(
+        (b) => !localState.banners[b.key],
+      );
       if (missingBanners.length > 0) {
         toast.error(
           `Missing cover assets: ${missingBanners.map((b) => b.label).join(", ")}`,
@@ -165,7 +223,7 @@ export function GalleryEditForm({
     }
 
     // Call submission prop
-    onSubmit(banners, values.photos);
+    onSubmit(localState.banners, values.photos);
   };
 
   const renderActions = (saveText: string) => (
@@ -193,7 +251,7 @@ export function GalleryEditForm({
   );
 
   const bannersContent = (
-    <Card className="bg-[#0c0c14] border-white/5 p-6 rounded-2xl h-full flex flex-col justify-between">
+    <Card className="bg-kh-dark-2 border-white/5 p-6 rounded-2xl h-full flex flex-col justify-between">
       <div>
         <CardHeader className="p-0 mb-6">
           <CardTitle className="font-display text-xl uppercase tracking-wider text-white flex items-center gap-2">
@@ -221,10 +279,10 @@ export function GalleryEditForm({
                   className="absolute inset-0 opacity-0 cursor-pointer z-10"
                   disabled={isPending}
                 />
-                {bannerPreviews[field.key] ? (
+                {localState.bannerPreviews[field.key] ? (
                   <div className="relative w-full h-[200px] rounded-lg overflow-hidden border border-white/5">
                     <img
-                      src={bannerPreviews[field.key]}
+                      src={localState.bannerPreviews[field.key]}
                       alt={field.label}
                       className="w-full h-full object-cover"
                     />
@@ -289,7 +347,6 @@ export function GalleryEditForm({
               <p className="font-mono text-[9px] text-zinc-600 uppercase tracking-widest mt-1.5">
                 Click 'Add Photo Row' above to queue library uploads.
               </p>
-              {/* add  add photo btn */}
               <Button
                 type="button"
                 onClick={() =>
@@ -316,9 +373,9 @@ export function GalleryEditForm({
                   {/* Photo Preview Thumbnail */}
                   <div className="md:col-span-2 flex justify-center">
                     <div className="w-12 h-12 rounded-lg overflow-hidden border border-white/10 bg-neutral-900 flex items-center justify-center relative">
-                      {photoPreviews[index] ? (
+                      {localState.photoPreviews[field.id] ? (
                         <img
-                          src={photoPreviews[index]}
+                          src={localState.photoPreviews[field.id]}
                           alt="Row Preview"
                           className="w-full h-full object-cover"
                         />
@@ -382,7 +439,9 @@ export function GalleryEditForm({
                       <input
                         type="file"
                         accept="image/*"
-                        onChange={(e) => handlePhotoRowFileChange(e, index)}
+                        onChange={(e) =>
+                          handlePhotoRowFileChange(e, field.id, index)
+                        }
                         className="absolute inset-0 opacity-0 cursor-pointer"
                         disabled={isPending}
                       />
@@ -403,14 +462,7 @@ export function GalleryEditForm({
                   <div className="md:col-span-1 flex justify-center">
                     <Button
                       type="button"
-                      onClick={() => {
-                        remove(index);
-                        setPhotoPreviews((prev) => {
-                          const updated = { ...prev };
-                          delete updated[index];
-                          return updated;
-                        });
-                      }}
+                      onClick={() => handleRemovePhotoRow(field.id, index)}
                       className="text-zinc-500 hover:text-red-400 p-2 cursor-pointer bg-transparent border-none hover:bg-red-500/10 rounded-lg transition-colors"
                       disabled={isPending}
                     >

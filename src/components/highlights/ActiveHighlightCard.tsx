@@ -347,7 +347,7 @@ export function ActiveHighlightCard({
         </div>
 
         {/* Active Stream Feature Quick Card */}
-        <div className="bg-gradient-to-br from-zinc-900 to-zinc-950 border border-white/10 p-4 rounded-xl shadow-lg flex items-center justify-between gap-4">
+        <div className="bg-linear-to-br from-zinc-900 to-zinc-950 border border-white/10 p-4 rounded-xl shadow-lg flex items-center justify-between gap-4">
           <div className="min-w-0">
             <span className="text-[10px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
               Active Stream Segment

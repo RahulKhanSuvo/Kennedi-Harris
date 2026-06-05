@@ -54,7 +54,7 @@ export default function Sidebar() {
         <div className="flex items-center gap-3">
           <Link
             to="/"
-            className="flex items-center justify-center p-2 rounded-lg bg-white/[0.02] text-zinc-400 border border-white/5 hover:text-white hover:bg-white/[0.05] transition-colors cursor-pointer"
+            className="flex items-center justify-center p-2 rounded-lg bg-white/2 text-zinc-400 border border-white/5 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
             title="Exit to Website"
           >
             <ExternalLink size={16} />
@@ -121,7 +121,7 @@ export default function Sidebar() {
                 ${
                   isActive
                     ? "bg-kh-pink/10 text-kh-pink border border-kh-pink/20"
-                    : "text-zinc-400 hover:text-white hover:bg-white/[0.02] border border-transparent"
+                    : "text-zinc-400 hover:text-white hover:bg-white/2 border border-transparent"
                 }`
               }
             >
@@ -147,7 +147,7 @@ export default function Sidebar() {
         <div className="border-t border-white/5 p-3">
           <Link
             to="/"
-            className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/[0.02] border border-transparent transition-all cursor-pointer group"
+            className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/2 border border-transparent transition-all cursor-pointer group"
           >
             <ExternalLink
               size={18}
