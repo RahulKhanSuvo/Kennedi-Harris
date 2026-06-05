@@ -106,7 +106,7 @@ export function GalleryGrid({
                 Array.from({ length: 6 }).map((_, idx) => (
                   <div
                     key={`skeleton-${idx}`}
-                    className={`break-inside-avoid w-full ${idx % 2 !== 0 ? "aspect-4/5" : "aspect-square"} bg-[#111115] border border-white/5 rounded-xl overflow-hidden relative shadow-lg`}
+                    className={`break-inside-avoid w-full ${idx % 4 !== 0 ? "aspect-4/5" : "aspect-square"} bg-[#111115] border border-white/5 rounded-xl overflow-hidden relative shadow-lg`}
                   >
                     <div className="w-full h-full bg-white/5 animate-pulse" />
                   </div>
@@ -121,7 +121,7 @@ export function GalleryGrid({
                     exit="exit"
                     viewport={{ once: true, amount: 0.3 }}
                     onClick={() => setSelectedPhoto(item)}
-                    className={`relative break-inside-avoid w-full ${idx % 2 !== 0 ? "aspect-4/5" : "aspect-5/6"} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-colors duration-500 hover:border-white/20 cursor-pointer will-change-transform`}
+                    className={`relative break-inside-avoid w-full ${idx % 4 !== 0 ? "aspect-4/5" : "aspect-square"} bg-[#111115] border border-white/10 rounded-xl overflow-hidden group shadow-lg transition-colors duration-500 hover:border-white/20 cursor-pointer will-change-transform`}
                   >
                     {/* Image Canvas Container */}
                     <div className="w-full h-full bg-[#16161c] relative overflow-hidden transition-transform duration-700 group-hover:scale-105">
