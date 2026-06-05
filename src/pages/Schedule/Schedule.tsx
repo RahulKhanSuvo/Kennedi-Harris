@@ -1,5 +1,5 @@
 import { SeasonSchedule } from "./components/SeasonSchedule";
-import { UpcomingEvents } from "./components/UpcomingEvents";
+// import { UpcomingEvents } from "./components/UpcomingEvents";
 import { SubscribeBanner } from "./components/SubscribeBanner";
 import ScheduleHero from "./components/ScheduleHero";
 export default function Schedule() {
@@ -37,7 +37,7 @@ export default function Schedule() {
       <meta name="twitter:card" content="summary_large_image" />
       <ScheduleHero />
       <SeasonSchedule />
-      <UpcomingEvents />
+      {/* <UpcomingEvents /> */}
       <SubscribeBanner />
     </main>
   );
