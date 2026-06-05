@@ -115,7 +115,7 @@ export default function TopPlayCategories({
                         : "scale-100 grayscale contrast-125 opacity-10 group-hover:opacity-20"
                     }`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black via-black/80 to-transparent" />
                 </div>
 
                 {/* Top Core Status Layout */}
@@ -198,7 +198,7 @@ export default function TopPlayCategories({
                 </div>
 
                 <div
-                  className={`absolute bottom-0 left-0 h-[3px] transition-all duration-700 bg-gradient-to-r from-cyan-400 via-kh-pink to-white ${
+                  className={`absolute bottom-0 left-0 h-[3px] transition-all duration-700 bg-linear-to-r from-cyan-400 via-kh-pink to-white ${
                     isActive ? "w-full" : "w-0"
                   }`}
                 />
@@ -212,7 +212,7 @@ export default function TopPlayCategories({
       {/* FULLSCREEN LIGHTBOX VIDEO PLAYER MODAL     */}
       {/* ========================================== */}
       {modalVideo && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-4 transition-opacity duration-300">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-xl z-9999 flex items-center justify-center p-4 transition-opacity duration-300">
           <div
             className="absolute inset-0 cursor-pointer"
             onClick={() => setModalVideo(null)}
