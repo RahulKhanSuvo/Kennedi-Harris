@@ -14,7 +14,16 @@ export const useAllHighlights = () => {
     queryFn: highlightsApi.getAllHighlights,
   });
 };
-
+// add new video
+export const useAddNewVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: highlightsApi.addSingleVideo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["highlights"] });
+    },
+  });
+};
 export const useCreateHighlight = () => {
   const queryClient = useQueryClient();
   return useMutation({

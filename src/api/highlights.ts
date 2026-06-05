@@ -70,7 +70,20 @@ export const highlightsApi = {
     );
     return response.data;
   },
-
+  // add singal video
+  addSingleVideo: async ({
+    formData,
+    highlightId,
+  }: {
+    formData: FormData;
+    highlightId: string;
+  }): Promise<ApiResponse<HighlightData>> => {
+    const response = await axiosInstance.post<ApiResponse<HighlightData>>(
+      `/highlights/${highlightId}/add`,
+      formData,
+    );
+    return response.data;
+  },
   updateSingleVideo: async (
     highlightId: string,
     videoId: string,
@@ -95,7 +108,19 @@ export const highlightsApi = {
     );
     return response.data;
   },
-
+  addNewFeedVideo: async ({
+    formData,
+    highlightId,
+  }: {
+    formData: FormData;
+    highlightId: string;
+  }): Promise<ApiResponse<HighlightData>> => {
+    const response = await axiosInstance.post<ApiResponse<HighlightData>>(
+      `/highlights/${highlightId}/feed-videos/add`,
+      formData,
+    );
+    return response.data;
+  },
   updateSingleFeedVideo: async (
     highlightId: string,
     feedVideoId: string,
