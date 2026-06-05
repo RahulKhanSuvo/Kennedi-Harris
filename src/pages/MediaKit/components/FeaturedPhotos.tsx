@@ -1,7 +1,5 @@
-"use client";
-
 import { Link } from "react-router";
-import { ChevronRight, Maximize2, Camera } from "lucide-react";
+import { ChevronRight, Maximize2 } from "lucide-react";
 
 import Container from "@/components/common/Container";
 import MediaLightboxModal from "@/components/common/MediaLightboxModal";
@@ -73,7 +71,7 @@ export default function FeaturedPhotos() {
           Transforms seamlessly into a premium bento matrix on desktop frames.
         */}
         <div className="flex flex-col gap-4 md:grid md:grid-cols-4 md:auto-rows-auto">
-          {gallery?.photos?.map((photo) => (
+          {gallery?.photos?.slice(0, 4).map((photo) => (
             <div
               key={photo._id}
               onClick={() => setSelectedPhoto(photo)}
@@ -110,12 +108,12 @@ export default function FeaturedPhotos() {
 
                 {/* Lower Section: Data Block */}
                 <div className="transition-all duration-300">
-                  <div className="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1 rounded-lg mb-2 transform -skew-x-12 origin-left">
+                  {/* <div className="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1 rounded-lg mb-2 transform -skew-x-12 origin-left">
                     <Camera size={10} className="text-kh-pink skew-x-12" />
                     <span className="text-[9px] font-mono font-bold tracking-widest text-zinc-300 uppercase skew-x-12">
                       FRAME_CAP_{photo._id}
                     </span>
-                  </div>
+                  </div> */}
 
                   <p className="font-display font-bold text-base md:text-lg text-white uppercase tracking-wide drop-shadow-md">
                     {photo.name}
