@@ -24,6 +24,15 @@ export const useAddNewVideo = () => {
     },
   });
 };
+export const useAddNewFeed = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: highlightsApi.addNewFeedVideo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["highlights"] });
+    },
+  });
+};
 export const useCreateHighlight = () => {
   const queryClient = useQueryClient();
   return useMutation({
