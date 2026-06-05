@@ -106,7 +106,7 @@ export function GalleryGrid({
                 Array.from({ length: 6 }).map((_, idx) => (
                   <div
                     key={`skeleton-${idx}`}
-                    className={`break-inside-avoid w-full ${idx % 2 !== 0 ? "aspect-4/5" : "aspect-5/6"} bg-[#111115] border border-white/5 rounded-xl overflow-hidden relative shadow-lg`}
+                    className={`break-inside-avoid w-full ${idx % 2 !== 0 ? "aspect-4/5" : "aspect-square"} bg-[#111115] border border-white/5 rounded-xl overflow-hidden relative shadow-lg`}
                   >
                     <div className="w-full h-full bg-white/5 animate-pulse" />
                   </div>
