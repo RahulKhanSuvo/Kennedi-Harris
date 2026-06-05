@@ -145,7 +145,7 @@ export default function HeroSection({
         <div className="w-full lg:w-[55%] flex justify-center lg:justify-end items-end lg:self-end relative mt-12 lg:mt-0 overflow-visible lg:translate-x-12 xl:translate-x-20">
           {/* Ambient Identity Rings */}
           <div className="absolute bottom-[-10%] left-[25%] -translate-x-1/2 pointer-events-none h-[300px] w-[300px] rounded-full bg-[#ec4899] opacity-20 blur-[80px]" />
-          <div className="absolute bottom-0 right-0 pointer-events-none h-[400px] w-[500px] rounded-tl-[100px] bg-gradient-to-br from-[#06b6d4] to-[#3b82f6] opacity-15 blur-[100px]" />
+          <div className="absolute bottom-0 right-0 pointer-events-none h-[400px] w-[500px] rounded-tl-[100px] bg-linear-to-br from-[#06b6d4] to-[#3b82f6] opacity-15 blur-[100px]" />
 
           {/* Decorative Calligraphy Identity Tag */}
           {/* CHANGED: Adjusted positioning to `right-[45%] lg:right-[55%] bottom-[25%]` to pull it left of the player */}
@@ -154,7 +154,7 @@ export default function HeroSection({
             whileInView={{ opacity: 1, rotate: -10, scale: 1 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.9, delay: 0.6, ease: kineticSpring }}
-            className="absolute right-[45%] lg:right-[55%] bottom-[25%] font-script text-5xl lg:text-7xl text-kh-pink z-30 select-none pointer-events-none origin-bottom-right whitespace-nowrap text-right"
+            className="absolute right-[5%] lg:right-[55%] bottom-[5%] md:bottom-[25%]  font-script text-4xl lg:text-7xl text-kh-pink z-30 select-none pointer-events-none origin-bottom-right whitespace-nowrap text-right"
           >
             Kennedi
             <br />
