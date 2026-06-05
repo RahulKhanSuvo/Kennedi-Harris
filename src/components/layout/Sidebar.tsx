@@ -113,7 +113,7 @@ export default function Sidebar() {
                 ${
                   isActive
                     ? "bg-kh-pink/10 text-kh-pink border border-kh-pink/20"
-                    : "text-zinc-400 hover:text-white hover:bg-white/[0.02] border border-transparent"
+                    : "text-zinc-400 hover:text-white hover:bg-white/2 border border-transparent"
                 }`
               }
             >
