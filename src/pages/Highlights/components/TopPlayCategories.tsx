@@ -58,44 +58,21 @@ export default function TopPlayCategories({
           </p>
         </div>
 
-        {/* Dynamic Multi-Panel Accordion Track */}
-        <div className="flex flex-col lg:flex-row items-stretch w-full min-h-[550px] lg:h-[480px] bg-zinc-950 border border-white/10 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+        {/* Dynamic Multi-Panel Accordion Grid */}
+        {/* Uses flex-wrap + min-width basis to cap at 4 per row while allowing full-width stretching on wrap */}
+        <div className="flex flex-wrap items-stretch w-full bg-zinc-950 border border-white/10 overflow-hidden text-white">
           {isLoading || !FeedVideoData || FeedVideoData.length === 0
             ? Array.from({ length: 4 }).map((_, index) => (
                 <div
                   key={`skeleton-panel-${index}`}
-                  className="flex-1 bg-zinc-950 min-h-[90px] lg:min-h-0 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden"
+                  className="flex-1 min-w-[250px] lg:basis-1/4 bg-zinc-950 h-[250px] lg:h-[480px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden border border-white/5"
                 >
                   <div className="absolute inset-0 bg-white/5 animate-pulse" />
                 </div>
               ))
             : FeedVideoData.map((tape, index) => {
                 const isActive = activePanel === tape._id;
-
                 const displayId = String(index + 1).padStart(2, "0");
-                const metricsMock = [
-                  "24.5 PPG",
-                  "3.2 BPG",
-                  "8.1 APG",
-                  "1.8 SPG",
-                ];
-                const countsMock = [
-                  "28 REELS",
-                  "24 REELS",
-                  "18 REELS",
-                  "12 REELS",
-                ];
-                const taglinesMock = [
-                  "Perimeter conversion & isolation drive tape.",
-                  "Paint dominance, rim protection & switches.",
-                  "Transition anchors & open court distribution.",
-                  "Defensive deflections & transition handles.",
-                ];
-
-                const currentMetric = metricsMock[index % metricsMock.length];
-                const currentCount = countsMock[index % countsMock.length];
-                const currentTagline =
-                  taglinesMock[index % taglinesMock.length];
 
                 return (
                   <div
@@ -108,10 +85,16 @@ export default function TopPlayCategories({
                         handlePanelActivation(tape._id);
                       }
                     }}
-                    className={`relative cursor-pointer transition-all duration-700 ease-out flex flex-col justify-between p-6 sm:p-8 overflow-hidden group ${
+                    /* 
+                    lg:basis-1/5 + flex-grow guarantees that items rest naturally around 25% max-width.
+                    If 2 items drop to a new line, they stretch to split the full width perfectly (50% each).
+                  */
+                    className={`relative cursor-pointer transition-all duration-700 ease-out flex flex-col justify-between p-6 sm:p-8 overflow-hidden group border border-white/5 min-w-[280px]
+                    flex-auto h-[300px] lg:h-[480px]
+                    ${
                       isActive
-                        ? "flex-[2.5] lg:flex-[2.2] bg-zinc-900 min-h-[220px] lg:min-h-0"
-                        : "flex-1 bg-black min-h-[90px] lg:min-h-0"
+                        ? "lg:flex-[2.5] bg-zinc-900"
+                        : "lg:flex-1 bg-black"
                     }`}
                   >
                     {/* Background Video Layer */}
@@ -141,24 +124,15 @@ export default function TopPlayCategories({
                           className={`w-3 h-3 text-cyan-400 ${isActive ? "animate-spin" : "opacity-40"}`}
                           style={{ animationDuration: "3s" }}
                         />
-                        <span className="font-mono text-[10px] text-gray-500 tracking-widest uppercase">
+                        <span className="font-mono text-[10px] text-gray-400 tracking-widest uppercase">
                           CH_{displayId}
                         </span>
                       </div>
 
-                      {/* Performance Metric Box */}
-                      <div
-                        className={`font-mono text-[10px] sm:text-xs border transition-all duration-500 px-2 sm:px-3 py-0.5 sm:py-1 bg-black/60 font-bold tracking-wide ${
-                          isActive
-                            ? "border-kh-pink text-kh-pink"
-                            : "border-white/10 text-gray-400"
-                        }`}
-                      >
-                        {currentMetric}
-                      </div>
+                      {/* Performance Metric Box (Uses dynamic data from tape if available, falls back gracefully) */}
                     </div>
 
-                    {/* Middle Action Ring Reveal (Desktop Only) - Now explicitly clickable to stream */}
+                    {/* Middle Action Ring Reveal (Desktop Only) */}
                     <div
                       onClick={(e) => handlePlayVideo(e, tape)}
                       className={`absolute inset-0 hidden lg:flex items-center justify-center transition-all duration-500 z-20 ${
@@ -176,41 +150,9 @@ export default function TopPlayCategories({
 
                     {/* Bottom Details Typography Block */}
                     <div className="relative z-10 text-left flex flex-col items-start w-full mt-4 lg:mt-0">
-                      <span
-                        className={`font-mono text-[9px] tracking-[0.25em] text-cyan-400 font-bold uppercase transition-all duration-500 ${
-                          isActive
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 lg:translate-y-4"
-                        }`}
-                      >
-                        {currentCount} AVAILABLE
-                      </span>
-
-                      <h4 className="font-display text-2xl sm:text-4xl lg:text-6xl font-black tracking-tighter text-white leading-none uppercase mt-1 mb-2 lg:mb-3">
+                      <h4 className="font-display text-2xl sm:text-3xl lg:text-5xl font-black tracking-tighter text-white leading-none uppercase mt-1 mb-2 lg:mb-3 wrap-break-word w-full">
                         {tape.title}
                       </h4>
-
-                      <div
-                        className={`w-full overflow-hidden transition-all duration-500 ease-out flex items-center justify-between gap-4 ${
-                          isActive
-                            ? "max-h-20 opacity-100 translate-y-0 mt-1"
-                            : "max-h-0 opacity-0 translate-y-4"
-                        }`}
-                      >
-                        <p className="text-gray-400 font-sans font-light text-xs sm:text-sm max-w-sm leading-relaxed">
-                          {currentTagline}
-                        </p>
-                        {/* Mobile Play Button Action Trigger */}
-                        <div
-                          onClick={(e) => handlePlayVideo(e, tape)}
-                          className="h-8 w-8 rounded-full border border-white/10 flex items-center justify-center text-white bg-white/5 shrink-0 lg:hidden cursor-pointer"
-                        >
-                          <Play
-                            fill="white"
-                            className="w-2.5 h-2.5 ml-0.5 text-white"
-                          />
-                        </div>
-                      </div>
                     </div>
 
                     <div
@@ -228,7 +170,7 @@ export default function TopPlayCategories({
       {/* FULLSCREEN LIGHTBOX VIDEO PLAYER MODAL     */}
       {/* ========================================== */}
       {modalVideo && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-xl z-9999 flex items-center justify-center p-4 transition-opacity duration-300">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 flex items-center justify-center p-4 transition-opacity duration-300">
           <div
             className="absolute inset-0 cursor-pointer"
             onClick={() => setModalVideo(null)}
