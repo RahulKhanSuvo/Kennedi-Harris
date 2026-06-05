@@ -1,16 +1,14 @@
 import { motion, type Variants } from "motion/react";
 import { MapPin, Calendar } from "lucide-react";
 import { Link } from "react-router";
+import useSchedule from "@/hooks/useSchedule";
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
 
-// Combined Viewport Strategy for Mid-Page Sections
 const responsiveViewport = {
   once: true,
-  // "amount: 0.1" triggers as soon as 10% of the element enters the screen.
-  // This ensures it never gets stuck or missed in the middle of the page.
   amount: 0.1,
-  margin: "0px 0px -50px 0px", // Slight bottom margin buffer for smoother entry
+  margin: "0px 0px -50px 0px",
 } as const;
 
 const containerVariants: Variants = {
@@ -30,40 +28,47 @@ const itemVariants: Variants = {
   },
 };
 
-const scheduleData = [
-  {
-    month: "MAY",
-    days: "24-26",
-    type: "AAU TOURNAMENT",
-    team: "FBC UNITED",
-    location: "TBD",
-  },
-  {
-    month: "JUN",
-    days: "6",
-    type: "SCHOOL GAME",
-    team: "WESTFIELD",
-    location: "TBD",
-  },
-  {
-    month: "JUN",
-    days: "13-15",
-    type: "AAU TOURNAMENT",
-    team: "FBC UNITED",
-    location: "TBD",
-  },
-  {
-    month: "JUN",
-    days: "20-22",
-    type: "SCHOOL GAME",
-    team: "WESTFIELD",
-    location: "TBD",
-  },
-];
+// 💡 Clean Skeleton Component matching the row typography & constraints
+function ScheduleSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div
+          key={`schedule-skeleton-${index}`}
+          className="flex items-center justify-between animate-pulse bg-neutral-950/10"
+        >
+          {/* Mock Date Block */}
+          <div className="w-20 h-16 bg-neutral-900 shrink-0 border-r border-white/5" />
+
+          {/* Core Info Elements */}
+          <div className="flex-1 min-w-0 px-5 sm:px-6 flex items-center justify-between gap-4 h-16">
+            {/* Title Line */}
+            <div className="flex-1 min-w-0">
+              <div className="h-3 w-32 bg-zinc-800 rounded-xs" />
+            </div>
+
+            {/* Badge Indicator Line */}
+            <div className="flex-1 hidden sm:block">
+              <div className="h-5 w-24 bg-zinc-900 border border-white/5 rounded-xs" />
+            </div>
+
+            {/* Location Line */}
+            <div className="flex items-center gap-1.5 justify-end min-w-[70px] shrink-0">
+              <div className="h-3 w-3 bg-zinc-800 rounded-full" />
+              <div className="h-2 w-12 bg-zinc-800 rounded-xs" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
 
 export default function ScheduleSection() {
+  const { data, isLoading } = useSchedule();
+
   return (
-    <div className="w-full max-w-2xl mx-auto xl:mx-0 xl:max-w-none bg-neutral-950/20  lg:p-8 rounded border-l border-white/5 backdrop-blur-xs">
+    <div className="w-full max-w-2xl mx-auto xl:mx-0 xl:max-w-none bg-neutral-950/20 lg:p-8 rounded border-l border-white/5 backdrop-blur-xs">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
           <h3 className="font-condensed font-semibold text-lg lg:text-xl tracking-widest text-white uppercase">
@@ -78,7 +83,6 @@ export default function ScheduleSection() {
         </Link>
       </div>
 
-      {/* Rows wrapper using the fluid visibility intersection handler */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -86,48 +90,47 @@ export default function ScheduleSection() {
         viewport={responsiveViewport}
         className="flex flex-col border border-white/5 bg-neutral-950/40 rounded-lg overflow-hidden divide-y divide-white/5"
       >
-        {scheduleData.map((item, i) => (
-          <motion.div
-            key={i}
-            variants={itemVariants}
-            className="flex items-center justify-between group hover:bg-white/[0.02] transition-colors duration-200"
-          >
-            <div
-              className={`w-20 h-16 ${i % 2 === 0 ? "bg-gradient-to-br from-kh-pink to-kh-pink/90" : "bg-gradient-to-br from-kh-blue to-kh-blue/90"} flex flex-col items-center justify-center shrink-0 shadow-md select-none`}
+        {isLoading || !data?.data ? (
+          <ScheduleSkeleton />
+        ) : (
+          data.data.map((item, i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              className="flex items-center justify-between group hover:bg-white/[0.02] transition-colors duration-200"
             >
-              <span className="font-condensed font-bold text-white text-[10px] tracking-widest leading-none mb-1 opacity-90">
-                {item.month}
-              </span>
-              <span className="font-condensed font-black text-white text-lg leading-none tracking-tight">
-                {item.days}
-              </span>
-            </div>
-
-            <div className="flex-1 min-w-0 px-5 sm:px-6 flex items-center justify-between gap-4 h-16">
-              <div className="flex-1 min-w-0">
-                <span className="font-condensed font-bold text-sm tracking-wider text-white uppercase block truncate group-hover:text-kh-pink transition-colors duration-200">
-                  {item.type}
+              <div
+                className={`w-20 h-16 ${
+                  i % 2 === 0
+                    ? "bg-linear-to-br from-kh-pink to-kh-pink/90"
+                    : "bg-linear-to-br from-kh-blue to-kh-blue/90"
+                } flex flex-col items-center justify-center shrink-0 shadow-md select-none`}
+              >
+                <span className="font-condensed font-bold text-white text-[10px] tracking-widest leading-none mb-1 opacity-90">
+                  {item.date}
                 </span>
               </div>
 
-              <div className="flex-1 hidden sm:block truncate">
-                <span className="font-condensed font-medium text-xs tracking-widest text-zinc-400 uppercase bg-white/5 border border-white/10 px-2.5 py-1 rounded-sm">
-                  {item.team}
-                </span>
-              </div>
+              <div className="flex-1 min-w-0 px-5 sm:px-6 flex items-center justify-between gap-4 h-16">
+                <div className="flex-1 min-w-0">
+                  <span className="font-condensed font-bold text-sm tracking-wider text-white uppercase block truncate group-hover:text-kh-pink transition-colors duration-200">
+                    {item.matchName}
+                  </span>
+                </div>
 
-              <div className="flex items-center gap-1.5 justify-end min-w-[70px] shrink-0 text-zinc-500 group-hover:text-zinc-400 transition-colors duration-200">
-                <MapPin
-                  size={13}
-                  className="text-zinc-600 group-hover:text-kh-blue transition-colors duration-200"
-                />
-                <span className="font-condensed font-bold text-xs tracking-widest uppercase">
-                  {item.location}
-                </span>
+                <div className="flex items-center gap-1.5 justify-end min-w-[70px] shrink-0 text-zinc-500 group-hover:text-zinc-400 transition-colors duration-200">
+                  <MapPin
+                    size={13}
+                    className="text-zinc-600 group-hover:text-kh-blue transition-colors duration-200"
+                  />
+                  <span className="font-condensed font-bold text-xs tracking-widest uppercase">
+                    {item.address}
+                  </span>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))
+        )}
       </motion.div>
 
       <div className="mt-5 flex items-center gap-2.5 text-zinc-600 font-condensed tracking-wider text-[11px] uppercase px-2">
