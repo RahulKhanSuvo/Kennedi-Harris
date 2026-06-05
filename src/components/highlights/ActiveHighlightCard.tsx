@@ -13,11 +13,9 @@ import {
   Maximize2,
   Settings,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface ActiveHighlightCardProps {
   highlight: any;
-  onEditClick: () => void;
   onEditVideoClick: (video: any) => void;
   onDeleteVideoClick: (videoId: string) => void;
   onEditFeedVideoClick: (feedVideo: any) => void;
@@ -36,7 +34,6 @@ type ActiveMediaFocus = {
 
 export function ActiveHighlightCard({
   highlight,
-  onEditClick,
   onEditVideoClick,
   onDeleteVideoClick,
   onEditFeedVideoClick,
@@ -89,14 +86,6 @@ export function ActiveHighlightCard({
                   </span>
                 </div>
               </div>
-
-              <Button
-                onClick={onEditClick}
-                className="bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-white font-condensed font-bold uppercase tracking-wider text-xs px-4 h-10 rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
-              >
-                <Edit2 size={13} className="text-kh-pink" />
-                Config Deck
-              </Button>
             </div>
 
             {/* Main Interactive Index Channel Block */}
@@ -337,13 +326,6 @@ export function ActiveHighlightCard({
               Highlight Controls
             </span>
           </div>
-          <Button
-            onClick={onEditClick}
-            className="bg-zinc-800 hover:bg-zinc-700 border border-white/10 text-white font-condensed font-bold uppercase tracking-wider text-[11px] h-8 px-3 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer"
-          >
-            <Edit2 size={11} className="text-kh-pink" />
-            Edit Deck
-          </Button>
         </div>
 
         {/* Active Stream Feature Quick Card */}

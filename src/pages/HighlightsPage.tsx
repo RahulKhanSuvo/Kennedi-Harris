@@ -5,7 +5,6 @@ import { Video, PlusCircle, VideoOff, X } from "lucide-react";
 import {
   useAllHighlights,
   useCreateHighlight,
-  useUpdateHighlight,
   useUpdateSingleVideo,
   useDeleteSingleVideo,
   useUpdateSingleFeedVideo,
@@ -15,7 +14,6 @@ import { Button } from "@/components/ui/button";
 
 // Modular sub-components
 import { HighlightCreateForm } from "@/components/highlights/HighlightCreateForm";
-import { HighlightEditForm } from "@/components/highlights/HighlightEditForm";
 import { ActiveHighlightCard } from "@/components/highlights/ActiveHighlightCard";
 import { EditSingleVideoModal } from "@/components/highlights/EditSingleVideoModal";
 import { EditSingleFeedVideoModal } from "@/components/highlights/EditSingleFeedVideoModal";
@@ -24,7 +22,6 @@ import type { HighlightFormValues } from "@/components/highlights/HighlightCreat
 export default function HighlightsPage() {
   const { data: highlights = [], isLoading, isError } = useAllHighlights();
   const createMutation = useCreateHighlight();
-  const updateMutation = useUpdateHighlight();
 
   // Granular Item mutations
   const updateSingleVideoMutation = useUpdateSingleVideo();
@@ -34,7 +31,6 @@ export default function HighlightsPage() {
 
   // Inline states — no modal for whole package creation/editing
   const [isCreating, setIsCreating] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   // Single Item Modals states
   const [isEditVideoOpen, setIsEditVideoOpen] = useState(false);
@@ -96,25 +92,6 @@ export default function HighlightsPage() {
         );
       },
     });
-  };
-
-  const handleEdit = (values: HighlightFormValues) => {
-    if (!activeHighlight) return;
-    const formData = buildFormData(values);
-    updateMutation.mutate(
-      { id: activeHighlight._id, formData },
-      {
-        onSuccess: () => {
-          toast.success("Highlight package updated successfully!");
-          setIsEditing(false);
-        },
-        onError: (err: any) => {
-          toast.error(
-            err.response?.data?.message || "Failed to update highlight",
-          );
-        },
-      },
-    );
   };
 
   const handleOpenEditVideo = (video: any) => {
@@ -235,7 +212,6 @@ export default function HighlightsPage() {
       },
     );
   };
-
   return (
     <div className="space-y-6">
       {/* ── Page Header ── */}
@@ -250,11 +226,16 @@ export default function HighlightsPage() {
           </p>
         </div>
 
-        {!isLoading && !isError && !hasExistingData && (
-          <div className="flex gap-2">
-            {isCreating ? (
+        {/* Dynamic Context Header Action Buttons */}
+        {!isLoading && !isError && (
+          <div className="flex items-center gap-2">
+            {hasExistingData && !isCreating ? (
+              <></>
+            ) : isCreating ? (
               <Button
-                onClick={() => setIsCreating(false)}
+                onClick={() => {
+                  setIsCreating(false);
+                }}
                 variant="outline"
                 className="font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl flex items-center gap-1 cursor-pointer border-white/10 text-zinc-400 hover:bg-white/5 hover:text-white"
               >
@@ -355,17 +336,9 @@ export default function HighlightsPage() {
           onCancel={() => setIsCreating(false)}
           onSubmit={handleCreate}
         />
-      ) : isEditing && activeHighlight ? (
-        <HighlightEditForm
-          highlight={activeHighlight}
-          isPending={updateMutation.isPending}
-          onCancel={() => setIsEditing(false)}
-          onSubmit={handleEdit}
-        />
       ) : hasExistingData ? (
         <ActiveHighlightCard
           highlight={activeHighlight}
-          onEditClick={() => setIsEditing(true)}
           onEditVideoClick={handleOpenEditVideo}
           onDeleteVideoClick={handleDeleteVideo}
           onEditFeedVideoClick={handleOpenEditFeed}
