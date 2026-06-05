@@ -16,7 +16,6 @@ import type { HomeNumbers } from "@/types";
 
 interface SeasonStatsProps {
   stats: HomeNumbers | undefined;
-  isLoading: boolean;
 }
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
@@ -97,7 +96,7 @@ function DigitCounter({ value, trigger }: { value: string; trigger: boolean }) {
   );
 }
 
-export function SeasonStats({ stats, isLoading }: SeasonStatsProps) {
+export function SeasonStats({ stats }: SeasonStatsProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // Triggers precisely when 30% of the statistical frame layer is captured by viewport
@@ -105,14 +104,6 @@ export function SeasonStats({ stats, isLoading }: SeasonStatsProps) {
     once: true,
     amount: 0.3,
   });
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-24 text-zinc-500 font-mono text-sm tracking-widest">
-        LOADING_STAT_MATRIX...
-      </div>
-    );
-  }
 
   // Map dynamic live stats directly into your custom design matrix structure
   const dynamicStatsList = [

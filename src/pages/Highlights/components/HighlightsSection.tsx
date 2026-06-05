@@ -6,49 +6,7 @@ import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 
 import mainHighlightImg from "@/assets/gallery/looking2.avif";
-import video1 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
-import video2 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.15.05-PM.mp4";
-import video3 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.14.13-PM.mp4";
-import video4 from "@/assets/videos/WhatsApp-Video-2025-11-19-at-10.15.05-PM.mp4";
-
-interface PlaylistItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  videoUrl: string;
-  tag: string;
-}
-
-const BROADCAST_PLAYLIST: PlaylistItem[] = [
-  {
-    id: "reel-01",
-    title: "vs. Team Elite",
-    subtitle: "Atlanta, GA // Live Feed",
-    videoUrl: video1,
-    tag: "SCORING TAPE",
-  },
-  {
-    id: "reel-02",
-    title: "AAU Championship Highlights",
-    subtitle: "Tournament Run // Finals",
-    videoUrl: video2,
-    tag: "CHAMPIONSHIP",
-  },
-  {
-    id: "reel-03",
-    title: "Shot Blocking Highlights",
-    subtitle: "Defense Showcase // Rim Protection",
-    videoUrl: video3,
-    tag: "DEFENSIVE TAPE",
-  },
-  {
-    id: "reel-04",
-    title: "Full Game vs. Georgia Stars",
-    subtitle: "Regular Season // Broadcast Reel",
-    videoUrl: video4,
-    tag: "FULL GAME TAPE",
-  },
-];
+import type { HighlightData, HighlightVideo } from "@/types";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -66,9 +24,13 @@ const formatTime = (timeInSeconds: number): string => {
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
 
-export default function MediaBroadcastCenter() {
-  const [currentTrack, setCurrentTrack] = useState<PlaylistItem>(
-    BROADCAST_PLAYLIST[0],
+export default function MediaBroadcastCenter({
+  highlights,
+}: {
+  highlights: HighlightData;
+}) {
+  const [currentTrack, setCurrentTrack] = useState<HighlightVideo>(
+    highlights.videos[0],
   );
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [activeMobileId, setActiveMobileId] = useState<string | null>(null);
@@ -135,13 +97,13 @@ export default function MediaBroadcastCenter() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const index = Number(entry.target.getAttribute("data-index"));
-          if (!isNaN(index) && BROADCAST_PLAYLIST[index]) {
+          if (!isNaN(index) && highlights.videos[index]) {
             // Reset local variables during interaction transition instead of secondary side effects
             setDesktopCurrentTime("0:00");
             setDesktopProgress(0);
             setDesktopTotalDuration("0:00");
 
-            setCurrentTrack(BROADCAST_PLAYLIST[index]);
+            setCurrentTrack(highlights.videos[index]);
             if (videoRef.current) {
               videoRef.current.load();
             }
@@ -315,7 +277,7 @@ export default function MediaBroadcastCenter() {
                   playsInline
                   poster={mainHighlightImg}
                 >
-                  <source src={currentTrack.videoUrl} type="video/mp4" />
+                  <source src={currentTrack.video_url} type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
 
@@ -390,10 +352,10 @@ export default function MediaBroadcastCenter() {
               <div className="p-5 bg-zinc-950 border-t border-white/5 flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <span className="font-mono text-[9px] tracking-widest text-cyan-400 font-bold border border-cyan-400/20 bg-cyan-400/5 px-2 py-0.5 uppercase">
-                    {currentTrack.tag}
+                    {currentTrack.video_type}
                   </span>
                   <h4 className="font-display text-xl lg:text-2xl tracking-tighter text-white uppercase mt-2 truncate">
-                    {currentTrack.title}
+                    {currentTrack.video_name}
                   </h4>
                 </div>
                 <button
@@ -413,11 +375,11 @@ export default function MediaBroadcastCenter() {
 
           {/* RIGHT COMPONENT */}
           <div className="w-full lg:w-[42%] flex flex-col gap-8 pb-32">
-            {BROADCAST_PLAYLIST.map((item, index) => {
-              const isSelected = currentTrack.id === item.id;
+            {highlights.videos.map((item, index) => {
+              const isSelected = currentTrack.video_url === item.video_url;
               return (
                 <div
-                  key={item.id}
+                  key={item.video_url}
                   data-index={index}
                   ref={(el) => {
                     itemsRef.current[index] = el;
@@ -433,7 +395,7 @@ export default function MediaBroadcastCenter() {
                       className={`font-mono text-xs tracking-widest font-black ${isSelected ? "text-kh-pink" : "text-zinc-600"}`}
                     >
                       [{String(index + 1).padStart(2, "0")}] //{" "}
-                      {item.id.toUpperCase()}
+                      {item.video_name.toUpperCase()}
                     </span>
                     <div
                       className={`p-2 rounded-lg border transition-colors ${isSelected ? "border-kh-pink/20 bg-kh-pink/5 text-kh-pink" : "border-white/5 bg-zinc-900 text-zinc-500"}`}
@@ -446,21 +408,21 @@ export default function MediaBroadcastCenter() {
                     <h4
                       className={`font-display text-2xl uppercase tracking-tight transition-colors duration-300 ${isSelected ? "text-white" : "text-zinc-400"}`}
                     >
-                      {item.title}
+                      {item.video_name}
                     </h4>
                     <p className="text-zinc-500 font-condensed text-xs uppercase tracking-widest">
-                      {item.subtitle}
+                      {item.video_type}
                     </p>
                   </div>
 
                   <div className="flex items-center gap-3 mt-4 border-t border-white/5 pt-4">
                     <span className="font-mono text-[10px] text-zinc-400 bg-white/5 px-2 py-1 rounded-sm">
-                      TRACK ID: {item.id}
+                      TRACK ID: {item.video_url}
                     </span>
                     <span
                       className={`font-mono text-[10px] px-2 py-1 rounded-sm ${isSelected ? "bg-cyan-500/10 text-cyan-400" : "bg-zinc-900 text-zinc-500"}`}
                     >
-                      {item.tag}
+                      {item.video_type}
                     </span>
                   </div>
                 </div>
@@ -473,36 +435,38 @@ export default function MediaBroadcastCenter() {
         {/* 📱 MOBILE LAYOUT */}
         {/* ========================================== */}
         <div className="flex flex-col gap-8 lg:hidden w-full">
-          {BROADCAST_PLAYLIST.map((item, index) => {
-            const isSelfPlaying = activeMobileId === item.id;
-            const currentMobileTime = mobileCurrentTimes[item.id] || "0:00";
-            const totalMobileDuration = mobileDurations[item.id] || "0:00";
-            const currentMobilePercent = mobileProgress[item.id] || 0;
+          {highlights.videos.map((item, index) => {
+            const isSelfPlaying = activeMobileId === item._id;
+            const currentMobileTime = mobileCurrentTimes[item._id] || "0:00";
+            const totalMobileDuration = mobileDurations[item._id] || "0:00";
+            const currentMobilePercent = mobileProgress[item._id] || 0;
 
             return (
               <div
-                key={`mobile-${item.id}`}
+                key={`mobile-${item._id}`}
                 ref={(el) => {
-                  mobileContainerRefs.current[item.id] = el;
+                  mobileContainerRefs.current[item._id] = el;
                 }}
                 className="flex flex-col bg-zinc-950 border border-white/5 rounded overflow-hidden shadow-xl w-full"
               >
                 <div
-                  onClick={() => handleMobilePlayToggle(item.id)}
+                  onClick={() => handleMobilePlayToggle(item._id)}
                   className="relative aspect-video w-full bg-zinc-900 flex items-center justify-center cursor-pointer"
                 >
                   <video
                     ref={(el) => {
-                      mobileVideoRefs.current[item.id] = el;
+                      mobileVideoRefs.current[item._id] = el;
                     }}
-                    onLoadedMetadata={() => handleMobileMetadataLoaded(item.id)}
-                    onTimeUpdate={() => handleMobileTimeUpdate(item.id)}
+                    onLoadedMetadata={() =>
+                      handleMobileMetadataLoaded(item._id)
+                    }
+                    onTimeUpdate={() => handleMobileTimeUpdate(item._id)}
                     className="w-full h-full object-cover"
                     preload="metadata"
                     playsInline
                     poster={mainHighlightImg}
                   >
-                    <source src={item.videoUrl} type="video/mp4" />
+                    <source src={item.video_url} type="video/mp4" />
                   </video>
 
                   <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
@@ -527,7 +491,7 @@ export default function MediaBroadcastCenter() {
                       min="0"
                       max="100"
                       value={currentMobilePercent}
-                      onChange={(e) => handleMobileScrub(item.id, e)}
+                      onChange={(e) => handleMobileScrub(item._id, e)}
                       className="w-full h-1 bg-white/25 accent-kh-pink rounded-lg appearance-none cursor-pointer outline-none"
                       style={{
                         background: `linear-gradient(to right, #ec4899 0%, #ec4899 ${currentMobilePercent}%, rgba(255,255,255,0.2) ${currentMobilePercent}%, rgba(255,255,255,0.2) 100%)`,
@@ -543,7 +507,7 @@ export default function MediaBroadcastCenter() {
                   </span>
 
                   <button
-                    onClick={(e) => toggleMobileFullscreen(item.id, e)}
+                    onClick={(e) => toggleMobileFullscreen(item._id, e)}
                     className="absolute bottom-3 left-3 p-2 rounded bg-black/70 border border-white/10 text-white cursor-pointer z-20"
                   >
                     <Maximize className="w-3.5 h-3.5" />
@@ -558,22 +522,19 @@ export default function MediaBroadcastCenter() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <span className="font-mono text-[9px] tracking-widest text-cyan-400 font-bold bg-cyan-400/5 border border-cyan-400/20 px-2 py-0.5 uppercase rounded">
-                        {item.tag}
+                        {item.video_type}
                       </span>
                       <h4 className="font-display text-xl tracking-tight text-white uppercase mt-2">
-                        {item.title}
+                        {item.video_name}
                       </h4>
-                      <p className="text-zinc-500 font-sans text-xs mt-0.5">
-                        {item.subtitle}
-                      </p>
                     </div>
 
                     <button
                       onClick={() => {
-                        const targetVid = mobileVideoRefs.current[item.id];
+                        const targetVid = mobileVideoRefs.current[item._id];
                         if (targetVid) {
                           targetVid.currentTime = 0;
-                          if (!isSelfPlaying) handleMobilePlayToggle(item.id);
+                          if (!isSelfPlaying) handleMobilePlayToggle(item._id);
                         }
                       }}
                       className="p-2.5 rounded-xl bg-zinc-900 border border-white/5 text-zinc-400 active:text-kh-pink"

@@ -47,6 +47,7 @@ export interface HomeData {
 
 // Highlights
 export interface HighlightVideo {
+  _id: string;
   video_url: string;
   video_name: string;
   video_type: string;

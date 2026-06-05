@@ -10,10 +10,11 @@ import { useActiveHighlight } from "@/hooks/useHighlights";
 import { useHome } from "@/hooks/useHome";
 
 export default function Highlights() {
-  const { data: activeHighlights } = useActiveHighlight();
+  const { data: activeHighlights, isLoading: highlightLoading } =
+    useActiveHighlight();
   const { data: homeData, isLoading: homeLoading } = useHome();
   const mainUrl = activeHighlights?.MainVideo_url;
-  if (activeHighlights) return <Preloader />;
+  if (highlightLoading || homeLoading) return <Preloader />;
 
   return (
     <main className="min-h-screen text-foreground flex flex-col w-full">
@@ -56,9 +57,9 @@ export default function Highlights() {
       <HeroSection mainUrl={mainUrl} />
       {/* <NavigationTabs /> */}
       {/* <FeaturedHighlightsSection></FeaturedHighlightsSection> */}
-      <HighlightsSection />
+      <HighlightsSection highlights={activeHighlights} />
 
-      <SeasonStats stats={homeData?.NUMBERS} isLoading={homeLoading} />
+      <SeasonStats stats={homeData?.NUMBERS} />
       <TopPlayCategories />
       {/* <SubscribeSection /> */}
       <TestimonialSlider />
