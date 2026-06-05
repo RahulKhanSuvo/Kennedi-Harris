@@ -20,43 +20,22 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 15 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: kineticSpring },
+    transition: { duration: 0.5, ease: kineticSpring },
   },
 };
 
 export default function BottomInfoBar() {
-  // Centralized metric collection matrix
+  // Cleaned configuration matrix: layout logic is kept purely in the JSX loop
   const metrics = [
-    {
-      icon: LuCalendarDays,
-      label: "CLASS OF 2030",
-      customClass: "justify-start md:justify-center lg:justify-start",
-    },
-    {
-      icon: TbRuler2,
-      label: "6'4\"",
-      customClass: "justify-start md:justify-center",
-    },
-    {
-      icon: PiBasketball,
-      label: "GUARD / FORWARD",
-      customClass: "justify-start md:justify-center",
-    },
-    {
-      icon: MapPin,
-      label: "WARNER ROBINS, GA",
-      customClass: "justify-start md:justify-center",
-    },
-    {
-      icon: Star,
-      label: "NATIONAL PROSPECT",
-      customClass:
-        "col-span-2 md:col-span-1 justify-start md:justify-center lg:justify-end",
-    },
+    { icon: LuCalendarDays, label: "CLASS OF 2030" },
+    { icon: TbRuler2, label: "6'4\"" },
+    { icon: PiBasketball, label: "GUARD / FORWARD" },
+    { icon: MapPin, label: "WARNER ROBINS, GA" },
+    { icon: Star, label: "NATIONAL PROSPECT", isFeatured: true },
   ];
 
   return (
@@ -65,11 +44,11 @@ export default function BottomInfoBar() {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        className="max-w-[1920px] w-full mx-auto px-6 sm:px-10 py-6 md:py-8 
-                   grid grid-cols-1 md:flex md:flex-row md:flex-wrap lg:flex-nowrap 
-                   items-center justify-between gap-y-6 gap-x-4 md:gap-0
-                   font-condensed font-semibold tracking-widest text-base sm:text-lg lg:text-xl text-white"
+        viewport={{ once: true, amount: 0.1 }}
+        className="max-w-[1920px] w-full mx-auto px-5 sm:px-10 py-5 lg:py-7 
+                   grid grid-cols-2 md:grid-cols-5 gap-y-5 gap-x-4
+                   items-center justify-items-start md:justify-items-center lg:justify-between
+                   font-condensed font-semibold tracking-widest text-sm sm:text-base lg:text-lg text-white"
       >
         {metrics.map((metric, index) => {
           const IconComponent = metric.icon;
@@ -77,10 +56,16 @@ export default function BottomInfoBar() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className={`flex items-center gap-3 md:w-1/5 truncate ${metric.customClass}`}
+              className={`flex items-center gap-2.5 min-w-0 w-full md:w-auto
+                ${metric.isFeatured ? "col-span-2 md:col-span-1" : ""} 
+                ${index % 2 === 1 ? "justify-self-start pl-2 md:pl-0" : ""}
+                md:justify-center lg:justify-start
+              `}
             >
-              <IconComponent className="text-kh-pink shrink-0 text-xl md:text-2xl" />
-              <span className="truncate">{metric.label}</span>
+              <IconComponent className="text-kh-pink shrink-0 text-lg sm:text-xl lg:text-2xl" />
+              <span className="truncate uppercase select-none">
+                {metric.label}
+              </span>
             </motion.div>
           );
         })}

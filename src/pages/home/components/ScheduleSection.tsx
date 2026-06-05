@@ -68,7 +68,7 @@ export default function ScheduleSection() {
   const { data, isLoading } = useSchedule();
 
   return (
-    <div className="w-full max-w-2xl mx-auto xl:mx-0 xl:max-w-none bg-neutral-950/20 lg:p-8 rounded border-l border-white/5 backdrop-blur-xs">
+    <div className="w-full max-w-2xl mx-auto xl:mx-0 xl:max-w-none bg-neutral-950/20 lg:p-8 rounded md:border-l border-white/5 backdrop-blur-xs">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
           <h3 className="font-condensed font-semibold text-lg lg:text-xl tracking-widest text-white uppercase">
@@ -93,7 +93,7 @@ export default function ScheduleSection() {
         {isLoading || !data?.data ? (
           <ScheduleSkeleton />
         ) : (
-          data.data.map((item, i) => (
+          data?.data?.slice(0, 5).map((item, i) => (
             <motion.div
               key={i}
               variants={itemVariants}
@@ -104,9 +104,9 @@ export default function ScheduleSection() {
                   i % 2 === 0
                     ? "bg-linear-to-br from-kh-pink to-kh-pink/90"
                     : "bg-linear-to-br from-kh-blue to-kh-blue/90"
-                } flex flex-col items-center justify-center shrink-0 shadow-md select-none`}
+                } flex flex-col items-center justify-center text-center shrink-0 shadow-md select-none`}
               >
-                <span className="font-condensed font-bold text-white text-[10px] tracking-widest leading-none mb-1 opacity-90">
+                <span className=" font-bold text-white  tracking-widest leading-none mb-1">
                   {item.date}
                 </span>
               </div>
