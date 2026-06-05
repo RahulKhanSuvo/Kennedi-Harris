@@ -31,7 +31,7 @@ export function SeasonSchedule() {
       className="py-24 bg-kh-dark border-t border-white/5 relative overflow-hidden"
     >
       {/* Subtle background glow tracker */}
-      <div className="absolute right-[-10%] top-0 w-[500px] h-[500px] bg-kh-blue/[0.02] blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute right-[-10%] top-0 w-[500px] h-[500px] bg-kh-blue/2 blur-[150px] rounded-full pointer-events-none" />
 
       <Container className="relative z-10 w-full flex flex-col gap-10">
         {/* Header Configuration */}
