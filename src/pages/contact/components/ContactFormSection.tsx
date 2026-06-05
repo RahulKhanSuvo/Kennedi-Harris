@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   User,
@@ -17,8 +19,10 @@ type FormField = "name" | "email" | "subject" | "message" | null;
 
 export function ContactFormSection({
   data,
+  isLoading,
 }: {
   data: GetInTouchDetails | null;
+  isLoading: boolean;
 }) {
   const [formState, setFormState] = useState({
     name: "",
@@ -27,7 +31,6 @@ export function ContactFormSection({
     message: "",
   });
 
-  // Explicitly passing the FormField union type to useState resolves the TS2345 error
   const [focusedField, setFocusedField] = useState<FormField>(null);
 
   const contactInfo = [
@@ -39,6 +42,8 @@ export function ContactFormSection({
       lines: [data?.bookingEmail],
       isLink: true,
       href: `mailto:${data?.bookingEmail}`,
+      requiresLoading: true,
+      skeletonWidth: "w-48",
     },
     {
       icon: (
@@ -48,6 +53,8 @@ export function ContactFormSection({
       lines: [data?.phone],
       isLink: true,
       href: `tel:${data?.phone}`,
+      requiresLoading: true,
+      skeletonWidth: "w-36",
     },
     {
       icon: (
@@ -56,6 +63,7 @@ export function ContactFormSection({
       title: "LOCATION",
       lines: ["Warner Robins, Georgia", "United States"],
       isLink: false,
+      requiresLoading: false,
     },
     {
       icon: (
@@ -66,6 +74,7 @@ export function ContactFormSection({
       lines: ["info@kennediharrishoops.com"],
       isLink: true,
       href: "mailto:info@kennediharrishoops.com",
+      requiresLoading: false,
     },
     {
       icon: (
@@ -76,6 +85,7 @@ export function ContactFormSection({
       lines: ["media@kennediharrishoops.com"],
       isLink: true,
       href: "mailto:media@kennediharrishoops.com",
+      requiresLoading: false,
     },
   ];
 
@@ -236,23 +246,29 @@ export function ContactFormSection({
                       </p>
                     )}
 
-                    {info.lines.map((line, lIdx) => (
-                      <div key={lIdx} className="truncate">
-                        {info.isLink ? (
-                          <a
-                            href={info.href}
-                            className="inline-flex items-center gap-1 text-gray-200 hover:text-white text-sm font-sans font-light transition-colors group/link underline-offset-4 hover:underline"
-                          >
-                            {line}
-                            <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300 text-kh-pink" />
-                          </a>
-                        ) : (
-                          <p className="text-gray-200 text-sm font-sans font-light">
-                            {line}
-                          </p>
-                        )}
-                      </div>
-                    ))}
+                    {info.requiresLoading && isLoading ? (
+                      <div
+                        className={`h-4 ${info.skeletonWidth || "w-32"} bg-white/5 rounded animate-pulse mt-1.5`}
+                      />
+                    ) : (
+                      info.lines.map((line, lIdx) => (
+                        <div key={lIdx} className="truncate">
+                          {info.isLink ? (
+                            <a
+                              href={info.href}
+                              className="inline-flex items-center gap-1 text-gray-200 hover:text-white text-sm font-sans font-light transition-colors group/link underline-offset-4 hover:underline mt-0.5"
+                            >
+                              {line}
+                              <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300 text-kh-pink" />
+                            </a>
+                          ) : (
+                            <p className="text-gray-200 text-sm font-sans font-light mt-0.5">
+                              {line}
+                            </p>
+                          )}
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
               ))}

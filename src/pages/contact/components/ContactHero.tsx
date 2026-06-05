@@ -1,3 +1,5 @@
+"use client";
+
 import { Mail, Phone, MapPin, ArrowDown, Send } from "lucide-react";
 import Container from "@/components/common/Container";
 import { motion, type Variants } from "motion/react";
@@ -5,8 +7,10 @@ import type { ContactDetails } from "@/types";
 
 export function ContactHero({
   contactDetails,
+  isLoading,
 }: {
   contactDetails: ContactDetails | null | undefined;
+  isLoading: boolean;
 }) {
   // Animation configuration constants
   const fadeInUp: Variants = {
@@ -103,7 +107,7 @@ export function ContactHero({
           </motion.div>
         </motion.div>
 
-        {/* RIGHT COLUMN — Premium Digital Rolodex Card (Also animated nicely) */}
+        {/* RIGHT COLUMN — Premium Digital Rolodex Card */}
         <motion.div
           className="lg:col-span-5 w-full flex justify-center lg:justify-end"
           initial={{ opacity: 0, x: 30 }}
@@ -121,51 +125,66 @@ export function ContactHero({
 
             {/* Directory Metric Contact Info Items */}
             <div className="space-y-6 relative z-10">
+              {/* Email Block */}
               <div className="flex gap-4 items-center group/item">
                 <div className="h-10 w-10 shrink-0 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-kh-pink group-hover/item:border-kh-pink/40 transition-colors">
                   <Mail size={16} />
                 </div>
-                <div>
-                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase mb-0.5">
                     Email Me Directly
                   </div>
-                  <a
-                    href={`${contactDetails?.email}`}
-                    className="text-sm font-sans font-medium text-gray-200 hover:text-kh-pink transition-colors"
-                  >
-                    {contactDetails?.email}
-                  </a>
+                  {isLoading ? (
+                    <div className="h-4 w-44 bg-white/5 rounded animate-pulse mt-1" />
+                  ) : (
+                    <a
+                      href={`mailto:${contactDetails?.email}`}
+                      className="text-sm font-sans font-medium text-gray-200 hover:text-kh-pink transition-colors block truncate"
+                    >
+                      {contactDetails?.email || "info@kennediharrishoops.com"}
+                    </a>
+                  )}
                 </div>
               </div>
 
+              {/* Phone Block */}
               <div className="flex gap-4 items-center group/item">
                 <div className="h-10 w-10 shrink-0 rounded bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 group-hover/item:border-cyan-400/40 transition-colors">
                   <Phone size={16} />
                 </div>
-                <div>
-                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase mb-0.5">
                     Management / Inquiries
                   </div>
-                  <a
-                    href={`tel:${contactDetails?.phone}`}
-                    className="text-sm font-sans font-medium text-gray-200 hover:text-cyan-400 transition-colors"
-                  >
-                    {contactDetails?.phone}
-                  </a>
+                  {isLoading ? (
+                    <div className="h-4 w-32 bg-white/5 rounded animate-pulse mt-1" />
+                  ) : (
+                    <a
+                      href={`tel:${contactDetails?.phone}`}
+                      className="text-sm font-sans font-medium text-gray-200 hover:text-cyan-400 transition-colors block"
+                    >
+                      {contactDetails?.phone || "4041234567"}
+                    </a>
+                  )}
                 </div>
               </div>
 
+              {/* Location Block */}
               <div className="flex gap-4 items-center group/item">
                 <div className="h-10 w-10 shrink-0 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 group-hover/item:text-white transition-colors">
                   <MapPin size={16} />
                 </div>
-                <div>
-                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-condensed tracking-widest text-gray-500 uppercase mb-0.5">
                     Based Out Of
                   </div>
-                  <div className="text-sm font-sans font-medium text-gray-300">
-                    {contactDetails?.location || "United States"}
-                  </div>
+                  {isLoading ? (
+                    <div className="h-4 w-28 bg-white/5 rounded animate-pulse mt-1" />
+                  ) : (
+                    <div className="text-sm font-sans font-medium text-gray-300">
+                      {contactDetails?.location || "Atlanta, Georgia"}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

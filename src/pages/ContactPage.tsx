@@ -294,7 +294,7 @@ export default function ContactPage() {
             </Card>
 
             {/* Group 2: Get In Touch */}
-            <Card className="bg-[#0c0c14] border-white/5 p-6 rounded-2xl">
+            <Card className="bg-kh-dark-2 border-white/5 p-6 rounded-2xl">
               <CardHeader className="p-0 mb-6">
                 <CardTitle className="font-display text-xl uppercase tracking-wider text-white">
                   Get In Touch
