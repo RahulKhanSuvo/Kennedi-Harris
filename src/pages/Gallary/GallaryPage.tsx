@@ -3,15 +3,9 @@ import { InstagramSection } from "./components/InstagramSection";
 import { GalleryGrid } from "./components/GalleryGrid";
 import { GalleryHeritage } from "./components/GalleryHeritage";
 import { useActiveGallery } from "@/hooks/useGallery";
-import Preloader from "@/components/common/Preloader";
 
 export default function GallaryPage() {
   const { data, isLoading } = useActiveGallery();
-  console.log(data);
-  // Scroll to top on mount
-  if (isLoading) {
-    return <Preloader />;
-  }
 
   return (
     <main className="bg-kh-dark min-h-screen text-foreground flex flex-col w-full overflow-hidden">
@@ -50,9 +44,13 @@ export default function GallaryPage() {
       <GalleryHero
         bannerFristImg={data?.bannerFristImg || ""}
         bannerSecondImg={data?.bannerSecondImg || ""}
+        isLoading={isLoading}
       />
-      <GalleryGrid data={data?.photos || []} />
-      <GalleryHeritage mentorshipImgUrl={data?.mentorshipImgUrl || ""} />
+      <GalleryGrid data={data?.photos || []} isLoading={isLoading} />
+      <GalleryHeritage
+        mentorshipImgUrl={data?.mentorshipImgUrl || ""}
+        isLoading={isLoading}
+      />
       <InstagramSection />
     </main>
   );

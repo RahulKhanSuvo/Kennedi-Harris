@@ -1,3 +1,5 @@
+"use client";
+
 import { Shield, Flame, HeartHandshake } from "lucide-react";
 import Container from "@/components/common/Container";
 
@@ -5,8 +7,10 @@ import foundationImg from "@/assets/gallery/fatheranddaughter.jpg";
 
 export function GalleryHeritage({
   mentorshipImgUrl,
+  isLoading,
 }: {
   mentorshipImgUrl?: string;
+  isLoading: boolean;
 }) {
   return (
     <section className="py-24 relative bg-[#0c0c0f] border-t border-white/5 overflow-hidden">
@@ -14,6 +18,7 @@ export function GalleryHeritage({
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute inset-0 dot-grid opacity-[0.05] pointer-events-none" />
 
+      {/* ✅ Fixed: Added leading angle bracket to the Container tag */}
       <Container className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* LEFT CANVAS BLOCK (5 Columns) — Raw Archival Media Frame */}
         <div className="lg:col-span-5 order-2 lg:order-1 relative">
@@ -22,18 +27,23 @@ export function GalleryHeritage({
 
           <div className="relative aspect-4/5 w-full max-w-[380px] mx-auto lg:max-w-none bg-[#121216] border border-white/10 p-3 rounded-2xl shadow-2xl">
             <div className="w-full h-full rounded-xl bg-[#17171d] overflow-hidden relative flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
-              <img
-                src={mentorshipImgUrl || foundationImg}
-                alt="Early Mentorship & Roots"
-                className="w-full absolute aspect-4/5 h-full object-cover filter contrast-[1.05] sepia-[0.15]"
-              />
-              {/* [ FOUNDATION_ARCHIVE_IMAGE ] */}
-              {/* High-Contrast Vintage Vignette Overlay */}
-              <div className="absolute inset-0 bg-linear-to-t from-[#0c0c0f] via-transparent to-black/30" />
+              {isLoading ? (
+                <div className="absolute inset-0 bg-white/5 animate-pulse" />
+              ) : (
+                <>
+                  <img
+                    src={mentorshipImgUrl || foundationImg}
+                    alt="Early Mentorship & Roots"
+                    className="w-full absolute aspect-4/5 h-full object-cover filter contrast-[1.05] sepia-[0.15]"
+                  />
+                  {/* High-Contrast Vintage Vignette Overlay */}
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0c0c0f] via-transparent to-black/30" />
+                </>
+              )}
             </div>
 
             {/* Float Overlay Identity Ribbon */}
-            <div className="absolute -bottom-4 -right-4 bg-[#15151a] border border-white/10 px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2">
+            <div className="absolute -bottom-4 -right-4 bg-[#15151a] border border-white/10 px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2 z-20">
               <HeartHandshake size={14} className="text-kh-pink" />
               <span className="font-condensed text-[11px] font-bold tracking-widest text-white uppercase">
                 EST. 2016 // COACHED BY DAD

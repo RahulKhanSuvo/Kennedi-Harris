@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef } from "react";
 import { Grid, Layers, ArrowDown } from "lucide-react";
 import { motion, useInView, type Variants } from "motion/react";
@@ -69,9 +71,11 @@ const floatingMiniFrameVariants: Variants = {
 export function GalleryHero({
   bannerFristImg,
   bannerSecondImg,
+  isLoading,
 }: {
   bannerFristImg: string;
   bannerSecondImg: string;
+  isLoading: boolean;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -207,13 +211,17 @@ export function GalleryHero({
             >
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-transparent z-10" />
 
-              {/* Main Image Replacement Layer */}
+              {/* Main Image Replacement Layer or Shimmer Skeleton */}
               <div className="w-full h-full bg-[#1c1c24] flex items-center justify-center text-gray-600 font-condensed text-xs tracking-widest uppercase">
-                <img
-                  src={bannerFristImg || galleryHeroMain}
-                  alt="On Court Action"
-                  className="w-full h-full object-cover"
-                />
+                {isLoading ? (
+                  <div className="w-full h-full bg-white/5 animate-pulse" />
+                ) : (
+                  <img
+                    src={bannerFristImg || galleryHeroMain}
+                    alt="On Court Action"
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </div>
 
               {/* Bottom Frame Badge Tag */}
@@ -234,11 +242,15 @@ export function GalleryHero({
               className="absolute -bottom-6 -left-6 sm:-left-10 w-1/2 aspect-square bg-[#1a1a22] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-20 hidden sm:block will-change-transform"
             >
               <div className="w-full h-full bg-[#22222a] flex items-center justify-center text-gray-600 font-condensed text-[9px] tracking-wider uppercase text-center">
-                <img
-                  src={bannerSecondImg || galleryHeroSub}
-                  alt="Training Session"
-                  className="w-full h-full object-cover"
-                />
+                {isLoading ? (
+                  <div className="w-full h-full bg-white/5 animate-pulse" />
+                ) : (
+                  <img
+                    src={bannerSecondImg || galleryHeroSub}
+                    alt="Training Session"
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </div>
             </motion.div>
           </div>
