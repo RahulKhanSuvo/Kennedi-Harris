@@ -213,7 +213,7 @@ export default function FooterPage() {
           {[1, 2].map((i) => (
             <div
               key={i}
-              className="h-64 bg-[#0c0c14] border border-white/5 rounded-2xl"
+              className="h-64 bg-kh-dark-2 border border-white/5 rounded-2xl"
             />
           ))}
         </div>

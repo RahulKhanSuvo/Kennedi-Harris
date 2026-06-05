@@ -1,9 +1,7 @@
-"use client";
-
 import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
 import { Calendar, MapPin, ArrowDown, Clock } from "lucide-react";
-import scheduleBg from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
+import scheduleBg from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.avif";
 
 // Animation configs mapping directly to your elite broadcast specifications
 const canvasVariants: Variants = {

@@ -1,7 +1,7 @@
 import { PlayCircle, FileText } from "lucide-react";
 import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
-import backgroundImage from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
+import backgroundImage from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.avif";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 

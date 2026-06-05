@@ -1,7 +1,7 @@
 import { Handshake, Download, FileText, ArrowUpRight } from "lucide-react";
 import { motion, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
-import backgroundImage from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.png";
+import backgroundImage from "@/assets/backgroud/984f0b66772a4d7d8361bee6cd73b590.avif";
 
 // Kinetic physics curves for premium fluid motion
 const fluidSpring = [0.16, 1, 0.3, 1] as const;
