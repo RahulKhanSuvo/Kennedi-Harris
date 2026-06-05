@@ -156,7 +156,7 @@ export default function HighlightsSection({
 
       {/* Playlist Strip Deck Controller */}
       <div className="w-full lg:w-1/3 flex flex-col justify-between gap-4 lg:pt-9">
-        <div className="flex flex-col gap-3 max-h-[380px] overflow-y-auto pr-1 custom-scrollbar">
+        <div className="flex flex-col gap-3 max-h-[380px] overflow-hidden pr-1 custom-scrollbar">
           {videosList.map((item, index) => {
             const isActive = currentVideo === item.video_url;
             return (
