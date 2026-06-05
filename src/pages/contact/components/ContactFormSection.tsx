@@ -71,10 +71,11 @@ export function ContactFormSection({
       ),
       title: "BOOK KENNEDI",
       description: "For camps, clinics, appearances, and speaking engagements.",
-      lines: ["info@kennediharrishoops.com"],
+      lines: [data?.bookingEmail],
       isLink: true,
-      href: "mailto:info@kennediharrishoops.com",
-      requiresLoading: false,
+      href: `mailto:${data?.bookingEmail}`,
+      requiresLoading: true,
+      skeletonWidth: "w-36",
     },
     {
       icon: (
@@ -82,10 +83,11 @@ export function ContactFormSection({
       ),
       title: "MEDIA INQUIRIES",
       description: "For media requests and interviews.",
-      lines: ["media@kennediharrishoops.com"],
+      lines: [data?.mediaEmail],
       isLink: true,
-      href: "mailto:media@kennediharrishoops.com",
-      requiresLoading: false,
+      href: `mailto:${data?.mediaEmail}`,
+      requiresLoading: true,
+      skeletonWidth: "w-36",
     },
   ];
 
