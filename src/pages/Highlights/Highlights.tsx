@@ -60,7 +60,7 @@ export default function Highlights() {
       <HighlightsSection highlights={activeHighlights} />
 
       <SeasonStats stats={homeData?.NUMBERS} />
-      <TopPlayCategories />
+      <TopPlayCategories FeedVideoData={activeHighlights?.feedVideos || []} />
       {/* <SubscribeSection /> */}
       <TestimonialSlider />
     </main>

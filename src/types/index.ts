@@ -56,6 +56,7 @@ export interface HighlightVideo {
 export interface FeedVideo {
   title: string;
   video_url: string;
+  _id: string;
 }
 
 export interface HighlightData {
