@@ -54,7 +54,7 @@ export default function Navbar() {
     { name: "HIGHLIGHTS", path: "highlights" },
     { name: "SCHEDULE", path: "schedule" },
     { name: "MEDIA KIT", path: "media-kit" },
-    { name: "BRAND PARTNERS", path: "brand-partners" },
+    // { name: "BRAND PARTNERS", path: "brand-partners" },
     { name: "GALLERY", path: "gallery" },
     { name: "CONTACT", path: "contact" },
   ];
