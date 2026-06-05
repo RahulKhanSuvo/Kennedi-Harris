@@ -33,7 +33,7 @@ function GallerySkeleton() {
           className="aspect-square bg-neutral-900 rounded-sm border border-white/5 relative overflow-hidden animate-pulse"
         >
           {/* Subtle shifting gradient highlight */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="font-mono text-[9px] tracking-[0.25em] text-zinc-700 uppercase">
               LOADING
@@ -110,7 +110,7 @@ export default function GallerySection() {
                   <motion.div
                     key={index}
                     variants={fadeUpVariants}
-                    className="aspect-square bg-neutral-900 rounded-sm border border-white/5 overflow-hidden cursor-pointer group relative"
+                    className="aspect-square bg-neutral-900 rounded-sm border border-white/5 overflow-hidden group relative"
                   >
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 z-10" />
                     <img
@@ -160,7 +160,7 @@ export default function GallerySection() {
             </div>
 
             {/* Marquee Mask Container Box */}
-            <div className="w-full overflow-hidden border-t border-white/5 pt-8 relative [mask-image:linear-gradient(to_right,transparent_0%,#000_10%,#000_90%,transparent_100%)]">
+            <div className="w-full overflow-hidden border-t border-white/5 pt-8 relative mask-[linear-gradient(to_right,transparent_0%,#000_10%,#000_90%,transparent_100%)]">
               <div className="animate-marquee-infinite gap-16 items-center pr-16 select-none opacity-60 hover:opacity-100 transition-opacity duration-300">
                 {/* Track Group A */}
                 <div className="flex items-center gap-16 shrink-0">
