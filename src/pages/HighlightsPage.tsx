@@ -332,7 +332,7 @@ export default function HighlightsPage() {
               <div className="w-full flex-1 min-h-[300px] lg:min-h-0 aspect-video rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
                 <Video
                   size={36}
-                  className="text-zinc-900 animate-spin [animation-duration:3s]"
+                  className="text-zinc-900 animate-spin animation-duration-[3s]"
                 />
               </div>
             </div>
