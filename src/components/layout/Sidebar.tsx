@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import {
   Home,
   Video,
@@ -11,7 +11,9 @@ import {
   Menu,
   X,
   Calendar,
+  LogOut,
 } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 
 const NAV_ITEMS = [
   { label: "Home Page", to: "/dashboard/home", icon: Home },
@@ -25,10 +27,17 @@ const NAV_ITEMS = [
 
 export default function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+
+  const handleLogout = () => {
+    clearAuth();
+    navigate("/login");
+  };
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button & Top Bar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-4 bg-kh-dark-2 border-b border-white/5">
         <div className="flex items-center gap-2">
           <span className="text-2xl font-display font-black leading-none text-white">
@@ -39,12 +48,23 @@ export default function Sidebar() {
             CMS Panel
           </span>
         </div>
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+
+        {/* Mobile Control Actions */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleLogout}
+            className="flex items-center justify-center p-2 rounded-lg bg-red-950/20 text-red-400 border border-red-500/10 hover:bg-red-900/30 transition-colors cursor-pointer"
+            title="Logout"
+          >
+            <LogOut size={16} />
+          </button>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="text-zinc-400 hover:text-white transition-colors cursor-pointer p-1"
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Overlay */}
@@ -66,7 +86,7 @@ export default function Sidebar() {
         `}
       >
         {/* Header/Logo */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-white/5">
+        <div className="flex items-center gap-3 px-5 py-6 border-b border-white/5">
           <div className="text-3xl font-display font-black leading-none shrink-0">
             <span className="text-kh-pink">A</span>
             <span className="text-white">D</span>
