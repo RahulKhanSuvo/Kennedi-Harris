@@ -6,6 +6,7 @@ import { AboutHero } from "./components/AboutHero";
 import { useActiveAbout } from "@/hooks/useAbout";
 import Preloader from "@/components/common/Preloader";
 import { useActiveGallery } from "@/hooks/useGallery";
+import type { GalleryData } from "@/types";
 
 export default function About() {
   const { data: aboutData, isLoading: aboutIsLoading } = useActiveAbout();
@@ -30,9 +31,9 @@ export default function About() {
         property="og:description"
         content="Learn more about Kennedy Harris, his journey, and his mission."
       />
-      <AboutHero dHeroImage={aboutData?.bannerImgUrl} />
-      <Timeline data={aboutData} />
-      <BeyondTheGame data={galleryData} />
+      <AboutHero dHeroImage={aboutData?.bannerImgUrl || ""} />
+      <Timeline data={aboutData || null} />
+      <BeyondTheGame data={galleryData as GalleryData | null} />
       <AthleteBanner />
       <ContactForm />
     </main>

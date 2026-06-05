@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { type GalleryData } from "@/types";
 
-export function BeyondTheGame({ data }: { data?: GalleryData }) {
+export function BeyondTheGame({ data }: { data?: GalleryData | null }) {
   // Configured mixed-media layout slots spanning across multiple grid pathways
   const bentoItems = [
     {

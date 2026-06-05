@@ -2,68 +2,36 @@
 
 import { Link } from "react-router";
 import { ChevronRight, Maximize2, Camera } from "lucide-react";
-import img1 from "@/assets/gallery/drib2.avif";
-import img2 from "@/assets/gallery/dribliing.avif";
-import img3 from "@/assets/gallery/working.avif";
-import img4 from "@/assets/gallery/jumping4.avif";
+
 import Container from "@/components/common/Container";
 import MediaLightboxModal from "@/components/common/MediaLightboxModal";
 import { useState } from "react";
-
-interface PhotoItem {
-  id: number;
-  src: string;
-  alt: string;
-  // Controlled desktop explicit tracks; mobile relies on clean native flow
-  desktopGridClass: string;
-  mobileAspectClass: string;
-}
-
-const photos: PhotoItem[] = [
-  {
-    id: 1,
-    src: img1,
-    alt: "On-court action",
-    desktopGridClass: "md:col-span-2 md:row-span-2 md:h-[440px] lg:h-[500px]",
-    mobileAspectClass: "aspect-[4/3] sm:aspect-[16/10]",
-  },
-  {
-    id: 2,
-    src: img2,
-    alt: "Player portrait",
-    desktopGridClass: "md:col-span-2 md:row-span-1 md:h-[212px] lg:h-[242px]",
-    mobileAspectClass: "aspect-[4/3] sm:aspect-[16/10]",
-  },
-  {
-    id: 3,
-    src: img3,
-    alt: "Jersey detail",
-    desktopGridClass: "md:col-span-1 md:row-span-1 md:h-[212px] lg:h-[242px]",
-    mobileAspectClass: "aspect-square",
-  },
-  {
-    id: 4,
-    src: img4,
-    alt: "In-game defense",
-    desktopGridClass: "md:col-span-1 md:row-span-1 md:h-[212px] lg:h-[242px]",
-    mobileAspectClass: "aspect-square",
-  },
-];
+import { useActiveGallery } from "@/hooks/useGallery";
+import type { GalleryPhoto } from "@/types";
 
 export default function FeaturedPhotos() {
-  const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null);
+  const { data: gallery } = useActiveGallery();
+  const [selectedPhoto, setSelectedPhoto] = useState<GalleryPhoto | null>(null);
 
   const handleNext = () => {
-    if (!selectedPhoto) return;
-    const currentIndex = photos.findIndex((p) => p.id === selectedPhoto.id);
-    setSelectedPhoto(photos[(currentIndex + 1) % photos.length]);
+    if (!selectedPhoto || !gallery) return;
+    const currentIndex = gallery?.photos.findIndex(
+      (p) => p._id === selectedPhoto._id,
+    );
+    setSelectedPhoto(
+      gallery?.photos[(currentIndex + 1) % gallery.photos.length],
+    );
   };
 
   const handlePrev = () => {
-    if (!selectedPhoto) return;
-    const currentIndex = photos.findIndex((p) => p.id === selectedPhoto.id);
+    if (!selectedPhoto || !gallery) return;
+    const currentIndex = gallery?.photos.findIndex(
+      (p) => p._id === selectedPhoto._id,
+    );
     setSelectedPhoto(
-      photos[(currentIndex - 1 + photos.length) % photos.length],
+      gallery?.photos[
+        (currentIndex - 1 + gallery.photos.length) % gallery.photos.length
+      ],
     );
   };
 
@@ -105,17 +73,17 @@ export default function FeaturedPhotos() {
           Transforms seamlessly into a premium bento matrix on desktop frames.
         */}
         <div className="flex flex-col gap-4 md:grid md:grid-cols-4 md:auto-rows-auto">
-          {photos.map((photo) => (
+          {gallery?.photos?.map((photo) => (
             <div
-              key={photo.id}
+              key={photo._id}
               onClick={() => setSelectedPhoto(photo)}
-              className={`relative w-full rounded overflow-hidden group cursor-pointer border border-white/5 bg-neutral-900/40 transition-all duration-500 hover:border-kh-pink/40 shadow-2xl hover:shadow-kh-pink/5 ${photo.mobileAspectClass} ${photo.desktopGridClass}`}
+              className={`relative w-full rounded overflow-hidden group cursor-pointer border border-white/5 bg-neutral-900/40 transition-all duration-500 hover:border-kh-pink/40 shadow-2xl hover:shadow-kh-pink/5`}
             >
               {/* Image Engine */}
               <div className="w-full h-full overflow-hidden relative">
                 <img
-                  src={photo.src}
-                  alt={photo.alt}
+                  src={photo.url}
+                  alt={photo.name}
                   className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 group-hover:brightness-110 will-change-transform"
                 />
               </div>
@@ -128,7 +96,7 @@ export default function FeaturedPhotos() {
 
               {/* Technical Blueprint Elements */}
               <div className="absolute top-4 left-4 font-mono text-[9px] text-white/40 md:text-white/20 tracking-wider group-hover:text-kh-pink/60 transition-colors duration-300 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-md border border-white/5">
-                // 0{photo.id}
+                // 0{photo._id}
               </div>
 
               {/* Advanced Cyber UI Overlays */}
@@ -145,12 +113,12 @@ export default function FeaturedPhotos() {
                   <div className="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/5 px-2.5 py-1 rounded-lg mb-2 transform -skew-x-12 origin-left">
                     <Camera size={10} className="text-kh-pink skew-x-12" />
                     <span className="text-[9px] font-mono font-bold tracking-widest text-zinc-300 uppercase skew-x-12">
-                      FRAME_CAP_{photo.id}
+                      FRAME_CAP_{photo._id}
                     </span>
                   </div>
 
                   <p className="font-display font-bold text-base md:text-lg text-white uppercase tracking-wide drop-shadow-md">
-                    {photo.alt}
+                    {photo.name}
                   </p>
                 </div>
               </div>

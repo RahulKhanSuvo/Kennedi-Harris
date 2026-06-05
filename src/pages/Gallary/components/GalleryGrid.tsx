@@ -168,9 +168,10 @@ export function GalleryGrid({ data }: { data: GalleryPhoto[] }) {
         activeItem={
           selectedPhoto
             ? {
-                id: selectedPhoto._id,
-                src: selectedPhoto.url,
-                alt: selectedPhoto.name,
+                _id: selectedPhoto._id,
+                url: selectedPhoto.url,
+                name: selectedPhoto.name,
+                type: selectedPhoto.type,
               }
             : null
         }

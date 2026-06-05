@@ -2,7 +2,14 @@
 
 import { useRef } from "react";
 import { motion, useScroll, type Variants } from "motion/react";
-import { Award, Trophy, Target, Sparkles, Flame } from "lucide-react";
+import {
+  Award,
+  Trophy,
+  Target,
+  Sparkles,
+  Flame,
+  type LucideIcon,
+} from "lucide-react";
 import Container from "@/components/common/Container";
 
 import earlyLifeImg from "@/assets/about/pic1.avif";
@@ -12,6 +19,27 @@ import recognitionImg from "@/assets/about/pic4.avif";
 import meImg from "@/assets/modal/cd19294a-d030-4580-9dae-4de0473da04e.png";
 import type { AboutData } from "@/types";
 
+// 💡 Define the structural interface for an item inside your timeline data array
+interface TimelineItem {
+  id: number;
+  tag: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  stats: {
+    value: string;
+    label: string;
+  };
+  icon: LucideIcon;
+  image: string;
+}
+
+// 💡 Define explicit types for the sub-component props
+interface TimelineBlockProps {
+  item: TimelineItem;
+  isEven: boolean;
+}
+
 export function Timeline({ data }: { data: AboutData | null }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineGridRef = useRef<HTMLDivElement>(null);
@@ -20,7 +48,9 @@ export function Timeline({ data }: { data: AboutData | null }) {
     target: timelineGridRef,
     offset: ["start 30%", "end center"],
   });
-  const TIMELINE_DATA = [
+
+  // Explicitly typing the array configuration handles safe object construction
+  const TIMELINE_DATA: TimelineItem[] = [
     {
       id: 1,
       tag: "ORIGIN STORY",
@@ -73,15 +103,12 @@ export function Timeline({ data }: { data: AboutData | null }) {
       id="about"
       className="py-14 bg-[#0a0a0c] relative overflow-hidden border-t border-white/5"
     >
-      {/* Dynamic Cyber Grid & Lighting Framework */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#141416_1px,transparent_1px),linear-gradient(to_bottom,#141416_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-70 pointer-events-none" />
 
-      {/* Massive Ambient Lighting Nodes */}
       <div className="absolute top-0 right-0 w-[600px] xl:w-[900px] h-[600px] xl:h-[900px] bg-kh-blue/5 rounded-full filter blur-[180px] pointer-events-none animate-pulse duration-[8s]" />
       <div className="absolute bottom-1/4 left-0 w-[600px] xl:w-[900px] h-[600px] xl:h-[900px] bg-kh-pink/5 rounded-full filter blur-[180px] pointer-events-none animate-pulse duration-[10s]" />
 
       <Container className=" relative z-10">
-        {/* Editorial Heading Grid Matrix */}
         <div className=" flex  mb-20 items-center text-center flex-col">
           <div className="lg:col-span-8">
             <span className="text-kh-pink font-condensed tracking-[0.3em] uppercase font-black text-xs xl:text-sm block mb-4">
@@ -93,21 +120,11 @@ export function Timeline({ data }: { data: AboutData | null }) {
               <span className="text-kh-pink">DRIVEN BY PURPOSE.</span>
             </h2>
           </div>
-          {/* <div className="lg:col-span-4 border-l border-white/10 pl-6 xl:pl-10 pb-2">
-            <p className="text-zinc-400 font-sans font-light text-base md:text-lg xl:text-xl leading-relaxed max-w-md xl:max-w-xl">
-              Kennedi Harris has been making waves in the basketball universe
-              since she was just 6 years old. Explore the critical inflection
-              milestones that continue to sculpt her elite game layout.
-            </p>
-          </div> */}
         </div>
 
-        {/* Chronological Grid Frame */}
         <div ref={timelineGridRef} className="relative">
-          {/* Kinetic Axis Bar Track */}
           <div className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-px bg-zinc-900 transform lg:-translate-x-1/2 pointer-events-none" />
 
-          {/* Active 1:1 Laser Line Progress Indicator */}
           <motion.div
             style={{ scaleY: scrollYProgress }}
             className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-1 bg-linear-to-b to-kh-pink from-white origin-top transform lg:-translate-x-1/2 pointer-events-none z-10"
@@ -123,7 +140,6 @@ export function Timeline({ data }: { data: AboutData | null }) {
           </div>
         </div>
 
-        {/* Dynamic Ultra-Wide Athlete Quote Section */}
         <div className="mt-56 bg-neutral-950/40 border border-white/5 rounded p-8 md:p-12  relative overflow-hidden max-w-7xl 2xl:max-w-[1400px] mx-auto backdrop-blur-xl shadow-3xl">
           <div className="absolute inset-0 bg-linear-to-r from-kh-pink/3 to-transparent pointer-events-none" />
 
@@ -158,7 +174,8 @@ export function Timeline({ data }: { data: AboutData | null }) {
   );
 }
 
-function TimelineBlock({ item, isEven }) {
+// 💡 Fixed lines by applying the interface 'TimelineBlockProps' explicitly here
+function TimelineBlock({ item, isEven }: TimelineBlockProps) {
   const Icon = item.icon;
 
   const containerVariants: Variants = {
@@ -204,10 +221,8 @@ function TimelineBlock({ item, isEven }) {
 
   return (
     <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 xl:gap-24 items-center w-full min-h-[420px]">
-      {/* Central Timeline Point Marker Pin */}
       <div className="absolute left-4 lg:left-1/2 top-1/2 w-3.5 h-3.5 rounded-full bg-[#0a0a0c] border-2 border-kh-pink transform -translate-x-1/2 -translate-y-1/2 z-20 shadow-[0_0_15px_rgba(234,76,137,0.6)]" />
 
-      {/* TEXT CONTENT COLUMN */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -219,7 +234,6 @@ function TimelineBlock({ item, isEven }) {
             : "lg:order-2 lg:pl-16 xl:pl-24"
         }`}
       >
-        {/* Tag Shutter */}
         <div
           className={`overflow-hidden flex ${isEven ? "lg:justify-end" : "justify-start"}`}
         >
@@ -236,7 +250,6 @@ function TimelineBlock({ item, isEven }) {
           </motion.div>
         </div>
 
-        {/* Title Shutter */}
         <div className="overflow-hidden py-1">
           <motion.h3
             variants={shutterUpVariants}
@@ -246,7 +259,6 @@ function TimelineBlock({ item, isEven }) {
           </motion.h3>
         </div>
 
-        {/* Description Shutter */}
         <div className="overflow-hidden">
           <motion.p
             variants={shutterUpVariants}
@@ -258,7 +270,6 @@ function TimelineBlock({ item, isEven }) {
           </motion.p>
         </div>
 
-        {/* Dynamic KPI Widget Component */}
         <div
           className={`pt-4 flex ${isEven ? "lg:justify-end" : "justify-start"}`}
         >
@@ -281,7 +292,6 @@ function TimelineBlock({ item, isEven }) {
         </div>
       </motion.div>
 
-      {/* VISUAL IMAGE HOLDER CANVAS */}
       <motion.div
         variants={complexImageVariants}
         initial="hidden"
@@ -290,17 +300,14 @@ function TimelineBlock({ item, isEven }) {
         className={`pl-12 lg:pl-0 lg:col-span-6 ${isEven ? "lg:order-2 lg:pl-16 xl:pr-0" : "lg:order-1 lg:pr-16 xl:pl-0"}`}
       >
         <div className="w-full aspect-16/10 xl:aspect-video bg-neutral-950/80 border border-white/5 rounded-2xl overflow-hidden relative group shadow-2xl backdrop-blur-xs">
-          {/* Gradient overlay to keep text/cyber accents legible */}
           <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-transparent z-10 pointer-events-none" />
 
-          {/* Actual Timeline Image */}
           <img
-            src={item.image} // Safe fallback depending on Next.js setup/bundler behavior
+            src={item.image}
             alt={item.title}
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out grayscale-30 group-hover:grayscale-0 opacity-80 group-hover:opacity-100"
           />
 
-          {/* Technical Blueprint Wireframe Layer (Z-Index bumped so it overlays beautifully on top of your photo) */}
           <div className="absolute inset-0 flex flex-col justify-between p-8 xl:p-12 opacity-30 group-hover:opacity-50 transition-opacity duration-500 select-none z-20">
             <div className="flex justify-between items-start">
               <div className="font-mono text-[11px] xl:text-xs text-white">
@@ -315,7 +322,6 @@ function TimelineBlock({ item, isEven }) {
             </div>
           </div>
 
-          {/* Premium Highlight Trim Bars */}
           <div className="absolute bottom-0 left-0 w-16 h-[2px] bg-kh-pink group-hover:w-28 transition-all duration-300 z-20" />
           <div className="absolute top-0 right-0 w-16 h-[2px] bg-cyan-500 group-hover:w-28 transition-all duration-300 z-20" />
         </div>

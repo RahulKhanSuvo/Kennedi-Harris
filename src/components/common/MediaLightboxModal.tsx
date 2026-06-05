@@ -1,16 +1,11 @@
 import { useEffect } from "react";
 import { X, ArrowLeft, ArrowRight, Camera } from "lucide-react";
-
-interface LightboxItem {
-  id: string;
-  src: string;
-  alt: string;
-}
+import type { GalleryPhoto } from "@/types";
 
 interface MediaLightboxModalProps {
   isOpen: boolean;
   onClose: () => void;
-  activeItem: LightboxItem | null;
+  activeItem: GalleryPhoto | null;
   onNext: () => void;
   onPrev: () => void;
   systemIndex?: string;
@@ -103,8 +98,8 @@ export default function MediaLightboxModal({
         <div className="absolute w-[60%] h-[60%] bg-kh-pink/5 filter blur-[120px] rounded-full pointer-events-none" />
 
         <img
-          src={activeItem.src}
-          alt={activeItem.alt}
+          src={activeItem.url}
+          alt={activeItem.name}
           className="max-w-full max-h-full object-contain rounded-xl border border-white/5 shadow-[0_0_80px_rgba(0,0,0,0.8)] select-none"
         />
 
@@ -113,10 +108,10 @@ export default function MediaLightboxModal({
           <div className="flex items-center gap-3">
             <div className="inline-flex items-center gap-1.5 bg-kh-pink/10 border border-kh-pink/20 px-2.5 py-1 rounded font-mono text-[10px] text-kh-pink tracking-widest uppercase">
               <Camera size={10} />
-              INDEX_0{activeItem.id}
+              INDEX_0{activeItem._id}
             </div>
             <h3 className="font-display font-black text-lg md:text-xl text-white uppercase tracking-wider">
-              {activeItem.alt}
+              {activeItem.name}
             </h3>
           </div>
 

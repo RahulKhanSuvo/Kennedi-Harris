@@ -1,532 +1,361 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as zod from "zod";
 import { toast } from "sonner";
-import {
-  Video,
-  PlusCircle,
-  Trash2,
-  Edit2,
-  VideoOff,
-  Plus,
-  Loader2,
-  ExternalLink,
-} from "lucide-react";
+import { Video, PlusCircle, VideoOff, X } from "lucide-react";
 import {
   useAllHighlights,
   useCreateHighlight,
   useUpdateHighlight,
-  useDeleteHighlight,
+  useUpdateSingleVideo,
+  useDeleteSingleVideo,
+  useUpdateSingleFeedVideo,
+  useDeleteSingleFeedVideo,
 } from "@/hooks/useHighlights";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-const feedVideoSchema = zod.object({
-  video_type: zod.string().min(1, "Type is required"),
-  video_name: zod.string().min(1, "Name is required"),
-  videos: zod.any().optional(), // File
-});
-
-const highlightSchema = zod.object({
-  title: zod.string().min(1, "Title is required"),
-  MainVideo_url: zod.any().refine((val) => {
-    return val instanceof File || (typeof val === "string" && val.length > 0);
-  }, "Main video is required"),
-  feedVideos: zod.array(feedVideoSchema),
-});
-
-type HighlightFormValues = zod.infer<typeof highlightSchema>;
+// Modular sub-components
+import { HighlightCreateForm } from "@/components/highlights/HighlightCreateForm";
+import { HighlightEditForm } from "@/components/highlights/HighlightEditForm";
+import { ActiveHighlightCard } from "@/components/highlights/ActiveHighlightCard";
+import { EditSingleVideoModal } from "@/components/highlights/EditSingleVideoModal";
+import { EditSingleFeedVideoModal } from "@/components/highlights/EditSingleFeedVideoModal";
+import type { HighlightFormValues } from "@/components/highlights/HighlightCreateForm";
 
 export default function HighlightsPage() {
   const { data: highlights = [], isLoading, isError } = useAllHighlights();
   const createMutation = useCreateHighlight();
   const updateMutation = useUpdateHighlight();
-  const deleteMutation = useDeleteHighlight();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedHighlight, setSelectedHighlight] = useState(null);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
+  // Granular Item mutations
+  const updateSingleVideoMutation = useUpdateSingleVideo();
+  const deleteSingleVideoMutation = useDeleteSingleVideo();
+  const updateSingleFeedVideoMutation = useUpdateSingleFeedVideo();
+  const deleteSingleFeedVideoMutation = useDeleteSingleFeedVideo();
 
-  const isEdit = !!selectedHighlight;
+  // Inline states — no modal for whole package creation/editing
+  const [isCreating, setIsCreating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<HighlightFormValues>({
-    resolver: zodResolver(highlightSchema),
-    defaultValues: {
-      title: "",
-      MainVideo_url: "",
-      feedVideos: [],
-    },
-  });
+  // Single Item Modals states
+  const [isEditVideoOpen, setIsEditVideoOpen] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<any | null>(null);
 
-  const watchMainVideo = watch("MainVideo_url");
+  const [isEditFeedOpen, setIsEditFeedOpen] = useState(false);
+  const [selectedFeedVideo, setSelectedFeedVideo] = useState<any | null>(null);
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "feedVideos",
-  });
+  const activeHighlight =
+    highlights.find((h: any) => h.isActive) || highlights[0];
+  const hasExistingData = !!activeHighlight;
 
-  const handleOpenForm = (highlight: any = null) => {
-    setSelectedHighlight(highlight);
-    if (highlight) {
-      reset({
-        title: highlight.title || "Highlight Reel",
-        MainVideo_url: highlight.MainVideo_url || "",
-        feedVideos: (highlight.videos || highlight.feedVideos || []).map(
-          (v: any) => ({
-            video_type: v.video_type || "tiktok",
-            video_name: v.video_name || v.title || "",
-            videos: undefined, // existing file is string on server, keep file input empty
-          }),
-        ),
-      });
-    } else {
-      reset({
-        title: "",
-        MainVideo_url: "",
-        feedVideos: [
-          { video_type: "tiktok", video_name: "", videos: undefined },
-        ],
-      });
-    }
-    setIsOpen(true);
-  };
+  const isSubmittingItem =
+    updateSingleVideoMutation.isPending ||
+    deleteSingleVideoMutation.isPending ||
+    updateSingleFeedVideoMutation.isPending ||
+    deleteSingleFeedVideoMutation.isPending;
 
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => {
-    const file = e.target.files?.[0] || null;
-    if (file) {
-      setValue(`feedVideos.${index}.videos`, file);
-    }
-  };
-
-  const onSubmit = async (values: HighlightFormValues) => {
+  // ── Build FormData from form values ──
+  const buildFormData = (values: HighlightFormValues): FormData => {
     const formData = new FormData();
-    formData.append("title", values.title);
 
+    // Main Video File
     if (values.MainVideo_url instanceof File) {
       formData.append("MainVideo_url", values.MainVideo_url);
     } else if (typeof values.MainVideo_url === "string") {
       formData.append("MainVideo_url", values.MainVideo_url);
     }
 
-    values.feedVideos.forEach((fv) => {
-      // Append matching Server indices:
-      formData.append("video_type", fv.video_type);
-      formData.append("video_name", fv.video_name);
-      if (fv.videos instanceof File) {
-        formData.append("feedVideos", fv.videos);
-        formData.append("videos", fv.videos); // append under both for compatibility
+    // videos array
+    (values.videos || []).forEach((v: any) => {
+      formData.append("video_name", v.video_name);
+      formData.append("video_type", v.video_type);
+      formData.append("video_url", v.video_url || "");
+      if (v.videos instanceof File) {
+        formData.append("videos", v.videos);
       }
     });
 
-    if (isEdit && selectedHighlight) {
-      updateMutation.mutate(
-        { id: selectedHighlight._id, formData },
-        {
-          onSuccess: () => {
-            toast.success("Highlight package updated successfully!");
-            setIsOpen(false);
-          },
-          onError: (err: any) => {
-            toast.error(
-              err.response?.data?.message || "Failed to update highlight",
-            );
-          },
-        },
-      );
-    } else {
-      createMutation.mutate(formData, {
-        onSuccess: () => {
-          toast.success("Highlight package created successfully!");
-          setIsOpen(false);
-        },
-        onError: (err: any) => {
-          toast.error(
-            err.response?.data?.message || "Failed to create highlight",
-          );
-        },
-      });
-    }
+    // feedVideos array
+    (values.feedVideos || []).forEach((fv: any) => {
+      formData.append("title", fv.title);
+      formData.append("video_url", fv.video_url || "");
+      if (fv.feedVideos instanceof File) {
+        formData.append("feedVideos", fv.feedVideos);
+      }
+    });
+
+    return formData;
   };
 
-  const confirmDelete = (id: string) => {
-    setDeleteId(id);
-    setIsDeleteOpen(true);
-  };
-
-  const handleDelete = () => {
-    if (!deleteId) return;
-    deleteMutation.mutate(deleteId, {
+  // ── Create Handler ──
+  const handleCreate = (values: HighlightFormValues) => {
+    const formData = buildFormData(values);
+    createMutation.mutate(formData, {
       onSuccess: () => {
-        toast.success("Highlight package deleted!");
-        setIsDeleteOpen(false);
-        setDeleteId(null);
+        toast.success("Highlight package initialized successfully!");
+        setIsCreating(false);
       },
       onError: (err: any) => {
         toast.error(
-          err.response?.data?.message || "Failed to delete highlight",
+          err.response?.data?.message || "Failed to create highlight",
         );
       },
     });
   };
 
-  const isPending = createMutation.isPending || updateMutation.isPending;
+  // ── Edit Handler ──
+  const handleEdit = (values: HighlightFormValues) => {
+    if (!activeHighlight) return;
+    const formData = buildFormData(values);
+    updateMutation.mutate(
+      { id: activeHighlight._id, formData },
+      {
+        onSuccess: () => {
+          toast.success("Highlight package updated successfully!");
+          setIsEditing(false);
+        },
+        onError: (err: any) => {
+          toast.error(
+            err.response?.data?.message || "Failed to update highlight",
+          );
+        },
+      },
+    );
+  };
+
+  // ── Single Video handlers ──
+  const handleOpenEditVideo = (video: any) => {
+    setSelectedVideo(video);
+    setIsEditVideoOpen(true);
+  };
+
+  const handleEditVideoSubmit = (data: {
+    video_name: string;
+    video_type: string;
+    file: File | null;
+  }) => {
+    if (!activeHighlight || !selectedVideo) return;
+
+    const formData = new FormData();
+    formData.append("video_name", data.video_name);
+    formData.append("video_type", data.video_type);
+    if (data.file) {
+      formData.append("video", data.file);
+      formData.append("videos", data.file); // append both for safety
+    }
+
+    updateSingleVideoMutation.mutate(
+      {
+        highlightId: activeHighlight._id,
+        videoId: selectedVideo._id,
+        formData,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Video clip updated successfully!");
+          setIsEditVideoOpen(false);
+          setSelectedVideo(null);
+        },
+        onError: (err: any) => {
+          toast.error(
+            err.response?.data?.message || "Failed to update video clip",
+          );
+        },
+      },
+    );
+  };
+
+  const handleDeleteVideo = (videoId: string) => {
+    if (!activeHighlight) return;
+
+    deleteSingleVideoMutation.mutate(
+      {
+        highlightId: activeHighlight._id,
+        videoId,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Video clip deleted successfully!");
+        },
+        onError: (err: any) => {
+          toast.error(
+            err.response?.data?.message || "Failed to delete video clip",
+          );
+        },
+      },
+    );
+  };
+
+  // ── Single Feed Video handlers ──
+  const handleOpenEditFeed = (feedVideo: any) => {
+    setSelectedFeedVideo(feedVideo);
+    setIsEditFeedOpen(true);
+  };
+
+  const handleEditFeedSubmit = (data: { title: string; file: File | null }) => {
+    if (!activeHighlight || !selectedFeedVideo) return;
+
+    const formData = new FormData();
+    formData.append("title", data.title);
+    if (data.file) {
+      formData.append("feedVideo", data.file);
+      formData.append("feedVideos", data.file); // append both for safety
+    }
+
+    updateSingleFeedVideoMutation.mutate(
+      {
+        highlightId: activeHighlight._id,
+        feedVideoId: selectedFeedVideo._id,
+        formData,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Feed clip updated successfully!");
+          setIsEditFeedOpen(false);
+          setSelectedFeedVideo(null);
+        },
+        onError: (err: any) => {
+          toast.error(
+            err.response?.data?.message || "Failed to update feed clip",
+          );
+        },
+      },
+    );
+  };
+
+  const handleDeleteFeedVideo = (feedVideoId: string) => {
+    if (!activeHighlight) return;
+
+    deleteSingleFeedVideoMutation.mutate(
+      {
+        highlightId: activeHighlight._id,
+        feedVideoId,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Feed clip deleted successfully!");
+        },
+        onError: (err: any) => {
+          toast.error(
+            err.response?.data?.message || "Failed to delete feed clip",
+          );
+        },
+      },
+    );
+  };
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-white/5">
+    <div className="space-y-6">
+      {/* ── Page Header ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/5">
         <div>
-          <h2 className="font-display text-4xl uppercase tracking-tight text-white flex items-center gap-2">
-            <Video className="text-kh-pink" />
+          <h2 className="font-display text-4xl uppercase tracking-tight text-white flex items-center gap-2.5">
+            <Video className="text-kh-pink" size={32} />
             Highlights Section
           </h2>
-          <p className="font-condensed text-xs tracking-wider text-zinc-500 uppercase mt-1">
+          <p className="font-condensed text-xs tracking-wider text-zinc-500 uppercase mt-0.5">
             Manage main stream video reels and feed snippets
           </p>
         </div>
 
-        <Button
-          onClick={() => handleOpenForm(null)}
-          className="bg-kh-pink hover:bg-kh-pink-bright text-white font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl flex items-center gap-2 border-none cursor-pointer"
-        >
-          <PlusCircle size={14} />
-          Create Highlight Package
-        </Button>
+        {!isLoading && !isError && !hasExistingData && (
+          <div className="flex gap-2">
+            {isCreating ? (
+              <Button
+                onClick={() => setIsCreating(false)}
+                variant="outline"
+                className="font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl flex items-center gap-1 cursor-pointer border-white/10 text-zinc-400 hover:bg-white/5 hover:text-white"
+              >
+                <X size={14} />
+                Cancel
+              </Button>
+            ) : (
+              <Button
+                onClick={() => setIsCreating(true)}
+                className="bg-kh-pink hover:bg-kh-pink-bright text-white font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl flex items-center gap-2 border-none cursor-pointer"
+              >
+                <PlusCircle size={14} />
+                Initialize Package
+              </Button>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Main Table */}
+      {/* ── Main Content Area ── */}
       {isLoading ? (
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="h-14 bg-[#0c0c14] border border-white/5 animate-pulse rounded-xl"
-            />
-          ))}
-        </div>
+        <div className="w-full h-[400px] bg-[#0c0c14] border border-white/5 animate-pulse rounded-2xl" />
       ) : isError ? (
         <div className="p-8 text-center bg-red-950/20 border border-red-500/10 rounded-2xl">
           <p className="text-red-400 font-condensed uppercase tracking-wider text-sm">
             Failed to retrieve highlight data nodes.
           </p>
         </div>
-      ) : highlights.length === 0 ? (
-        <div className="text-center p-12 bg-neutral-900/10 border border-dashed border-white/10 rounded-2xl space-y-4">
-          <VideoOff size={48} className="mx-auto text-zinc-600 animate-pulse" />
-          <h3 className="font-display text-xl uppercase tracking-wide">
-            No Highlights Available
-          </h3>
-          <p className="text-sm text-zinc-500 max-w-sm mx-auto font-condensed uppercase tracking-wider">
-            Create highlight streams containing active video rolls.
+      ) : isCreating ? (
+        /* Edit Mode: Inline Form for full initialization */
+        <HighlightCreateForm
+          isPending={createMutation.isPending}
+          onCancel={() => setIsCreating(false)}
+          onSubmit={handleCreate}
+        />
+      ) : isEditing && activeHighlight ? (
+        /* Edit Mode: Inline Edit Form */
+        <HighlightEditForm
+          highlight={activeHighlight}
+          isPending={updateMutation.isPending}
+          onCancel={() => setIsEditing(false)}
+          onSubmit={handleEdit}
+        />
+      ) : hasExistingData ? (
+        /* Read-only Mode: Active Highlight Card Details */
+        <ActiveHighlightCard
+          highlight={activeHighlight}
+          onEditClick={() => setIsEditing(true)}
+          onEditVideoClick={handleOpenEditVideo}
+          onDeleteVideoClick={handleDeleteVideo}
+          onEditFeedVideoClick={handleOpenEditFeed}
+          onDeleteFeedVideoClick={handleDeleteFeedVideo}
+          isSubmittingItem={isSubmittingItem}
+        />
+      ) : (
+        /* Empty Prompt View State */
+        <div className="text-center py-24 border border-dashed border-white/5 rounded-2xl bg-neutral-950/10 flex flex-col items-center justify-center p-6 max-w-md mx-auto">
+          <VideoOff size={48} className="text-zinc-800 mb-3 animate-pulse" />
+          <p className="font-display text-lg font-bold text-zinc-400 tracking-wide uppercase">
+            No Active Highlight Package
+          </p>
+          <p className="font-mono text-[10px] text-zinc-600 uppercase tracking-widest mt-1.5 max-w-[280px] leading-relaxed">
+            Initialize your highlights grid structure to publish video reels.
           </p>
           <Button
-            onClick={() => handleOpenForm(null)}
-            className="bg-kh-pink hover:bg-kh-pink-bright text-white font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl border-none cursor-pointer"
+            onClick={() => setIsCreating(true)}
+            className="mt-6 bg-kh-pink hover:bg-pink-600 text-white font-condensed font-bold uppercase tracking-widest text-xs px-6 py-2.5 rounded-xl border-none shadow-[0_4px_20px_rgba(236,72,153,0.2)] cursor-pointer"
           >
-            Deploy Highlight Reel
+            Initialize Package
           </Button>
         </div>
-      ) : (
-        <Card className="bg-[#0c0c14] border-white/5 overflow-hidden rounded-2xl shadow-xl">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Main Video URL</TableHead>
-                <TableHead>Feed Clips</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {highlights.map((highlight) => (
-                <TableRow key={highlight._id}>
-                  <TableCell className="font-bold">
-                    {highlight.title || "Highlight Reel"}
-                  </TableCell>
-                  <TableCell className="font-mono text-xs max-w-xs truncate text-zinc-400">
-                    <a
-                      href={highlight.MainVideo_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-kh-pink flex items-center gap-1.5"
-                    >
-                      {highlight.MainVideo_url}
-                      <ExternalLink size={12} />
-                    </a>
-                  </TableCell>
-                  <TableCell>
-                    <span className="bg-neutral-900 border border-white/5 text-zinc-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                      {(highlight.videos || highlight.feedVideos || []).length}{" "}
-                      Clips
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon-xs"
-                        onClick={() => handleOpenForm(highlight)}
-                        className="text-zinc-400 hover:text-white cursor-pointer"
-                      >
-                        <Edit2 size={14} />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon-xs"
-                        onClick={() => confirmDelete(highlight._id)}
-                        className="text-zinc-400 hover:text-red-400 cursor-pointer"
-                      >
-                        <Trash2 size={14} />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Card>
       )}
 
-      {/* Form Dialog */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-3xl bg-[#0c0c14] border-white/5 text-white max-h-[90vh] overflow-y-auto rounded-2xl">
-          <DialogHeader>
-            <DialogTitle className="font-display text-2xl uppercase tracking-wide text-white">
-              {isEdit ? "Modify Highlight Reel" : "Deploy Highlight Package"}
-            </DialogTitle>
-            <DialogDescription className="font-condensed text-[10px] uppercase tracking-widest text-zinc-500">
-              Update stream attributes and compile individual clips
-            </DialogDescription>
-          </DialogHeader>
+      {/* ── Single Video Edit Modal ── */}
+      {isEditVideoOpen && (
+        <EditSingleVideoModal
+          isOpen={isEditVideoOpen}
+          onOpenChange={setIsEditVideoOpen}
+          video={selectedVideo}
+          isPending={updateSingleVideoMutation.isPending}
+          onSubmit={handleEditVideoSubmit}
+        />
+      )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 py-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="title">Highlight Package Title</Label>
-                <Input
-                  id="title"
-                  {...register("title")}
-                  disabled={isPending}
-                  placeholder="e.g. Season Highlights"
-                />
-                {errors.title && (
-                  <span className="text-red-400 text-xs">
-                    {errors.title.message}
-                  </span>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label>Main Video File Upload</Label>
-                <div className="relative h-9 rounded-md border border-white/10 bg-neutral-900/50 flex items-center px-3 cursor-pointer">
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] || null;
-                      if (file) {
-                        setValue("MainVideo_url", file);
-                      }
-                    }}
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    disabled={isPending}
-                  />
-                  <span className="text-zinc-400 text-xs truncate">
-                    {watchMainVideo instanceof File
-                      ? watchMainVideo.name
-                      : typeof watchMainVideo === "string" && watchMainVideo
-                        ? watchMainVideo.split("/").pop()
-                        : "Select main video file..."}
-                  </span>
-                </div>
-                {errors.MainVideo_url && (
-                  <span className="text-red-400 text-xs">
-                    {(errors.MainVideo_url as any).message}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Dynamic field array for feedVideos */}
-            <div className="pt-6 border-t border-white/5 space-y-4">
-              <div className="flex items-center justify-between">
-                <Label>Video Feed Clips</Label>
-                <Button
-                  type="button"
-                  onClick={() =>
-                    append({
-                      video_type: "tiktok",
-                      video_name: "",
-                      videos: undefined,
-                    })
-                  }
-                  className="bg-neutral-900 border border-white/10 hover:bg-neutral-800 text-zinc-300 font-condensed font-bold uppercase tracking-wider text-[10px] px-2 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer"
-                >
-                  <Plus size={12} />
-                  Add Clip Row
-                </Button>
-              </div>
-
-              <div className="space-y-4">
-                {fields.map((field, index) => (
-                  <div
-                    key={field.id}
-                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 rounded-xl bg-neutral-950/40 border border-white/5 items-end relative"
-                  >
-                    <div className="md:col-span-3 space-y-1">
-                      <Label>Platform Type</Label>
-                      <Select
-                        defaultValue={field.video_type}
-                        onValueChange={(val) =>
-                          setValue(`feedVideos.${index}.video_type`, val)
-                        }
-                      >
-                        <SelectTrigger className="bg-neutral-900 border-white/10 text-xs text-white">
-                          <SelectValue placeholder="Platform" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="tiktok">TikTok</SelectItem>
-                          <SelectItem value="instagram">Instagram</SelectItem>
-                          <SelectItem value="youtube">YouTube</SelectItem>
-                          <SelectItem value="facebook">Facebook</SelectItem>
-                          <SelectItem value="raw">Raw Mp4</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="md:col-span-4 space-y-1">
-                      <Label>Clip Name</Label>
-                      <Input
-                        placeholder="e.g. Crossover Compilation"
-                        {...register(`feedVideos.${index}.video_name`)}
-                        className="bg-neutral-900 border-white/10"
-                      />
-                    </div>
-
-                    <div className="md:col-span-4 space-y-1">
-                      <Label>Video File Upload</Label>
-                      <div className="relative h-9 rounded-md border border-white/10 bg-neutral-900/50 flex items-center px-3 cursor-pointer">
-                        <input
-                          type="file"
-                          accept="video/*"
-                          onChange={(e) => handleFileChange(e, index)}
-                          className="absolute inset-0 opacity-0 cursor-pointer"
-                        />
-                        <span className="text-zinc-500 text-xs truncate">
-                          {control._formValues.feedVideos?.[index]?.videos
-                            ?.name || "Select MP4..."}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="md:col-span-1 flex justify-center pb-1">
-                      <Button
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="text-zinc-500 hover:text-red-400 p-2 cursor-pointer bg-transparent border-none hover:bg-red-500/10 rounded-lg"
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <DialogFooter className="mt-8 border-t border-white/5 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setIsOpen(false)}
-                disabled={isPending}
-                className="cursor-pointer"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={isPending}
-                className="bg-kh-pink hover:bg-kh-pink-bright text-white font-condensed font-bold uppercase tracking-wider text-xs px-4 py-2 rounded-xl flex items-center gap-2 border-none cursor-pointer"
-              >
-                {isPending && <Loader2 size={12} className="animate-spin" />}
-                {isEdit ? "Update Highlight" : "Create Highlight"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      {/* Delete Dialog */}
-      <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <DialogContent className="bg-[#0c0c14] border-white/5 text-white rounded-xl max-w-sm">
-          <DialogHeader>
-            <DialogTitle className="font-display text-xl uppercase tracking-wider">
-              Confirm Delete
-            </DialogTitle>
-            <DialogDescription className="font-condensed text-xs uppercase tracking-wider text-zinc-500">
-              Are you sure you want to delete this Highlight package? This
-              action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="mt-4 flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setIsDeleteOpen(false)}
-              disabled={deleteMutation.isPending}
-              className="cursor-pointer"
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={deleteMutation.isPending}
-              className="bg-red-500 text-white font-condensed font-bold uppercase tracking-wider text-xs py-2 px-4 rounded-xl cursor-pointer"
-            >
-              {deleteMutation.isPending ? "Deleting..." : "Delete Reel"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* ── Single Feed Edit Modal ── */}
+      {isEditFeedOpen && (
+        <EditSingleFeedVideoModal
+          isOpen={isEditFeedOpen}
+          onOpenChange={setIsEditFeedOpen}
+          feedVideo={selectedFeedVideo}
+          isPending={updateSingleFeedVideoMutation.isPending}
+          onSubmit={handleEditFeedSubmit}
+        />
+      )}
     </div>
   );
 }

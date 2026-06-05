@@ -6,7 +6,7 @@ import type { ContactDetails } from "@/types";
 export function ContactHero({
   contactDetails,
 }: {
-  contactDetails: ContactDetails;
+  contactDetails: ContactDetails | null | undefined;
 }) {
   // Animation configuration constants
   const fadeInUp: Variants = {
@@ -130,10 +130,10 @@ export function ContactHero({
                     Email Me Directly
                   </div>
                   <a
-                    href={`${contactDetails.email}`}
+                    href={`${contactDetails?.email}`}
                     className="text-sm font-sans font-medium text-gray-200 hover:text-kh-pink transition-colors"
                   >
-                    {contactDetails.email}
+                    {contactDetails?.email}
                   </a>
                 </div>
               </div>
@@ -147,10 +147,10 @@ export function ContactHero({
                     Management / Inquiries
                   </div>
                   <a
-                    href={`tel:${contactDetails.phone}`}
+                    href={`tel:${contactDetails?.phone}`}
                     className="text-sm font-sans font-medium text-gray-200 hover:text-cyan-400 transition-colors"
                   >
-                    {contactDetails.phone}
+                    {contactDetails?.phone}
                   </a>
                 </div>
               </div>
@@ -164,7 +164,7 @@ export function ContactHero({
                     Based Out Of
                   </div>
                   <div className="text-sm font-sans font-medium text-gray-300">
-                    {contactDetails.location || "United States"}
+                    {contactDetails?.location || "United States"}
                   </div>
                 </div>
               </div>

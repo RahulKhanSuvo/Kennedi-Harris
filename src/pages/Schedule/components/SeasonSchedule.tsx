@@ -61,7 +61,7 @@ export function SeasonSchedule() {
             {isLoading ? (
               <ScheduleLoadingSkeleton />
             ) : (
-              data.data.map((item, idx) => (
+              data?.data?.map((item, idx) => (
                 <motion.div
                   layout
                   variants={itemVariants}

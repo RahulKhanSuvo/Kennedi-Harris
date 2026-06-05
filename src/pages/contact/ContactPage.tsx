@@ -32,10 +32,11 @@ export default function ContactPage() {
         name="twitter:description"
         content="Get in touch with Kennedy Harris. Contact for media inquiries, endorsements, or partnership opportunities."
       />
+      ``
       <meta name="twitter:image" content="URL_TO_CONTACT_IMAGE" />
       <meta name="twitter:card" content="summary_large_image" />
-      <ContactHero contactDetails={data?.directReachout} />
-      <ContactFormSection data={data?.getInTouch} />
+      <ContactHero contactDetails={data?.directReachout || null} />
+      <ContactFormSection data={data?.getInTouch || null} />
       <MapSection />
       <WorkTogether />
     </div>

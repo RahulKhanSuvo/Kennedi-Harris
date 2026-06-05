@@ -70,5 +70,55 @@ export const highlightsApi = {
     );
     return response.data;
   },
+
+  updateSingleVideo: async (
+    highlightId: string,
+    videoId: string,
+    formData: FormData,
+  ): Promise<ApiResponse<HighlightData>> => {
+    const response = await axiosInstance.patch<ApiResponse<HighlightData>>(
+      `/highlights/${highlightId}/videos/${videoId}`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    );
+    return response.data;
+  },
+
+  deleteSingleVideo: async (
+    highlightId: string,
+    videoId: string,
+  ): Promise<ApiResponse<HighlightData>> => {
+    const response = await axiosInstance.delete<ApiResponse<HighlightData>>(
+      `/highlights/delete/${highlightId}/videos/${videoId}`,
+    );
+    return response.data;
+  },
+
+  updateSingleFeedVideo: async (
+    highlightId: string,
+    feedVideoId: string,
+    formData: FormData,
+  ): Promise<ApiResponse<HighlightData>> => {
+    const response = await axiosInstance.patch<ApiResponse<HighlightData>>(
+      `/highlights/${highlightId}/feed-videos/${feedVideoId}`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    );
+    return response.data;
+  },
+
+  deleteSingleFeedVideo: async (
+    highlightId: string,
+    feedVideoId: string,
+  ): Promise<ApiResponse<HighlightData>> => {
+    const response = await axiosInstance.delete<ApiResponse<HighlightData>>(
+      `/highlights/delete/${highlightId}/feed-videos/${feedVideoId}`,
+    );
+    return response.data;
+  },
 };
 export default highlightsApi;

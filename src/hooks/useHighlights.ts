@@ -45,3 +45,72 @@ export const useDeleteHighlight = () => {
     },
   });
 };
+
+export const useUpdateSingleVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      highlightId,
+      videoId,
+      formData,
+    }: {
+      highlightId: string;
+      videoId: string;
+      formData: FormData;
+    }) => highlightsApi.updateSingleVideo(highlightId, videoId, formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["highlights"] });
+    },
+  });
+};
+
+export const useDeleteSingleVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      highlightId,
+      videoId,
+    }: {
+      highlightId: string;
+      videoId: string;
+    }) => highlightsApi.deleteSingleVideo(highlightId, videoId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["highlights"] });
+    },
+  });
+};
+
+export const useUpdateSingleFeedVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      highlightId,
+      feedVideoId,
+      formData,
+    }: {
+      highlightId: string;
+      feedVideoId: string;
+      formData: FormData;
+    }) =>
+      highlightsApi.updateSingleFeedVideo(highlightId, feedVideoId, formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["highlights"] });
+    },
+  });
+};
+
+export const useDeleteSingleFeedVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      highlightId,
+      feedVideoId,
+    }: {
+      highlightId: string;
+      feedVideoId: string;
+    }) => highlightsApi.deleteSingleFeedVideo(highlightId, feedVideoId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["highlights"] });
+    },
+  });
+};

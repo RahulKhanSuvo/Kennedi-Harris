@@ -15,7 +15,11 @@ import type { GetInTouchDetails } from "@/types";
 
 type FormField = "name" | "email" | "subject" | "message" | null;
 
-export function ContactFormSection({ data }: { data: GetInTouchDetails }) {
+export function ContactFormSection({
+  data,
+}: {
+  data: GetInTouchDetails | null;
+}) {
   const [formState, setFormState] = useState({
     name: "",
     email: "",

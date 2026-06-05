@@ -48,11 +48,11 @@ export default function GallaryPage() {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content="https://YOUR_DOMAIN.com/highlights" />
       <GalleryHero
-        bannerFristImg={data?.bannerFristImg}
-        bannerSecondImg={data?.bannerSecondImg}
+        bannerFristImg={data?.bannerFristImg || ""}
+        bannerSecondImg={data?.bannerSecondImg || ""}
       />
-      <GalleryGrid data={data?.photos} />
-      <GalleryHeritage mentorshipImgUrl={data?.mentorshipImgUrl} />
+      <GalleryGrid data={data?.photos || []} />
+      <GalleryHeritage mentorshipImgUrl={data?.mentorshipImgUrl || ""} />
       <InstagramSection />
     </main>
   );
