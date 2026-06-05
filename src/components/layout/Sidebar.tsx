@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate, Link } from "react-router";
 import {
   Home,
   Video,
@@ -12,6 +12,7 @@ import {
   X,
   Calendar,
   LogOut,
+  ExternalLink,
 } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 
@@ -50,7 +51,14 @@ export default function Sidebar() {
         </div>
 
         {/* Mobile Control Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <Link
+            to="/"
+            className="flex items-center justify-center p-2 rounded-lg bg-white/[0.02] text-zinc-400 border border-white/5 hover:text-white hover:bg-white/[0.05] transition-colors cursor-pointer"
+            title="Exit to Website"
+          >
+            <ExternalLink size={16} />
+          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center justify-center p-2 rounded-lg bg-red-950/20 text-red-400 border border-red-500/10 hover:bg-red-900/30 transition-colors cursor-pointer"
@@ -113,7 +121,7 @@ export default function Sidebar() {
                 ${
                   isActive
                     ? "bg-kh-pink/10 text-kh-pink border border-kh-pink/20"
-                    : "text-zinc-400 hover:text-white hover:bg-white/2 border border-transparent"
+                    : "text-zinc-400 hover:text-white hover:bg-white/[0.02] border border-transparent"
                 }`
               }
             >
@@ -134,6 +142,22 @@ export default function Sidebar() {
             </NavLink>
           ))}
         </nav>
+
+        {/* Fixed Footer Viewport Exit Link */}
+        <div className="border-t border-white/5 p-3">
+          <Link
+            to="/"
+            className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/[0.02] border border-transparent transition-all cursor-pointer group"
+          >
+            <ExternalLink
+              size={18}
+              className="shrink-0 text-zinc-500 group-hover:text-white transition-colors"
+            />
+            <span className="font-condensed text-xs font-bold tracking-wider uppercase flex-1">
+              Exit to Website
+            </span>
+          </Link>
+        </div>
       </aside>
     </>
   );
