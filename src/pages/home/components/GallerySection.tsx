@@ -1,9 +1,8 @@
 "use client";
 
 import { motion, type Variants } from "motion/react";
-import gal1 from "@/assets/gallery/drib2.avif";
-import gal2 from "@/assets/gallery/dribliing.avif";
 import { Link } from "react-router";
+import { useActiveGallery } from "@/hooks/useGallery";
 
 const kineticSpring = [0.16, 1, 0.3, 1] as const;
 
@@ -24,29 +23,46 @@ const fadeUpVariants: Variants = {
   },
 };
 
-const imageArray = [
-  { src: gal1, alt: "In-game baseline drive" },
-  { src: gal2, alt: "Defensive closeout block" },
-  { src: gal1, alt: "Mid-range pull up jumper" },
-  { src: gal1, alt: "Fastbreak transition attack" },
-];
+// 💡 Extracted Skeleton Loader Component for cleaner rendering
+function GallerySkeleton() {
+  return (
+    <>
+      {Array.from({ length: 4 }).map((_, index) => (
+        <div
+          key={`skeleton-${index}`}
+          className="aspect-square bg-neutral-900 rounded-sm border border-white/5 relative overflow-hidden animate-pulse"
+        >
+          {/* Subtle shifting gradient highlight */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-mono text-[9px] tracking-[0.25em] text-zinc-700 uppercase">
+              LOADING
+            </span>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
 
 export default function GallerySection() {
+  const { data, isLoading } = useActiveGallery();
+
   return (
     <section
       id="gallery"
       className="py-20 lg:py-28 bg-kh-dark border-t border-white/10 relative overflow-hidden"
     >
-      {/* 
-        Tailwind Global Style Injection Core
-        Injects a clean hardware-accelerated horizontal translation utility directly.
-      */}
+      {/* Tailwind Global Style Injection Core */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
         @keyframes marquee {
           0% { transform: translateX(0%); }
           100% { transform: translateX(-50%); }
+        }
+        @keyframes shimmer {
+          100% { transform: translateX(100%); }
         }
         .animate-marquee-infinite {
           display: flex;
@@ -87,25 +103,29 @@ export default function GallerySection() {
               viewport={{ once: true, amount: 0.3 }}
               className="grid grid-cols-2 sm:grid-cols-4 gap-3"
             >
-              {imageArray.map((img, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeUpVariants}
-                  className="aspect-square bg-neutral-900 rounded-sm border border-white/5 overflow-hidden cursor-pointer group relative"
-                >
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 z-10" />
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-500 will-change-transform"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      e.currentTarget.parentElement!.innerHTML =
-                        '<div class="absolute inset-0 flex items-center justify-center text-[10px] font-condensed tracking-widest text-zinc-600">// MEDIA</div>';
-                    }}
-                  />
-                </motion.div>
-              ))}
+              {isLoading ? (
+                <GallerySkeleton />
+              ) : (
+                data?.photos?.slice(0, 4).map((img, index) => (
+                  <motion.div
+                    key={index}
+                    variants={fadeUpVariants}
+                    className="aspect-square bg-neutral-900 rounded-sm border border-white/5 overflow-hidden cursor-pointer group relative"
+                  >
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 z-10" />
+                    <img
+                      src={img.url}
+                      alt={img.name}
+                      className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-500 will-change-transform"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                        e.currentTarget.parentElement!.innerHTML =
+                          '<div class="absolute inset-0 flex items-center justify-center text-[10px] font-condensed tracking-widest text-zinc-600">// MEDIA</div>';
+                      }}
+                    />
+                  </motion.div>
+                ))
+              )}
             </motion.div>
           </div>
 
@@ -139,10 +159,7 @@ export default function GallerySection() {
               </p>
             </div>
 
-            {/* 
-              Marquee Mask Container Box
-              Uses CSS masks to softly fade out logo edges on either side seamlessly.
-            */}
+            {/* Marquee Mask Container Box */}
             <div className="w-full overflow-hidden border-t border-white/5 pt-8 relative [mask-image:linear-gradient(to_right,transparent_0%,#000_10%,#000_90%,transparent_100%)]">
               <div className="animate-marquee-infinite gap-16 items-center pr-16 select-none opacity-60 hover:opacity-100 transition-opacity duration-300">
                 {/* Track Group A */}
@@ -175,7 +192,7 @@ export default function GallerySection() {
                   </div>
                 </div>
 
-                {/* Duplicate Track Group B (Enables Seamless Loop Assembly) */}
+                {/* Duplicate Track Group B */}
                 <div
                   className="flex items-center gap-16 shrink-0"
                   aria-hidden="true"
