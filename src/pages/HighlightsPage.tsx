@@ -57,14 +57,12 @@ export default function HighlightsPage() {
   const buildFormData = (values: HighlightFormValues): FormData => {
     const formData = new FormData();
 
-    // Main Video File
     if (values.MainVideo_url instanceof File) {
       formData.append("MainVideo_url", values.MainVideo_url);
     } else if (typeof values.MainVideo_url === "string") {
       formData.append("MainVideo_url", values.MainVideo_url);
     }
 
-    // videos array
     (values.videos || []).forEach((v: any) => {
       formData.append("video_name", v.video_name);
       formData.append("video_type", v.video_type);
@@ -74,7 +72,6 @@ export default function HighlightsPage() {
       }
     });
 
-    // feedVideos array
     (values.feedVideos || []).forEach((fv: any) => {
       formData.append("title", fv.title);
       formData.append("video_url", fv.video_url || "");
@@ -86,7 +83,6 @@ export default function HighlightsPage() {
     return formData;
   };
 
-  // ── Create Handler ──
   const handleCreate = (values: HighlightFormValues) => {
     const formData = buildFormData(values);
     createMutation.mutate(formData, {
@@ -102,7 +98,6 @@ export default function HighlightsPage() {
     });
   };
 
-  // ── Edit Handler ──
   const handleEdit = (values: HighlightFormValues) => {
     if (!activeHighlight) return;
     const formData = buildFormData(values);
@@ -122,7 +117,6 @@ export default function HighlightsPage() {
     );
   };
 
-  // ── Single Video handlers ──
   const handleOpenEditVideo = (video: any) => {
     setSelectedVideo(video);
     setIsEditVideoOpen(true);
@@ -140,7 +134,7 @@ export default function HighlightsPage() {
     formData.append("video_type", data.video_type);
     if (data.file) {
       formData.append("video", data.file);
-      formData.append("videos", data.file); // append both for safety
+      formData.append("videos", data.file);
     }
 
     updateSingleVideoMutation.mutate(
@@ -185,7 +179,6 @@ export default function HighlightsPage() {
     );
   };
 
-  // ── Single Feed Video handlers ──
   const handleOpenEditFeed = (feedVideo: any) => {
     setSelectedFeedVideo(feedVideo);
     setIsEditFeedOpen(true);
@@ -198,7 +191,7 @@ export default function HighlightsPage() {
     formData.append("title", data.title);
     if (data.file) {
       formData.append("feedVideo", data.file);
-      formData.append("feedVideos", data.file); // append both for safety
+      formData.append("feedVideos", data.file);
     }
 
     updateSingleFeedVideoMutation.mutate(
@@ -283,7 +276,73 @@ export default function HighlightsPage() {
 
       {/* ── Main Content Area ── */}
       {isLoading ? (
-        <div className="w-full h-[400px] bg-[#0c0c14] border border-white/5 animate-pulse rounded-2xl" />
+        /* Immersive Split-Pane Workspace Skeleton Layout (Full Height matched to active view) */
+        <div className="grid grid-cols-12 gap-8 items-stretch min-h-[750px] w-full animate-pulse">
+          {/* Left Column Command Box Skeleton */}
+          <div className="col-span-12 lg:col-span-5 bg-zinc-950/20 border border-white/5 rounded-2xl p-6 xl:p-8 flex flex-col justify-between space-y-8">
+            <div className="space-y-6">
+              {/* Header block lines */}
+              <div className="flex items-center justify-between pb-6 border-b border-white/5">
+                <div className="flex items-center gap-3 w-2/3">
+                  <div className="w-11 h-11 bg-zinc-900 rounded-xl shrink-0" />
+                  <div className="space-y-2 flex-1">
+                    <div className="h-4 bg-zinc-900 rounded w-3/4" />
+                    <div className="h-2.5 bg-zinc-900 rounded w-1/2" />
+                  </div>
+                </div>
+                <div className="w-24 h-9 bg-zinc-900 rounded-xl" />
+              </div>
+
+              {/* Pseudo Channel Tracks */}
+              <div className="space-y-5">
+                <div className="space-y-2">
+                  <div className="h-3 bg-zinc-900/60 rounded w-1/4" />
+                  <div className="h-14 bg-zinc-900/40 rounded-xl border border-white/5" />
+                </div>
+
+                <div className="space-y-2">
+                  <div className="h-3 bg-zinc-900/60 rounded w-1/3" />
+                  <div className="h-11 bg-zinc-900/30 rounded-xl border border-white/5" />
+                  <div className="h-11 bg-zinc-900/30 rounded-xl border border-white/5" />
+                  <div className="h-11 bg-zinc-900/30 rounded-xl border border-white/5" />
+                </div>
+
+                <div className="space-y-2">
+                  <div className="h-3 bg-zinc-900/60 rounded w-1/4" />
+                  <div className="h-11 bg-zinc-900/30 rounded-xl border border-white/5" />
+                  <div className="h-11 bg-zinc-900/30 rounded-xl border border-white/5" />
+                </div>
+              </div>
+            </div>
+
+            <div className="h-3 bg-zinc-900/40 rounded w-1/2 pt-2" />
+          </div>
+
+          {/* Right Column Monitor Stage Theater Box Skeleton */}
+          <div className="col-span-12 lg:col-span-7 bg-zinc-950/40 p-6 xl:p-8 rounded-2xl border border-white/5 flex flex-col justify-between space-y-6">
+            <div className="space-y-6 flex-1 flex flex-col">
+              <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                <div className="h-3 bg-zinc-900 rounded w-1/4" />
+                <div className="h-5 bg-zinc-900 rounded-md w-20" />
+              </div>
+
+              <div className="h-6 bg-zinc-900 rounded w-1/3" />
+
+              {/* Aspect Ratio Video Stage Filler Box */}
+              <div className="w-full flex-1 min-h-[300px] lg:min-h-0 aspect-video rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center">
+                <Video
+                  size={36}
+                  className="text-zinc-900 animate-spin [animation-duration:3s]"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-4 border-t border-white/5">
+              <div className="h-2.5 bg-zinc-900 rounded w-1/3" />
+              <div className="h-2.5 bg-zinc-900 rounded w-1/5" />
+            </div>
+          </div>
+        </div>
       ) : isError ? (
         <div className="p-8 text-center bg-red-950/20 border border-red-500/10 rounded-2xl">
           <p className="text-red-400 font-condensed uppercase tracking-wider text-sm">
@@ -291,14 +350,12 @@ export default function HighlightsPage() {
           </p>
         </div>
       ) : isCreating ? (
-        /* Edit Mode: Inline Form for full initialization */
         <HighlightCreateForm
           isPending={createMutation.isPending}
           onCancel={() => setIsCreating(false)}
           onSubmit={handleCreate}
         />
       ) : isEditing && activeHighlight ? (
-        /* Edit Mode: Inline Edit Form */
         <HighlightEditForm
           highlight={activeHighlight}
           isPending={updateMutation.isPending}
@@ -306,7 +363,6 @@ export default function HighlightsPage() {
           onSubmit={handleEdit}
         />
       ) : hasExistingData ? (
-        /* Read-only Mode: Active Highlight Card Details */
         <ActiveHighlightCard
           highlight={activeHighlight}
           onEditClick={() => setIsEditing(true)}
@@ -317,7 +373,6 @@ export default function HighlightsPage() {
           isSubmittingItem={isSubmittingItem}
         />
       ) : (
-        /* Empty Prompt View State */
         <div className="text-center py-24 border border-dashed border-white/5 rounded-2xl bg-neutral-950/10 flex flex-col items-center justify-center p-6 max-w-md mx-auto">
           <VideoOff size={48} className="text-zinc-800 mb-3 animate-pulse" />
           <p className="font-display text-lg font-bold text-zinc-400 tracking-wide uppercase">
