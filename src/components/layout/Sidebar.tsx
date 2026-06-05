@@ -30,7 +30,7 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile Menu Button */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-4 bg-[#0c0c14] border-b border-white/5">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-4 bg-kh-dark-2 border-b border-white/5">
         <div className="flex items-center gap-2">
           <span className="text-2xl font-display font-black leading-none text-white">
             <span className="text-kh-pink">A</span>
@@ -60,7 +60,7 @@ export default function Sidebar() {
       <aside
         className={`
           fixed top-0 left-0 h-screen z-50 flex flex-col
-          bg-[#0c0c14] border-r border-white/5
+          bg-kh-dark-2 border-r border-white/5
           transition-all duration-300 ease-in-out
           ${collapsed ? "w-[72px]" : "w-[240px]"}
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
@@ -76,7 +76,7 @@ export default function Sidebar() {
           {!collapsed && (
             <div>
               <p className="font-condensed text-sm font-bold tracking-widest text-white uppercase leading-none">
-                Angela Daughter
+                Admin
               </p>
               <p className="font-condensed text-[9px] tracking-widest text-zinc-500 uppercase mt-1">
                 CMS BACKEND

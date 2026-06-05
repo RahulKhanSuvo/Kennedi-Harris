@@ -84,10 +84,10 @@ export default function LoginPage() {
             <Sparkles size={24} />
           </div>
           <CardTitle className="font-display text-4xl tracking-tight uppercase">
-            Angela Daughter
+            Admin
           </CardTitle>
           <CardDescription className="font-condensed text-xs uppercase tracking-widest text-zinc-500">
-            CMS Administrative Gateway
+            CMS Backend
           </CardDescription>
         </CardHeader>
         <CardContent>

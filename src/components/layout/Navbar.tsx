@@ -18,7 +18,7 @@ export default function Navbar() {
       {/* Title */}
       <div>
         <h1 className="font-display text-2xl uppercase tracking-tight text-white hidden sm:block">
-          Angela Daughter CMS
+          Admin
         </h1>
       </div>
 
