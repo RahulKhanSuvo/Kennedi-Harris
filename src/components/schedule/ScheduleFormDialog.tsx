@@ -66,10 +66,19 @@ export function ScheduleFormDialog({
 
   const handleFormSubmit = (values: ScheduleFormValues) => {
     onSubmit(values, isEdit);
+    reset({
+      date: "",
+      matchName: "",
+      address: "",
+    });
   };
 
   const handleClose = () => {
-    reset();
+    reset({
+      date: "",
+      matchName: "",
+      address: "",
+    });
     onOpenChange(false);
   };
 
