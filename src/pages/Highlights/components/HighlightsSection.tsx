@@ -390,7 +390,6 @@ export default function MediaBroadcastCenter({
                           className={`font-mono text-xs tracking-widest font-black ${isSelected ? "text-kh-pink" : "text-zinc-600"}`}
                         >
                           [{String(index + 1).padStart(2, "0")}] //{" "}
-                          {item._id.toUpperCase()}
                         </span>
                         <div
                           className={`p-2 rounded-lg border transition-colors ${isSelected ? "border-kh-pink/20 bg-kh-pink/5 text-kh-pink" : "border-white/5 bg-zinc-900 text-zinc-500"}`}
@@ -411,9 +410,6 @@ export default function MediaBroadcastCenter({
                       </div>
 
                       <div className="flex items-center gap-3 mt-4 border-t border-white/5 pt-4">
-                        <span className="font-mono text-[10px] text-zinc-400 bg-white/5 px-2 py-1 rounded-sm">
-                          TRACK ID: {item._id}
-                        </span>
                         <span
                           className={`font-mono text-[10px] px-2 py-1 rounded-sm ${isSelected ? "bg-cyan-500/10 text-cyan-400" : "bg-zinc-900 text-zinc-500"}`}
                         >
