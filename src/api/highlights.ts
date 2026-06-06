@@ -81,6 +81,9 @@ export const highlightsApi = {
     const response = await axiosInstance.post<ApiResponse<HighlightData>>(
       `/highlights/${highlightId}/add`,
       formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
     );
     return response.data;
   },
@@ -118,6 +121,9 @@ export const highlightsApi = {
     const response = await axiosInstance.post<ApiResponse<HighlightData>>(
       `/highlights/${highlightId}/feed-videos/add`,
       formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
     );
     return response.data;
   },

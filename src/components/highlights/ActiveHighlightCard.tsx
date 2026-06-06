@@ -14,6 +14,8 @@ import {
   Layers,
 } from "lucide-react";
 import { Button } from "../ui/button";
+import { AddFeedVideoModal } from "./AddFeedVideoModal";
+import { AddVideoModal } from "./AddVideoModal";
 
 interface ActiveHighlightCardProps {
   highlight: any;
@@ -42,9 +44,11 @@ export function ActiveHighlightCard({
   onEditFeedVideoClick,
   onDeleteFeedVideoClick,
 }: ActiveHighlightCardProps) {
+  const [isAddFeedOpen, setIsAddFeedOpen] = useState("");
+  const [isAddVideoOpen, setIsAddVideoOpen] = useState("");
   const videosList = highlight.videos || [];
   const feedVideosList = highlight.feedVideos || [];
-
+  console.log("highlight", highlight);
   const [activeTab, setActiveTab] = useState<"CLIPS" | "FEEDS">("CLIPS");
 
   const [activeFocus, setActiveFocus] = useState<
@@ -74,7 +78,12 @@ export function ActiveHighlightCard({
     activeFocus.type === "MIXED_STEP"
       ? highlight.MainVideo_url || ""
       : (activeFocus as any).url;
-
+  const openAddVideoModal = () => {
+    setIsAddVideoOpen(highlight?._id);
+  };
+  const openAddFeedVideoModal = () => {
+    setIsAddFeedOpen(highlight?._id);
+  };
   return (
     <div className="w-full bg-zinc-950 border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
       <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch divide-y lg:divide-y-0 lg:divide-x divide-white/5">
@@ -152,9 +161,7 @@ export function ActiveHighlightCard({
 
         {/* RIGHT COLUMN: MULTI-TAB INDEX MANAGER (5 COLUMNS) */}
         <div className="lg:col-span-5 p-4 sm:p-6 flex flex-col bg-zinc-950 gap-4">
-          {/* ========================================================= */}
           {/* OUTSIDE STANDALONE ITEM: MIXED STEP 2026 MASTER          */}
-          {/* ========================================================= */}
           <div
             onClick={() => {
               setActiveFocus({
@@ -221,6 +228,13 @@ export function ActiveHighlightCard({
 
             <Button
               size="sm"
+              onClick={() => {
+                if (activeTab === "CLIPS") {
+                  openAddVideoModal();
+                } else {
+                  openAddFeedVideoModal();
+                }
+              }}
               className="font-mono text-[11px] uppercase tracking-wider h-8"
             >
               <PlusCircle size={13} className="mr-1" /> Add{" "}
@@ -398,6 +412,14 @@ export function ActiveHighlightCard({
           </div>
         </div>
       )}
+      <AddFeedVideoModal
+        isOpen={isAddFeedOpen}
+        onClose={() => setIsAddFeedOpen("")}
+      />
+      <AddVideoModal
+        isOpen={isAddVideoOpen}
+        onClose={() => setIsAddVideoOpen("")}
+      />
     </div>
   );
 }

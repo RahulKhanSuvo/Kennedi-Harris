@@ -31,6 +31,9 @@ export const useAddNewFeed = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["highlights"] });
     },
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ["highlights"] });
+    },
   });
 };
 export const useCreateHighlight = () => {
