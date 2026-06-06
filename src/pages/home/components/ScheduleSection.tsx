@@ -100,13 +100,13 @@ export default function ScheduleSection() {
               className="flex items-center justify-between group hover:bg-white/2 transition-colors duration-200"
             >
               <div
-                className={`w-20 h-16 ${
+                className={`w-28 h-16 ${
                   i % 2 === 0
                     ? "bg-linear-to-br from-kh-pink to-kh-pink/90"
                     : "bg-linear-to-br from-kh-blue to-kh-blue/90"
                 } flex flex-col items-center justify-center text-center shrink-0 shadow-md px-2`}
               >
-                <span className=" font-bold text-white  tracking-widest leading-none mb-1">
+                <span className=" font-bold text-white text-sm tracking-widest leading-none mb-1">
                   {item.date}
                 </span>
               </div>
