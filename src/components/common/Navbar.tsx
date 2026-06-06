@@ -53,9 +53,9 @@ export default function Navbar() {
     { name: "ABOUT", path: "about" },
     { name: "HIGHLIGHTS", path: "highlights" },
     { name: "SCHEDULE", path: "schedule" },
+    { name: "GALLERY", path: "gallery" },
     { name: "MEDIA KIT", path: "media-kit" },
     // { name: "BRAND PARTNERS", path: "brand-partners" },
-    { name: "GALLERY", path: "gallery" },
     { name: "CONTACT", path: "contact" },
   ];
 
