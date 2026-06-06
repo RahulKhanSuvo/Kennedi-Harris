@@ -24,7 +24,7 @@ interface TimelineItem {
   subtitle: string;
   description: string;
   stats: {
-    value: string;
+    value: string | number;
     label: string;
   };
   icon: LucideIcon;
@@ -71,7 +71,10 @@ export function Timeline({
       subtitle: "THE BREAKOUT YEAR",
       description:
         "In her early years, Kennedi participated in various youth leagues, where she not only honed her skills but also learned the core components of elite teamwork. Her strategic gameplay, defensive length, and clutch scoring mechanics led her team to its first major championship series.",
-      stats: { value: "37", label: "Tournaments Played" },
+      stats: {
+        value: data?.totalGamePlayed || "0",
+        label: "Tournaments Played",
+      },
       icon: Trophy,
       image: data?.fristVictoryImgUrl || tournamentImg,
     },
@@ -93,7 +96,7 @@ export function Timeline({
       subtitle: "NATIONAL HARDWARE PROFILE",
       description:
         "Throughout her rising youth basketball trajectory, Kennedi has picked up numerous personal accolades, MVP honors, and defensive player recognition awards. This structural framework keeps her focused on long-term execution and high-profile team legacy.",
-      stats: { value: "9", label: "Major Awards" },
+      stats: { value: data?.totalMajorReward || "0", label: "Major Awards" },
       icon: Award,
       image: data?.accoladesMilestonesImgUrl || recognitionImg,
     },
