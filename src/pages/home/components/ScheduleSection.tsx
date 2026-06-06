@@ -93,7 +93,7 @@ export default function ScheduleSection() {
         {isLoading || !data?.data ? (
           <ScheduleSkeleton />
         ) : (
-          data?.data?.slice(0, 5).map((item, i) => (
+          data?.data?.slice(0, 6).map((item, i) => (
             <motion.div
               key={i}
               variants={itemVariants}
