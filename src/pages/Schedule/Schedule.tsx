@@ -2,7 +2,9 @@ import { SeasonSchedule } from "./components/SeasonSchedule";
 // import { UpcomingEvents } from "./components/UpcomingEvents";
 import { SubscribeBanner } from "./components/SubscribeBanner";
 import ScheduleHero from "./components/ScheduleHero";
+import useSchedule from "@/hooks/useSchedule";
 export default function Schedule() {
+  const { data, isLoading } = useSchedule();
   return (
     <main className="bg-kh-dark min-h-screen text-foreground flex flex-col w-full overflow-hidden">
       <title>Schedule | Kennedy Harris</title>
@@ -35,8 +37,8 @@ export default function Schedule() {
       />
       <meta name="twitter:image" content="URL_TO_SCHEDULE_IMAGE" />
       <meta name="twitter:card" content="summary_large_image" />
-      <ScheduleHero />
-      <SeasonSchedule />
+      <ScheduleHero data={data?.data} isLoading={isLoading} />
+      <SeasonSchedule data={data?.data} isLoading={isLoading} />
       {/* <UpcomingEvents /> */}
       <SubscribeBanner />
     </main>

@@ -1,12 +1,16 @@
 import { MapPin, Calendar, Clock } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import Container from "@/components/common/Container";
-import useSchedule from "@/hooks/useSchedule";
 import { ScheduleLoadingSkeleton } from "@/components/schedule";
+import type { GameScheduleData } from "@/types";
 
-export function SeasonSchedule() {
-  const { data, isLoading } = useSchedule();
-
+export function SeasonSchedule({
+  data,
+  isLoading,
+}: {
+  data: GameScheduleData[];
+  isLoading: boolean;
+}) {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
@@ -61,7 +65,7 @@ export function SeasonSchedule() {
             {isLoading ? (
               <ScheduleLoadingSkeleton />
             ) : (
-              data?.data?.map((item, idx) => (
+              data?.map((item, idx) => (
                 <motion.div
                   layout
                   variants={itemVariants}

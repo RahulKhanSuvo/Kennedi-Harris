@@ -1,11 +1,11 @@
 import { Outlet, useLocation, useNavigationType } from "react-router";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
-import { useQuery } from "@tanstack/react-query";
-import { highlightsService, homeService } from "@/api/services";
+
 import Preloader from "@/components/common/Preloader";
 import { useEffect, useRef } from "react";
 import type Lenis from "@studio-freight/lenis";
+import { useHome } from "@/hooks/useHome";
 
 declare global {
   interface Window {
@@ -81,18 +81,9 @@ function LenisScrollRestoration() {
 }
 
 export default function MainLayout() {
-  const { isLoading } = useQuery({
-    queryKey: ["home-active"],
-    queryFn: homeService.getActiveHome,
-    staleTime: Infinity,
-  });
-  const { isLoading: isHighlightsLoading } = useQuery({
-    queryKey: ["active-media"],
-    queryFn: highlightsService.getActiveHighlights,
-    staleTime: Infinity,
-  });
+  const { isLoading } = useHome();
 
-  if (isLoading || isHighlightsLoading) return <Preloader />;
+  if (isLoading) return <Preloader />;
 
   return (
     <>
