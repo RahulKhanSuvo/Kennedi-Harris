@@ -103,20 +103,6 @@ export default function Sidebar() {
         </div>
 
         {/* 🚀 MAIN RETURN GATEWAY: VIEW PORTFOLIO LIVE WEBSITE */}
-        <div className="p-3 border-b border-white/5 bg-white/[0.01]">
-          <Link
-            to="/"
-            className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-zinc-100 bg-kh-pink/10 border border-kh-pink/20 hover:bg-kh-pink/20 transition-all cursor-pointer group shadow-[0_0_20px_rgba(236,72,153,0.05)]"
-          >
-            <span className="font-condensed text-xs font-bold tracking-wider uppercase flex-1 text-white">
-              Go to Live Website
-            </span>
-            <ArrowUpRight
-              size={16}
-              className="shrink-0 text-kh-pink group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-            />
-          </Link>
-        </div>
 
         {/* Dynamic Nav Node List */}
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
@@ -153,7 +139,20 @@ export default function Sidebar() {
         </nav>
 
         {/* Footer Accent Block */}
-        <div className="border-t border-white/5 p-4 text-center"></div>
+        <div className="p-3 border-b border-white/5 bg-white/[0.01]">
+          <Link
+            to="/"
+            className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-zinc-100 bg-kh-pink/10 border border-kh-pink/20 hover:bg-kh-pink/20 transition-all cursor-pointer group shadow-[0_0_20px_rgba(236,72,153,0.05)]"
+          >
+            <span className="font-condensed text-xs font-bold tracking-wider uppercase flex-1 text-white">
+              Go to Live Website
+            </span>
+            <ArrowUpRight
+              size={16}
+              className="shrink-0 text-kh-pink group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+            />
+          </Link>
+        </div>
       </aside>
     </>
   );
