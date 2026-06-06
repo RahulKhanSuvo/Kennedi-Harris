@@ -145,7 +145,7 @@ export default function GallerySection() {
                     variants={fadeUpVariants}
                     className="sm:col-span-7 rounded-xl border border-white/5 overflow-hidden group relative bg-neutral-900/20 flex items-center justify-center min-h-[300px] sm:min-h-full"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent z-10 pointer-events-none transition-opacity group-hover:opacity-40" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-transparent z-10 pointer-events-none transition-opacity group-hover:opacity-40" />
                     {photos[0] && !brokenImages[0] ? (
                       <img
                         src={photos[0].url}
@@ -216,7 +216,7 @@ export default function GallerySection() {
             {/* Main Interactive Matrix Layout Split */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center my-auto w-full">
               {/* Tactical Blueprint Court Drawing (Left 7 Columns) */}
-              <div className="md:col-span-7 aspect-[4/3] bg-[#09090b] rounded-xl border border-white/5 relative overflow-hidden flex items-center justify-center p-4 shadow-2xl">
+              <div className="md:col-span-7 aspect-4/3 bg-[#09090b] rounded-xl border border-white/5 relative overflow-hidden flex items-center justify-center p-4 shadow-2xl">
                 <svg
                   className="absolute inset-0 w-full h-full stroke-white/5 fill-none"
                   viewBox="0 0 100 100"
