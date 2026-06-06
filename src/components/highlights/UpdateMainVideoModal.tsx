@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef } from "react";
-import { X, UploadCloud, Layers, Loader2 } from "lucide-react";
+import { X, UploadCloud, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { useUpdateHighlight } from "@/hooks/useHighlights";
@@ -82,7 +82,7 @@ export function UpdateMainVideoModal({
       console.error("Failed to update main compilation source stream:", error);
     }
   };
-
+  const currentYear = new Date().getFullYear();
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
       <div
@@ -94,12 +94,8 @@ export function UpdateMainVideoModal({
         {/* Header Block */}
         <div className="px-6 py-4 bg-zinc-900/50 border-b border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Layers size={16} className="text-kh-pink" />
             <h3 className="font-display text-sm font-bold tracking-wider text-white uppercase">
-              UPDATE MIXED VIDEO 2026{" "}
-              <span className="text-[10px] font-mono text-zinc-500 font-normal">
-                // CORE STREAM
-              </span>
+              UPDATE MIXED VIDEO {currentYear}
             </h3>
           </div>
           <button
@@ -212,7 +208,7 @@ export function UpdateMainVideoModal({
                   <Loader2 size={13} className="animate-spin" /> Replacing...
                 </span>
               ) : (
-                "Overwrite Master"
+                "Replace"
               )}
             </Button>
           </div>
