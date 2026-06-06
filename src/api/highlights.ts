@@ -79,7 +79,7 @@ export const highlightsApi = {
     highlightId: string;
   }): Promise<ApiResponse<HighlightData>> => {
     const response = await axiosInstance.post<ApiResponse<HighlightData>>(
-      `/highlights/${highlightId}/add`,
+      `/highlights/${highlightId}/videos/add`,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
