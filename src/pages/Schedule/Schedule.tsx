@@ -37,8 +37,8 @@ export default function Schedule() {
       />
       <meta name="twitter:image" content="URL_TO_SCHEDULE_IMAGE" />
       <meta name="twitter:card" content="summary_large_image" />
-      <ScheduleHero data={data?.data} isLoading={isLoading} />
-      <SeasonSchedule data={data?.data} isLoading={isLoading} />
+      <ScheduleHero data={data?.data || []} isLoading={isLoading} />
+      <SeasonSchedule data={data?.data || []} isLoading={isLoading} />
       {/* <UpcomingEvents /> */}
       <SubscribeBanner />
     </main>
