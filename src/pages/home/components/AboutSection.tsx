@@ -121,7 +121,7 @@ export default function AboutSection({ second_img }: { second_img?: string }) {
               ABOUT KENNEDI
             </div>
 
-            <h2 className="font-condensed font-black text-4xl sm:text-6xl xl:text-7xl text-white uppercase leading-[0.92] tracking-tight italic">
+            <h2 className="font-condensed font-semibold text-4xl sm:text-6xl xl:text-7xl text-white uppercase leading-[0.92] tracking-tight italic">
               PURPOSE DRIVES.
               <br />
               <span className="text-kh-pink">PASSION DEFINES.</span>
