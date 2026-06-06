@@ -112,22 +112,23 @@ export default function ScheduleSection() {
                 <motion.div
                   key={item._id || i}
                   variants={itemVariants}
-                  className="flex items-center justify-between group/row hover:bg-white/[0.02] transition-colors duration-200 will-change-transform"
+                  className="flex items-center justify-between group/row hover:bg-white/2 transition-colors duration-200 will-change-transform"
                 >
                   {/* Neon Ribbon-Accent Date Flag */}
                   <div
-                    className={`w-24 h-16 bg-neutral-950/60 flex flex-col items-center justify-center text-center shrink-0 border-r border-white/5 px-2 relative`}
+                    className={`w-24 h-full bg-neutral-950/60 flex flex-col items-center justify-center text-center shrink-0 border-r border-white/5 relative`}
                   >
                     <div
-                      className={`absolute left-0 top-0 bottom-0 w-[3px] ${
+                      className={`px-2 py-1  ${
                         isEven
                           ? "bg-kh-pink shadow-[0_0_8px_rgba(232,23,106,0.5)]"
                           : "bg-kh-blue shadow-[0_0_8px_rgba(38,85,245,0.5)]"
                       }`}
-                    />
-                    <span className="font-mono font-black text-white text-xs tracking-widest uppercase">
-                      {item.date}
-                    </span>
+                    >
+                      <span className="font-mono font-black text-white text-xs tracking-widest uppercase">
+                        {item.date}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Core Content Layout Split */}
