@@ -18,6 +18,8 @@ export default {
         "revert",
         "wip",
         "release",
+        "ui",
+        "scss"
       ],
     ],
 
