@@ -10,13 +10,13 @@ export default function HighlightAndSchedule({
 }) {
   return (
     <Container className="py-12 md:py-16">
-      <div className="flex flex-col xl:flex-row gap-10 xl:gap-12 items-start justify-between">
-        {/* Latest Highlights Section - Takes full width on mobile/tablet/laptop, and flexes to fill available space on xl+ */}
+      <div className="flex flex-col xl:flex-row gap-6 xl:gap-6 xl:items-stretch justify-between">
+        {/* Highlights */}
         <div className="w-full xl:flex-1 min-w-0">
           <HighlightsSection highlights={highlights} />
         </div>
 
-        {/* Upcoming Schedule Section - Takes full width on mobile/tablet/laptop, and has a dedicated width on xl+ */}
+        {/* Schedule - It will now perfectly stretch to match the Highlights height */}
         <div className="w-full xl:w-[420px] 2xl:w-[480px] shrink-0">
           <ScheduleSection />
         </div>
