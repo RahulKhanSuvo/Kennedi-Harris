@@ -254,7 +254,7 @@ export default function HighlightsSection({
                 </div>
 
                 {/* Metadata Meta Strip Titles */}
-                <div className="flex flex-col justify-center min-w-0 flex-1">
+                <div className="flex flex-col justify-center gap-1 min-w-0 flex-1">
                   <p
                     className={`text-xs sm:text-sm font-sans font-semibold tracking-wide line-clamp-2 leading-snug transition-colors duration-300 ${
                       isActive
@@ -264,6 +264,9 @@ export default function HighlightsSection({
                   >
                     {item.video_name}
                   </p>
+                  <span className="text-xs  tracking-wider text-zinc-500 uppercase">
+                    {item.video_type}
+                  </span>
                 </div>
               </motion.div>
             );
