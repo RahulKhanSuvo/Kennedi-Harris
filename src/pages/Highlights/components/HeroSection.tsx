@@ -241,35 +241,6 @@ export default function HighlightsHeroSection({
         </motion.div>
 
         {/* Quick Filter Navigation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-3 sm:gap-6 mt-8 font-condensed text-xs sm:text-sm tracking-wider uppercase"
-        >
-          <span className="text-gray-500 font-bold">Quick Jump:</span>
-          <a
-            href="#mixtapes"
-            className="text-white hover:text-kh-pink transition-colors"
-          >
-            ⚡ Full Mixtapes
-          </a>
-          <span className="text-gray-700">•</span>
-          <a
-            href="#game-winners"
-            className="text-white hover:text-cyan-400 transition-colors"
-          >
-            🏀 Game Winners
-          </a>
-          <span className="text-gray-700">•</span>
-          <a
-            href="#defense"
-            className="text-white hover:text-kh-pink transition-colors"
-          >
-            🛡️ Defensive Stops
-          </a>
-        </motion.div>
       </Container>
     </section>
   );
