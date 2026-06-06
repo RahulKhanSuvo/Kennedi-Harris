@@ -77,31 +77,7 @@ export function ActiveHighlightCard({
 
   return (
     <div className="w-full bg-zinc-950 border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-      {/* ========================================================= */}
-      {/* STUDIO DECK CONTROL NODE HEADER                           */}
-      {/* ========================================================= */}
-      <div className="w-full px-6 py-4 bg-zinc-900/60 border-b border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />
-          <div>
-            <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white flex items-center gap-2">
-              STUDIO DECK{" "}
-              <span className="text-xs font-mono font-normal text-zinc-500">
-                // CONTROL NODE
-              </span>
-            </h3>
-          </div>
-        </div>
-        <div className="font-mono text-[10px] text-zinc-400 bg-black/40 border border-white/5 px-3 py-1 rounded-sm uppercase tracking-widest self-stretch sm:self-auto text-center">
-          DECK_ID: {highlight._id || "NULL_NODE"}
-        </div>
-      </div>
-
-      {/* ========================================================= */}
-      {/* MAIN TWO-COLUMN DECK WORKSPACE INTERFACE                  */}
-      {/* ========================================================= */}
       <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch divide-y lg:divide-y-0 lg:divide-x divide-white/5">
-        {/* LEFT COLUMN: HERO MONITOR PLATFORM (7 COLUMNS) */}
         <div className="lg:col-span-7 p-4 sm:p-6 flex flex-col justify-between bg-black/20">
           <div className="space-y-4">
             <div className="flex items-center justify-between font-mono text-[11px] text-zinc-400 uppercase tracking-wider">
@@ -225,9 +201,8 @@ export function ActiveHighlightCard({
             </div>
           </div>
 
-          <div className="h-[1px] w-full bg-white/5" />
+          <div className="h-px w-full bg-white/5" />
 
-          {/* Dynamic Tab Selector Row */}
           <div className="flex items-center justify-between gap-2">
             <div className="flex gap-1.5 bg-black/40 p-1 rounded-lg border border-white/5">
               <button
