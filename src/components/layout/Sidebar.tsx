@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { NavLink, useNavigate, Link } from "react-router";
+import { NavLink, Link } from "react-router";
 import {
   Home,
   Video,
@@ -11,10 +13,8 @@ import {
   Menu,
   X,
   Calendar,
-  LogOut,
-  ExternalLink,
+  ArrowUpRight,
 } from "lucide-react";
-import { useAuthStore } from "@/store/authStore";
 
 const NAV_ITEMS = [
   { label: "Home Page", to: "/dashboard/home", icon: Home },
@@ -28,18 +28,13 @@ const NAV_ITEMS = [
 
 export default function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navigate = useNavigate();
-  const clearAuth = useAuthStore((state) => state.clearAuth);
-
-  const handleLogout = () => {
-    clearAuth();
-    navigate("/login");
-  };
 
   return (
     <>
-      {/* Mobile Menu Button & Top Bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-4 bg-kh-dark-2 border-b border-white/5">
+      {/* ========================================== */}
+      {/* 📱 MOBILE HEADER BAR */}
+      {/* ========================================== */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-4 bg-kh-dark-2 border-b border-white/5 backdrop-blur-md bg-kh-dark-2/95">
         <div className="flex items-center gap-2">
           <span className="text-2xl font-display font-black leading-none text-white">
             <span className="text-kh-pink">A</span>
@@ -50,22 +45,18 @@ export default function Sidebar() {
           </span>
         </div>
 
-        {/* Mobile Control Actions */}
+        {/* Mobile Action Controls */}
         <div className="flex items-center gap-3">
           <Link
             to="/"
-            className="flex items-center justify-center p-2 rounded-lg bg-white/2 text-zinc-400 border border-white/5 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-            title="Exit to Website"
+            className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white/2 text-zinc-300 border border-white/5 hover:text-white hover:bg-white/5 transition-all cursor-pointer active:scale-95"
+            title="Go to Live Website"
           >
-            <ExternalLink size={16} />
+            <span className="font-condensed text-[10px] font-bold tracking-wider uppercase">
+              Live Site
+            </span>
+            <ArrowUpRight size={14} className="text-kh-pink" />
           </Link>
-          <button
-            onClick={handleLogout}
-            className="flex items-center justify-center p-2 rounded-lg bg-red-950/20 text-red-400 border border-red-500/10 hover:bg-red-900/30 transition-colors cursor-pointer"
-            title="Logout"
-          >
-            <LogOut size={16} />
-          </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="text-zinc-400 hover:text-white transition-colors cursor-pointer p-1"
@@ -75,7 +66,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Menu Backdrop Blur Overlay */}
       {mobileOpen && (
         <div
           className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
@@ -83,18 +74,20 @@ export default function Sidebar() {
         />
       )}
 
-      {/* Sidebar Container */}
+      {/* ========================================== */}
+      {/* 🎛️ SIDEBAR CONTAINER CORE */}
+      {/* ========================================== */}
       <aside
         className={`
           fixed top-0 left-0 h-screen z-50 flex flex-col w-[240px]
           bg-kh-dark-2 border-r border-white/5
-          transition-transform duration-300 ease-in-out
+          transition-transform duration-300 ease-in-out pt-[68px] lg:pt-0
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0
         `}
       >
-        {/* Header/Logo */}
-        <div className="flex items-center gap-3 px-5 py-6 border-b border-white/5">
+        {/* Header/Identity Plate */}
+        <div className="hidden lg:flex items-center gap-3 px-5 py-6 border-b border-white/5">
           <div className="text-3xl font-display font-black leading-none shrink-0">
             <span className="text-kh-pink">A</span>
             <span className="text-white">D</span>
@@ -109,8 +102,24 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+        {/* 🚀 MAIN RETURN GATEWAY: VIEW PORTFOLIO LIVE WEBSITE */}
+        <div className="p-3 border-b border-white/5 bg-white/[0.01]">
+          <Link
+            to="/"
+            className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-zinc-100 bg-kh-pink/10 border border-kh-pink/20 hover:bg-kh-pink/20 transition-all cursor-pointer group shadow-[0_0_20px_rgba(236,72,153,0.05)]"
+          >
+            <span className="font-condensed text-xs font-bold tracking-wider uppercase flex-1 text-white">
+              Go to Live Website
+            </span>
+            <ArrowUpRight
+              size={16}
+              className="shrink-0 text-kh-pink group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+            />
+          </Link>
+        </div>
+
+        {/* Dynamic Nav Node List */}
+        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
           {NAV_ITEMS.map(({ label, to, icon: Icon }) => (
             <NavLink
               key={to}
@@ -120,7 +129,7 @@ export default function Sidebar() {
                 `flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative cursor-pointer
                 ${
                   isActive
-                    ? "bg-kh-pink/10 text-kh-pink border border-kh-pink/20"
+                    ? "bg-white/5 text-white border border-white/10"
                     : "text-zinc-400 hover:text-white hover:bg-white/2 border border-transparent"
                 }`
               }
@@ -128,7 +137,7 @@ export default function Sidebar() {
               {({ isActive }) => (
                 <>
                   {isActive && (
-                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-kh-pink rounded-r-full" />
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-white rounded-r-full" />
                   )}
                   <Icon size={18} className="shrink-0" />
                   <span className="font-condensed text-xs font-bold tracking-wider uppercase flex-1">
@@ -143,21 +152,8 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {/* Fixed Footer Viewport Exit Link */}
-        <div className="border-t border-white/5 p-3">
-          <Link
-            to="/"
-            className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/2 border border-transparent transition-all cursor-pointer group"
-          >
-            <ExternalLink
-              size={18}
-              className="shrink-0 text-zinc-500 group-hover:text-white transition-colors"
-            />
-            <span className="font-condensed text-xs font-bold tracking-wider uppercase flex-1">
-              Exit to Website
-            </span>
-          </Link>
-        </div>
+        {/* Footer Accent Block */}
+        <div className="border-t border-white/5 p-4 text-center"></div>
       </aside>
     </>
   );
