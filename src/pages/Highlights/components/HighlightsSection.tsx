@@ -219,8 +219,8 @@ export default function MediaBroadcastCenter({
 
   return (
     <section className="py-16 md:py-24 lg:py-32 bg-black relative border-t border-white/5">
-      <div className="absolute left-[-10%] top-1/4 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-cyan-500/5 blur-[120px] sm:blur-[180px] rounded-full pointer-events-none" />
-      <div className="absolute right-[-10%] bottom-1/4 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-kh-pink/5 blur-[120px] sm:blur-[180px] rounded-full pointer-events-none" />
+      {/* <div className="absolute left-[-10%] top-1/4 w-[100px] md:w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-cyan-500/5 blur-[120px] sm:blur-[180px] rounded-full pointer-events-none" />
+      <div className="absolute right-[-10%] bottom-1/4 w-[100px] md:w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-pink-500/5 blur-[120px] sm:blur-[180px] rounded-full pointer-events-none" /> */}
 
       <Container className="w-full flex flex-col gap-8 md:gap-12">
         <motion.div
