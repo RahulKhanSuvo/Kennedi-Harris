@@ -108,15 +108,10 @@ export default function MediaLightboxModal({
           <div className="flex items-center gap-3">
             <div className="inline-flex items-center gap-1.5 bg-kh-pink/10 border border-kh-pink/20 px-2.5 py-1 rounded font-mono text-[10px] text-kh-pink tracking-widest uppercase">
               <Camera size={10} />
-              INDEX_0{activeItem._id}
             </div>
             <h3 className="font-display font-black text-lg md:text-xl text-white uppercase tracking-wider">
               {activeItem.name}
             </h3>
-          </div>
-
-          <div className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest hidden md:block">
-            SCALE: FULL_RESOLUTION // ASPECT_STABLE
           </div>
         </div>
       </div>
