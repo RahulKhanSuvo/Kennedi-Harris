@@ -90,7 +90,7 @@ export default function ScheduleSection() {
             <span>VIEW FULL SCHEDULE</span>
             <ArrowUpRight
               size={13}
-              className="text-zinc-500 group-hover/link:text-kh-blue transition-colors group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform"
+              className="text-zinc-500 group-hover/link:text-kh-blue transition-colors group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
             />
           </Link>
         </div>
