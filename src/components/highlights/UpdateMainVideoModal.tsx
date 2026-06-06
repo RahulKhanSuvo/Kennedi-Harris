@@ -1,25 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef } from "react";
-import { X, UploadCloud, Film, Loader2 } from "lucide-react";
+import { X, UploadCloud, Layers, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
-import { useAddNewFeed } from "@/hooks/useHighlights";
 import { toast } from "sonner";
+import { useUpdateHighlight } from "@/hooks/useHighlights";
 
-interface AddFeedVideoModalProps {
-  isOpen: string;
+interface UpdateMainVideoModalProps {
+  isOpen: string; // Passes highlight?._id when open, "" when closed
   onClose: () => void;
+  currentVideoUrl?: string;
 }
 
-export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
-  const [title, setTitle] = useState("");
+export function UpdateMainVideoModal({
+  isOpen,
+  onClose,
+  currentVideoUrl,
+}: UpdateMainVideoModalProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const createMutation = useAddNewFeed();
+  const updateMutation = useUpdateHighlight();
+  const isSubmitting = updateMutation.isPending;
 
-  // Check if the actual hook is currently working through its server payload transition
-  const isSubmitting = createMutation.isPending;
+  // Intercept the close action to reset local file buffer safely without an effect
+  const handleSafeClose = () => {
+    setSelectedFile(null);
+    onClose();
+  };
 
   if (!isOpen) return null;
 
@@ -50,38 +58,28 @@ export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !selectedFile) return;
+    if (!selectedFile) return;
 
     try {
       const formData = new FormData();
-      formData.append("feedVideo", selectedFile);
-      formData.append("title", title);
+      formData.append("MainVideo_url", selectedFile);
 
-      // Correct debug inspection strategy
-      console.log("--- Inspecting FormData Nodes ---");
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
-
-      // Fire mutation and only clear states on actual backend success
-      createMutation.mutate(
-        { formData, highlightId: isOpen },
+      updateMutation.mutate(
+        { id: isOpen, formData },
         {
           onSuccess: () => {
-            toast.success("Feed video added successfully!");
-            setTitle("");
-            setSelectedFile(null);
-            onClose(); // Cleanly exit only when stream finishes
+            toast.success("Main composition video updated successfully!");
+            handleSafeClose();
           },
           onError: (err: any) => {
             toast.error(
-              err.response?.data?.message || "Failed to add feed video",
+              err.response?.data?.message || "Failed to update main video",
             );
           },
         },
       );
     } catch (error) {
-      console.error("Failed to append feed video node:", error);
+      console.error("Failed to update main compilation source stream:", error);
     }
   };
 
@@ -89,19 +87,23 @@ export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
       <div
         className="absolute inset-0"
-        onClick={!isSubmitting ? onClose : undefined}
+        onClick={!isSubmitting ? handleSafeClose : undefined}
       />
 
       <div className="relative w-full max-w-lg bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-10 animate-in scale-in duration-200">
+        {/* Header Block */}
         <div className="px-6 py-4 bg-zinc-900/50 border-b border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Film size={16} className="text-kh-pink" />
+            <Layers size={16} className="text-kh-pink" />
             <h3 className="font-display text-sm font-bold tracking-wider text-white uppercase">
-              ADD NEW FEED VIDEO{" "}
+              UPDATE MIXED VIDEO 2026{" "}
+              <span className="text-[10px] font-mono text-zinc-500 font-normal">
+                // CORE STREAM
+              </span>
             </h3>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleSafeClose}
             disabled={isSubmitting}
             className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors disabled:opacity-30"
           >
@@ -110,24 +112,20 @@ export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
-          <div className="space-y-1.5">
-            <label className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold">
-              Feed Title Header Value
-            </label>
-            <input
-              type="text"
-              required
-              disabled={isSubmitting}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. New Title"
-              className="w-full h-10 px-3 bg-black/40 border border-white/10 rounded-lg text-sm text-white placeholder-zinc-600 focus:outline-hidden focus:border-kh-pink/50 focus:ring-1 focus:ring-kh-pink/30 font-mono transition-all disabled:opacity-50"
-            />
-          </div>
+          {currentVideoUrl && !selectedFile && (
+            <div className="p-3 rounded-lg bg-zinc-900/30 border border-white/5 flex flex-col gap-1">
+              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">
+                Active Source Track Online
+              </span>
+              <span className="font-mono text-xs text-cyan-400 truncate max-w-full">
+                {currentVideoUrl}
+              </span>
+            </div>
+          )}
 
           <div className="space-y-1.5">
             <label className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold">
-              Feed Video Media Payload (.mp4, .mov)
+              New Master Composition File (.mp4, .mov)
             </label>
 
             <div
@@ -136,7 +134,7 @@ export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
               onDragLeave={!isSubmitting ? handleDrag : undefined}
               onDrop={!isSubmitting ? handleDrop : undefined}
               onClick={() => !isSubmitting && fileInputRef.current?.click()}
-              className={`w-full py-8 px-4 rounded-xl border border-dashed flex flex-col items-center justify-center text-center transition-all ${
+              className={`w-full py-10 px-4 rounded-xl border border-dashed flex flex-col items-center justify-center text-center transition-all ${
                 isSubmitting
                   ? "cursor-not-allowed opacity-40 border-white/5"
                   : "cursor-pointer"
@@ -162,7 +160,7 @@ export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
                 className={`p-3 rounded-xl mb-3 ${selectedFile ? "bg-cyan-500/10 text-cyan-400" : "bg-zinc-900 text-zinc-400"}`}
               >
                 <UploadCloud
-                  size={20}
+                  size={22}
                   className={
                     !selectedFile && dragActive && !isSubmitting
                       ? "animate-bounce"
@@ -178,16 +176,16 @@ export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
                   </p>
                   <p className="font-mono text-[10px] text-zinc-500 uppercase">
                     {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • READY
-                    FOR APPEND
+                    FOR COMPILATION OVERWRITE
                   </p>
                 </div>
               ) : (
                 <div className="space-y-1">
                   <p className="font-mono text-xs text-zinc-300 font-medium">
-                    Click to browse or drop video clip asset here
+                    Drag/Drop new master video or click to upload
                   </p>
                   <p className="font-mono text-[9px] text-zinc-600 uppercase tracking-wider">
-                    Binary Multipart Buffer Node
+                    This will replace the current tracking mix preview
                   </p>
                 </div>
               )}
@@ -198,7 +196,7 @@ export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
             <Button
               type="button"
               variant="ghost"
-              onClick={onClose}
+              onClick={handleSafeClose}
               disabled={isSubmitting}
               className="font-mono text-xs uppercase tracking-wider text-zinc-400 hover:text-white"
             >
@@ -206,15 +204,15 @@ export function AddFeedVideoModal({ isOpen, onClose }: AddFeedVideoModalProps) {
             </Button>
             <Button
               type="submit"
-              disabled={isSubmitting || !title || !selectedFile}
-              className="font-mono text-xs uppercase tracking-wider h-9 bg-linear-to-r from-kh-pink to-rose-600 text-white font-bold min-w-[100px]"
+              disabled={isSubmitting || !selectedFile}
+              className="font-mono text-xs uppercase tracking-wider h-9 bg-linear-to-r from-kh-pink to-rose-600 text-white font-bold min-w-[120px]"
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-1.5 justify-center">
-                  <Loader2 size={13} className="animate-spin" /> Uploading...
+                  <Loader2 size={13} className="animate-spin" /> Replacing...
                 </span>
               ) : (
-                "Upload"
+                "Overwrite Master"
               )}
             </Button>
           </div>

@@ -8,14 +8,15 @@ import {
   Trash2,
   Eye,
   X,
-  Settings2,
   Sliders,
   PlusCircle,
   Layers,
+  Edit,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { AddFeedVideoModal } from "./AddFeedVideoModal";
 import { AddVideoModal } from "./AddVideoModal";
+import { UpdateMainVideoModal } from "./UpdateMainVideoModal";
 
 interface ActiveHighlightCardProps {
   highlight: any;
@@ -38,7 +39,6 @@ type ActiveMediaFocus = {
 
 export function ActiveHighlightCard({
   highlight,
-  onEditMainVideoClick,
   onEditVideoClick,
   onDeleteVideoClick,
   onEditFeedVideoClick,
@@ -46,6 +46,7 @@ export function ActiveHighlightCard({
 }: ActiveHighlightCardProps) {
   const [isAddFeedOpen, setIsAddFeedOpen] = useState("");
   const [isAddVideoOpen, setIsAddVideoOpen] = useState("");
+  const [isUpdateMainVideoOpen, setIsUpdateMainVideoOpen] = useState("");
   const videosList = highlight.videos || [];
   const feedVideosList = highlight.feedVideos || [];
   console.log("highlight", highlight);
@@ -83,6 +84,9 @@ export function ActiveHighlightCard({
   };
   const openAddFeedVideoModal = () => {
     setIsAddFeedOpen(highlight?._id);
+  };
+  const openUpdateMainVideoModal = () => {
+    setIsUpdateMainVideoOpen(highlight?._id);
   };
   return (
     <div className="w-full bg-zinc-950 border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
@@ -190,7 +194,7 @@ export function ActiveHighlightCard({
                   MAIN MIX COMPOSITION
                 </span>
                 <p className="font-mono text-sm font-black uppercase tracking-wide truncate text-white">
-                  ★ MIXED STEP 2026
+                  ★ MIXED VIDEO 2026
                 </p>
               </div>
             </div>
@@ -198,12 +202,12 @@ export function ActiveHighlightCard({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  onEditMainVideoClick?.(highlight);
+                  openUpdateMainVideoModal();
                 }}
                 className="p-2 rounded-lg bg-black/40 border border-white/5 text-zinc-400 hover:text-kh-pink hover:border-kh-pink/30 transition-all"
                 title="Update Configuration"
               >
-                <Settings2 size={14} />
+                <Edit size={14} />
               </button>
             </div>
           </div>
@@ -370,7 +374,6 @@ export function ActiveHighlightCard({
           </div>
         </div>
       </div>
-
       {/* ================================================================= */}
       {/* MOBILE IMMERSIVE BOTTOM SHEET OVERLAY TRIGGER                     */}
       {/* ================================================================= */}
@@ -419,6 +422,11 @@ export function ActiveHighlightCard({
       <AddVideoModal
         isOpen={isAddVideoOpen}
         onClose={() => setIsAddVideoOpen("")}
+      />
+      <UpdateMainVideoModal
+        isOpen={isUpdateMainVideoOpen}
+        onClose={() => setIsUpdateMainVideoOpen("")}
+        currentVideoUrl={activeVideoUrl}
       />
     </div>
   );
