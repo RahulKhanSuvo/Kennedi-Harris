@@ -3,7 +3,7 @@ import { useAuthStore } from "@/store/authStore";
 
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
-  "https://angela-daughter-admin.onrender.com/api/v1";
+  "https://api.kennediharrishoops.com/api/v1";
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
